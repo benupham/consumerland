@@ -1,0 +1,27 @@
+{
+  "name": "product-map",
+  "version": "1.0.0",
+  "description": "product map app",
+  "main": "index.js",
+  "scripts": {
+    "start": "watchify index.js -g cssify --outfile bundle.js & live-server --ignore=index.js,./",
+    "build": "browserify -g cssify index.js | uglifyjs --compress --output bundle.js"
+  },
+  "author": "Ben Upham",
+  "license": "ISC",
+  "dependencies": {
+    "ol": "^4.6.5"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babelify": "^8.0.0",
+    "browserify": "^16.2.0",
+    "cssify": "^1.0.3",
+    "http-server": "^0.11.1",
+    "live-server": "^1.2.0",
+    "uglify-js": "^3.3.21",
+    "watchify": "^3.11.0"
+  }
+}
