@@ -5,7 +5,7 @@
     <title>Product Map, Someday.</title>
     <style>
       #map {
-        width: 900px;
+        width: 100%;
         height: 900px;
       }
     </style>
@@ -14,5 +14,13 @@
   <body>
     <div id="map"></div>
     <div id="info">&nbsp;</div>
+    <div id="pm-overlays" style="display: none;">
+      <div id="pm-search-wrapper" class="pm-search-wrapper">
+        <form id="search" action="" name="search">
+          <input type="text" name="search">
+          <button id="submit" type="submit" >Search</button>
+        </form>
+      </div>
+    </div>
   </body>
 </html>
