@@ -4,12 +4,14 @@ body {
 	background: white;
 }
 
-.pm-search-wrapper {
+.search-overlay {
 	display: block;
 	position: absolute;
 	top: .5em;
 	right: .5em;
 	width: auto;
 	padding: 20px;
-	background: green;
+	background: lightgrey;
+	opacity: 0.9;
+	border: 1px solid grey;
 }

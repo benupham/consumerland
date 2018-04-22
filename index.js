@@ -223,9 +223,11 @@ searchForm.addEventListener('submit', handleSearch);
 
 
 const search = new Control({
-  element: document.getElementById('pm-search-wrapper'),
+  element: document.getElementById('search-overlay'),
 
 
 });
 map.addControl(search);
+
+console.log(view.getProjection().setWorldExtent([-100000, -100000, 100000, 100000]));
 

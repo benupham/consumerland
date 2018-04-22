@@ -15,11 +15,22 @@
     <div id="map"></div>
     <div id="info">&nbsp;</div>
     <div id="pm-overlays" style="display: none;">
-      <div id="pm-search-wrapper" class="pm-search-wrapper">
+      <div id="search-overlay" class="search-overlay">
         <form id="search" action="" name="search">
           <input type="text" name="search">
-          <button id="submit" type="submit" >Search</button>
+          <button id="submit" type="submit">Search</button>
         </form>
+      </div>
+      <div id="product-overlay" class="product-overlay">
+        <div id="product-image" class="product-image">
+          <img src="">
+        </div>
+        <div id="product-info" class="product-info">
+          <div id="product-name" class="product-name"></div>
+          <div id="product-size" class="product-size"></div>
+          <div id="product-price" class="product-price"></div>
+        </div>
+        <button id="add-to-cart" name="add-to-cart">Add to Cart</button>
       </div>
     </div>
   </body>
