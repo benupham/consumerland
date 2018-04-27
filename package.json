@@ -10,7 +10,10 @@
   "author": "Ben Upham",
   "license": "ISC",
   "dependencies": {
-    "ol": "^4.6.5"
+    "imagemagick": "^0.1.3",
+    "match-sorter": "^2.2.1",
+    "ol": "^4.6.5",
+    "spritesmith": "^3.3.0"
   },
   "devDependencies": {
     "css-loader": "^0.28.11",
