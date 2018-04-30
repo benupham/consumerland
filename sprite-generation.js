@@ -17,7 +17,7 @@ let sprites = [];
 // });
 
 function generateSprites() {
-
+	
 }
 spritesmith.run({src: sprites}, function handleResult (err, result) {
   fs.writeFileSync('test5.png',result.image); // Buffer representation of image
@@ -36,6 +36,7 @@ productJson.forEach((dept, dindex) => {
 
 })
 fs.writeFileSync(JSON.stringify('productIndex.json'), productIndex); 
+
 
 
 

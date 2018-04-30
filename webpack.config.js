@@ -12,7 +12,7 @@ module.exports = {
   mode: 'development',
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html'
+      template: './index.html'
   })
   ],
   module: {
