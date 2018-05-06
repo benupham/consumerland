@@ -5,17 +5,17 @@ const fs = require('fs');
 
 	get scrape data json 
 	remove unusual characters (done)
-	add depts, subdepts from img path
-	change image path to missing-item.jpg if url has "missing-item"
+	add depts, subdepts from img path (done)
+	change image path to missing-item.jpg if url has "missing-item" (done)
 	
-	generate brands and attach to products
+	generate brands and attach to products (done)
 		first word in product name, except if 
 			first word is "the", then is first 2 
 			product is in produce, meat&seafood, bakery, fresh food
 				if first word is "organic" or "fresh", use 2nd word
 
-	place brands inside subdepts 
-	place products inside brands
+	place brands inside subdepts (done)
+	place products inside brands (done)
 
 	generate unique id for all depts, subdepts, brands, products 
 		including duplicate Sale/Coupon items
@@ -76,7 +76,7 @@ SAMPLE++++++++
 
 const source = JSON.parse(fs.readFileSync('./data/scrape-data-working.json','utf8'));
 
-const fruitsVegs = JSON.parse(fs.readFileSync('./data/fruits-vegs.json','utf8'));
+//const fruitsVegs = JSON.parse(fs.readFileSync('./data/fruits-vegs.json','utf8'));
 
 const tagsList = [
 	"local",
@@ -134,6 +134,7 @@ function addDeptsSubdepts(parsedJson) {
 	})
 }
 
+//adds tags to products -- already done
 function createBrandsandTags(product) {
 
 	let pName = product.productName.toLowerCase();
@@ -201,18 +202,213 @@ function addBrandsTags(parsedJson) {
 	})
 }
 
+// returns NEW json with brand hierarchy inserted between subdept and products
+function addBrandHierachy(parsedJson) {
+	const newJson = [];
+
+	parsedJson.forEach((dept, i) => {
+		let l = newJson.push({
+			"departmentName": dept.departmentName,
+			"subdepartments": [] 
+		});
+		dept.subdepartments.forEach((subdept) => {
+			let k = newJson[l - 1].subdepartments.push({
+				"subdepartmentName": subdept.subdepartmentName,
+				"brands": []
+			});
+			let brandsTemp = [];
+
+			// create array of unique brands in subdept
+			subdept.products.forEach((product) => {
+				if (brandsTemp.indexOf(product.brand) < 0) {
+					brandsTemp.push(product.brand);
+				} 			 
+			});
+
+			// add unique brands to new json subdepartment
+			brandsTemp.forEach((brand) => {
+				newJson[l - 1].subdepartments[k - 1].brands.push({
+								"brandName": brand,
+								"products": []
+							})
+			});
+
+			// add products to brands by subdepartment
+			newJson[l - 1].subdepartments[k - 1].brands.forEach((brand) => {
+				//console.log(newJson[l - 1].subdepartments[k - 1].subdepartmentName,brand);
+				subdept.products.forEach((product) => {
+					if ((brand.brandName == product.brand) && (brand.products.indexOf(product) < 0)) {
+						//console.log('match', product);
+						brand.products.push(product);
+					} 			 
+				});	
+			})
+			
+
+		})
+	})
+	return newJson;
+}
+
+function generateUids(parsedJson) {
+	uid = 0;
+	parsedJson.forEach((dept) => {
+		uid++;
+		dept.id = uid;
+		console.log(uid);
+		dept.subdepartments.forEach((subdept) => {
+			uid++;
+			subdept.id = uid;
+			console.log(uid);
+			subdept.brands.forEach((brand) => {
+				uid++;
+				brand.id = uid;
+				console.log(uid);
+				brand.products.forEach((product) => {
+					uid++;
+					product.id = uid;
+					console.log(uid);
+				})
+
+			})
+		})
+	})
+}
+
+function addProductImg(parsedJson) {
+	parsedJson.forEach((dept) => {
+		dept.subdepartments.forEach((subdept) => {
+			subdept.brands.forEach((brand) => {
+				brand.products.forEach((product) => {
+					product.productImg = product.productImgPath.split('/').pop();
+				})
+
+			})
+		})
+	})
+}
+
+// converts raw product json to D3 ready data
+function createD3DataHierarchy(parsedJson) {
+  const d3testdata = {
+    "name": "products",
+    "children": []
+  };
+  parsedJson.forEach((dept, i) => {
+    //if (i == 0) {return} 
+    d3testdata.children.push({
+      "name": dept.departmentName,
+      "id": dept.id,
+      "children": []
+    });
+
+    dept.subdepartments.forEach((subdept, j) => {
+      d3testdata.children[i].children.push({
+        "name": subdept.subdepartmentName,
+        "id": subdept.id,
+        "children": []
+      });
+      subdept.brands.forEach((brand, k) => {
+        //console.log(d3testdata.children[i].children[j].children);
+        d3testdata.children[i].children[j].children.push({
+          "name": brand.brandName,
+          "id": brand.id,
+          "children": []
+
+          // "price": product.productPrice,
+          // "img": product.productImgPath,
+          // "prodsize": product.productSize,
+          // "department": d3testdata.children[i].name,
+          // "subdepartment": d3testdata.children[i].children[j].name
+        })
+        brand.products.forEach((product, l) => {
+        	d3testdata.children[i].children[j].children[k].children.push({
+        		"name": product.productName + ", " + product.productSize,
+        		"price": product.productPrice,
+        		"img": product.productImgPath,
+        		"id": product.id,
+        		"size": 1
+        	})
+        })
+      })
+    })
+  })
+  return d3testdata
+}
+
+//Don't use -- unnecessary
+function createD3DataLinks(parsedJson) {
+	const links = [];
+
+	parsedJson.forEach((dept, i) => {
+	  //if (i > 2) {return} 
+	  links.push({
+	  	"source": 0,
+	  	"id": dept.id
+	  })
+	  d3testdata.children.push({
+	    "name": dept.departmentName,
+	    "id": dept.id,
+	    "children": []
+	  });
+
+	  dept.subdepartments.forEach((subdept, j) => {
+	    d3testdata.children[i].children.push({
+	      "name": subdept.subdepartmentName,
+	      "id": subdept.id,
+	      "children": []
+	    });
+	    subdept.brands.forEach((brand, k) => {
+	      //console.log(d3testdata.children[i].children[j].children);
+	      d3testdata.children[i].children[j].children.push({
+	        "name": brand.brandName,
+	        "id": brand.id,
+	        "children": []
+
+	        // "price": product.productPrice,
+	        // "img": product.productImgPath,
+	        // "prodsize": product.productSize,
+	        // "department": d3testdata.children[i].name,
+	        // "subdepartment": d3testdata.children[i].children[j].name
+	      })
+	      brand.products.forEach((product, l) => {
+	      	d3testdata.children[i].children[j].children[k].children.push({
+	      		"name": product.productName,
+	      		"id": product.id,
+	      		"size": 1
+	      	})
+	      })
+	    })
+	  })
+	})
+	return d3testdata
+}
+
+const d3data = createD3DataHierarchy(source);
+saveJson('./data/testd3dataNoSales.json',d3data);
 
 
 
+// sample d3 data
+//  {
+//   "name": "products",
+//   "children": [
+//     {
+//       "name": "Sales",
+//       "children": [
+//         {
+//           "name": "Produce",
+//           "children": [
+//             {
+//               "name": "Organic Broccoli",
+//               "size": 5,
+//               "price": "$3.34 each Reg: $4.68",
+//               "img": "product-images/sales/produce/organic-broccoli-200x.jpg",
+//               "prodsize": "At $2.49/lb",
+//               "department": "Sales",
+//               "subdepartment": "Produce"
+//             },
 
-
-// function addBrandHierachy() {
-
-// }
-
-// function generateUids() {
-
-// }
 
 // function createFeaturesList() {
 

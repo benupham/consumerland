@@ -21,7 +21,7 @@ import {search} from './controls.js';
 
 import matchSorter from 'match-sorter';
 
-import {productData} from './productSet.js';
+import {productData} from './data/d3productSet1.js';
 
 
 
@@ -76,15 +76,15 @@ let center = Math.ceil(Math.sqrt(productData.features.length)) * 100;
 console.log(center);
 
 var view = new View({
-  center: [center, center],
-  zoom: 0,
-  zoomFactor: 2,
+  center: [39870,-37605],
+  zoom: 8,
+  zoomFactor: 1.25,
   minResolution: 1,
-  maxResolution: 20,
-  projection: new Projection({
-   units: 'pixels',
-   extent: [center,center,center,center]
-  })
+  maxResolution: 100,
+  // projection: new Projection({
+  //  units: 'pixels',
+  //  extent: [center,center,center,center]
+  // })
 })
 
 
