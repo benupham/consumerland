@@ -6,14 +6,14 @@ export const departmentsData = {
       "id": 23780,
       "properties": {
         "name": "Household",
-        "radius": 4689.705570392618,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 6632.245221185892,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          61507.88590796608,
-          -39137.684233592554
+          86424.62708716375,
+          -53149.15624224234
         ]
       }
     },
@@ -22,14 +22,14 @@ export const departmentsData = {
       "id": 23511,
       "properties": {
         "name": "Pets",
-        "radius": 3057.831250154857,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 4313.6908483655825,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32292.140101385638,
-          -11370.426283367653
+          43096.85953040835,
+          -17712.43700570148
         ]
       }
     },
@@ -38,14 +38,14 @@ export const departmentsData = {
       "id": 23047,
       "properties": {
         "name": "Babies",
-        "radius": 3925.963699822731,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 5552.15110967376,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          45676.76407443577,
-          -11031.752543742767
+          61755.91425128053,
+          -14569.44110343754
         ]
       }
     },
@@ -54,14 +54,14 @@ export const departmentsData = {
       "id": 18872,
       "properties": {
         "name": "Personal Care",
-        "radius": 11749.932857816439,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 16214.638615035921,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          25815.699435566807,
-          -38040.98672750406
+          36417.695188675876,
+          -53955.26016881056
         ]
       }
     },
@@ -70,14 +70,14 @@ export const departmentsData = {
       "id": 18267,
       "properties": {
         "name": "Breakfast",
-        "radius": 4505.043613484842,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 6371.09377727256,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          59046.43829545145,
-          -30278.52579696544
+          81500.34992820249,
+          -41114.27695034403
         ]
       }
     },
@@ -86,14 +86,14 @@ export const departmentsData = {
       "id": 17835,
       "properties": {
         "name": "International",
-        "radius": 3487.8108322573853,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 4932.509381970187,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          38482.18225799391,
-          -9242.326574599623
+          51326.24116623591,
+          -13497.048934436243
         ]
       }
     },
@@ -102,14 +102,14 @@ export const departmentsData = {
       "id": 17785,
       "properties": {
         "name": "Floral",
-        "radius": 1104.0187935341944,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 1561.3183509308396,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          30738.398862767703,
-          -15231.36968486586
+          37501.0221861467,
+          -15922.929389516437
         ]
       }
     },
@@ -118,14 +118,14 @@ export const departmentsData = {
       "id": 16985,
       "properties": {
         "name": "Dry Goods & Pasta",
-        "radius": 5494.487985153022,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 7770.379426899424,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48119.73136817165,
-          -53155.57368405905
+          69884.8205840428,
+          -74997.00379436911
         ]
       }
     },
@@ -134,14 +134,14 @@ export const departmentsData = {
       "id": 16343,
       "properties": {
         "name": "Bulk",
-        "radius": 3998.076306612678,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 5654.133736214181,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          50595.238370271356,
-          -17244.563552037926
+          69879.81837632867,
+          -22288.443747186506
         ]
       }
     },
@@ -150,14 +150,14 @@ export const departmentsData = {
       "id": 15601,
       "properties": {
         "name": "Canned Goods",
-        "radius": 5361.007097794489,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 7581.608945679391,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          57942.68464572183,
-          -48534.82023868201
+          82947.13223670566,
+          -66931.05305806384
         ]
       }
     },
@@ -166,14 +166,14 @@ export const departmentsData = {
       "id": 15047,
       "properties": {
         "name": "Meat & Seafood",
-        "radius": 4096.827490711588,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 5793.789000067263,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          52105.74561988324,
-          -25197.28857788943
+          71979.44262289631,
+          -33542.177038814436
         ]
       }
     },
@@ -182,14 +182,14 @@ export const departmentsData = {
       "id": 12674,
       "properties": {
         "name": "Beverages",
-        "radius": 8354.475260712949,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 11815.01222021075,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          21465.14055334145,
-          -18412.949046455033
+          29652.08180162465,
+          -26754.38148001086
         ]
       }
     },
@@ -198,14 +198,14 @@ export const departmentsData = {
       "id": 11222,
       "properties": {
         "name": "Frozen",
-        "radius": 6553.457587284145,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 9267.9886003741,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          7825.319992602143,
-          -41411.49845185004
+          11639.74985278563,
+          -59906.53858031088
         ]
       }
     },
@@ -214,14 +214,14 @@ export const departmentsData = {
       "id": 8333,
       "properties": {
         "name": "Snacks",
-        "radius": 9647.277569426438,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 13588.061272428366,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          47212.90986280968,
-          -38040.98672750406
+          66220.39507614018,
+          -53955.26016881056
         ]
       }
     },
@@ -230,14 +230,14 @@ export const departmentsData = {
       "id": 7412,
       "properties": {
         "name": "Bakery",
-        "radius": 5549.362013881161,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 7847.98302254881,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          37291.01250620146,
-          -50986.36401010438
+          54567.143405997296,
+          -71947.08388205696
         ]
       }
     },
@@ -246,14 +246,14 @@ export const departmentsData = {
       "id": 6138,
       "properties": {
         "name": "Deli",
-        "radius": 6536.004565006552,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 9243.306299564727,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          14692.608035990888,
-          -52554.85406698593
+          22227.046878044275,
+          -75091.30662501446
         ]
       }
     },
@@ -262,14 +262,14 @@ export const departmentsData = {
       "id": 4550,
       "properties": {
         "name": "Dairy & Eggs",
-        "radius": 6728.029208987896,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 9514.870155393008,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10097.823377127788,
-          -28325.871990466236
+          14029.064272617035,
+          -41276.26859723542
         ]
       }
     },
@@ -278,14 +278,14 @@ export const departmentsData = {
       "id": 1965,
       "properties": {
         "name": "Pantry",
-        "radius": 8931.778766313784,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 12631.442667436984,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          38443.33791400975,
-          -21661.855426930444
+          53745.570565482216,
+          -30893.57895774309
         ]
       }
     },
@@ -294,14 +294,14 @@ export const departmentsData = {
       "id": 930,
       "properties": {
         "name": "Produce",
-        "radius": 5975.462623610804,
-        "fill": "rgba(200,200,200,0.5)"
+        "radius": 8450.580283763915,
+        "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          26791.988079090195,
-          -55739.475517723644
+          39606.246008372975,
+          -78413.5137245312
         ]
       }
     }

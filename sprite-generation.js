@@ -1,75 +1,84 @@
-const fs = require('fs')
-const spritesmith = require('spritesmith')
-const imagemagick = require('imagemagick')
+const fs = require('fs');
+const EventEmitter = require('events').EventEmitter;
+const Spritesmith = require('spritesmith');
+const Imagemagick = require('imagemagick');
+const Tinify = require("tinify");
+Tinify.key = "qInLPzbZ40ptUtm-wrd-1BYRnXbcgM5j";
+ 
 
 
-const productJson = JSON.parse(fs.readFileSync('productInfo.json','utf8'));
+const filesEE = new EventEmitter();
 
-const productsOnlyJson2 = JSON.parse(fs.readFileSync('productsOnlyJson2.json','utf8'));
-
+const testdir = './sprite-test-images/jpgs/'
 
 let sprites = [];
 
-// productsOnlyJson.forEach((product, index) => {
-// 	if (index < 200) {
-// 		sprites.push(product.productImgPath);
-// 	}
-// });
+function createSprite() {
+	fs.readdir(testdir, (err, imgs) => {
+		if (err) throw err;
+		imgs.forEach(img => {
+			sprites.push(__dirname + '/sprite-test-images/jpgs/' + img);
+		})
+		console.log(sprites);
+		filesEE.emit('files_ready');
+	})
 
-function generateSprites() {
-	
+
+	filesEE.on('files_ready',function(){
+		console.log(sprites);
+	  Spritesmith.run({src: sprites, engine: require('gmsmith')}, function handleResult (err, result) {
+	  	if (err) throw err;
+	    console.log(result.coordinates);
+	    Tinify.fromBuffer(result.image)
+	    	.toFile('./sprite-test-images/a-test-4-opt.png')
+	    	.catch(err => console.log(err));
+	    // fs.writeFileSync('./sprite-test-images/a-test-3.png',result.image, err => {
+	    // 	if (err) throw err;
+	    // 	console.log('saved');
+	    // }); 
+	    // result.coordinates; // Object mapping filename to {x, y, width, height} of image
+	    // result.properties; // Object with metadata about spritesheet {width, height}
+	  });
+	});
 }
-spritesmith.run({src: sprites}, function handleResult (err, result) {
-  fs.writeFileSync('test5.png',result.image); // Buffer representation of image
-  result.coordinates; // Object mapping filename to {x, y, width, height} of image
-  result.properties; // Object with metadata about spritesheet {width, height}
-  //console.dir(result.coordinates,result.properties);
-});
 
-const productIndex = {};
+function convertJpg() {
+	// fs.readdir(testdir, (err, imgs) => {
+	// 	if (err) throw err;
+	// 	imgs.forEach(img => {
+	// 		sprites.push(__dirname + '/sprite-test-images/sprites/' + img);
+	// 	})
+	// 	console.log(sprites);
+	// 	filesEE.emit('files_ready');
+	// })
 
-productIndex.departmentsCount = productJson.length;
+	// Trying to get transparencies from white bg
+	// Imagemagick.convert([
+	// 	'./sprite-test-images/a-test.png', 
+	// 	'-alpha', 'set',
+	// 	'-channel', 'RGBA',
+	// 	'-fuzz', '1%',
+	// 	'-floodfill', '+0+0','none',
+	// 	'./sprite-test-images/a-test-trans.png'], 
+	// function(err, stdout){
+	//   if (err) throw err;
+	//   console.log('stdout:', stdout);
+	// });
 
-productIndex.departments = [];
 
-productJson.forEach((dept, dindex) => {
+	// Imagemagick.convert([
+	// 	'./sprite-test-images/a-test-4-opt.png',
 
-})
-fs.writeFileSync(JSON.stringify('productIndex.json'), productIndex); 
+	// 	'./sprite-test-images/a-test-4-opt.jpg'], 
+	// function(err, stdout){
+	//   if (err) throw err;
+	//   console.log('stdout:', stdout);
+	// });
+	
 
+	// Tinify.fromFile('./sprite-test-images/a-test-trans.png')
+	// 	.toFile('./sprite-test-images/a-test-trans-opt.png');
 
+}
 
-
-// addDepartmentstoJson() {
-// 	productsOnlyJson.forEach((product) => {
-// 		let pathArray = product.productImgPath.split('/');
-// 		product.department = pathArray[1];
-// 		product.subdepartment = pathArray[2];
-// 	})
-
-// 	fs.writeFile('productsOnlyJson2.json', JSON.stringify(productsOnlyJson, null, 2)); 	
-// }
-
-// function countProductsbyDepartment() {
-// 	let countDepartments = {};
-// 	let countSubdepartments = {}
-// 	productsOnlyJson2.forEach((product, index) => {
-// 		let department = product.department;
-// 		let subdepartment = product.subdepartment;
-// 		if (!countDepartments.hasOwnProperty(department)) {
-// 			countDepartments[department] = 1;
-// 		} else {
-// 			countDepartments[department]++;
-// 		}
-// 		if (!countSubdepartments.hasOwnProperty(subdepartment)) {
-// 			countSubdepartments[subdepartment] = 1;
-// 		} else {
-// 			countSubdepartments[subdepartment]++;
-// 		} 
-		
-// 	})
-// 	console.log(`departments: ${countDepartments} \n subdepartments: ${countSubdepartments}`);
-// 	console.dir(countDepartments);
-// 	console.dir(countSubdepartments);
-// }
-// countProductsbyDepartment();
+convertJpg();

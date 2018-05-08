@@ -3,33 +3,17 @@ export const subdepartmentsData = {
   "features": [
     {
       "type": "Feature",
-      "id": 24471,
-      "properties": {
-        "name": "Coupons",
-        "radius": 509.2676385936225,
-        "fill": "rgba(255,255,255,0.5)"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          65254.16079912577,
-          -39373.62380616146
-        ]
-      }
-    },
-    {
-      "type": "Feature",
       "id": 24440,
       "properties": {
         "name": "Sales",
-        "radius": 747.2196791967839,
+        "radius": 1056.728204392165,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          65158.466203787415,
-          -40626.461754258155
+          91587.32725204626,
+          -55254.60560332382
         ]
       }
     },
@@ -38,14 +22,14 @@ export const subdepartmentsData = {
       "id": 24431,
       "properties": {
         "name": "Air Fresheners & Candles",
-        "radius": 336.4692885745558,
+        "radius": 475.83943122416343,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          64206.88356133979,
-          -37954.95933846743
+          91163.64816123384,
+          -52406.38854312059
         ]
       }
     },
@@ -54,14 +38,14 @@ export const subdepartmentsData = {
       "id": 24294,
       "properties": {
         "name": "More Household",
-        "radius": 1368.5711424081744,
+        "radius": 1935.4518706660804,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          60557.31007270079,
-          -39469.96922195871
+          85080.30984886744,
+          -53619.07817936274
         ]
       }
     },
@@ -70,14 +54,14 @@ export const subdepartmentsData = {
       "id": 24250,
       "properties": {
         "name": "Garden",
-        "radius": 862.7547467294232,
+        "radius": 1220.119463826515,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          60552.73167114946,
-          -41701.290413937786
+          85073.83501129955,
+          -56774.64287107006
         ]
       }
     },
@@ -86,14 +70,14 @@ export const subdepartmentsData = {
       "id": 24240,
       "properties": {
         "name": "Trash Bags & Liners",
-        "radius": 517.9449471770337,
+        "radius": 732.4847688603772,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          64938.6213198423,
-          -38396.07558055867
+          91734.35371658664,
+          -53471.44372554044
         ]
       }
     },
@@ -102,14 +86,14 @@ export const subdepartmentsData = {
       "id": 24178,
       "properties": {
         "name": "Paper Goods",
-        "radius": 1226.2331464595613,
+        "radius": 1734.1555463545458,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          59309.062706900586,
-          -37195.1312472231
+          83315.0214949563,
+          -50401.97146329029
         ]
       }
     },
@@ -118,14 +102,14 @@ export const subdepartmentsData = {
       "id": 24084,
       "properties": {
         "name": "Laundry",
-        "radius": 1410.71539615405,
+        "radius": 1995.052845889591,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          63336.59661126302,
-          -39469.96922195871
+          89010.81456542312,
+          -53619.07817936274
         ]
       }
     },
@@ -134,14 +118,14 @@ export const subdepartmentsData = {
       "id": 24026,
       "properties": {
         "name": "Kitchen Supplies",
-        "radius": 965.1032465693153,
+        "radius": 1364.8621003886308,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          58843.396288446274,
-          -41053.80497541037
+          82656.46973043651,
+          -55858.9601824655
         ]
       }
     },
@@ -150,14 +134,14 @@ export const subdepartmentsData = {
       "id": 23982,
       "properties": {
         "name": "Plates, Bowls, Cups & Flatware",
-        "radius": 903.0292796788893,
+        "radius": 1277.076254541892,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          62311.51836904817,
-          -41544.24717398996
+          87561.13501278931,
+          -56552.55019125683
         ]
       }
     },
@@ -166,14 +150,14 @@ export const subdepartmentsData = {
       "id": 23946,
       "properties": {
         "name": "Food Storage",
-        "radius": 753.3849713170116,
+        "radius": 1065.447244124583,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          63967.92700328861,
-          -41539.93355416185
+          89903.65056816403,
+          -56546.44981159298
         ]
       }
     },
@@ -182,14 +166,14 @@ export const subdepartmentsData = {
       "id": 23885,
       "properties": {
         "name": "Dish Detergents",
-        "radius": 1049.3670137941947,
+        "radius": 1484.0290628147047,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          58159.45294674216,
-          -39158.99312849057
+          81689.22778070378,
+          -53179.29157040629
         ]
       }
     },
@@ -198,30 +182,14 @@ export const subdepartmentsData = {
       "id": 23781,
       "properties": {
         "name": "Cleaning Products",
-        "radius": 1372.1770922820497,
+        "radius": 1940.5514538829527,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          61905.0739400191,
-          -37083.50039879995
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 23763,
-      "properties": {
-        "name": "Coupons",
-        "radius": 509.2676385936225,
-        "fill": "rgba(255,255,255,0.5)"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          33033.87477055204,
-          -10189.202050028669
+          86986.33578890542,
+          -50244.10160347106
         ]
       }
     },
@@ -230,14 +198,14 @@ export const subdepartmentsData = {
       "id": 23756,
       "properties": {
         "name": "Sales",
-        "radius": 332.2875655532295,
+        "radius": 469.9255818133161,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32332.464824151815,
-          -9724.186729079482
+          44093.675511676985,
+          -16246.036022399769
         ]
       }
     },
@@ -246,14 +214,14 @@ export const subdepartmentsData = {
       "id": 23753,
       "properties": {
         "name": "Small Animal Care",
-        "radius": 100,
+        "radius": 141.4213562373095,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          31900.571423343798,
-          -9742.642884432726
+          43535.547714986395,
+          -15996.559688401578
         ]
       }
     },
@@ -262,14 +230,14 @@ export const subdepartmentsData = {
       "id": 23586,
       "properties": {
         "name": "Dog Food & Care",
-        "radius": 1842.9264459029248,
+        "radius": 2606.291574251962,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          31084.826496466907,
-          -11506.026957306129
+          41389.46025629473,
+          -17712.43700570148
         ]
       }
     },
@@ -278,30 +246,14 @@ export const subdepartmentsData = {
       "id": 23512,
       "properties": {
         "name": "Cat Food & Care",
-        "radius": 1207.3136049187294,
+        "radius": 1707.3992741136199,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          34135.06654728856,
-          -11506.026957306129
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 23507,
-      "properties": {
-        "name": "Coupons",
-        "radius": 200,
-        "fill": "rgba(255,255,255,0.5)"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          42540.08142621812,
-          -10662.318052941011
+          45703.15110466031,
+          -17712.43700570148
         ]
       }
     },
@@ -310,14 +262,14 @@ export const subdepartmentsData = {
       "id": 23483,
       "properties": {
         "name": "Sales",
-        "radius": 674.9666514497782,
+        "radius": 954.5469926298299,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          42669.394950342714,
-          -9796.959945780909
+          57502.852048926026,
+          -12823.18066468197
         ]
       }
     },
@@ -326,14 +278,14 @@ export const subdepartmentsData = {
       "id": 23421,
       "properties": {
         "name": "Baby First Aid & Vitamins",
-        "radius": 978.8407481858106,
+        "radius": 1384.2898614878009,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          47307.15908668044,
-          -10073.202607680818
+          64061.640989622385,
+          -13213.84678364687
         ]
       }
     },
@@ -342,14 +294,14 @@ export const subdepartmentsData = {
       "id": 23378,
       "properties": {
         "name": "Diapers & Wipes",
-        "radius": 1102.9167083221012,
+        "radius": 1559.7597670770065,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          45678.440006917575,
-          -8776.673291798332
+          61758.28437772592,
+          -11380.277441111546
         ]
       }
     },
@@ -358,14 +310,14 @@ export const subdepartmentsData = {
       "id": 23148,
       "properties": {
         "name": "Baby Food & Formula",
-        "radius": 2333.0808576894547,
+        "radius": 3299.4745910574793,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          44654.85986450356,
-          -12056.66764631985
+          60310.72345814823,
+          -16018.889941783063
         ]
       }
     },
@@ -374,14 +326,14 @@ export const subdepartmentsData = {
       "id": 23073,
       "properties": {
         "name": "Baby Bath & Body Care",
-        "radius": 1185.5795638927957,
+        "radius": 1676.662698529571,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48173.52028608581,
-          -12056.66764631985
+          65286.86074773529,
+          -16018.889941783063
         ]
       }
     },
@@ -390,30 +342,14 @@ export const subdepartmentsData = {
       "id": 23048,
       "properties": {
         "name": "Baby Accessories",
-        "radius": 723.0579077947558,
+        "radius": 1022.5582995844586,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          43881.326903380046,
-          -9100.042727269272
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 23012,
-      "properties": {
-        "name": "Coupons",
-        "radius": 930.8204277722514,
-        "fill": "rgba(255,255,255,0.5)"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          17882.745141979056,
-          -33910.33968002929
+          59216.782653584734,
+          -11837.590882411481
         ]
       }
     },
@@ -422,14 +358,14 @@ export const subdepartmentsData = {
       "id": 22589,
       "properties": {
         "name": "Sales",
-        "radius": 3013.3970796146114,
+        "radius": 4261.58701880646,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          30328.313066301933,
-          -39437.60141806613
+          34195.18834584418,
+          -56087.9300102029
         ]
       }
     },
@@ -438,14 +374,14 @@ export const subdepartmentsData = {
       "id": 22539,
       "properties": {
         "name": "Oils & Tinctures",
-        "radius": 871.1767472161503,
+        "radius": 1232.0299711371572,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          18674.8199678683,
-          -32291.756568521356
+          26505.336087829008,
+          -45478.21847595548
         ]
       }
     },
@@ -454,14 +390,14 @@ export const subdepartmentsData = {
       "id": 22532,
       "properties": {
         "name": "Foot Care",
-        "radius": 232.28756555322954,
+        "radius": 328.5042255760066,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          15347.37424479835,
-          -38737.50856353922
+          22341.720309489247,
+          -52330.9898936412
         ]
       }
     },
@@ -470,14 +406,14 @@ export const subdepartmentsData = {
       "id": 22523,
       "properties": {
         "name": "Family Planning",
-        "radius": 409.331459920627,
+        "radius": 578.8821021257296,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          15380.093774731471,
-          -38096.724351646495
+          22831.80540023007,
+          -51567.33646993802
         ]
       }
     },
@@ -486,14 +422,14 @@ export const subdepartmentsData = {
       "id": 22262,
       "properties": {
         "name": "Protein & Meal Replacements",
-        "radius": 2308.452047573026,
+        "radius": 3264.6441937657146,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          26701.621223523885,
-          -44113.74594708344
+          36612.542831126004,
+          -63215.380715580206
         ]
       }
     },
@@ -502,14 +438,14 @@ export const subdepartmentsData = {
       "id": 22166,
       "properties": {
         "name": "Muscles, Joints & Pain Relief",
-        "radius": 1209.8692825847436,
+        "radius": 1711.013548129951,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          27091.520744783847,
-          -30166.38067572084
+          38473.46676383645,
+          -42972.260798836076
         ]
       }
     },
@@ -518,14 +454,14 @@ export const subdepartmentsData = {
       "id": 22097,
       "properties": {
         "name": "Cleanses & Detoxes",
-        "radius": 1025.5267169046501,
+        "radius": 1450.3137916225098,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          20097.649049284868,
-          -31037.547082078552
+          28573.925611556675,
+          -43770.61622603315
         ]
       }
     },
@@ -534,14 +470,14 @@ export const subdepartmentsData = {
       "id": 22073,
       "properties": {
         "name": "Adult Care",
-        "radius": 591.2373558868941,
+        "radius": 836.1358872768537,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          15752.291864601864,
-          -37167.958214740494
+          23940.837435255704,
+          -50688.516889125305
         ]
       }
     },
@@ -550,14 +486,14 @@ export const subdepartmentsData = {
       "id": 21739,
       "properties": {
         "name": "Hair Care",
-        "radius": 2762.9874031285576,
+        "radius": 3907.454258170424,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          21636.284894105243,
-          -44362.47465874346
+          29456.095713763825,
+          -62741.81882874456
         ]
       }
     },
@@ -566,14 +502,14 @@ export const subdepartmentsData = {
       "id": 21516,
       "properties": {
         "name": "Digestion",
-        "radius": 2147.0631133147463,
+        "radius": 3036.4057741207153,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          31137.247389912456,
-          -44534.2645090398
+          42913.5889185956,
+          -63208.38776300153
         ]
       }
     },
@@ -582,14 +518,14 @@ export const subdepartmentsData = {
       "id": 21059,
       "properties": {
         "name": "Vitamins & Supplements",
-        "radius": 2894.416998195478,
+        "radius": 4093.3237740112672,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          24420.498988491843,
-          -39437.60141806613
+          42550.09913866191,
+          -56087.9300102029
         ]
       }
     },
@@ -598,14 +534,14 @@ export const subdepartmentsData = {
       "id": 20933,
       "properties": {
         "name": "Air Fresheners & Candles",
-        "radius": 1650.8640044063548,
+        "radius": 2334.6742646650237,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          33033.251412590515,
-          -35637.780369294225
+          46505.44266291753,
+          -51020.93717516204
         ]
       }
     },
@@ -614,14 +550,14 @@ export const subdepartmentsData = {
       "id": 20844,
       "properties": {
         "name": "Stress & Sleep Aids",
-        "radius": 1264.2390698243933,
+        "radius": 1787.9040386276029,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          24741.560475736092,
-          -30940.26624436628
+          35120.82690266606,
+          -43973.37529788834
         ]
       }
     },
@@ -630,14 +566,14 @@ export const subdepartmentsData = {
       "id": 20690,
       "properties": {
         "name": "Cold, Flu & Allergy",
-        "radius": 1716.0113580220332,
+        "radius": 2426.8065357010323,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          34944.62519830073,
-          -38409.512671921424
+          48992.088574911046,
+          -55081.51490753222
         ]
       }
     },
@@ -646,14 +582,14 @@ export const subdepartmentsData = {
       "id": 20272,
       "properties": {
         "name": "Beauty",
-        "radius": 3018.759074158553,
+        "radius": 4269.170024211873,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          18507.655840776933,
-          -39500.34831584657
+          25685.66529095155,
+          -55486.40436215649
         ]
       }
     },
@@ -662,14 +598,14 @@ export const subdepartmentsData = {
       "id": 20171,
       "properties": {
         "name": "First Aid",
-        "radius": 1202.2120887989156,
+        "radius": 1700.184640828314,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          22291.91605442669,
-          -30652.823159526924
+          31693.08505004768,
+          -43327.350199647684
         ]
       }
     },
@@ -678,14 +614,14 @@ export const subdepartmentsData = {
       "id": 20069,
       "properties": {
         "name": "Feminine Care",
-        "radius": 1412.1747701664758,
+        "radius": 1997.1167124105384,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          29661.902867923684,
-          -30684.30997167848
+          42086.641094359395,
+          -43806.04811367494
         ]
       }
     },
@@ -694,14 +630,14 @@ export const subdepartmentsData = {
       "id": 20031,
       "properties": {
         "name": "Eye & Ear Care",
-        "radius": 817.3221773082869,
+        "radius": 1155.8681079776868,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          18107.357214347652,
-          -35643.99246667489
+          25495.674845843645,
+          -47642.15965183641
         ]
       }
     },
@@ -710,14 +646,14 @@ export const subdepartmentsData = {
       "id": 19826,
       "properties": {
         "name": "Oral Hygiene",
-        "radius": 2049.9949479787647,
+        "radius": 2899.130658227896,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          34597.86721848376,
-          -42159.52099194833
+          48106.307625655776,
+          -60333.27643140323
         ]
       }
     },
@@ -726,14 +662,14 @@ export const subdepartmentsData = {
       "id": 19799,
       "properties": {
         "name": "Shave Needs",
-        "radius": 726.6488768317485,
+        "radius": 1027.6366966986352,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          16679.49843330412,
-          -36231.41558285194
+          25591.74047100664,
+          -49823.55017801613
         ]
       }
     },
@@ -742,14 +678,14 @@ export const subdepartmentsData = {
       "id": 19382,
       "properties": {
         "name": "Soap",
-        "radius": 2951.76999830283,
+        "radius": 4174.43316460587,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          27255.468984783904,
-          -34324.7893231276
+          38540.84612098488,
+          -48857.32180367564
         ]
       }
     },
@@ -758,14 +694,14 @@ export const subdepartmentsData = {
       "id": 19273,
       "properties": {
         "name": "Deodorants",
-        "radius": 1472.1053615568542,
+        "radius": 2081.8713675558515,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          31457.511008106347,
-          -32941.49035551219
+          44535.79261086496,
+          -47067.91883547038
         ]
       }
     },
@@ -774,30 +710,14 @@ export const subdepartmentsData = {
       "id": 18873,
       "properties": {
         "name": "Skin Care",
-        "radius": 2775.9306542077807,
+        "radius": 3925.7587793878615,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          21532.510300024845,
-          -34557.81004605013
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 18854,
-      "properties": {
-        "name": "Coupons",
-        "radius": 571.1087481254967,
-        "fill": "rgba(255,255,255,0.5)"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          56080.65605486363,
-          -28660.277664759516
+          30440.780160261806,
+          -48812.14480204549
         ]
       }
     },
@@ -806,14 +726,14 @@ export const subdepartmentsData = {
       "id": 18844,
       "properties": {
         "name": "Sales",
-        "radius": 385.8321828615248,
+        "radius": 545.6491058027843,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          55381.22839019563,
-          -29313.37558030922
+          77657.24661042733,
+          -38973.78644636068
         ]
       }
     },
@@ -822,14 +742,14 @@ export const subdepartmentsData = {
       "id": 18798,
       "properties": {
         "name": "Breakfast Bars & Pastries",
-        "radius": 815.9239522745986,
+        "radius": 1153.8907191717954,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          57388.05141699128,
-          -28197.053011846594
+          79155.03671302252,
+          -38170.629907918454
         ]
       }
     },
@@ -838,14 +758,14 @@ export const subdepartmentsData = {
       "id": 18677,
       "properties": {
         "name": "Granola",
-        "radius": 1565.7359946770632,
+        "radius": 2214.285078768031,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          59762.021855167346,
-          -28388.281831797718
+          82512.33790336394,
+          -38441.068298609935
         ]
       }
     },
@@ -854,14 +774,14 @@ export const subdepartmentsData = {
       "id": 18513,
       "properties": {
         "name": "Hot Cereal & Pancake Mixes",
-        "radius": 1841.9747484237585,
+        "radius": 2604.9456707696486,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          61409.85517941035,
-          -31371.08887285133
+          84842.7261390387,
+          -42659.394470009924
         ]
       }
     },
@@ -870,14 +790,14 @@ export const subdepartmentsData = {
       "id": 18268,
       "properties": {
         "name": "Cereal",
-        "radius": 2363.416883958894,
+        "radius": 3342.3762108362266,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          57204.46354702769,
-          -31371.08887285133
+          78895.40425743283,
+          -42659.394470009924
         ]
       }
     },
@@ -886,14 +806,14 @@ export const subdepartmentsData = {
       "id": 18255,
       "properties": {
         "name": "Sales",
-        "radius": 376.8575705341463,
+        "radius": 532.957087332365,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          37371.69156375935,
-          -6875.821826284899
+          49755.77016556029,
+          -10150.305823949231
         ]
       }
     },
@@ -902,14 +822,14 @@ export const subdepartmentsData = {
       "id": 18242,
       "properties": {
         "name": "More International Foods",
-        "radius": 300,
+        "radius": 424.26406871192853,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          38032.582538823975,
-          -7021.970004061812
+          50690.411145746664,
+          -10356.990559077458
         ]
       }
     },
@@ -918,14 +838,14 @@ export const subdepartmentsData = {
       "id": 18227,
       "properties": {
         "name": "Kosher Foods",
-        "radius": 495.1619767642674,
+        "radius": 700.2647831114983,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          38821.656048904784,
-          -7120.181841334186
+          51806.32960541228,
+          -10495.883071333628
         ]
       }
     },
@@ -934,14 +854,14 @@ export const subdepartmentsData = {
       "id": 18181,
       "properties": {
         "name": "Indian Foods",
-        "radius": 972.1508265949041,
+        "radius": 1374.8288836427282,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          40165.40558776868,
-          -7709.540848820144
+          53706.67842770619,
+          -11329.362572827016
         ]
       }
     },
@@ -950,14 +870,14 @@ export const subdepartmentsData = {
       "id": 18122,
       "properties": {
         "name": "Latino Foods",
-        "radius": 1055.8888144585706,
+        "radius": 1493.252281765359,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          40848.95869529176,
-          -9618.912456150638
+          54673.36850296761,
+          -14029.621795523917
         ]
       }
     },
@@ -966,14 +886,14 @@ export const subdepartmentsData = {
       "id": 17836,
       "properties": {
         "name": "Asian Foods",
-        "radius": 2366.776437297855,
+        "radius": 3347.1273367317017,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          37426.29344353534,
-          -9618.912456150638
+          49832.98888447055,
+          -14029.621795523917
         ]
       }
     },
@@ -982,14 +902,14 @@ export const subdepartmentsData = {
       "id": 17830,
       "properties": {
         "name": "Vase",
-        "radius": 200,
+        "radius": 282.842712474619,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          31642.417656301895,
-          -15231.36968486586
+          38779.49782460292,
+          -15922.929389516437
         ]
       }
     },
@@ -998,14 +918,14 @@ export const subdepartmentsData = {
       "id": 17786,
       "properties": {
         "name": "Bouquet",
-        "radius": 904.0187935341944,
+        "radius": 1278.4756384562206,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          30538.398862767703,
-          -15231.36968486586
+          37218.17947367208,
+          -15922.929389516437
         ]
       }
     },
@@ -1014,14 +934,14 @@ export const subdepartmentsData = {
       "id": 17746,
       "properties": {
         "name": "Sales",
-        "radius": 902.5349042742173,
+        "radius": 1276.3771021397013,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          44010.602781202324,
-          -55205.23105853504
+          64073.635206815794,
+          -77895.6570515711
         ]
       }
     },
@@ -1030,14 +950,14 @@ export const subdepartmentsData = {
       "id": 17516,
       "properties": {
         "name": "Grains, Rice & Dried Goods",
-        "radius": 2164.8425771745337,
+        "radius": 3061.5497330429494,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          47051.36138739475,
-          -54802.0044317287
+          68373.91726759583,
+          -77325.40848723162
         ]
       }
     },
@@ -1046,14 +966,14 @@ export const subdepartmentsData = {
       "id": 17383,
       "properties": {
         "name": "Instant Foods",
-        "radius": 1627.9654953254105,
+        "radius": 2302.290882564629,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          49295.550746202825,
-          -51744.38980646388
+          71547.68029535559,
+          -73001.28841567178
         ]
       }
     },
@@ -1062,14 +982,14 @@ export const subdepartmentsData = {
       "id": 17237,
       "properties": {
         "name": "Pasta Sauce",
-        "radius": 1715.8712995936214,
+        "radius": 2426.6084631720473,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          46022.46504040876,
-          -51060.17165880848
+          66918.83809941211,
+          -72033.6578316357
         ]
       }
     },
@@ -1078,14 +998,14 @@ export const subdepartmentsData = {
       "id": 17177,
       "properties": {
         "name": "Fresh Pasta",
-        "radius": 1102.5857068040407,
+        "radius": 1559.2916602409994,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          44198.60073710988,
-          -53208.943145045254
+          64339.504465758684,
+          -75072.47960991235
         ]
       }
     },
@@ -1094,14 +1014,14 @@ export const subdepartmentsData = {
       "id": 16986,
       "properties": {
         "name": "Dry Pasta",
-        "radius": 1963.621870734084,
+        "radius": 2776.98068096457,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          51179.82583530336,
-          -54802.0044317287
+          74212.44768160334,
+          -77325.40848723162
         ]
       }
     },
@@ -1110,14 +1030,14 @@ export const subdepartmentsData = {
       "id": 16976,
       "properties": {
         "name": "Sales",
-        "radius": 273.20508075688775,
+        "radius": 386.3703305156273,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          51512.46391451911,
-          -18411.032476878823
+          71176.97118075889,
+          -23938.079920783264
         ]
       }
     },
@@ -1126,14 +1046,14 @@ export const subdepartmentsData = {
       "id": 16969,
       "properties": {
         "name": "Bulk Spices & Seasoning",
-        "radius": 232.28756555322954,
+        "radius": 328.5042255760066,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          51888.19506882482,
-          -18749.187641200926
+          71708.33527498411,
+          -24416.303540354085
         ]
       }
     },
@@ -1142,14 +1062,14 @@ export const subdepartmentsData = {
       "id": 16920,
       "properties": {
         "name": "Bulk Candies & Chocolates",
-        "radius": 940.9678161015371,
+        "radius": 1330.7294472873862,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          47955.676678105316,
-          -16025.978390813527
+          66146.91443254697,
+          -20565.104085276358
         ]
       }
     },
@@ -1158,14 +1078,14 @@ export const subdepartmentsData = {
       "id": 16839,
       "properties": {
         "name": "Other Bulk",
-        "radius": 922.2276876868449,
+        "radius": 1304.226903522715,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          49527.242516935876,
-          -15025.13959282554
+          68369.44415598341,
+          -19149.70428341256
         ]
       }
     },
@@ -1174,14 +1094,14 @@ export const subdepartmentsData = {
       "id": 16691,
       "properties": {
         "name": "Bulk Nuts & Seeds",
-        "radius": 1534.521769125992,
+        "radius": 2170.141497654733,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          49988.8711944656,
-          -17438.128788332295
+          69022.2856925263,
+          -22562.186329557953
         ]
       }
     },
@@ -1190,14 +1110,14 @@ export const subdepartmentsData = {
       "id": 16654,
       "properties": {
         "name": "Bulk Flours & Powders",
-        "radius": 706.9265822437116,
+        "radius": 999.745160211116,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          50024.83416984567,
-          -19679.288616693444
+          69073.14502005209,
+          -25731.664954272048
         ]
       }
     },
@@ -1206,14 +1126,14 @@ export const subdepartmentsData = {
       "id": 16619,
       "properties": {
         "name": "Bulk Tea & Coffee",
-        "radius": 831.9755154558186,
+        "radius": 1176.591057519965,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48532.534339809215,
-          -19303.44172821735
+          66962.71436128746,
+          -25200.137187213426
         ]
       }
     },
@@ -1222,14 +1142,14 @@ export const subdepartmentsData = {
       "id": 16578,
       "properties": {
         "name": "Bulk Trail Mix & Snack Mix",
-        "radius": 916.1030632394596,
+        "radius": 1295.5653765647808,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          47571.9165628318,
-          -17842.96502390184
+          65604.19567282932,
+          -23134.711224440474
         ]
       }
     },
@@ -1238,14 +1158,14 @@ export const subdepartmentsData = {
       "id": 16497,
       "properties": {
         "name": "Bulk Dried Fruits & Vegetables",
-        "radius": 1103.179007554954,
+        "radius": 1560.1307142095068,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          51533.875029246126,
-          -15300.272727270949
+          71207.25106959137,
+          -19538.801293603472
         ]
       }
     },
@@ -1254,14 +1174,14 @@ export const subdepartmentsData = {
       "id": 16481,
       "properties": {
         "name": "Bulk Spreads Butter, Honey, Syrup",
-        "radius": 548.7005550759651,
+        "radius": 775.9797666700753,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          51166.48445819393,
-          -19156.570597979775
+          70687.68234132136,
+          -24992.430042910386
         ]
       }
     },
@@ -1270,14 +1190,14 @@ export const subdepartmentsData = {
       "id": 16344,
       "properties": {
         "name": "Bulk Grains, Rice & Dried Goods",
-        "radius": 1505.6351386793817,
+        "radius": 2129.289633105878,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          53029.02810227098,
-          -17438.128788332295
+          73321.71682328692,
+          -22562.186329557953
         ]
       }
     },
@@ -1286,14 +1206,14 @@ export const subdepartmentsData = {
       "id": 16305,
       "properties": {
         "name": "Sales",
-        "radius": 960.8003173761157,
+        "radius": 1358.776839565677,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          53837.14067549907,
-          -49902.302895045155
+          77141.01627309754,
+          -68864.96557700257
         ]
       }
     },
@@ -1302,14 +1222,14 @@ export const subdepartmentsData = {
       "id": 16069,
       "properties": {
         "name": "Soup, Broth & Bouillon",
-        "radius": 2181.056254846662,
+        "radius": 3084.4793359028185,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          56978.899586000065,
-          -49927.07523258235
+          81584.13433403456,
+          -68899.99895271937
         ]
       }
     },
@@ -1318,14 +1238,14 @@ export const subdepartmentsData = {
       "id": 15976,
       "properties": {
         "name": "Canned Meat & Seafood",
-        "radius": 1427.869250881622,
+        "radius": 2019.3120598923012,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          56265.42688130279,
-          -46389.37824081664
+          80575.13155866867,
+          -63896.939887397806
         ]
       }
     },
@@ -1334,14 +1254,14 @@ export const subdepartmentsData = {
       "id": 15857,
       "properties": {
         "name": "Canned Meals & Beans",
-        "radius": 1610.3375505891952,
+        "radius": 2277.36120404191,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          59260.570621526225,
-          -46899.09830507144
+          84810.90445734953,
+          -64617.79291528062
         ]
       }
     },
@@ -1350,14 +1270,14 @@ export const subdepartmentsData = {
       "id": 15662,
       "properties": {
         "name": "Canned & Jarred Vegetables",
-        "radius": 1924.5365462369912,
+        "radius": 2721.705684971028,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          61084.492387083716,
-          -49927.07523258235
+          87390.31935490842,
+          -68899.99895271937
         ]
       }
     },
@@ -1366,14 +1286,14 @@ export const subdepartmentsData = {
       "id": 15602,
       "properties": {
         "name": "Canned Fruit & Applesauce",
-        "radius": 1026.367442721023,
+        "radius": 1451.5027574742614,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          54414.32384960142,
-          -48000.80472510056
+          77957.27654588665,
+          -66175.84107623933
         ]
       }
     },
@@ -1382,14 +1302,14 @@ export const subdepartmentsData = {
       "id": 15575,
       "properties": {
         "name": "Sales",
-        "radius": 657.0920314778639,
+        "radius": 929.2684626432836,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          52671.41210058931,
-          -27238.317003576307
+          72779.4158316907,
+          -36428.62711960982
         ]
       }
     },
@@ -1398,14 +1318,14 @@ export const subdepartmentsData = {
       "id": 15477,
       "properties": {
         "name": "Hot Dogs, Bacon & Sausage",
-        "radius": 1348.4815561635312,
+        "radius": 1907.0409053364424,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          54622.148907736024,
-          -25266.28570685825
+          75538.17428097798,
+          -33639.75371436694
         ]
       }
     },
@@ -1414,14 +1334,14 @@ export const subdepartmentsData = {
       "id": 15413,
       "properties": {
         "name": "Packaged Seafood",
-        "radius": 1117.249708719832,
+        "radius": 1580.0296906289761,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          49379.50711167249,
-          -26399.58111936498
+          68123.95915032088,
+          -35242.47545690917
         ]
       }
     },
@@ -1430,14 +1350,14 @@ export const subdepartmentsData = {
       "id": 15362,
       "properties": {
         "name": "Packaged Poultry",
-        "radius": 1012.559235096164,
+        "radius": 1431.975002979122,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          51066.686568844954,
-          -27699.393265966868
+          70509.99122081145,
+          -37080.68742317085
         ]
       }
     },
@@ -1446,14 +1366,14 @@ export const subdepartmentsData = {
       "id": 15288,
       "properties": {
         "name": "Packaged Meat",
-        "radius": 1217.9819510709995,
+        "radius": 1722.4865939302504,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          53345.13607855524,
-          -23040.084195746942
+          73732.20541862608,
+          -30491.42934477785
         ]
       }
     },
@@ -1462,14 +1382,14 @@ export const subdepartmentsData = {
       "id": 15211,
       "properties": {
         "name": "Seafood Counter",
-        "radius": 1080.7394796306507,
+        "radius": 1528.3964294857076,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          51063.13120923845,
-          -22763.36413434648
+          70504.96318303682,
+          -30100.088080964608
         ]
       }
     },
@@ -1478,14 +1398,14 @@ export const subdepartmentsData = {
       "id": 15157,
       "properties": {
         "name": "Poultry Counter",
-        "radius": 1121.1102550927978,
+        "radius": 1585.489327667795,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          49361.971030959714,
-          -24161.289848445904
+          68099.159387146,
+          -32077.053585034104
         ]
       }
     },
@@ -1494,30 +1414,14 @@ export const subdepartmentsData = {
       "id": 15048,
       "properties": {
         "name": "Meat Counter",
-        "radius": 1516.5986928068676,
+        "radius": 2144.7944400447795,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          51757.068658765624,
-          -25266.28570685825
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 15021,
-      "properties": {
-        "name": "Coupons",
-        "radius": 737.8114305568398,
-        "fill": "rgba(255,255,255,0.5)"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          26394.598528415852,
-          -23114.14390636246
+          71486.33893559677,
+          -33639.75371436694
         ]
       }
     },
@@ -1526,14 +1430,14 @@ export const subdepartmentsData = {
       "id": 14824,
       "properties": {
         "name": "Sales",
-        "radius": 1949.5849598319026,
+        "radius": 2757.1294911928826,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          16451.82700386475,
-          -22271.784843662557
+          22562.1857875259,
+          -32211.599399392533
         ]
       }
     },
@@ -1542,14 +1446,14 @@ export const subdepartmentsData = {
       "id": 14764,
       "properties": {
         "name": "Cocoa & Drink Mixes",
-        "radius": 932.7863175816025,
+        "radius": 1319.159061119959,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          24738.92365214345,
-          -22891.34906763049
+          34281.910260218254,
+          -33087.795527689144
         ]
       }
     },
@@ -1558,14 +1462,14 @@ export const subdepartmentsData = {
       "id": 14636,
       "properties": {
         "name": "Soft Drinks",
-        "radius": 1588.238752896598,
+        "radius": 2246.1087846328996,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          19613.63470311941,
-          -23858.973772327954
+          27033.65711742751,
+          -34456.223508359566
         ]
       }
     },
@@ -1574,14 +1478,14 @@ export const subdepartmentsData = {
       "id": 14528,
       "properties": {
         "name": "Energy & Sports Drinks",
-        "radius": 1349.9848429513481,
+        "radius": 1909.1668738999094,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          22477.27049072792,
-          -23201.137945449074
+          31083.449685960426,
+          -33525.90316017253
         ]
       }
     },
@@ -1590,14 +1494,14 @@ export const subdepartmentsData = {
       "id": 14080,
       "properties": {
         "name": "Juice & Nectars",
-        "radius": 3047.0616842290083,
+        "radius": 4309.195959224069,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          26518.00214118438,
-          -19331.283078446053
+          36797.90718794617,
+          -28053.10192284133
         ]
       }
     },
@@ -1606,14 +1510,14 @@ export const subdepartmentsData = {
       "id": 13665,
       "properties": {
         "name": "Tea",
-        "radius": 3016.8046851161193,
+        "radius": 4266.406100721911,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          20454.13577183925,
-          -19331.283078446053
+          28222.305128000193,
+          -28053.10192284133
         ]
       }
     },
@@ -1622,14 +1526,14 @@ export const subdepartmentsData = {
       "id": 13281,
       "properties": {
         "name": "Coffee",
-        "radius": 2824.0702678425723,
+        "radius": 3993.8384738775844,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          23456.849135282977,
-          -14321.339698217425
+          32468.78309050124,
+          -20967.972047800693
         ]
       }
     },
@@ -1638,14 +1542,14 @@ export const subdepartmentsData = {
       "id": 12916,
       "properties": {
         "name": "Refrigerated",
-        "radius": 2774.4306906740403,
+        "radius": 3923.637510615381,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          17860.87613170319,
-          -14153.116258359552
+          24554.882174165,
+          -20730.068177644633
         ]
       }
     },
@@ -1654,30 +1558,14 @@ export const subdepartmentsData = {
       "id": 12675,
       "properties": {
         "name": "Water, Seltzer & Sparkling Water",
-        "radius": 2082.0308814225923,
+        "radius": 2944.4363097874393,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          15447.248162692105,
-          -18367.332558985174
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 12661,
-      "properties": {
-        "name": "Coupons",
-        "radius": 467.17441508310765,
-        "fill": "rgba(255,255,255,0.5)"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          11640.489999360407,
-          -44668.7881177142
+          21141.496765866494,
+          -26689.870024763164
         ]
       }
     },
@@ -1686,14 +1574,14 @@ export const subdepartmentsData = {
       "id": 12607,
       "properties": {
         "name": "Sales",
-        "radius": 1002.4707359101673,
+        "radius": 1417.7077106062957,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          6404.472793658097,
-          -46087.185381523755
+          9630.368473979135,
+          -66518.95844966605
         ]
       }
     },
@@ -1702,14 +1590,14 @@ export const subdepartmentsData = {
       "id": 12185,
       "properties": {
         "name": "Ice Cream & Ice",
-        "radius": 2984.6240560525366,
+        "radius": 4220.895818654493,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          6950.326846817911,
-          -42137.63246597177
+          10402.322679034069,
+          -60933.44715118225
         ]
       }
     },
@@ -1718,14 +1606,14 @@ export const subdepartmentsData = {
       "id": 12129,
       "properties": {
         "name": "Frozen Dessert",
-        "radius": 867.7806592011532,
+        "radius": 1227.2271774073356,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8246.820174239196,
-          -45765.32141929466
+          12235.841126199472,
+          -66063.77406904254
         ]
       }
     },
@@ -1734,14 +1622,14 @@ export const subdepartmentsData = {
       "id": 12113,
       "properties": {
         "name": "Frozen Juice",
-        "radius": 441.97950396241924,
+        "radius": 625.0534087945864,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10789.190554938756,
-          -44349.648486137005
+          15831.295799160436,
+          -64061.71020708647
         ]
       }
     },
@@ -1750,14 +1638,14 @@ export const subdepartmentsData = {
       "id": 11969,
       "properties": {
         "name": "Frozen Vegan & Vegetarian",
-        "radius": 1715.0787479664061,
+        "radius": 2425.4876259119587,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          7264.155664668258,
-          -37448.41953423257
+          10846.143649501546,
+          -54301.89862626137
         ]
       }
     },
@@ -1766,14 +1654,14 @@ export const subdepartmentsData = {
       "id": 11898,
       "properties": {
         "name": "Frozen Breads & Doughs",
-        "radius": 1204.5763923269776,
+        "radius": 1703.5282709432659,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          4310.3361041401895,
-          -45390.30049011427
+          6668.811966199815,
+          -65533.41438482186
         ]
       }
     },
@@ -1782,14 +1670,14 @@ export const subdepartmentsData = {
       "id": 11821,
       "properties": {
         "name": "Frozen Pizza",
-        "radius": 1250.6388809769505,
+        "radius": 1768.6704671087143,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          2901.278021849236,
-          -43379.669405356195
+          4676.102916052525,
+          -62689.95263582807
         ]
       }
     },
@@ -1798,14 +1686,14 @@ export const subdepartmentsData = {
       "id": 11776,
       "properties": {
         "name": "Frozen Meat & Seafood",
-        "radius": 808.1715032951205,
+        "radius": 1142.927100683412,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9631.151737366772,
-          -44820.630054718546
+          14193.581597595636,
+          -64727.77872900225
         ]
       }
     },
@@ -1814,14 +1702,14 @@ export const subdepartmentsData = {
       "id": 11546,
       "properties": {
         "name": "Frozen Meals",
-        "radius": 2093.548127822104,
+        "radius": 2960.7241558468213,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          12028.49903069255,
-          -42137.63246597177
+          17583.942653535385,
+          -60933.44715118225
         ]
       }
     },
@@ -1830,14 +1718,14 @@ export const subdepartmentsData = {
       "id": 11434,
       "properties": {
         "name": "Frozen Appetizers & Sides",
-        "radius": 1368.6830733860331,
+        "radius": 1935.6101649730183,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          4405.693546933383,
-          -38605.476703220156
+          6803.667755071166,
+          -55938.22456708463
         ]
       }
     },
@@ -1846,14 +1734,14 @@ export const subdepartmentsData = {
       "id": 11354,
       "properties": {
         "name": "Frozen Breakfast",
-        "radius": 1324.1265520839906,
+        "radius": 1872.5977282555039,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          2852.7193787736223,
-          -40805.3619075098
+          4607.430624444558,
+          -59049.33205865497
         ]
       }
     },
@@ -1862,30 +1750,14 @@ export const subdepartmentsData = {
       "id": 11223,
       "properties": {
         "name": "Frozen Produce",
-        "radius": 1587.7181554538083,
+        "radius": 2245.3725486687695,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10213.550638742308,
-          -38934.870566775826
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 11176,
-      "properties": {
-        "name": "Coupons",
-        "radius": 1151.9268946523155,
-        "fill": "rgba(255,255,255,0.5)"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          55690.009903242906,
-          -38445.22720563021
+          15017.21802263211,
+          -56404.057836287524
         ]
       }
     },
@@ -1894,14 +1766,14 @@ export const subdepartmentsData = {
       "id": 11082,
       "properties": {
         "name": "Sales",
-        "radius": 1373.5623131270618,
+        "radius": 1942.510451988851,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          52938.97968263652,
-          -42344.572322242304
+          74580.96581400017,
+          -60041.44928372287
         ]
       }
     },
@@ -1910,14 +1782,14 @@ export const subdepartmentsData = {
       "id": 10850,
       "properties": {
         "name": "Fruit & Vegetable Snacks",
-        "radius": 2101.6335189087595,
+        "radius": 2972.15862557866,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          46444.20246510344,
-          -43202.24759731163
+          65395.9637883731,
+          -61254.38528983799
         ]
       }
     },
@@ -1926,14 +1798,14 @@ export const subdepartmentsData = {
       "id": 10801,
       "properties": {
         "name": "Mint & Gum",
-        "radius": 970.6097717002921,
+        "radius": 1372.6495029104067,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          55048.84224506264,
-          -36421.84737620744
+          78202.56091771794,
+          -54717.128068255886
         ]
       }
     },
@@ -1942,14 +1814,14 @@ export const subdepartmentsData = {
       "id": 10712,
       "properties": {
         "name": "Trail Mix & Snack Mix",
-        "radius": 1229.3033713751615,
+        "radius": 1738.4975000697227,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          54968.12942550273,
-          -40714.40021703831
+          77450.61690044744,
+          -57736.03778354108
         ]
       }
     },
@@ -1958,14 +1830,14 @@ export const subdepartmentsData = {
       "id": 10581,
       "properties": {
         "name": "Popcorn & Jerky",
-        "radius": 1552.0434964550636,
+        "radius": 2194.9209620797096,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          50014.513060348494,
-          -42426.20765885562
+          70445.14545405301,
+          -60156.899083930315
         ]
       }
     },
@@ -1974,14 +1846,14 @@ export const subdepartmentsData = {
       "id": 10214,
       "properties": {
         "name": "Nuts, Seeds & Dried Fruit",
-        "radius": 2624.959587838206,
+        "radius": 3712.253449802081,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          48697.71817904473,
-          -33563.46050871821
+          68582.91627404974,
+          -47623.08186432251
         ]
       }
     },
@@ -1990,14 +1862,14 @@ export const subdepartmentsData = {
       "id": 10196,
       "properties": {
         "name": "Ice Cream Toppings",
-        "radius": 554.2616760788545,
+        "radius": 783.8443794143593,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          53794.61649791258,
-          -35554.58114981676
+          77382.02596936948,
+          -52722.83915662776
         ]
       }
     },
@@ -2006,14 +1878,14 @@ export const subdepartmentsData = {
       "id": 9758,
       "properties": {
         "name": "Energy & Granola Bars",
-        "radius": 2913.435865169342,
+        "radius": 4120.220513626676,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          51628.74656077146,
-          -38262.704790451935
+          72728.01636318816,
+          -54268.816860454535
         ]
       }
     },
@@ -2022,14 +1894,14 @@ export const subdepartmentsData = {
       "id": 9521,
       "properties": {
         "name": "Crackers",
-        "radius": 2140.446253838713,
+        "radius": 3027.0481217093916,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          42402.53239849912,
-          -41913.78189304633
+          59680.179165543894,
+          -59432.2196162134
         ]
       }
     },
@@ -2038,14 +1910,14 @@ export const subdepartmentsData = {
       "id": 9156,
       "properties": {
         "name": "Cookies & Cakes",
-        "radius": 2567.1125403793626,
+        "radius": 3630.4453707425446,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          43510.23541138343,
-          -33345.20487916708
+          61246.70778944642,
+          -47314.42179294701
         ]
       }
     },
@@ -2054,14 +1926,14 @@ export const subdepartmentsData = {
       "id": 8687,
       "properties": {
         "name": "Candy & Chocolate",
-        "radius": 2874.6440709703716,
+        "radius": 4065.360632161706,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          45840.66662463175,
-          -38262.704790451935
+          64542.43521739978,
+          -54268.816860454535
         ]
       }
     },
@@ -2070,30 +1942,14 @@ export const subdepartmentsData = {
       "id": 8334,
       "properties": {
         "name": "Chips & Pretzels",
-        "radius": 2714.6425016844355,
+        "radius": 3839.0842428765554,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          40298.52542940858,
-          -37538.27717952747
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 8330,
-      "properties": {
-        "name": "Coupons",
-        "radius": 100,
-        "fill": "rgba(255,255,255,0.5)"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          32764.040846179167,
-          -50938.25241065016
+          56704.66397452856,
+          -53244.32150812762
         ]
       }
     },
@@ -2102,14 +1958,14 @@ export const subdepartmentsData = {
       "id": 8309,
       "properties": {
         "name": "Sales",
-        "radius": 590.5435532953286,
+        "radius": 835.1547022422524,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32641.243655298837,
-          -50258.71488489486
+          47991.377235150845,
+          -70918.03262053676
         ]
       }
     },
@@ -2118,14 +1974,14 @@ export const subdepartmentsData = {
       "id": 7911,
       "properties": {
         "name": "Bakery Desserts",
-        "radius": 2741.78722445952,
+        "radius": 3877.4726779719385,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          35217.315366376,
-          -52372.5462291038
+          51634.49278660184,
+          -73907.44157608639
         ]
       }
     },
@@ -2134,14 +1990,14 @@ export const subdepartmentsData = {
       "id": 7813,
       "properties": {
         "name": "Breakfast Bakery",
-        "radius": 1238.6741888066883,
+        "radius": 1751.7498371719105,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          38071.36304970681,
-          -49597.93186242592
+          55670.72572802777,
+          -69983.54430837529
         ]
       }
     },
@@ -2150,14 +2006,14 @@ export const subdepartmentsData = {
       "id": 7756,
       "properties": {
         "name": "Buns & Rolls",
-        "radius": 929.7663036619349,
+        "radius": 1314.88811647621,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          33598.13215143992,
-          -49077.314670270585
+          49344.62192407236,
+          -69247.28041442463
         ]
       }
     },
@@ -2166,14 +2022,14 @@ export const subdepartmentsData = {
       "id": 7663,
       "properties": {
         "name": "Tortillas & Flat Bread",
-        "radius": 1405.8861742967356,
+        "radius": 1988.2232948432684,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          35787.70935436181,
-          -48264.280740942166
+          52441.15170030745,
+          -68097.47680489888
         ]
       }
     },
@@ -2182,30 +2038,14 @@ export const subdepartmentsData = {
       "id": 7413,
       "properties": {
         "name": "Bread",
-        "radius": 2286.1111597819445,
+        "radius": 3233.049407256112,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          40245.21375061747,
-          -52372.5462291038
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 7408,
-      "properties": {
-        "name": "Coupons",
-        "radius": 200,
-        "fill": "rgba(255,255,255,0.5)"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          11657.334632588474,
-          -56150.17930642632
+          58745.01487182989,
+          -73907.44157608639
         ]
       }
     },
@@ -2214,14 +2054,14 @@ export const subdepartmentsData = {
       "id": 7365,
       "properties": {
         "name": "Sales",
-        "radius": 766.382610050281,
+        "radius": 1083.8286810999984,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10448.098029169563,
-          -55244.95188832471
+          16224.403260769237,
+          -78895.67944806206
         ]
       }
     },
@@ -2230,14 +2070,14 @@ export const subdepartmentsData = {
       "id": 7356,
       "properties": {
         "name": "Newly Added",
-        "radius": 273.20508075688775,
+        "radius": 386.3703305156273,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          11302.756269231628,
-          -55836.81492955282
+          17433.072535058935,
+          -79732.70018803426
         ]
       }
     },
@@ -2246,14 +2086,14 @@ export const subdepartmentsData = {
       "id": 7271,
       "properties": {
         "name": "Tofu & Meat Alternatives",
-        "radius": 1333.0483752973514,
+        "radius": 1885.215091644934,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9760.58678226768,
-          -53261.283884947836
+          15252.115531116555,
+          -76090.34925444095
         ]
       }
     },
@@ -2262,14 +2102,14 @@ export const subdepartmentsData = {
       "id": 7137,
       "properties": {
         "name": "Prepared Soups & Salads",
-        "radius": 1583.1492880754029,
+        "radius": 2238.9111944575448,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          16797.56137571541,
-          -50870.865903213285
+          25203.900439245237,
+          -72709.7877249314
         ]
       }
     },
@@ -2278,14 +2118,14 @@ export const subdepartmentsData = {
       "id": 6711,
       "properties": {
         "name": "Prepared Meals",
-        "radius": 2793.7035652683066,
+        "radius": 3950.8934712525083,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          13807.82482928671,
-          -54067.476026886725
+          20975.77446736327,
+          -77230.47711544952
         ]
       }
     },
@@ -2294,14 +2134,14 @@ export const subdepartmentsData = {
       "id": 6599,
       "properties": {
         "name": "Lunch Meat",
-        "radius": 1487.6592296486372,
+        "radius": 2103.8678587586132,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          11079.584212085707,
-          -50767.96537887334
+          17117.459585100463,
+          -72564.26440783456
         ]
       }
     },
@@ -2310,14 +2150,14 @@ export const subdepartmentsData = {
       "id": 6267,
       "properties": {
         "name": "Specialty Cheeses",
-        "radius": 2178.0746352282167,
+        "radius": 3080.262689000576,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          18779.603029783233,
-          -54067.476026886725
+          28006.93062761635,
+          -77230.47711544952
         ]
       }
     },
@@ -2326,30 +2166,14 @@ export const subdepartmentsData = {
       "id": 6139,
       "properties": {
         "name": "Fresh Dips & Tapenades",
-        "radius": 1513.18946461822,
+        "radius": 2139.9730633031695,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          13906.695655121537,
-          -49761.71800643505
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 6103,
-      "properties": {
-        "name": "Coupons",
-        "radius": 914.7423261610189,
-        "fill": "rgba(255,255,255,0.5)"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          11838.714188776275,
-          -31524.3655214355
+          21115.598930181906,
+          -71141.21572663005
         ]
       }
     },
@@ -2358,14 +2182,14 @@ export const subdepartmentsData = {
       "id": 5971,
       "properties": {
         "name": "Sales",
-        "radius": 1659.6556267628148,
+        "radius": 2347.1074962367925,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          5373.274034266311,
-          -26490.92123476071
+          7347.542515841442,
+          -38681.2563522299
         ]
       }
     },
@@ -2374,14 +2198,14 @@ export const subdepartmentsData = {
       "id": 5936,
       "properties": {
         "name": "Refrigerated Pudding & Desserts",
-        "radius": 741.1842726261609,
+        "radius": 1048.1928505655544,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          13418.84148791818,
-          -32019.633750860103
+          16161.700343013965,
+          -45791.30235818793
         ]
       }
     },
@@ -2390,14 +2214,14 @@ export const subdepartmentsData = {
       "id": 5688,
       "properties": {
         "name": "Soy & Lactose-Free",
-        "radius": 2161.077634030873,
+        "radius": 3056.2252993876205,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          12072.73762961217,
-          -25051.24280831396
+          16822.014793004368,
+          -36645.24359609296
         ]
       }
     },
@@ -2406,14 +2230,14 @@ export const subdepartmentsData = {
       "id": 5568,
       "properties": {
         "name": "Other Creams & Cheeses",
-        "radius": 1353.3630152204228,
+        "radius": 1913.9443309388673,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          4919.6207082243545,
-          -29469.59207872947
+          6705.979829537243,
+          -42893.73305761584
         ]
       }
     },
@@ -2422,14 +2246,14 @@ export const subdepartmentsData = {
       "id": 5483,
       "properties": {
         "name": "Butter",
-        "radius": 1243.9430233069256,
+        "radius": 1759.201094380045,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          6091.366630491443,
-          -31787.567521097462
+          8363.07880446273,
+          -46171.84536546043
         ]
       }
     },
@@ -2438,14 +2262,14 @@ export const subdepartmentsData = {
       "id": 5430,
       "properties": {
         "name": "Cream",
-        "radius": 1117.7310438421039,
+        "radius": 1580.71040128694,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          10240.473965980205,
-          -32779.98337333496
+          14230.80267005263,
+          -47575.33332320875
         ]
       }
     },
@@ -2454,14 +2278,14 @@ export const subdepartmentsData = {
       "id": 5378,
       "properties": {
         "name": "Eggs",
-        "radius": 995.6091632949785,
+        "radius": 1408.0039815546882,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8128.012239160577,
-          -32719.05485928414
+          11243.330645990225,
+          -47489.16739230284
         ]
       }
     },
@@ -2470,14 +2294,14 @@ export const subdepartmentsData = {
       "id": 5221,
       "properties": {
         "name": "Milk",
-        "radius": 1768.1399534469342,
+        "radius": 2500.5275023383874,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          8179.303117208339,
-          -24522.169517202343
+          11315.866901351395,
+          -35897.02097231354
         ]
       }
     },
@@ -2486,14 +2310,14 @@ export const subdepartmentsData = {
       "id": 4919,
       "properties": {
         "name": "Packaged Cheese",
-        "radius": 2371.452793904998,
+        "radius": 3353.7407036680165,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          14257.936267346646,
-          -29022.229964400958
+          19912.35234296768,
+          -42261.06748824056
         ]
       }
     },
@@ -2502,30 +2326,14 @@ export const subdepartmentsData = {
       "id": 4551,
       "properties": {
         "name": "Yogurt",
-        "radius": 2818.776763848436,
+        "radius": 3986.3523287366015,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          9067.70670959321,
-          -29022.229964400958
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "id": 4534,
-      "properties": {
-        "name": "Coupons",
-        "radius": 520.2565992872198,
-        "fill": "rgba(255,255,255,0.5)"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          42302.36898042714,
-          -17380.19561134723
+          12572.25931056306,
+          -42261.06748824056
         ]
       }
     },
@@ -2534,14 +2342,14 @@ export const subdepartmentsData = {
       "id": 4429,
       "properties": {
         "name": "Sales",
-        "radius": 1439.2541630538349,
+        "radius": 2035.412757092671,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          45799.5840498317,
-          -22619.152587694847
+          64148.87361891629,
+          -32247.40158571736
         ]
       }
     },
@@ -2550,14 +2358,14 @@ export const subdepartmentsData = {
       "id": 4360,
       "properties": {
         "name": "Baking Supplies & Decor",
-        "radius": 1019.2088656540277,
+        "radius": 1441.3790006988238,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          43088.23685685228,
-          -18703.965077134162
+          60314.44964630257,
+          -26710.490309048688
         ]
       }
     },
@@ -2566,14 +2374,14 @@ export const subdepartmentsData = {
       "id": 4014,
       "properties": {
         "name": "Baking Ingredients",
-        "radius": 2585.125830916221,
+        "radius": 3655.920010522736,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          41812.18181128887,
-          -22074.856965877007
+          58509.835294532175,
+          -31477.651335402283
         ]
       }
     },
@@ -2582,14 +2390,14 @@ export const subdepartmentsData = {
       "id": 3924,
       "properties": {
         "name": "Doughs, Gelatins & Bake Mixes",
-        "radius": 1336.568736588935,
+        "radius": 1890.1936343279444,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          45097.672822648914,
-          -19933.54029264257
+          63156.22124185245,
+          -28449.372254778504
         ]
       }
     },
@@ -2598,14 +2406,14 @@ export const subdepartmentsData = {
       "id": 3765,
       "properties": {
         "name": "Preserved Dips & Spreads",
-        "radius": 1569.6823321559098,
+        "radius": 2219.866042752317,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          41462.49760627483,
-          -26214.92361131818
+          58015.30714925367,
+          -37332.58973451366
         ]
       }
     },
@@ -2614,14 +2422,14 @@ export const subdepartmentsData = {
       "id": 3618,
       "properties": {
         "name": "Pickled Goods & Olives",
-        "radius": 1724.684536179828,
+        "radius": 2439.0722618806635,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          34879.60471643095,
-          -26408.50002717047
+          48705.69074478703,
+          -37606.348127167556
         ]
       }
     },
@@ -2630,14 +2438,14 @@ export const subdepartmentsData = {
       "id": 3331,
       "properties": {
         "name": "Oils & Vinegars",
-        "radius": 2448.1057933301086,
+        "radius": 3462.1444150515845,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          39349.71131138093,
-          -17685.134922239562
+          55027.37611661872,
+          -25269.646886242066
         ]
       }
     },
@@ -2646,14 +2454,14 @@ export const subdepartmentsData = {
       "id": 3183,
       "properties": {
         "name": "Salad Dressing & Toppings",
-        "radius": 1767.0957281815915,
+        "radius": 2499.050744805967,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          32228.810794099685,
-          -24135.65577471595
+          44956.90202876998,
+          -34392.06096018464
         ]
       }
     },
@@ -2662,14 +2470,14 @@ export const subdepartmentsData = {
       "id": 2804,
       "properties": {
         "name": "Spices & Seasonings",
-        "radius": 2857.8295239224417,
+        "radius": 4041.581271681362,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          36369.22645645021,
-          -22074.856965877007
+          50812.33401232808,
+          -31477.651335402283
         ]
       }
     },
@@ -2678,14 +2486,14 @@ export const subdepartmentsData = {
       "id": 2563,
       "properties": {
         "name": "Spreads",
-        "radius": 2095.5268546881885,
+        "radius": 2963.5224982170703,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          31743.36446982216,
-          -20303.65954769001
+          44270.377253172555,
+          -28972.79992496202
         ]
       }
     },
@@ -2694,14 +2502,14 @@ export const subdepartmentsData = {
       "id": 2414,
       "properties": {
         "name": "Honeys, Syrups & Nectars",
-        "radius": 1648.536771745304,
+        "radius": 2331.383060672968,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          38244.5584756653,
-          -26172.474201348967
+          53464.453987854584,
+          -37272.55720322047
         ]
       }
     },
@@ -2710,14 +2518,14 @@ export const subdepartmentsData = {
       "id": 2111,
       "properties": {
         "name": "Condiments",
-        "radius": 2144.4199590103826,
+        "radius": 3032.66778945604,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          34770.55629332245,
-          -17334.94624952097
+          48551.472985871595,
+          -24774.405315894004
         ]
       }
     },
@@ -2726,14 +2534,14 @@ export const subdepartmentsData = {
       "id": 1966,
       "properties": {
         "name": "Marinades & Meat Preparation",
-        "radius": 1543.9930726756897,
+        "radius": 2183.535943588068,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          44428.98261060106,
-          -25268.910267986903
+          62210.55047494823,
+          -35994.72483418866
         ]
       }
     },
@@ -2742,14 +2550,14 @@ export const subdepartmentsData = {
       "id": 1940,
       "properties": {
         "name": "Sales",
-        "radius": 695.6928103553926,
+        "radius": 983.8582076500497,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          22443.44932113988,
-          -54491.0193671464
+          33456.48352037458,
+          -76647.93010435675
         ]
       }
     },
@@ -2758,14 +2566,14 @@ export const subdepartmentsData = {
       "id": 1890,
       "properties": {
         "name": "Fresh Herbs",
-        "radius": 849.4467373772061,
+        "radius": 1201.2990965124216,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          23878.31675232646,
-          -53917.77275626473
+          35485.69250176609,
+          -75837.23697266348
         ]
       }
     },
@@ -2774,14 +2582,14 @@ export const subdepartmentsData = {
       "id": 1662,
       "properties": {
         "name": "Fresh Fruits",
-        "radius": 2203.127116346388,
+        "radius": 3115.69224756899,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          26888.63773329626,
-          -53411.63569580585
+          39742.92926014986,
+          -75121.4510773429
         ]
       }
     },
@@ -2790,14 +2598,14 @@ export const subdepartmentsData = {
       "id": 1292,
       "properties": {
         "name": "Fresh Vegetables",
-        "radius": 2755.1973550923594,
+        "radius": 3896.437466586095,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          24105.58699453339,
-          -57515.24510089545
+          35807.10116061895,
+          -80924.83115270239
         ]
       }
     },
@@ -2806,14 +2614,14 @@ export const subdepartmentsData = {
       "id": 931,
       "properties": {
         "name": "Packaged Vegetables & Fruits",
-        "radius": 2686.4010845568037,
+        "radius": 3799.1448477540234,
         "fill": "rgba(255,255,255,0.5)"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          29547.185434182556,
-          -57515.24510089545
+          43502.68347495907,
+          -80924.83115270239
         ]
       }
     }

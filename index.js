@@ -12,11 +12,12 @@ import VectorSource from 'ol/source/vector';
 import Icon from 'ol/style/icon';
 import Circle from 'ol/geom/circle';
 import CircleStyle from 'ol/style/circle';
+import RegularShape from 'ol/style/regularshape';
+import Stroke from 'ol/style/stroke';
 import Fill from 'ol/style/fill';
 import Text from 'ol/style/text';
 import IconCache from 'ol/style/iconImageCache';
 import Style from 'ol/style/style';
-import Stroke from 'ol/style/stroke';
 import Extent from 'ol/extent';
 import GeoJSON from 'ol/format/geojson';
 import Select from 'ol/interaction/select';
@@ -33,14 +34,14 @@ import matchSorter from 'match-sorter';
 * 
 */
 
-const circleFeatureRender = function(features) {
+const circleFeatureRender = function(features, colors = null) {
   let circles = [];
   features.features.forEach(f => {
     const circle = new Feature({
       'geometry': new Circle(f.geometry.coordinates, f.properties.radius || 100),
       //'labelPoint': f.geometry.coordinates,
       'name': f.properties.name,
-      'fill': f.properties.fill
+      'fill': colors ? colors[Math.floor(Math.random() * (colors.length -1))] : f.properties.fill 
     })
     circle.setId(f.id);
     circles.push(circle);
@@ -50,18 +51,40 @@ const circleFeatureRender = function(features) {
 
 const colors = [
   '#000',
+  '#303030',
+  '#606060',
   '#808080',
   '#A9A9A9',
   '#C0C0C0',
+  '#DCDCDC',
   '#E8E8E8',
   '#fff'
 ]
 
+function stringDivider(str, width, spaceReplacer) {
+        if (str.length > width) {
+          var p = width;
+          while (p > 0 && (str[p] != ' ' && str[p] != '-')) {
+            p--;
+          }
+          if (p > 0) {
+            var left;
+            if (str.substring(p, p + 1) == '-') {
+              left = str.substring(0, p + 1);
+            } else {
+              left = str.substring(0, p);
+            }
+            var right = str.substring(p + 1);
+            return left + spaceReplacer + stringDivider(right, width, spaceReplacer);
+          }
+        }
+        return str;
+      }
+
 /*
-* Product Features
+* Product Image Features
 * 
 */
-
 
 const iconcache = new IconCache();
 iconcache.setSize(productData.length);
@@ -117,19 +140,22 @@ const productsVectorLayer = new VectorLayer({
   maxResolution: 6 
 })
 
-// Product circles (for high-resolution)
+/*
+* Product Circle Features (at low zoom levels)
+* 
+*/
 
 const productsCirclesStyle = function(product, resolution) {
   const properties = product.getProperties();
   let style = new Style({
     fill: new Fill({
-      color: colors[Math.floor(Math.random() * 5)]
+      color: properties.fill
     }),
   })
   return style;
 }
 
-const productCircles = circleFeatureRender(productData)
+const productCircles = circleFeatureRender(productData, colors);
 
 const productsCirclesSource = new VectorSource({
        features: productCircles
@@ -144,55 +170,128 @@ const productsCirclesLayer = new VectorLayer({
   opacity: 0.5
 })
 
-
 /*
-* Department & Subdepartment Features
+* Product Names
 * 
 */
 
-
-const departmentsVectorStyle = function(dept, resolution) {
-  const properties = dept.getProperties();
+const productsNamesStyle = function(product, resolution) {
+  const properties = product.getProperties();
   let style = new Style({
-    fill: new Fill({
-      color: properties.fill
-    }),
     text: new Text({
-      text: properties.name,
-      fill: new Fill({
-        color: '#aaa'
-      }),
+      text: stringDivider(properties.name, 24, '\n'),
+      scale: 1.25 / resolution,
+      offsetY: 140 / resolution
     })
   })
   return style;
 }
 
-const departments = circleFeatureRender(departmentsData);
+const productsNamesLayer = new VectorLayer({
+  source: productsVectorSource,
+  style: productsNamesStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  renderMode: 'vector',
+  maxResolution: 6 
+})
 
-const departmentsVectorSource = new VectorSource({
+
+
+/*
+* Department & Subdepartment Features with Fill
+* 
+*/
+
+const departments = circleFeatureRender(departmentsData, colors);
+const subdepartments = circleFeatureRender(subdepartmentsData, colors);
+
+const departmentsFillStyle = function(dept, resolution) {
+  const properties = dept.getProperties();
+  const fill = new Fill({ color: properties.fill });
+
+  let style = new Style({
+      fill: fill,
+      text: new Text({
+        text: properties.name,
+        fill: new Fill({
+          color: '#aaa'
+        }),
+      })
+    })
+
+  return style;
+}
+
+const departmentsFillSource = new VectorSource({
        features: departments
 });
 
-const departmentsVectorLayer = new VectorLayer({
-  source: departmentsVectorSource,
-  style: departmentsVectorStyle,
+const departmentsFillLayer = new VectorLayer({
+  source: departmentsFillSource,
+  style: departmentsFillStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
+  minResolution: 6
 })
 
-const subdepartments = circleFeatureRender(subdepartmentsData);
-
-const subdepartmentsVectorSource = new VectorSource({
+const subdepartmentsFillSource = new VectorSource({
        features: subdepartments
 });
 
-const subdepartmentsVectorLayer = new VectorLayer({
-  source: subdepartmentsVectorSource,
-  style: departmentsVectorStyle,
+const subdepartmentsFillLayer = new VectorLayer({
+  source: subdepartmentsFillSource,
+  style: departmentsFillStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
+  minResolution: 6
 })
 
+/*
+* Department & Subdepartment Features No Fill
+* 
+*/
+
+const departmentsNoFillStyle = function(dept, resolution) {
+  const properties = dept.getProperties();
+  const stroke = new Stroke({ color: properties.fill, width: 20 });
+
+  let style = new Style({
+      stroke: stroke,
+      text: new Text({
+        text: properties.name,
+        fill: new Fill({
+          color: '#aaa'
+        }),
+      })
+    })
+
+  return style;
+}
+
+const departmentsNoFillSource = new VectorSource({
+       features: departments
+});
+
+const departmentsNoFillLayer = new VectorLayer({
+  source: departmentsNoFillSource,
+  style: departmentsNoFillStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  maxResolution: 6
+})
+
+const subdepartmentsNoFillSource = new VectorSource({
+       features: subdepartments
+});
+
+const subdepartmentsNoFillLayer = new VectorLayer({
+  source: subdepartmentsNoFillSource,
+  style: departmentsNoFillStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  maxResolution: 6
+})
 
 
 /*
@@ -202,16 +301,24 @@ const subdepartmentsVectorLayer = new VectorLayer({
 
 var view = new View({
   center: [39870,-37605],
-  zoom: 8,
-  zoomFactor: 1.25,
-  minResolution: 1,
+  resolution: 20,
+  zoomFactor: 1.5,
+  minResolution: .75,
   maxResolution: 100,
 })
 
 
 var map = new olMap({
   renderer: /** @type {Array<ol.renderer.Type>} */ (['canvas']),
-  layers: [departmentsVectorLayer,subdepartmentsVectorLayer,productsVectorLayer,productsCirclesLayer],
+  layers: [
+    departmentsFillLayer,
+    subdepartmentsFillLayer,
+    departmentsNoFillLayer,
+    subdepartmentsNoFillLayer,
+    productsVectorLayer,
+    productsCirclesLayer,
+    productsNamesLayer
+    ],
   target: document.getElementById('map'),
   view: view
 });
