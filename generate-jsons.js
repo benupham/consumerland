@@ -74,7 +74,7 @@ SAMPLE++++++++
 
 //}
 
-const source = JSON.parse(fs.readFileSync('./data/scrape-data-working.json','utf8'));
+const source = JSON.parse(fs.readFileSync('./data/scrape-data-working-v1.json','utf8'));
 
 //const fruitsVegs = JSON.parse(fs.readFileSync('./data/fruits-vegs.json','utf8'));
 
@@ -383,44 +383,95 @@ function createD3DataLinks(parsedJson) {
 	})
 	return d3testdata
 }
+// const d3data = createD3DataHierarchy(source);
+// saveJson('./data/testd3dataNoSales.json',d3data);
 
-const d3data = createD3DataHierarchy(source);
-saveJson('./data/testd3dataNoSales.json',d3data);
+// Use scrape-data-working-v1.json, which does not have brands
+const wordCntByDept = [];
+const getProductWordCount = function(scrapeJson) {
+	scrapeJson.forEach((dept, i) => {
+		const wordCntDept = {
+			dept: dept.departmentName,
+			subdepts: []
+		}
+		dept.subdepartments.forEach((subdept, i) => {
+			
+			// combine product names into one string
+			let productConcat = '';
+			subdept.products.forEach((product, i) => {
+				productConcat += product.productName + ' ';
+			})
 
+			productConcat = productConcat.toLowerCase().replace(/[^a-zA-Z0-9 ]/g, ' ');
+			let wordsArray = productConcat.split(/\s+/);
+			const wordCount = {};
 
+			// count frequency of each word in combined string
+			wordsArray.forEach((word) => {
+				if (wordCount.hasOwnProperty(word)) {
+					wordCount[word]++;
+				} else {
+					wordCount[word] = 1;
+				}
+			})
 
-// sample d3 data
-//  {
-//   "name": "products",
-//   "children": [
-//     {
-//       "name": "Sales",
-//       "children": [
-//         {
-//           "name": "Produce",
-//           "children": [
-//             {
-//               "name": "Organic Broccoli",
-//               "size": 5,
-//               "price": "$3.34 each Reg: $4.68",
-//               "img": "product-images/sales/produce/organic-broccoli-200x.jpg",
-//               "prodsize": "At $2.49/lb",
-//               "department": "Sales",
-//               "subdepartment": "Produce"
-//             },
+			// sort by count in descending order
+			let finalWordsArray = [];
+		  finalWordsArray = Object.keys(wordCount).map(function (key) {
+		  	// but first, filter out unnecessary  tags
+		  	const badTags = [
+		  		'the',
+		  		'of',
+		  		'original',
+		  		'fresh',
+		  		's',
+		  		'foods',
+		  		'365',
+		  		'for',
+		  		'market',
+		  		'no',
+		  		'style',
+		  		'on',
+		  		'natural',
+		  		'products',
+		  		'all',
+		  		'free',
+		  		'medium',
+		  		'mild',
+		  		'red',
+		  		'bob',
+		  		'mill',
+		  		'with',
+		  		'cheese',
 
+		  	];
+		  	if ((badTags.indexOf(key) > -1) || (wordCount[key] < 4)) {
+		  		return 
+		  	} else {
+		  		return {
+		  		  name: key,
+		  		  total: wordCount[key]
+		  		};		  		
+		  	}
+		  });
 
-// function createFeaturesList() {
+		  finalWordsArray.sort(function (a, b) {
+		    return b.total - a.total;
+		  });
+		  const wordCntSubdept = {
+		  	subdept: subdept.subdepartmentName,
+		  	wordsCount: finalWordsArray 
+		  }
+			wordCntDept.subdepts.push(wordCntSubdept);
+		})
 
-// }
+		wordCntByDept.push(wordCntDept);
 
-// function createFlatProductsList() {
-
-// }
-
-// function createFeatureUidNameIndex() {
-
-// }
+	})
+	console.log(wordCntByDept.length);
+}
+getProductWordCount(source);
+saveJson('./data/wordCntByDept.json', wordCntByDept);
 
 function saveJson(filename, json) {
 	fs.writeFile(filename, JSON.stringify(json, null, 2), (err) => {
