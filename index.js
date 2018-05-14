@@ -20,7 +20,7 @@ import IconCache from 'ol/style/iconImageCache';
 import Style from 'ol/style/style';
 import Extent from 'ol/extent';
 import GeoJSON from 'ol/format/geojson';
-import Select from 'ol/interaction/select';
+import MouseWheelZoom from 'ol/interaction/mousewheelzoom';
 import CanvasMap from 'ol/canvasmap';
 import Overlay from 'ol/overlay';
 import {productData} from './data/productData.js';
@@ -40,11 +40,12 @@ const circleFeatureRender = function(featureCollection, colors = null) {
   let circles = [];
   featureCollection.features.forEach(f => {
     const circle = new Feature({
-      'geometry': new Circle(f.geometry.coordinates, f.properties.radius || 100),
+      'geometry': new Circle(f.geometry.coordinates, f.properties.radius || (100 * Math.sqrt(2))),
       //'labelPoint': f.geometry.coordinates,
       'name': f.properties.name,
+      'price': f.properties.price || '',
       'type': f.properties.type,
-      'fill': 'lightgrey'//colors ? colors[Math.floor(Math.random() * (colors.length -1))] : f.properties.fill 
+      'src': f.properties.src || ''
     })
     circle.setId(f.id);
     circles.push(circle);
@@ -89,9 +90,11 @@ function textFormatter(str, width, spaceReplacer, maxLength = null) {
 
 
 /*
-* Resolution Constants
+*  Constants
 * 
 */
+
+// Resolution
 
 const productsImageMax = 5;
 const deptsTextMin = 30;
@@ -100,6 +103,13 @@ const subdeptsFillMax = 90;
 const subdeptsTextMin = 10;
 const brandsTextMax = 10;
 const brandsFillMax = 20;
+
+const sqrt2 = Math.sqrt(2);
+
+// Offsets
+
+const nameOffset = 120;
+const priceOffset = 146;
 
 /*
 * Product Image Features
@@ -119,7 +129,7 @@ const removeIcon = new Style({
     crossOrigin: 'anonymous',
     src: 'product-images/remove.png'
   }),
-  zIndex: 100
+  zIndex: 100,
 })
 
 const addIcon = new Style({
@@ -138,24 +148,34 @@ const productsVectorStyle = function(product, resolution) {
   let style = styleCache[product.getProperties().name];
   if (style) {
     style[0].getImage().setScale(1 / resolution); //resize image icon
+    style[0].setZIndex(2);
+
     style[1].getText().setScale(1.25 / resolution); // resize text size
-    style[1].getText().setOffsetY(120 / resolution); // resize text position relative to image
-    style[2].getText().setScale(1.25 / resolution); // resize text size
-    style[2].getText().setOffsetY(160 / resolution); // resize text position relative to image
+    style[1].getText().setOffsetY(nameOffset / resolution);
+    style[1].getText().setOffsetX(-100 / resolution);
     style[1].getText().getFill().setColor('#606060');
-    style[2].getText().getFill().setColor('#606060');
-    style[0].setZIndex(1);
     style[1].setZIndex(10);
+
+    style[2].getText().setScale(1.25 / resolution); // resize text size
+    style[2].getText().setOffsetY(priceOffset / resolution);
+    style[2].getText().setOffsetX(-100 / resolution);
+    style[2].getText().getFill().setColor('#606060');
     style[2].setZIndex(10);
-    // style[0].setStroke(null);
+
     if (product.get('highlighted') === true) {
       style[0].getImage().setScale(1);
-      style[1].getText().setScale(1);
-      style[2].getText().setScale(1);
-      style[1].getText().getFill().setColor('orange');
-      style[2].getText().getFill().setColor('orange');
       style[0].setZIndex(30);
+
+      style[1].getText().setScale(1.25);
+      style[1].getText().getFill().setColor('orange');
+      style[1].getText().setOffsetY(nameOffset);
+      style[1].getText().setOffsetX(-100);
       style[1].setZIndex(30);
+
+      style[2].getText().setScale(1.25);
+      style[2].getText().getFill().setColor('orange');
+      style[2].getText().setOffsetY(priceOffset);
+      style[2].getText().setOffsetX(-100);
       style[2].setZIndex(30);
     } 
     return style
@@ -177,12 +197,14 @@ const productsVectorStyle = function(product, resolution) {
     
     const productName = new Style({
       text: new Text({
-        text: textFormatter(productProperties.name, 30, '\n', 63),
+        text: textFormatter(productProperties.name, 24, '\n', 40),
+        textAlign: 'left',
         scale: 1.25 / resolution,
         font: '12px sans-serif',
         stroke: new Stroke({color: '#fff', width: 2}),
         fill: new Fill({color: '#606060' }),
-        offsetY: 120 / resolution
+        offsetX: -100 / resolution,
+        offsetY: nameOffset / resolution
       }),
       zIndex: 10
     })
@@ -190,11 +212,13 @@ const productsVectorStyle = function(product, resolution) {
     const productPrice = new Style({
       text: new Text({
         text: productProperties.price,
+        textAlign: 'left',
         scale: 1.25 / resolution,
-        font: '18px sans-serif',
-        stroke: new Stroke({color: '#fff'}),
-        fill: new Fill({color: '#606060' }),
-        offsetY: 160 / resolution
+        font: '12px sans-serif',
+        stroke: new Stroke({color: '#fff', width: 2}),
+        fill: new Fill({color: '#303030' }),
+        offsetX: -100 / resolution,
+        offsetY: priceOffset / resolution
       }),
       zIndex: 10
     }) 
@@ -203,7 +227,7 @@ const productsVectorStyle = function(product, resolution) {
     styleCache[product.getProperties().name] = [
       new Style({
         image: productIcon,
-        zIndex: 1,
+        zIndex: 9,
       }),
       productName,
       productPrice
@@ -214,10 +238,11 @@ const productsVectorStyle = function(product, resolution) {
   }
 }
 
-const productsVectorSource = new VectorSource({
-  features: (new GeoJSON()).readFeatures(productData)
-});
+const productsImageFeatures = (new GeoJSON()).readFeatures(productData)
 
+const productsVectorSource = new VectorSource({
+  features: productsImageFeatures
+});
 const productsVectorLayer = new VectorLayer({
   source: productsVectorSource,
   style: productsVectorStyle,
@@ -227,35 +252,7 @@ const productsVectorLayer = new VectorLayer({
   maxResolution: productsImageMax 
 })
 
-/*
-* Product Circle Features (at low zoom levels)
-* 
-*/
 
-const productsCirclesStyle = function(product, resolution) {
-  const properties = product.getProperties();
-  let style = new Style({
-    fill: new Fill({
-      color: properties.fill
-    }),
-  })
-  return style;
-}
-
-const productCircles = circleFeatureRender(productData, colors);
-
-const productsCirclesSource = new VectorSource({
-       features: productCircles
-});
-
-const productsCirclesLayer = new VectorLayer({
-  source: productsCirclesSource,
-  style: productsCirclesStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  minResolution: 5,
-  opacity: 0.5
-})
 
 /*
 * Department, Subdepartment & Brands (Subcategories) Features with Fill
@@ -276,30 +273,50 @@ const circleFillStyle = function(feature, resolution) {
     fill: new Fill({ color: '#fff' }),
     stroke: new Stroke({ color: '#C0C0C0', width: 2 }) 
   })
-  if (properties.type === 'brand' && resolution <= 5) {
-    style.getFill().setColor('#fff');
+  if (resolution <= productsImageMax) {
+    style.setStroke(null);
   }
 
   return style
 }
 
 const circleTextStyle = function(feature, resolution) {
-  const properties = feature.getProperties();
+  const name = feature.get('name');
+  const src = feature.get('src');
+  const center = feature.getGeometry().getCenter();
+  const radius = feature.getGeometry().getRadius();
+  let style = {};
 
-  const style = new Style({
-    text: new Text({
-      text: properties.name,
-      font: standardFont,
-      fill: standardFontColor,
-      stroke: standardFontStroke
+  if (src !== '') {
+    let logoIcon = iconcache[src];
+
+    if (!logoIcon) {
+      logoIcon = new Icon({
+        size: [200,200],
+        scale: 1 / resolution + .3,
+        crossOrigin: 'anonymous',
+        src: './product-images/brand-logos/' + src
+      });
+      iconcache[src] = logoIcon;
+    }
+    logoIcon.setScale(1 / resolution + .3);
+    style = new Style({
+      image: logoIcon,
+      geometry: new Point(center)
     })
-  })
-  if (properties.type === 'brand' && resolution <= 5) {
-    const brandOffset = -(properties.geometry.getRadius() - 100) / resolution;
-    style.getText().setOffsetY(brandOffset);
+  } else {
+    style = new Style({
+      text: new Text({
+        text: name,
+        font: standardFont,
+        fill: standardFontColor,
+        stroke: standardFontStroke
+      })
+    })  
   }
 
   return style
+  // }
 }
 /* Departments */
 
@@ -383,8 +400,8 @@ const brandsTextLayer = new VectorLayer({
 */
 
 var view = new View({
-  center: [48685.686728395056,-31232.65817901234],
-  resolution: 100,
+  center: [13289.165603450561,-40993.86453487949],
+  resolution: 1,
   zoomFactor: 1.25,
   minResolution: 1,
   maxResolution: 100,
@@ -412,8 +429,12 @@ const mapResize = function(e) {
   map.setSize([mapWidth,mapHeight]);
   map.updateSize();
 }
+
+
+
 window.addEventListener('load', mapResize);
 window.addEventListener('resize', mapResize);
+
 
 
 /*
@@ -435,7 +456,7 @@ const handleSearch = function(e) {
       const feature = productsVectorLayer.getSource().getFeatureById(match[0].id); 
       map.getView().animate({
         center: feature.getGeometry().getCoordinates(),
-        resolution: productsImageMax //need to make this a variable
+        resolution: productsImageMax - .001 //need to make this a variable
       })
     }
     catch(err) {
@@ -459,46 +480,53 @@ map.addControl(searchControl);
 * 
 */
 
-// Product Card
+// Product Card Overlay (hover)
+const productCardOverlay = new Overlay({
+  element: document.getElementById('product-card'),
+  autoPan: true,
+  // stopEvent: false
+});
+map.addOverlay(productCardOverlay);
+
+// Product Overlay (click)
 const productOverlay = new Overlay({
   element: document.getElementById('product-overlay'),
   autoPan: true,
+  // stopEvent: false
 });
 
 map.addOverlay(productOverlay);
 
-const updateProductOverlay = function(status) {
-  const btn = document.getElementById('add-to-cart');
-  if (status == 'in') {
+const updateAddCartButton = function(inCart, btn) {
+  if (inCart === true) {
     btn.classList.remove("btn-outline-warning");
     btn.classList.add('btn-outline-secondary');
     btn.textContent = 'Remove';
-    btn.onclick = removeProductFromCart; 
-  } else if (status == 'out') {
+  } else if (inCart === false) {
     btn.classList.remove("btn-outline-secondary");
     btn.classList.add('btn-outline-warning');
     btn.textContent = 'Add to Cart';
-    btn.onclick = addProductToCart;
   }
 }
 
-const renderProductOverlay = function(product) {
-  document.getElementById('product-overlay').style.display = 'block';
-  productOverlay.set('product', product.getId());
+const renderProductOverlay = function(product, overlay) {
+  overlay.getElement().style.display = 'block';
+  overlay.set('product', product.getId());
   const coordinate = product.getGeometry().getCoordinates();
+
+  console.log('render',product);
   
+  const btn = overlay.getElement().querySelector('.add-to-cart');
+  btn.setAttribute('data-pid', product.getId());
+  const inCart = product.get('inCart') || false;
+  updateAddCartButton(inCart, btn);
+  btn.addEventListener('click', updateCart);
 
+  overlay.setPosition(coordinate);
 
-  if (cartContents.querySelector('#item-'+product.getId())) {
-    updateProductOverlay('in');
-  } else {
-    updateProductOverlay('out');
-  }
-  productOverlay.setPosition(coordinate);
-
-  let name = document.querySelector('#product-name');
-  let price = document.querySelector('#product-price');
-  let image = document.querySelector('#product-image');
+  let name = overlay.getElement().querySelector('.product-name');
+  let price = overlay.getElement().querySelector('.product-price');
+  let image = overlay.getElement().querySelector('.product-image');
 
   name.textContent = product.get('name');
   price.textContent = product.get('price');
@@ -506,12 +534,12 @@ const renderProductOverlay = function(product) {
   image.src = '';
   image.src = product.get('src');
   const offset = [-100 - image.offsetLeft, -100 - image.offsetTop];
-  productOverlay.setOffset(offset);
+  overlay.setOffset(offset);
   
 } 
 
-const hideProductOverlay = function() {
-  document.getElementById('product-overlay').style.display = 'none';
+const hideProductOverlay = function(e) {
+  document.querySelector('product-overlay').style.display = 'none';
 }
 
 
@@ -523,40 +551,37 @@ const hideProductOverlay = function() {
 const cart = [];
 const cartContents = document.querySelector('#cart-contents');
 
-const addProductToCart = function() {
-  const pId = productOverlay.get('product');
+const updateCart = function() {
+  const pId = this.getAttribute('data-pid');
   const product = productsVectorSource.getFeatureById(pId);
-  updateProductOverlay('in');
+  const src = product.get('src');
+  const name = product.get('name');
+
+  for (var i = cart.length - 1; i >= 0; i--) {
+    if (cart[i].pId == pId) {
+      cart.splice(i,1);
+      cartContents.removeChild(cartContents.childNodes[i]);
+      updateAddCartButton(false, this);
+      product.set('inCart',false);
+      return 
+    } 
+  }
+
   cart.push({
     pId: pId,
     name: product.get('name'),
     src: product.get('src'),
     price: product.get('price')
   });
-  cart.forEach(p => {
-    if (!cartContents.querySelector('#item-'+p.pId)) {
-      const cartItem = document.getElementById('cart-item').cloneNode(true);
-      cartItem.id = 'item-' + p.pId;
-      cartItem.querySelector('img').src = p.src;
-      cartItem.querySelector('.cart-product-name').textContent = p.name;
-      cartContents.appendChild(cartItem);      
-    }
-  })
-  console.log(cart);
-}
-document.getElementById('add-to-cart').onclick = addProductToCart;
 
-const removeProductFromCart = function() {
-  const pId = productOverlay.get('product');
-  const product = productsVectorSource.getFeatureById(pId);
-  for (var i = cart.length - 1; i >= 0; i--) {
-    if (cart[i].pId == productOverlay.get('product')) {
-      cart.splice(i,1);
-      cartContents.removeChild(cartContents.childNodes[i]);
-      updateProductOverlay('out');
-      break
-    }
-  }
+  const cartItem = document.getElementById('cart-item').cloneNode(true);
+  cartItem.id = 'item-' + pId;
+  cartItem.querySelector('img').src = src;
+  cartItem.querySelector('.cart-product-name').textContent = name;
+  cartContents.appendChild(cartItem);
+  product.set('inCart',true);
+  updateAddCartButton(true, this);
+
 }
 
 const displayCart = function() {
@@ -573,12 +598,7 @@ document.getElementById('cart-open-button').onclick = displayCart;
 * 
 */
 
-
 /* On Hover */ 
-
-map.on('wheel', e => {
-  hideProductOverlay();
-})
 
 let highlighted = null;
 const handleHover = function(e) {
@@ -591,12 +611,14 @@ const handleHover = function(e) {
     if (feature != highlighted) {
       if (highlighted) {
         highlighted.set('highlighted', false);
+
       } 
       if (featureType == 'product') {
         map.getTarget().style.cursor = 'pointer';
         feature.set('highlighted', true);
         const hoverStyle = productsVectorStyle(feature);
         styleCache[feature.get('name')] = hoverStyle;
+        renderProductOverlay(feature, productCardOverlay);
       } 
       highlighted = feature;
     } 
@@ -628,7 +650,7 @@ const handleClick = function(e) {
     const constraint = [mapSize[0] + 1000, mapSize[1] + 2000] ;
 
     if (featureType == 'product') {
-      renderProductOverlay(feature);
+      renderProductOverlay(feature, productOverlay);
 
     } else if (featureType == 'brand') {
       hideProductOverlay();
@@ -651,26 +673,4 @@ const handleClick = function(e) {
 }
 
 map.on('click', handleClick);
-
-
-// map.on('click', function(evt) {
-//   var info = document.getElementById('info');
-//   info.innerHTML = 
-//   'event coor: ' + evt.coordinate + 
-//   '<br> Coordinate from pixel: ' +  map.getCoordinateFromPixel(evt.coordinate) +
-//   '<br> Pixel from Coordinate: ' +  map.getPixelFromCoordinate(evt.coordinate) +
-//   '<br> event pixel: ' + map.getEventPixel(evt) + 
-//   '<br> event coordinate: ' + map.getEventCoordinate(evt.coordinate) + 
-//   '<br> features at pixel: ' + map.getFeaturesAtPixel(evt.pixel)[0].getProperties().name +
-//   '<br> Resolution: ' + map.getView().getResolution() + 
-//   '<br> Zoom: ' + map.getView().getZoom();
-// });
-
-
-// let highlight; 
-
-
-
-
-
 

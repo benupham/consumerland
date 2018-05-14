@@ -38,6 +38,17 @@ body {
 
 /* PRODUCT OVERLAY */
 
+.product-card {
+	position: absolute;
+	background: rgba(255,255,255,1);
+	padding: 10px;
+}
+
+.product-card .product-image {
+	height: 200px;
+	width: 200px;
+}
+
 .product-overlay {
 	position: absolute;
 	height: 330px;
@@ -46,22 +57,22 @@ body {
 	background: rgba(255,255,255,1);
 }
 
-.product-name {
+.product-overlay .product-name {
 }
 
-.product-image {
+.product-overlay .product-image {
 	height: 200px;
 	width: 200px;
 }
 
-.product-price {
+.product-overlay .product-price {
 }
 
 .data-tool {
 	position: absolute; 
 	top: 100px; 
 	left: 20px; 
-	font-size: 24px; 
+	font-size: 20px; 
 	color: red; 
 	z-index: 1000;
 	background: white;

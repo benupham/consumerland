@@ -48,7 +48,17 @@
         </div>
       </div>
 
-      <!-- Product Card -->
+      <!-- Product Card Overlay -->
+      <div id="product-card" class="product-card card">
+        <img class="card-img-top product-image" src="./product-images/missing-item.jpg" alt="Product image">
+        <div class="card-body">
+          <h5 class="card-title product-name"></h5>
+          <p class="card-text product-price"></p>
+          <button id="product-card-add-button" class="add-to-cart d-block btn btn-outline-warning" name="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+
+      <!-- Product Overlay -->
       <div id="product-overlay" class="product-overlay container shadow-sm border border-secondary rounded">
         <div id="product-name" class="product-name h4"></div>
         <div class="media">
@@ -56,8 +66,7 @@
           <div class="media-body">
             <div id="product-info" class="product-info pt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris laoreet tellus quis consectetur condimentum.</div>
             <div id="product-price" class="product-price h4 py-2"></div>            
-            <button id="add-to-cart" class="d-block btn btn-outline-warning" name="add-to-cart">Add to Cart</button>
-            <a class="more d-block small pt-2">More...</a>
+            <button id="product-overlay-add-button" class="add-to-cart d-block btn btn-outline-warning" name="add-to-cart">Add to Cart</button>
           </div>
         </div>
       </div>

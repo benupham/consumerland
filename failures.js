@@ -208,3 +208,56 @@ const circlePolygonRender = function(featureCollection, colors, numberOfEdges = 
   })
   return circles;
 }
+
+
+
+
+/*
+* Product Circle Features (at low zoom levels)
+* 
+*/
+
+const productsCirclesStyle = function(product, resolution) {
+  const properties = product.getProperties();
+  let style = new Style({
+    fill: new Fill({
+      color: properties.fill
+    }),
+  })
+  return style;
+}
+
+const productCircles = circleFeatureRender(productData, colors);
+
+const productsCirclesSource = new VectorSource({
+       features: productCircles
+});
+
+const productsCirclesLayer = new VectorLayer({
+  source: productsCirclesSource,
+  style: productsCirclesStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  minResolution: 5,
+  opacity: 0.5
+})
+
+
+const productHoverBackground = new Feature({
+  style: new Style({
+    image: new RegularShape({
+      fill: new Fill({ color: '#fff' }),
+      stroke: new Stroke({ color: '#6c757d', width: 1 }),
+      radius: 100 * 2,
+      points: 4,
+      scale: 1,
+      rotation: Math.PI / 4
+    }),
+    zIndex: 1,
+  }),
+  type: 'hoverBg',
+  geometry: new Point({ coordinates: [] }),
+  id: 'hover-bg'
+})
+
+productsImageFeatures.push(productHoverBackground);
