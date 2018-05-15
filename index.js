@@ -402,7 +402,7 @@ const brandsTextLayer = new VectorLayer({
 var view = new View({
   center: [55667,-46227],
   // extent: [2400,-9795,92400,-83963],
-  resolution: 100,
+  resolution: 10,
   zoomFactor: 1.25,
   minResolution: 1,
   maxResolution: 100,
@@ -603,26 +603,47 @@ document.getElementById('cart-open-button').onclick = displayCart;
 
 let highlighted = null;
 const dataTool = document.querySelector('#data-tool');
-const jumpStrips = document.getElementById('jump-strips-border');
+//const jumpStrips = document.getElementById('jump-strips-border');
+
+
+
 
 const handleHover = function(e) {
   const size = map.getSize();
-  console.log(e);
-  const x = e.pixel[0];
-  const y = e.pixel[1];
+  const pixel = e.pixel;
+  const p = map.getCoordinateFromPixel(e.pixel);
+  const ctr = view.getCenter();
+  //const ctr = map.getPixelFromCoordinate(ctrCoor);
+  
+  const x = p[0];
+  const y = p[1];
 
-  if ((x < 100 || y < 100) || (x > size[0] - 100 || y > size[1] - 100)) console.log(x,y);
+  if (pixel[0] < 100 || pixel[1] < 100 || pixel[0] > size[0] - 100 || pixel[1] > size[1] - 100) {
+    let delta = 100;
+    if (pixel[0] < 100 || pixel[1] < 100) {
+      delta = pixel[0] <= pixel[1] ? 100 - pixel[0] : 100 - pixel[1];
+    }   
+    const angle = Math.atan2(p[1] - ctr[1], p[0] - ctr[0]); // * 180 / Math.PI
+    const adj = Math.sin(angle) * delta;
+    const opp = Math.cos(angle) * delta; 
+    const newCtr = [ctr[0] + opp, ctr[1] + adj];
+    //console.log(opp,adj);
+    view.setCenter(newCtr);
+    dataTool.innerHTML = `point: ${p}<br>center: ${ctr}<br>new center: ${newCtr}<br>angle: ${angle}
+    <br>sin: ${Math.sin(angle)}<br>cos: ${Math.cos(angle)}<br>opp: ${opp}<br>adj: ${adj}`;
+  }
 
-  dataTool.innerHTML = `zoom: ${view.getZoom()} 
-                        <br> res: ${view.getResolution()} 
-                        <br> pixel: ${e.pixel}
-                        <br> coor: ${e.coordinate}
-                        <br> view center: ${view.getCenter()}
-                        <br> view extent: ${view.calculateExtent()}
-                        <br> map size: ${map.getSize()}
-    `;  
-  jumpStrips.style.height = size[1] - 200 + 'px';
-  jumpStrips.style.width = size[0] - 200 + 'px';
+  
+  // `zoom: ${view.getZoom()} 
+  //                       <br> res: ${view.getResolution()} 
+  //                       <br> pixel: ${e.pixel}
+  //                       <br> coor: ${e.coordinate}
+  //                       <br> view center: ${view.getCenter()}
+  //                       <br> view extent: ${view.calculateExtent()}
+  //                       <br> map size: ${map.getSize()}
+  //   `;  
+  // // jumpStrips.style.height = size[1] - 200 + 'px';
+  // jumpStrips.style.width = size[0] - 200 + 'px';
 
 
   const resolution = view.getResolution();
