@@ -18,6 +18,7 @@
   </head>
   <body>
     <div id="data-tool" class="data-tool"></div>
+    <div id="jump-strips-border" class="jump-strips-border"></div>
     <div id="map"></div>
     <div id="pm-overlays" style="display: none;">
       
@@ -49,10 +50,10 @@
       </div>
 
       <!-- Product Card Overlay -->
-      <div id="product-card" class="product-card card">
+      <div id="product-card" class="product-card card shadow-sm border border-secondary rounded">
         <img class="card-img-top product-image" src="./product-images/missing-item.jpg" alt="Product image">
         <div class="card-body">
-          <h5 class="card-title product-name"></h5>
+          <a class="card-title product-name"></a>
           <p class="card-text product-price"></p>
           <button id="product-card-add-button" class="add-to-cart d-block btn btn-outline-warning" name="add-to-cart">Add to Cart</button>
         </div>

@@ -35,6 +35,8 @@ import matchSorter from 'match-sorter';
 * 
 */
 
+
+
 // Do not use with already-ingested GeoJSON data -- only the actual JSON variable
 const circleFeatureRender = function(featureCollection, colors = null) {
   let circles = [];
@@ -263,10 +265,8 @@ const standardFont = '16px sans-serif';
 const standardFontColor = new Fill({ color: '#606060' });
 const standardFontStroke = new Stroke({ color: '#fff', width: 2 });
 
-const dataTool = document.querySelector('#data-tool');
 
 const circleFillStyle = function(feature, resolution) {
-  dataTool.innerHTML = 'zoom: ' + view.getZoom() + '<br>res: ' + view.getResolution();
   const properties = feature.getProperties();
 
   const style = new Style({
@@ -400,8 +400,9 @@ const brandsTextLayer = new VectorLayer({
 */
 
 var view = new View({
-  center: [13289.165603450561,-40993.86453487949],
-  resolution: 1,
+  center: [55667,-46227],
+  // extent: [2400,-9795,92400,-83963],
+  resolution: 100,
   zoomFactor: 1.25,
   minResolution: 1,
   maxResolution: 100,
@@ -429,18 +430,15 @@ const mapResize = function(e) {
   map.setSize([mapWidth,mapHeight]);
   map.updateSize();
 }
-
-
-
 window.addEventListener('load', mapResize);
 window.addEventListener('resize', mapResize);
-
 
 
 /*
 * Controls
 * 
 */
+
 
 const handleSearch = function(e) {
   if (e.keyCode != 13) {
@@ -472,6 +470,8 @@ document.getElementById('search-button').onclick = handleSearch;
 
 document.getElementById('search-input').onkeypress = handleSearch;
 
+document.getElementById('search-cart-overlay').onpointermove = function(e) {e.stopPropagation()};
+
 map.addControl(searchControl);
 
 
@@ -480,11 +480,13 @@ map.addControl(searchControl);
 * 
 */
 
+
+
 // Product Card Overlay (hover)
 const productCardOverlay = new Overlay({
   element: document.getElementById('product-card'),
-  autoPan: true,
-  // stopEvent: false
+  autoPan: false,
+  stopEvent: false
 });
 map.addOverlay(productCardOverlay);
 
@@ -492,9 +494,8 @@ map.addOverlay(productCardOverlay);
 const productOverlay = new Overlay({
   element: document.getElementById('product-overlay'),
   autoPan: true,
-  // stopEvent: false
+  stopEvent: false
 });
-
 map.addOverlay(productOverlay);
 
 const updateAddCartButton = function(inCart, btn) {
@@ -510,11 +511,11 @@ const updateAddCartButton = function(inCart, btn) {
 }
 
 const renderProductOverlay = function(product, overlay) {
+  overlay.getElement().onpointermove = function(e) {e.stopPropagation()};
+  overlay.getElement().onpointerdown = function(e) {e.stopPropagation()};
   overlay.getElement().style.display = 'block';
   overlay.set('product', product.getId());
   const coordinate = product.getGeometry().getCoordinates();
-
-  console.log('render',product);
   
   const btn = overlay.getElement().querySelector('.add-to-cart');
   btn.setAttribute('data-pid', product.getId());
@@ -538,8 +539,8 @@ const renderProductOverlay = function(product, overlay) {
   
 } 
 
-const hideProductOverlay = function(e) {
-  document.querySelector('product-overlay').style.display = 'none';
+const hideProductOverlay = function(overlay) {
+  overlay.getElement().style.display = 'none';
 }
 
 
@@ -551,7 +552,7 @@ const hideProductOverlay = function(e) {
 const cart = [];
 const cartContents = document.querySelector('#cart-contents');
 
-const updateCart = function() {
+const updateCart = function(e) {
   const pId = this.getAttribute('data-pid');
   const product = productsVectorSource.getFeatureById(pId);
   const src = product.get('src');
@@ -601,7 +602,29 @@ document.getElementById('cart-open-button').onclick = displayCart;
 /* On Hover */ 
 
 let highlighted = null;
+const dataTool = document.querySelector('#data-tool');
+const jumpStrips = document.getElementById('jump-strips-border');
+
 const handleHover = function(e) {
+  const size = map.getSize();
+  console.log(e);
+  const x = e.pixel[0];
+  const y = e.pixel[1];
+
+  if ((x < 100 || y < 100) || (x > size[0] - 100 || y > size[1] - 100)) console.log(x,y);
+
+  dataTool.innerHTML = `zoom: ${view.getZoom()} 
+                        <br> res: ${view.getResolution()} 
+                        <br> pixel: ${e.pixel}
+                        <br> coor: ${e.coordinate}
+                        <br> view center: ${view.getCenter()}
+                        <br> view extent: ${view.calculateExtent()}
+                        <br> map size: ${map.getSize()}
+    `;  
+  jumpStrips.style.height = size[1] - 200 + 'px';
+  jumpStrips.style.width = size[0] - 200 + 'px';
+
+
   const resolution = view.getResolution();
 
   if (map.hasFeatureAtPixel(e.pixel)) {
@@ -614,6 +637,7 @@ const handleHover = function(e) {
 
       } 
       if (featureType == 'product') {
+        console.log(e);
         map.getTarget().style.cursor = 'pointer';
         feature.set('highlighted', true);
         const hoverStyle = productsVectorStyle(feature);
@@ -624,6 +648,7 @@ const handleHover = function(e) {
     } 
     if (featureType != 'product') {
       map.getTarget().style.cursor = '';
+      hideProductOverlay(productCardOverlay);
     }
   } else {
   }
@@ -634,34 +659,35 @@ map.on('pointermove', handleHover);
 /* On Click */
 
 const handleClick = function(e) {
+  console.log('handleClick click event',e);
   const features = map.getFeaturesAtPixel(e.pixel);
   const feature = features[0];
   const featureType = feature.get('type');
 
   if (document.getElementById('product-overlay').style.display == 'block' &&
       featureType != 'product') {
-    hideProductOverlay();
+    hideProductOverlay(productOverlay);
     return
   }
   if (features.length > 0) {
     const zoom = view.getZoom();
-    console.log(zoom);
     const mapSize = map.getSize();
     const constraint = [mapSize[0] + 1000, mapSize[1] + 2000] ;
 
     if (featureType == 'product') {
+      hideProductOverlay(productCardOverlay);
       renderProductOverlay(feature, productOverlay);
 
     } else if (featureType == 'brand') {
-      hideProductOverlay();
+      hideProductOverlay(productOverlay);
       view.fit(feature.getGeometry().getExtent(), {size: constraint, duration: 1000});
 
     } else if (featureType == 'subdept') {
-      hideProductOverlay();
+      hideProductOverlay(productOverlay);
       view.fit(feature.getGeometry().getExtent(), {size: constraint, duration: 1000});
 
     } else if (featureType == 'dept') {
-      hideProductOverlay();
+      hideProductOverlay(productOverlay);
       view.fit(feature.getGeometry().getExtent(), {size: constraint, duration: 1000});
 
     } else {
@@ -672,5 +698,5 @@ const handleClick = function(e) {
   }
 }
 
-map.on('click', handleClick);
+map.on('singleclick', handleClick);
 
