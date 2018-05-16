@@ -90,6 +90,8 @@ function textFormatter(str, width, spaceReplacer, maxLength = null) {
   return str;    
 }
 
+const dataTool = document.querySelector('#data-tool');
+
 
 /*
 *  Constants
@@ -150,36 +152,15 @@ const productsVectorStyle = function(product, resolution) {
   let style = styleCache[product.getProperties().name];
   if (style) {
     style[0].getImage().setScale(1 / resolution); //resize image icon
-    style[0].setZIndex(2);
 
     style[1].getText().setScale(1.25 / resolution); // resize text size
     style[1].getText().setOffsetY(nameOffset / resolution);
     style[1].getText().setOffsetX(-100 / resolution);
-    style[1].getText().getFill().setColor('#606060');
-    style[1].setZIndex(10);
 
     style[2].getText().setScale(1.25 / resolution); // resize text size
     style[2].getText().setOffsetY(priceOffset / resolution);
     style[2].getText().setOffsetX(-100 / resolution);
-    style[2].getText().getFill().setColor('#606060');
-    style[2].setZIndex(10);
 
-    if (product.get('highlighted') === true) {
-      style[0].getImage().setScale(1);
-      style[0].setZIndex(30);
-
-      style[1].getText().setScale(1.25);
-      style[1].getText().getFill().setColor('orange');
-      style[1].getText().setOffsetY(nameOffset);
-      style[1].getText().setOffsetX(-100);
-      style[1].setZIndex(30);
-
-      style[2].getText().setScale(1.25);
-      style[2].getText().getFill().setColor('orange');
-      style[2].getText().setOffsetY(priceOffset);
-      style[2].getText().setOffsetX(-100);
-      style[2].setZIndex(30);
-    } 
     return style
   }
   else  {
@@ -243,7 +224,8 @@ const productsVectorStyle = function(product, resolution) {
 const productsImageFeatures = (new GeoJSON()).readFeatures(productData)
 
 const productsVectorSource = new VectorSource({
-  features: productsImageFeatures
+  features: productsImageFeatures,
+  overlaps: false
 });
 const productsVectorLayer = new VectorLayer({
   source: productsVectorSource,
@@ -480,8 +462,6 @@ map.addControl(searchControl);
 * 
 */
 
-
-
 // Product Card Overlay (hover)
 const productCardOverlay = new Overlay({
   element: document.getElementById('product-card'),
@@ -601,8 +581,9 @@ document.getElementById('cart-open-button').onclick = displayCart;
 
 /* On Hover */ 
 
-let highlighted = null;
-const dataTool = document.querySelector('#data-tool');
+
+
+let jumpStripsInt = null;
 
 const handleJumpStrips = function(e) {
   const res = view.getResolution();
@@ -637,15 +618,11 @@ const handleJumpStrips = function(e) {
     view.setResolution(res + resDelta);
   }
 
-  dataTool.innerHTML = `resolution: ${res}<br>resDelta: ${resDelta}<br>pixel: ${pixel}<br>point: ${p}<br>delta: ${delta}<br>velocity: ${velocity}
-  <br>limit: ${limit}<br>center: ${ctr}`;
-
-
+  // dataTool.innerHTML = `resolution: ${res}<br>resDelta: ${resDelta}<br>pixel: ${pixel}<br>point: ${p}<br>delta: ${delta}<br>velocity: ${velocity}
+  // <br>limit: ${limit}<br>center: ${ctr}`;
 }
 
 
-
-let jumpStripsInt = null;
 const handleHover = function(e) {
   if (jumpStripsInt != null) {
     window.clearInterval(jumpStripsInt);
@@ -653,36 +630,25 @@ const handleHover = function(e) {
   const resolution = view.getResolution();
 
   const size = map.getSize();
-  if (e.pixel[0] < 100 || e.pixel[1] < 100 || e.pixel[0] > size[0] - 100 || e.pixel[1] > size[1] - 100) {
-    jumpStripsInt = window.setInterval(handleJumpStrips, 16, e);
-    return
-  } else if (jumpStripsInt != null) {
-    window.clearInterval(jumpStripsInt);
-  }
+  // if (e.pixel[0] < 100 || e.pixel[1] < 100 || e.pixel[0] > size[0] - 100 || e.pixel[1] > size[1] - 100) {
+  //   jumpStripsInt = window.setInterval(handleJumpStrips, 16, e);
+  //   return
+  // } else if (jumpStripsInt != null) {
+  //   window.clearInterval(jumpStripsInt);
+  // }
 
   if (map.hasFeatureAtPixel(e.pixel)) {
     const features = map.getFeaturesAtPixel(e.pixel);
     const feature = features[0];
     const featureType = feature.get('type');
-    if (feature != highlighted) {
-      if (highlighted) {
-        highlighted.set('highlighted', false);
-
-      } 
-      if (featureType == 'product') {
-        map.getTarget().style.cursor = 'pointer';
-        feature.set('highlighted', true);
-        const hoverStyle = productsVectorStyle(feature);
-        styleCache[feature.get('name')] = hoverStyle;
-        renderProductOverlay(feature, productCardOverlay);
-      } 
-      highlighted = feature;
+    if (featureType == 'product') {
+      renderProductOverlay(feature, productCardOverlay);
     } 
-    if (featureType != 'product') {
-      map.getTarget().style.cursor = '';
+    else if (featureType != 'product') {
       hideProductOverlay(productCardOverlay);
     }
   } else {
+    hideProductOverlay(productCardOverlay);
   }
 }
 map.on('pointermove', handleHover);
@@ -731,4 +697,97 @@ const handleClick = function(e) {
 }
 
 map.on('singleclick', handleClick);
+
+
+/* Contextual Arrows */ 
+
+const signage = {};
+for (let i = 0; i < 4; i++) {
+  signage[i] = new Overlay({
+    element: document.getElementById('sign-' + i),
+    autoPan: false,
+    stopEvent: true
+  });
+  map.addOverlay(signage[i]);
+}
+
+const displayArrows = function() {
+  const viewExtent = view.calculateExtent();
+  const res = view.getResolution();
+  const ctr = view.getCenter();
+
+  // This might be useful for low resolution views where more than 1 dept or sub is visible
+  // const extentDepts = departmentsSource.getFeaturesInExtent(extent);
+  // const extentSubdepts = subdepartmentsSource.getFeaturesInExtent(extent);
+  // for (var i = extentDepts.length - 1; i >= 0; i--) {
+  //   if (extentDepts[i].getGeometry().intersectsCoordinate(ctr)) extentDepts.splice(i, 1);
+  // }
+  // for (var i = extentSubdepts.length - 1; i >= 0; i--) {
+  //   if (extentSubdepts[i].getGeometry().intersectsCoordinate(ctr)) extentSubdepts.splice(i, 1);
+  // }
+  const closestDepts = [];
+  const cnt = 4;
+  for (let i = 0; i < 4; i++) {
+    const closestDept = departmentsSource.getClosestFeatureToCoordinate(ctr, (f) => {
+      // if the feature intersects the ctr, skip 
+      if (f.getGeometry().intersectsCoordinate(ctr)) return false;
+
+      // if the feature's center is in the view, skip
+      if (Extent.containsCoordinate(viewExtent,f.getGeometry().getCenter())) return false;
+
+      // if we've already found the feature, skip as well 
+      if (closestDepts.indexOf(f) > -1) return false;
+
+      return true;
+      
+    });
+    closestDepts.push(closestDept);
+  }
+  
+  closestDepts.forEach((f, i) => {
+    const coord = f.getGeometry().getCenter();
+    const angle = Math.atan2(coord[1] - ctr[1], coord[0] - ctr[0]); 
+    const deg = -angle * (180 / Math.PI);
+    const adj = Math.sin(angle) * 400 * res;
+    const opp = Math.cos(angle) * 400 * res; 
+    const signCtr = [ctr[0] + opp, ctr[1] + adj];
+
+    let sign = signage[i];
+
+    sign.setPosition(signCtr);
+
+    if (Math.abs(deg) > 90) {
+      sign.getElement().innerHTML = '&larr; ' + f.get('name');
+      sign.getElement().style.transform = 'rotate(' + deg + 'deg) scale(-1, -1)';
+    } else {
+      sign.getElement().innerHTML = f.get('name') + ' &rarr;';
+      sign.getElement().style.transform = 'rotate(' + deg + 'deg)';
+    } 
+    sign.getElement().setAttribute('feature', f.getId());
+    sign.getElement().addEventListener('click', function(e) {
+      console.log(this);
+
+      const fid = this.getAttribute('feature');
+      
+      view.fit(departmentsSource.getFeatureById(fid).getGeometry(), {
+        duration: 1000,
+        callback: displayArrows
+      });
+    }); 
+  })
+
+  const names = []; 
+  closestDepts.forEach((f) => {
+    names.push(f.get('name'));
+  })
+
+  dataTool.innerHTML = ``;
+}
+map.on('wheel', displayArrows);
+
+/* Featured Items */
+
+//add featured items
+//remove featured items
+// place featured items
 
