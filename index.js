@@ -603,13 +603,11 @@ document.getElementById('cart-open-button').onclick = displayCart;
 
 let highlighted = null;
 const dataTool = document.querySelector('#data-tool');
-//const jumpStrips = document.getElementById('jump-strips-border');
 
-
-
-
-const handleHover = function(e) {
+const handleJumpStrips = function(e) {
+  const res = view.getResolution();
   const size = map.getSize();
+  const limit = [size[0] - 100, size[1] - 100];
   const pixel = e.pixel;
   const p = map.getCoordinateFromPixel(e.pixel);
   const ctr = view.getCenter();
@@ -618,35 +616,49 @@ const handleHover = function(e) {
   const x = p[0];
   const y = p[1];
 
-  if (pixel[0] < 100 || pixel[1] < 100 || pixel[0] > size[0] - 100 || pixel[1] > size[1] - 100) {
-    let delta = 100;
-    if (pixel[0] < 100 || pixel[1] < 100) {
-      delta = pixel[0] <= pixel[1] ? 100 - pixel[0] : 100 - pixel[1];
-    }   
-    const angle = Math.atan2(p[1] - ctr[1], p[0] - ctr[0]); // * 180 / Math.PI
-    const adj = Math.sin(angle) * delta;
-    const opp = Math.cos(angle) * delta; 
-    const newCtr = [ctr[0] + opp, ctr[1] + adj];
-    //console.log(opp,adj);
-    view.setCenter(newCtr);
-    dataTool.innerHTML = `point: ${p}<br>center: ${ctr}<br>new center: ${newCtr}<br>angle: ${angle}
-    <br>sin: ${Math.sin(angle)}<br>cos: ${Math.cos(angle)}<br>opp: ${opp}<br>adj: ${adj}`;
+
+  const delta = res / 5;
+
+  let velocity = 10;
+  if (pixel[0] < 100 || pixel[1] < 100) {
+    velocity = pixel[0] <= pixel[1] ? (100 - pixel[0]) * delta : (100 - pixel[1]) * delta;
+  } else {
+    velocity = pixel[0] > limit[0] ? (pixel[0] - limit[0]) * delta : (pixel[1] - limit[1]) * delta;
+  }  
+  const angle = Math.atan2(p[1] - ctr[1], p[0] - ctr[0]); 
+  const adj = Math.sin(angle) * velocity;
+  const opp = Math.cos(angle) * velocity; 
+  const newCtr = [ctr[0] + opp, ctr[1] + adj];
+
+  view.setCenter(newCtr);
+
+  const resDelta = delta * 0.05;
+  if (res < 100) {
+    view.setResolution(res + resDelta);
   }
 
-  
-  // `zoom: ${view.getZoom()} 
-  //                       <br> res: ${view.getResolution()} 
-  //                       <br> pixel: ${e.pixel}
-  //                       <br> coor: ${e.coordinate}
-  //                       <br> view center: ${view.getCenter()}
-  //                       <br> view extent: ${view.calculateExtent()}
-  //                       <br> map size: ${map.getSize()}
-  //   `;  
-  // // jumpStrips.style.height = size[1] - 200 + 'px';
-  // jumpStrips.style.width = size[0] - 200 + 'px';
+  dataTool.innerHTML = `resolution: ${res}<br>resDelta: ${resDelta}<br>pixel: ${pixel}<br>point: ${p}<br>delta: ${delta}<br>velocity: ${velocity}
+  <br>limit: ${limit}<br>center: ${ctr}`;
 
 
+}
+
+
+
+let jumpStripsInt = null;
+const handleHover = function(e) {
+  if (jumpStripsInt != null) {
+    window.clearInterval(jumpStripsInt);
+  }
   const resolution = view.getResolution();
+
+  const size = map.getSize();
+  if (e.pixel[0] < 100 || e.pixel[1] < 100 || e.pixel[0] > size[0] - 100 || e.pixel[1] > size[1] - 100) {
+    jumpStripsInt = window.setInterval(handleJumpStrips, 16, e);
+    return
+  } else if (jumpStripsInt != null) {
+    window.clearInterval(jumpStripsInt);
+  }
 
   if (map.hasFeatureAtPixel(e.pixel)) {
     const features = map.getFeaturesAtPixel(e.pixel);
@@ -658,7 +670,6 @@ const handleHover = function(e) {
 
       } 
       if (featureType == 'product') {
-        console.log(e);
         map.getTarget().style.cursor = 'pointer';
         feature.set('highlighted', true);
         const hoverStyle = productsVectorStyle(feature);
