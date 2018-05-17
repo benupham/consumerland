@@ -713,6 +713,7 @@ for (let i = 0; i < 4; i++) {
 
 const displayArrows = function() {
   const viewExtent = view.calculateExtent();
+  console.log(viewExtent);
   const res = view.getResolution();
   const ctr = view.getCenter();
 
@@ -765,10 +766,7 @@ const displayArrows = function() {
     } 
     sign.getElement().setAttribute('feature', f.getId());
     sign.getElement().addEventListener('click', function(e) {
-      console.log(this);
-
       const fid = this.getAttribute('feature');
-      
       view.fit(departmentsSource.getFeatureById(fid).getGeometry(), {
         duration: 1000,
         callback: displayArrows
