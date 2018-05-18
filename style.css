@@ -68,6 +68,13 @@ body {
 .product-overlay .product-price {
 }
 
+/* CIRCLE HOVER */
+.circle-hover {
+	border-radius: 50%;
+}
+
+/* Dev Tools */
+
 .data-tool {
 	position: absolute; 
 	top: 20px; 

@@ -36,36 +36,6 @@ import matchSorter from 'match-sorter';
 */
 
 
-
-// Do not use with already-ingested GeoJSON data -- only the actual JSON variable
-const circleFeatureRender = function(featureCollection, colors = null) {
-  let circles = [];
-  featureCollection.features.forEach(f => {
-    const circle = new Feature({
-      'geometry': new Circle(f.geometry.coordinates, f.properties.radius || (100 * Math.sqrt(2))),
-      //'labelPoint': f.geometry.coordinates,
-      'name': f.properties.name,
-      'price': f.properties.price || '',
-      'type': f.properties.type,
-      'src': f.properties.src || ''
-    })
-    circle.setId(f.id);
-    circles.push(circle);
-  })
-  return circles;
-}
-
-const colors = [
-  '#303030',
-  '#606060',
-  '#808080',
-  '#A9A9A9',
-  '#C0C0C0',
-  '#DCDCDC',
-  '#E8E8E8',
-  '#fff'
-]
-
 function textFormatter(str, width, spaceReplacer, maxLength = null) {
   if (maxLength !== null) {
     str = str.length > maxLength ? str.substr(0, maxLength - 1) + '...' : str.substr(0);
@@ -114,6 +84,19 @@ const sqrt2 = Math.sqrt(2);
 
 const nameOffset = 120;
 const priceOffset = 146;
+
+// Colors
+
+const colors = [
+  '#303030',
+  '#606060',
+  '#808080',
+  '#A9A9A9',
+  '#C0C0C0',
+  '#DCDCDC',
+  '#E8E8E8',
+  '#fff'
+]
 
 /*
 * Product Image Features
@@ -239,9 +222,96 @@ const productsVectorLayer = new VectorLayer({
 
 
 /*
+* Product on Sale, in Cart, Tagged Features and Styles
+* 
+*/
+
+const tagsData = {
+  sale: {color: '', src: 'sale.png'}
+}
+
+const tagFeatureRender = function(featureCollection, colors = null, tagType = 'sale') {
+  let tags = [];
+  featureCollection.features.forEach( (f) => {
+    if (f.properties.price.indexOf('Reg') > -1) {
+      const tag = new Feature({
+        'geometry': new Point([f.geometry.coordinates[0] - 75, f.geometry.coordinates[1] + 75]),
+        'name': f.id + '-' + tagType,
+        'type': tagType,
+      })
+      tag.setId(f.id + '-' + tagType);
+      tags.push(tag);      
+    }
+  })
+  return tags;
+}
+
+
+const tagStyle = function (tag, resolution) {
+  const type = tag.get('type');
+  const src = tagsData[type].src || 'sale.png';
+  let style = {};
+
+  let tagIcon = iconcache[src];
+
+  if (!tagIcon) {
+    tagIcon = new Icon({
+      size: [32,32],
+      // scale: 1 / resolution + .3,
+      crossOrigin: 'anonymous',
+      src: './product-images/tags/' + src
+    });
+  }
+
+  tagIcon.setScale(1 / resolution);
+  
+  iconcache[src] = tagIcon;
+
+  style = new Style({
+    image: tagIcon
+  })
+
+  return style
+}
+
+const tagFeatures = tagFeatureRender(productData);
+const tagSource = new VectorSource({
+  features: tagFeatures,
+  overlaps: false
+});
+const tagLayer = new VectorLayer({
+  source: tagSource,
+  style: tagStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  renderMode: 'vector',
+  maxResolution: productsImageMax 
+})
+
+
+
+/*
 * Department, Subdepartment & Brands (Subcategories) Features with Fill
 * 
 */
+
+// Do not use with already-ingested GeoJSON data -- only the actual JSON variable
+const circleFeatureRender = function(featureCollection, colors = null) {
+  let circles = [];
+  featureCollection.features.forEach(f => {
+    const circle = new Feature({
+      'geometry': new Circle(f.geometry.coordinates, f.properties.radius || (100 * Math.sqrt(2))),
+      //'labelPoint': f.geometry.coordinates,
+      'name': f.properties.name,
+      'price': f.properties.price || '',
+      'type': f.properties.type,
+      'src': f.properties.src || ''
+    })
+    circle.setId(f.id);
+    circles.push(circle);
+  })
+  return circles;
+}
 
 const standardFont = '16px sans-serif'; 
 const standardFontColor = new Fill({ color: '#606060' });
@@ -257,6 +327,21 @@ const circleFillStyle = function(feature, resolution) {
   })
   if (resolution <= productsImageMax) {
     style.setStroke(null);
+  }
+
+  return style
+}
+
+const circleFillHoverStyle = function(feature, resolution) {
+  const properties = feature.getProperties();
+
+  const style = new Style({
+    fill: new Fill({ color: '#DCDCDC' }),
+    stroke: new Stroke({ color: '#808080', width: 3 })
+  })
+  if (resolution <= productsImageMax) {
+    style.setStroke(null);
+    style.setFill({color: '#fff'});
   }
 
   return style
@@ -397,6 +482,7 @@ var map = new olMap({
     subdepartmentsFillLayer,
     brandsFillLayer,
     productsVectorLayer,
+    tagLayer,
     departmentsTextLayer,
     subdepartmentsTextLayer,
     brandsTextLayer
@@ -581,13 +667,17 @@ document.getElementById('cart-open-button').onclick = displayCart;
 
 /* On Hover */ 
 
-
-
 let jumpStripsInt = null;
-
+let jumpStripActive = false;
 const handleJumpStrips = function(e) {
+  // prevent firing if dragging mouse
+  if (e.dragging === true) return;
+
+  map.getTargetElement().style.cursor = 'pointer';
+
+  jumpStripActive = true; 
+
   const res = view.getResolution();
-  console.log(res);
   if (res >= 100) window.clearInterval(jumpStripsInt);
   const size = map.getSize();
   const limit = [size[0] - 100, size[1] - 100];
@@ -595,11 +685,8 @@ const handleJumpStrips = function(e) {
   const p = map.getCoordinateFromPixel(e.pixel);
   const ctr = view.getCenter();
 
-
-  
   const x = p[0];
   const y = p[1];
-
 
   const delta = res / 5;
 
@@ -625,19 +712,24 @@ const handleJumpStrips = function(e) {
   // <br>limit: ${limit}<br>center: ${ctr}`;
 }
 
-
+let highlight = undefined; 
 const handleHover = function(e) {
   if (jumpStripsInt != null) {
     window.clearInterval(jumpStripsInt);
+    jumpStripActive = false; 
+    map.getTargetElement().style.cursor = '';
   }
   const resolution = view.getResolution();
 
   const size = map.getSize();
   if (resolution < view.getMaxResolution() && (e.pixel[0] < 100 || e.pixel[1] < 100 || e.pixel[0] > size[0] - 100 || e.pixel[1] > size[1] - 100)) {
     jumpStripsInt = window.setInterval(handleJumpStrips, 16, e);
+    hideProductOverlay(productCardOverlay);
     return
   } else if (jumpStripsInt != null) {
     window.clearInterval(jumpStripsInt);
+    map.getTargetElement().style.cursor = '';
+    jumpStripActive = false;
   }
 
   if (map.hasFeatureAtPixel(e.pixel)) {
@@ -647,15 +739,27 @@ const handleHover = function(e) {
     if (featureType == 'product') {
       renderProductOverlay(feature, productCardOverlay);
     } 
-    else if (featureType != 'product') {
+    else if (featureType == 'dept' || 'subdept' || 'brand') {
       hideProductOverlay(productCardOverlay);
+      if (feature != highlight) {
+        if (highlight) {
+          highlight.setStyle(circleFillStyle);
+        }
+        feature.setStyle(circleFillHoverStyle);
+        highlight = feature;
+      }
+
     }
   } else {
     hideProductOverlay(productCardOverlay);
+    if (highlight) {
+      highlight.setStyle(circleFillStyle);
+      highlight = undefined;
+    }
   }
 }
 map.on('pointermove', handleHover);
-document.getElementById('map').addEventListener('mouseleave', function(){
+map.getTargetElement().addEventListener('mouseleave', function(){
   window.clearInterval(jumpStripsInt);
 })
 
@@ -722,6 +826,7 @@ const displaySignage = function() {
   const res = view.getResolution();
   const ctr = view.getCenter();
 
+
   // This might be useful for low resolution views where more than 1 dept or sub is visible
   // const extentDepts = departmentsSource.getFeaturesInExtent(extent);
   // const extentSubdepts = subdepartmentsSource.getFeaturesInExtent(extent);
@@ -749,9 +854,15 @@ const displaySignage = function() {
     });
     if (closestDept != null) closestDepts.push(closestDept);
   }
+
+  // This logic is wasteful 
   if (closestDepts.length == 0) {
     for (let i = 0; i < 4; i++) {
       signage[i].getElement().style.display = 'none';
+    }
+  } else {
+    for (let i = 0; i < 4; i++) {
+      signage[i].getElement().style.display = 'inline-block';
     }
   }
 
@@ -791,7 +902,10 @@ const displaySignage = function() {
 
   dataTool.innerHTML = ``;
 }
-map.on('wheel', displaySignage);
+map.on('moveend', (e) => {
+  if (jumpStripActive === true) return; 
+  const signageTimeOut = setTimeout(displaySignage, 100);
+});
 
 /* Featured Items */
 
