@@ -587,12 +587,15 @@ let jumpStripsInt = null;
 
 const handleJumpStrips = function(e) {
   const res = view.getResolution();
+  console.log(res);
+  if (res >= 100) window.clearInterval(jumpStripsInt);
   const size = map.getSize();
   const limit = [size[0] - 100, size[1] - 100];
   const pixel = e.pixel;
   const p = map.getCoordinateFromPixel(e.pixel);
   const ctr = view.getCenter();
-  //const ctr = map.getPixelFromCoordinate(ctrCoor);
+
+
   
   const x = p[0];
   const y = p[1];
@@ -630,12 +633,12 @@ const handleHover = function(e) {
   const resolution = view.getResolution();
 
   const size = map.getSize();
-  // if (e.pixel[0] < 100 || e.pixel[1] < 100 || e.pixel[0] > size[0] - 100 || e.pixel[1] > size[1] - 100) {
-  //   jumpStripsInt = window.setInterval(handleJumpStrips, 16, e);
-  //   return
-  // } else if (jumpStripsInt != null) {
-  //   window.clearInterval(jumpStripsInt);
-  // }
+  if (resolution < view.getMaxResolution() && (e.pixel[0] < 100 || e.pixel[1] < 100 || e.pixel[0] > size[0] - 100 || e.pixel[1] > size[1] - 100)) {
+    jumpStripsInt = window.setInterval(handleJumpStrips, 16, e);
+    return
+  } else if (jumpStripsInt != null) {
+    window.clearInterval(jumpStripsInt);
+  }
 
   if (map.hasFeatureAtPixel(e.pixel)) {
     const features = map.getFeaturesAtPixel(e.pixel);
@@ -652,6 +655,9 @@ const handleHover = function(e) {
   }
 }
 map.on('pointermove', handleHover);
+document.getElementById('map').addEventListener('mouseleave', function(){
+  window.clearInterval(jumpStripsInt);
+})
 
 
 /* On Click */
@@ -699,7 +705,7 @@ const handleClick = function(e) {
 map.on('singleclick', handleClick);
 
 
-/* Contextual Arrows */ 
+/* Signage */ 
 
 const signage = {};
 for (let i = 0; i < 4; i++) {
@@ -711,9 +717,8 @@ for (let i = 0; i < 4; i++) {
   map.addOverlay(signage[i]);
 }
 
-const displayArrows = function() {
+const displaySignage = function() {
   const viewExtent = view.calculateExtent();
-  console.log(viewExtent);
   const res = view.getResolution();
   const ctr = view.getCenter();
 
@@ -742,9 +747,14 @@ const displayArrows = function() {
       return true;
       
     });
-    closestDepts.push(closestDept);
+    if (closestDept != null) closestDepts.push(closestDept);
   }
-  
+  if (closestDepts.length == 0) {
+    for (let i = 0; i < 4; i++) {
+      signage[i].getElement().style.display = 'none';
+    }
+  }
+
   closestDepts.forEach((f, i) => {
     const coord = f.getGeometry().getCenter();
     const angle = Math.atan2(coord[1] - ctr[1], coord[0] - ctr[0]); 
@@ -769,7 +779,7 @@ const displayArrows = function() {
       const fid = this.getAttribute('feature');
       view.fit(departmentsSource.getFeatureById(fid).getGeometry(), {
         duration: 1000,
-        callback: displayArrows
+        callback: displaySignage
       });
     }); 
   })
@@ -781,7 +791,7 @@ const displayArrows = function() {
 
   dataTool.innerHTML = ``;
 }
-map.on('wheel', displayArrows);
+map.on('wheel', displaySignage);
 
 /* Featured Items */
 
