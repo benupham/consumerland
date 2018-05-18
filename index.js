@@ -320,28 +320,17 @@ const standardFontStroke = new Stroke({ color: '#fff', width: 2 });
 
 const circleFillStyle = function(feature, resolution) {
   const properties = feature.getProperties();
+  let fill = '#fff';
+  if (properties.hover == true && resolution > productsImageMax) {
+    fill = '#DCDCDC';
+  } 
 
   const style = new Style({
-    fill: new Fill({ color: '#fff' }),
+    fill: new Fill({ color: fill }),
     stroke: new Stroke({ color: '#C0C0C0', width: 2 }) 
   })
   if (resolution <= productsImageMax) {
     style.setStroke(null);
-  }
-
-  return style
-}
-
-const circleFillHoverStyle = function(feature, resolution) {
-  const properties = feature.getProperties();
-
-  const style = new Style({
-    fill: new Fill({ color: '#DCDCDC' }),
-    stroke: new Stroke({ color: '#808080', width: 3 })
-  })
-  if (resolution <= productsImageMax) {
-    style.setStroke(null);
-    style.setFill({color: '#fff'});
   }
 
   return style
@@ -551,18 +540,20 @@ map.addControl(searchControl);
 // Product Card Overlay (hover)
 const productCardOverlay = new Overlay({
   element: document.getElementById('product-card'),
+  id: 'productCard',
   autoPan: false,
   stopEvent: false
 });
 map.addOverlay(productCardOverlay);
 
 // Product Overlay (click)
-const productOverlay = new Overlay({
+const productDetailOverlay = new Overlay({
   element: document.getElementById('product-overlay'),
+  id: 'productDetail',
   autoPan: true,
   stopEvent: false
 });
-map.addOverlay(productOverlay);
+map.addOverlay(productDetailOverlay);
 
 const updateAddCartButton = function(inCart, btn) {
   if (inCart === true) {
@@ -577,12 +568,14 @@ const updateAddCartButton = function(inCart, btn) {
 }
 
 const renderProductOverlay = function(product, overlay) {
+  // need to hide all visible overlays on render...
+  //SCREAMING OUT for React here...
   overlay.getElement().onpointermove = function(e) {e.stopPropagation()};
   overlay.getElement().onpointerdown = function(e) {e.stopPropagation()};
   overlay.getElement().style.display = 'block';
   overlay.set('product', product.getId());
   const coordinate = product.getGeometry().getCoordinates();
-  
+
   const btn = overlay.getElement().querySelector('.add-to-cart');
   btn.setAttribute('data-pid', product.getId());
   const inCart = product.get('inCart') || false;
@@ -592,8 +585,29 @@ const renderProductOverlay = function(product, overlay) {
   overlay.setPosition(coordinate);
 
   let name = overlay.getElement().querySelector('.product-name');
+  name.setAttribute('data-pid', product.getId());
   let price = overlay.getElement().querySelector('.product-price');
+  price.setAttribute('data-pid', product.getId());
   let image = overlay.getElement().querySelector('.product-image');
+  image.setAttribute('data-pid', product.getId());
+
+  if (overlay.getId() == 'productCard') {
+    image.addEventListener('click', function(e) {
+      const pId = this.getAttribute('data-pid');
+      const p = productsVectorSource.getFeatureById(pId);
+      renderProductOverlay(p,productDetailOverlay);
+    })
+    name.addEventListener('click', function(e) {
+      const pId = this.getAttribute('data-pid');
+      const p = productsVectorSource.getFeatureById(pId);
+      renderProductOverlay(p,productDetailOverlay);
+    })
+    price.addEventListener('click', function(e) {
+      const pId = this.getAttribute('data-pid');
+      const p = productsVectorSource.getFeatureById(pId);
+      renderProductOverlay(p,productDetailOverlay);
+    })
+  }
 
   name.textContent = product.get('name');
   price.textContent = product.get('price');
@@ -601,11 +615,10 @@ const renderProductOverlay = function(product, overlay) {
   image.src = '';
   image.src = product.get('src');
   const offset = [-100 - image.offsetLeft, -100 - image.offsetTop];
-  overlay.setOffset(offset);
-  
+  overlay.setOffset(offset); 
 } 
 
-const hideProductOverlay = function(overlay) {
+const hideOverlay = function(overlay) {
   overlay.getElement().style.display = 'none';
 }
 
@@ -714,17 +727,17 @@ const handleJumpStrips = function(e) {
 
 let highlight = undefined; 
 const handleHover = function(e) {
+
   if (jumpStripsInt != null) {
     window.clearInterval(jumpStripsInt);
     jumpStripActive = false; 
-    map.getTargetElement().style.cursor = '';
   }
   const resolution = view.getResolution();
 
   const size = map.getSize();
   if (resolution < view.getMaxResolution() && (e.pixel[0] < 100 || e.pixel[1] < 100 || e.pixel[0] > size[0] - 100 || e.pixel[1] > size[1] - 100)) {
     jumpStripsInt = window.setInterval(handleJumpStrips, 16, e);
-    hideProductOverlay(productCardOverlay);
+    hideOverlay(productCardOverlay);
     return
   } else if (jumpStripsInt != null) {
     window.clearInterval(jumpStripsInt);
@@ -736,24 +749,32 @@ const handleHover = function(e) {
     const features = map.getFeaturesAtPixel(e.pixel);
     const feature = features[0];
     const featureType = feature.get('type');
+    console.log(featureType);
     if (featureType == 'product') {
       renderProductOverlay(feature, productCardOverlay);
     } 
-    else if (featureType == 'dept' || 'subdept' || 'brand') {
-      hideProductOverlay(productCardOverlay);
+    else if ((resolution > productsImageMax) && (featureType == 'brand' || 'dept' || 'subdept')) {
+      hideOverlay(productCardOverlay);
+      map.getTargetElement().style.cursor = 'pointer';
       if (feature != highlight) {
         if (highlight) {
-          highlight.setStyle(circleFillStyle);
+          highlight.set('hover', false);
+          feature.dispatchEvent('change');
         }
-        feature.setStyle(circleFillHoverStyle);
+        feature.set('hover', true);
+        feature.dispatchEvent('change');
         highlight = feature;
       }
 
+    } else {
+      hideOverlay(productCardOverlay);
+      map.getTargetElement().style.cursor = '';
     }
   } else {
-    hideProductOverlay(productCardOverlay);
+    hideOverlay(productCardOverlay);
+    map.getTargetElement().style.cursor = '';
     if (highlight) {
-      highlight.setStyle(circleFillStyle);
+      highlight.set('hover', false);
       highlight = undefined;
     }
   }
@@ -767,45 +788,33 @@ map.getTargetElement().addEventListener('mouseleave', function(){
 /* On Click */
 
 const handleClick = function(e) {
-  console.log('handleClick click event',e);
+  
   const features = map.getFeaturesAtPixel(e.pixel);
+
+  if (features == null) {
+    hideOverlay(productCardOverlay);
+    return;
+  }
   const feature = features[0];
   const featureType = feature.get('type');
+  const zoom = view.getZoom();
+  const res = view.getResolution();
+  const mapSize = map.getSize();
+  const constraint = [mapSize[0] + 500, mapSize[1] + 100] ;
 
-  if (document.getElementById('product-overlay').style.display == 'block' &&
-      featureType != 'product') {
-    hideProductOverlay(productOverlay);
-    return
-  }
-  if (features.length > 0) {
-    const zoom = view.getZoom();
-    const mapSize = map.getSize();
-    const constraint = [mapSize[0] + 1000, mapSize[1] + 2000] ;
+  if (featureType == 'product') {
+    hideOverlay(productCardOverlay);
+    renderProductOverlay(feature, productDetailOverlay);
 
-    if (featureType == 'product') {
-      hideProductOverlay(productCardOverlay);
-      renderProductOverlay(feature, productOverlay);
+  } else if ((featureType == 'brand' || 'dept' || 'subdept') && res > productsImageMax) {
+    hideOverlay(productDetailOverlay);
+    view.fit(feature.getGeometry().getExtent(), {size: constraint, duration: 1000});
 
-    } else if (featureType == 'brand') {
-      hideProductOverlay(productOverlay);
-      view.fit(feature.getGeometry().getExtent(), {size: constraint, duration: 1000});
-
-    } else if (featureType == 'subdept') {
-      hideProductOverlay(productOverlay);
-      view.fit(feature.getGeometry().getExtent(), {size: constraint, duration: 1000});
-
-    } else if (featureType == 'dept') {
-      hideProductOverlay(productOverlay);
-      view.fit(feature.getGeometry().getExtent(), {size: constraint, duration: 1000});
-
-    } else {
-      // handle cases of "fake" feature layers, like product circles
-    }
   } else {
-    // what happens if they click on no features? 
+    hideOverlay(productDetailOverlay);
   }
-}
 
+}
 map.on('singleclick', handleClick);
 
 

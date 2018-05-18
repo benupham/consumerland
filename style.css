@@ -36,18 +36,20 @@ body {
 	width: 40%;
 }
 
-/* PRODUCT OVERLAY */
+/* PRODUCT CARD OVERLAY */
 
 .product-card {
 	position: absolute;
 	background: rgba(255,255,255,1);
-	padding: 10px;
 }
 
 .product-card .product-image {
-	height: 200px;
-	width: 200px;
+	height: auto;
+	width: auto;
+	cursor: pointer;
 }
+
+/* PRODUCT DETAIL OVERLAY */
 
 .product-overlay {
 	position: absolute;
@@ -69,8 +71,10 @@ body {
 }
 
 /* CIRCLE HOVER */
-.circle-hover {
+.circle-overlay {
 	border-radius: 50%;
+	border: 3px solid #000;
+	cursor: pointer;
 }
 
 /* Dev Tools */
