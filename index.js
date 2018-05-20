@@ -268,6 +268,7 @@ const standardFontStroke = new Stroke({ color: '#fff', width: 2 });
 
 const circleFillStyle = function(feature, resolution) {
   const properties = feature.getProperties();
+  console.log(properties);
   let fill = '#fff';
   if (properties.hover == true && resolution > productsImageMax) {
     fill = '#DCDCDC';
@@ -314,13 +315,65 @@ const circleTextStyle = function(feature, resolution) {
         text: name,
         font: standardFont,
         fill: standardFontColor,
-        stroke: standardFontStroke
+        stroke: standardFontStroke,
       })
     })  
   }
 
   return style
   // }
+}
+
+const circleStyle = function(feature, resolution) {
+  const props = feature.getProperties();
+  if (style) {
+    // update style
+    if (props.hover == true && resolution > productsImageMax) {
+      fill = '#DCDCDC';
+    }
+
+  } else {
+    
+    const name = props.name;
+    const src = props.src;
+    const center = props.geometry.getCenter();
+    const radius = props.geometry.getRadius();
+
+    let fill = '#fff';
+
+    if (src !== '') {
+      let logoIcon = iconcache[src];
+
+      if (!logoIcon) {
+        logoIcon = new Icon({
+          size: [200,200],
+          scale: 1 / resolution + .3,
+          crossOrigin: 'anonymous',
+          src: './product-images/brand-logos/' + src
+        });
+        iconcache[src] = logoIcon;
+      }
+      logoIcon.setScale(1 / resolution + .3);
+      
+      style = new Style({
+        image: logoIcon,
+        geometry: new Point(center)
+      })
+    } else {
+      style = new Style({
+        text: new Text({
+          text: name,
+          font: standardFont,
+          fill: standardFontColor,
+          stroke: standardFontStroke
+        })
+      })  
+    }
+  }
+  style = [
+
+  ]
+  return style
 }
 /* Departments */
 
