@@ -1,9 +1,9 @@
 import Control from 'ol/control/control';
-import {map, productsVectorSource, productsImageMax} from './index.js';
-import {productData} from './data/productData.js';
-import {brandsData} from './data/brandsData.js';
-import {departmentsData} from './data/departmentsData.js';
-import {subdepartmentsData} from './data/subdepartmentsData.js';
+import {map, productsVectorSource, productsImageMax} from '../index.js';
+import {productData} from '../data/productData.js';
+import {brandsData} from '../data/brandsData.js';
+import {departmentsData} from '../data/departmentsData.js';
+import {subdepartmentsData} from '../data/subdepartmentsData.js';
 import matchSorter from 'match-sorter';
 
 /*

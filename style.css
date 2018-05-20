@@ -41,6 +41,8 @@ body {
 .product-card {
 	position: absolute;
 	background: rgba(255,255,255,1);
+	padding-top: 10px;
+	z-index: 10;
 }
 
 .product-card .product-image {
@@ -57,6 +59,7 @@ body {
 	width: 500px;
 	padding: 20px;
 	background: rgba(255,255,255,1);
+	z-index: 10;
 }
 
 .product-overlay .product-name {
@@ -68,13 +71,6 @@ body {
 }
 
 .product-overlay .product-price {
-}
-
-/* CIRCLE HOVER */
-.circle-overlay {
-	border-radius: 50%;
-	border: 3px solid #000;
-	cursor: pointer;
 }
 
 /* Dev Tools */
@@ -89,12 +85,3 @@ body {
 	background: white;
 }
 
-.jump-strips-border {
-	border: 1px solid black;
-	top: 100px;
-	left: 100px;
-	height: 100px;
-	width: 100px;
-	position: absolute;
-	z-index: 1001;
-}

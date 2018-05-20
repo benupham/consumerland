@@ -261,3 +261,40 @@ const productHoverBackground = new Feature({
 })
 
 productsImageFeatures.push(productHoverBackground);
+
+
+const removeIcon = new Style({
+  image: new Icon({
+    size: [24,24],
+    anchorXUnits: 'pixels',
+    anchorYUnits: 'pixels',
+    anchor: [-85,85],
+    crossOrigin: 'anonymous',
+    src: 'product-images/remove.png'
+  }),
+  zIndex: 100,
+})
+
+const addIcon = new Style({
+  image: new Icon({
+    size: [24,24],
+    anchorXUnits: 'pixels',
+    anchorYUnits: 'pixels',
+    anchor: [-85,85],
+    crossOrigin: 'anonymous',
+    src: 'product-images/add.png'
+  }),
+  zIndex: 100
+})
+
+
+
+// This might be useful for low resolution views where more than 1 dept or sub is visible
+// const extentDepts = departmentsSource.getFeaturesInExtent(extent);
+// const extentSubdepts = subdepartmentsSource.getFeaturesInExtent(extent);
+// for (var i = extentDepts.length - 1; i >= 0; i--) {
+//   if (extentDepts[i].getGeometry().intersectsCoordinate(ctr)) extentDepts.splice(i, 1);
+// }
+// for (var i = extentSubdepts.length - 1; i >= 0; i--) {
+//   if (extentSubdepts[i].getGeometry().intersectsCoordinate(ctr)) extentSubdepts.splice(i, 1);
+// }

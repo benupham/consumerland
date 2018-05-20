@@ -22,45 +22,16 @@ import Extent from 'ol/extent';
 import GeoJSON from 'ol/format/geojson';
 import MouseWheelZoom from 'ol/interaction/mousewheelzoom';
 import CanvasMap from 'ol/canvasmap';
-import Overlay from 'ol/overlay';
 import {productData} from './data/productData.js';
 import {brandsData} from './data/brandsData.js';
 import {departmentsData} from './data/departmentsData.js';
 import {subdepartmentsData} from './data/subdepartmentsData.js';
-import Control from 'ol/control/control';
-import matchSorter from 'match-sorter';
 
-/*
-* Utility Functions
-* 
-*/
-
-
-function textFormatter(str, width, spaceReplacer, maxLength = null) {
-  if (maxLength !== null) {
-    str = str.length > maxLength ? str.substr(0, maxLength - 1) + '...' : str.substr(0);
-  }
-  if (str.length > width) {
-    var p = width;
-    while (p > 0 && (str[p] != ' ' && str[p] != '-')) {
-      p--;
-    }
-    if (p > 0) {
-      var left;
-      if (str.substring(p, p + 1) == '-') {
-        left = str.substring(0, p + 1);
-      } else {
-        left = str.substring(0, p);
-      }
-      var right = str.substring(p + 1);
-      return left + spaceReplacer + textFormatter(right, width, spaceReplacer, maxLength);
-    }
-  }
- 
-  return str;    
-}
-
-const dataTool = document.querySelector('#data-tool');
+import {productCardOverlay, productDetailOverlay, signage, renderProductOverlay, openProductDetail, hideOverlay} from './components/overlays.js';
+import {textFormatter, dataTool} from './utilities.js';
+import {displayCart, updateCart, updateAddCartButton} from './components/cart.js';
+import {displaySignage} from './components/signage.js';
+import {searchControl, handleSearch} from './components/search.js';
 
 
 /*
@@ -70,7 +41,7 @@ const dataTool = document.querySelector('#data-tool');
 
 // Resolution
 
-const productsImageMax = 5;
+export const productsImageMax = 5;
 const deptsTextMin = 30;
 const subdeptsTextMax = 30;
 const subdeptsFillMax = 90;
@@ -103,33 +74,9 @@ const colors = [
 * 
 */
 
-const iconcache = new IconCache();
+export const iconcache = new IconCache();
 iconcache.setSize(productData.length);
 const styleCache = {};
-
-const removeIcon = new Style({
-  image: new Icon({
-    size: [24,24],
-    anchorXUnits: 'pixels',
-    anchorYUnits: 'pixels',
-    anchor: [-85,85],
-    crossOrigin: 'anonymous',
-    src: 'product-images/remove.png'
-  }),
-  zIndex: 100,
-})
-
-const addIcon = new Style({
-  image: new Icon({
-    size: [24,24],
-    anchorXUnits: 'pixels',
-    anchorYUnits: 'pixels',
-    anchor: [-85,85],
-    crossOrigin: 'anonymous',
-    src: 'product-images/add.png'
-  }),
-  zIndex: 100
-})
 
 const productsVectorStyle = function(product, resolution) { 
   let style = styleCache[product.getProperties().name];
@@ -206,7 +153,7 @@ const productsVectorStyle = function(product, resolution) {
 
 const productsImageFeatures = (new GeoJSON()).readFeatures(productData)
 
-const productsVectorSource = new VectorSource({
+export const productsVectorSource = new VectorSource({
   features: productsImageFeatures,
   overlaps: false
 });
@@ -279,6 +226,7 @@ const tagSource = new VectorSource({
   features: tagFeatures,
   overlaps: false
 });
+
 const tagLayer = new VectorLayer({
   source: tagSource,
   style: tagStyle,
@@ -378,7 +326,7 @@ const circleTextStyle = function(feature, resolution) {
 
 const departments = circleFeatureRender(departmentsData, colors);
 
-const departmentsSource = new VectorSource({
+export const departmentsSource = new VectorSource({
        features: departments
 });
 
@@ -401,7 +349,7 @@ const departmentsTextLayer = new VectorLayer({
 
 const subdepartments = circleFeatureRender(subdepartmentsData, colors);
 
-const subdepartmentsSource = new VectorSource({
+export const subdepartmentsSource = new VectorSource({
        features: subdepartments
 });
 
@@ -455,7 +403,7 @@ const brandsTextLayer = new VectorLayer({
 * 
 */
 
-var view = new View({
+export const view = new View({
   center: [55667,-46227],
   // extent: [2400,-9795,92400,-83963],
   resolution: 10,
@@ -464,7 +412,7 @@ var view = new View({
   maxResolution: 100,
 })
 
-var map = new olMap({
+export const map = new olMap({
   renderer: /** @type {Array<ol.renderer.Type>} */ (['canvas']),
   layers: [
     departmentsFillLayer,
@@ -490,188 +438,20 @@ const mapResize = function(e) {
 window.addEventListener('load', mapResize);
 window.addEventListener('resize', mapResize);
 
+map.addOverlay(productCardOverlay);
+map.addOverlay(productDetailOverlay);
+for (let i = 0; i < 4; i++) {
+  map.addOverlay(signage[i]);
+}
 
-/*
-* Controls
-* 
-*/
 
-
-const handleSearch = function(e) {
-  if (e.keyCode != 13) {
-    return
-  }
-  const query = document.getElementById('search-input').value;
-  if (query != '') {
-    try {
-      console.log('query',query);
-      let products = productData.features;
-      let match = matchSorter(products, query, {keys: ['properties.name'] })
-      console.log('match',match[0].id);
-      const feature = productsVectorLayer.getSource().getFeatureById(match[0].id); 
-      map.getView().animate({
-        center: feature.getGeometry().getCoordinates(),
-        resolution: productsImageMax - .001 //need to make this a variable
-      })
-    }
-    catch(err) {
-      console.log(query +' not found');
-    }
-  }
-} 
-
-const searchControl = new Control({
-  element: document.getElementById('search-cart-overlay'),
+map.on('moveend', (e) => {
+  if (jumpStripActive === true) return; 
+  const signageTimeOut = setTimeout(displaySignage, 100);
 });
-document.getElementById('search-button').onclick = handleSearch;
-
-document.getElementById('search-input').onkeypress = handleSearch;
-
-document.getElementById('search-cart-overlay').onpointermove = function(e) {e.stopPropagation()};
 
 map.addControl(searchControl);
 
-
-/*
-* Overlays
-* 
-*/
-
-// Product Card Overlay (hover)
-const productCardOverlay = new Overlay({
-  element: document.getElementById('product-card'),
-  id: 'productCard',
-  autoPan: false,
-  stopEvent: false
-});
-map.addOverlay(productCardOverlay);
-
-// Product Overlay (click)
-const productDetailOverlay = new Overlay({
-  element: document.getElementById('product-overlay'),
-  id: 'productDetail',
-  autoPan: true,
-  stopEvent: false
-});
-map.addOverlay(productDetailOverlay);
-
-const updateAddCartButton = function(inCart, btn) {
-  if (inCart === true) {
-    btn.classList.remove("btn-outline-warning");
-    btn.classList.add('btn-outline-secondary');
-    btn.textContent = 'Remove';
-  } else if (inCart === false) {
-    btn.classList.remove("btn-outline-secondary");
-    btn.classList.add('btn-outline-warning');
-    btn.textContent = 'Add to Cart';
-  }
-}
-
-const renderProductOverlay = function(product, overlay) {
-  // need to hide all visible overlays on render...
-  //SCREAMING OUT for React here...
-  overlay.getElement().onpointermove = function(e) {e.stopPropagation()};
-  overlay.getElement().onpointerdown = function(e) {e.stopPropagation()};
-  overlay.getElement().style.display = 'block';
-  overlay.set('product', product.getId());
-  const coordinate = product.getGeometry().getCoordinates();
-
-  const btn = overlay.getElement().querySelector('.add-to-cart');
-  btn.setAttribute('data-pid', product.getId());
-  const inCart = product.get('inCart') || false;
-  updateAddCartButton(inCart, btn);
-  btn.addEventListener('click', updateCart);
-
-  overlay.setPosition(coordinate);
-
-  let name = overlay.getElement().querySelector('.product-name');
-  name.setAttribute('data-pid', product.getId());
-  let price = overlay.getElement().querySelector('.product-price');
-  price.setAttribute('data-pid', product.getId());
-  let image = overlay.getElement().querySelector('.product-image');
-  image.setAttribute('data-pid', product.getId());
-
-  if (overlay.getId() == 'productCard') {
-    image.addEventListener('click', function(e) {
-      const pId = this.getAttribute('data-pid');
-      const p = productsVectorSource.getFeatureById(pId);
-      renderProductOverlay(p,productDetailOverlay);
-    })
-    name.addEventListener('click', function(e) {
-      const pId = this.getAttribute('data-pid');
-      const p = productsVectorSource.getFeatureById(pId);
-      renderProductOverlay(p,productDetailOverlay);
-    })
-    price.addEventListener('click', function(e) {
-      const pId = this.getAttribute('data-pid');
-      const p = productsVectorSource.getFeatureById(pId);
-      renderProductOverlay(p,productDetailOverlay);
-    })
-  }
-
-  name.textContent = product.get('name');
-  price.textContent = product.get('price');
-
-  image.src = '';
-  image.src = product.get('src');
-  const offset = [-100 - image.offsetLeft, -100 - image.offsetTop];
-  overlay.setOffset(offset); 
-} 
-
-const hideOverlay = function(overlay) {
-  overlay.getElement().style.display = 'none';
-}
-
-
-/*
-* Cart
-* 
-*/
-
-const cart = [];
-const cartContents = document.querySelector('#cart-contents');
-
-const updateCart = function(e) {
-  const pId = this.getAttribute('data-pid');
-  const product = productsVectorSource.getFeatureById(pId);
-  const src = product.get('src');
-  const name = product.get('name');
-
-  for (var i = cart.length - 1; i >= 0; i--) {
-    if (cart[i].pId == pId) {
-      cart.splice(i,1);
-      cartContents.removeChild(cartContents.childNodes[i]);
-      updateAddCartButton(false, this);
-      product.set('inCart',false);
-      return 
-    } 
-  }
-
-  cart.push({
-    pId: pId,
-    name: product.get('name'),
-    src: product.get('src'),
-    price: product.get('price')
-  });
-
-  const cartItem = document.getElementById('cart-item').cloneNode(true);
-  cartItem.id = 'item-' + pId;
-  cartItem.querySelector('img').src = src;
-  cartItem.querySelector('.cart-product-name').textContent = name;
-  cartContents.appendChild(cartItem);
-  product.set('inCart',true);
-  updateAddCartButton(true, this);
-
-}
-
-const displayCart = function() {
-  if (cartContents.style.display == 'block') {
-    cartContents.style.display = 'none';
-    return
-  }
-  cartContents.style.display = 'block';
-}
-document.getElementById('cart-open-button').onclick = displayCart;
 
 /*
 * Interactions
@@ -727,29 +507,28 @@ const handleJumpStrips = function(e) {
 
 let highlight = undefined; 
 const handleHover = function(e) {
-
-  if (jumpStripsInt != null) {
-    window.clearInterval(jumpStripsInt);
-    jumpStripActive = false; 
-  }
   const resolution = view.getResolution();
+  // if (jumpStripsInt != null) {
+  //   window.clearInterval(jumpStripsInt);
+  //   jumpStripActive = false; 
+  // }
 
-  const size = map.getSize();
-  if (resolution < view.getMaxResolution() && (e.pixel[0] < 100 || e.pixel[1] < 100 || e.pixel[0] > size[0] - 100 || e.pixel[1] > size[1] - 100)) {
-    jumpStripsInt = window.setInterval(handleJumpStrips, 16, e);
-    hideOverlay(productCardOverlay);
-    return
-  } else if (jumpStripsInt != null) {
-    window.clearInterval(jumpStripsInt);
-    map.getTargetElement().style.cursor = '';
-    jumpStripActive = false;
-  }
+  // const size = map.getSize();
+  // if (resolution < view.getMaxResolution() && (e.pixel[0] < 100 || e.pixel[1] < 100 || e.pixel[0] > size[0] - 100 || e.pixel[1] > size[1] - 100)) {
+  //   jumpStripsInt = window.setInterval(handleJumpStrips, 16, e);
+  //   hideOverlay(productCardOverlay);
+  //   return
+  // } else if (jumpStripsInt != null) {
+  //   window.clearInterval(jumpStripsInt);
+  //   map.getTargetElement().style.cursor = '';
+  //   jumpStripActive = false;
+  // }
 
   if (map.hasFeatureAtPixel(e.pixel)) {
     const features = map.getFeaturesAtPixel(e.pixel);
     const feature = features[0];
     const featureType = feature.get('type');
-    console.log(featureType);
+
     if (featureType == 'product') {
       renderProductOverlay(feature, productCardOverlay);
     } 
@@ -818,103 +597,6 @@ const handleClick = function(e) {
 map.on('singleclick', handleClick);
 
 
-/* Signage */ 
-
-const signage = {};
-for (let i = 0; i < 4; i++) {
-  signage[i] = new Overlay({
-    element: document.getElementById('sign-' + i),
-    autoPan: false,
-    stopEvent: true
-  });
-  map.addOverlay(signage[i]);
-}
-
-const displaySignage = function() {
-  const viewExtent = view.calculateExtent();
-  const res = view.getResolution();
-  const ctr = view.getCenter();
-
-
-  // This might be useful for low resolution views where more than 1 dept or sub is visible
-  // const extentDepts = departmentsSource.getFeaturesInExtent(extent);
-  // const extentSubdepts = subdepartmentsSource.getFeaturesInExtent(extent);
-  // for (var i = extentDepts.length - 1; i >= 0; i--) {
-  //   if (extentDepts[i].getGeometry().intersectsCoordinate(ctr)) extentDepts.splice(i, 1);
-  // }
-  // for (var i = extentSubdepts.length - 1; i >= 0; i--) {
-  //   if (extentSubdepts[i].getGeometry().intersectsCoordinate(ctr)) extentSubdepts.splice(i, 1);
-  // }
-  const closestDepts = [];
-  const cnt = 4;
-  for (let i = 0; i < 4; i++) {
-    const closestDept = departmentsSource.getClosestFeatureToCoordinate(ctr, (f) => {
-      // if the feature intersects the ctr, skip 
-      if (f.getGeometry().intersectsCoordinate(ctr)) return false;
-
-      // if the feature's center is in the view, skip
-      if (Extent.containsCoordinate(viewExtent,f.getGeometry().getCenter())) return false;
-
-      // if we've already found the feature, skip as well 
-      if (closestDepts.indexOf(f) > -1) return false;
-
-      return true;
-      
-    });
-    if (closestDept != null) closestDepts.push(closestDept);
-  }
-
-  // This logic is wasteful 
-  if (closestDepts.length == 0) {
-    for (let i = 0; i < 4; i++) {
-      signage[i].getElement().style.display = 'none';
-    }
-  } else {
-    for (let i = 0; i < 4; i++) {
-      signage[i].getElement().style.display = 'inline-block';
-    }
-  }
-
-  closestDepts.forEach((f, i) => {
-    const coord = f.getGeometry().getCenter();
-    const angle = Math.atan2(coord[1] - ctr[1], coord[0] - ctr[0]); 
-    const deg = -angle * (180 / Math.PI);
-    const adj = Math.sin(angle) * 400 * res;
-    const opp = Math.cos(angle) * 400 * res; 
-    const signCtr = [ctr[0] + opp, ctr[1] + adj];
-
-    let sign = signage[i];
-
-    sign.setPosition(signCtr);
-
-    if (Math.abs(deg) > 90) {
-      sign.getElement().innerHTML = '&larr; ' + f.get('name');
-      sign.getElement().style.transform = 'rotate(' + deg + 'deg) scale(-1, -1)';
-    } else {
-      sign.getElement().innerHTML = f.get('name') + ' &rarr;';
-      sign.getElement().style.transform = 'rotate(' + deg + 'deg)';
-    } 
-    sign.getElement().setAttribute('feature', f.getId());
-    sign.getElement().addEventListener('click', function(e) {
-      const fid = this.getAttribute('feature');
-      view.fit(departmentsSource.getFeatureById(fid).getGeometry(), {
-        duration: 1000,
-        callback: displaySignage
-      });
-    }); 
-  })
-
-  const names = []; 
-  closestDepts.forEach((f) => {
-    names.push(f.get('name'));
-  })
-
-  dataTool.innerHTML = ``;
-}
-map.on('moveend', (e) => {
-  if (jumpStripActive === true) return; 
-  const signageTimeOut = setTimeout(displaySignage, 100);
-});
 
 /* Featured Items */
 
