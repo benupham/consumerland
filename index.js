@@ -330,6 +330,7 @@ const circleStyle = function(feature, resolution) {
     // update style
     if (props.hover == true && resolution > productsImageMax) {
       fill = '#DCDCDC';
+      
     }
 
   } else {
