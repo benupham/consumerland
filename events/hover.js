@@ -1,4 +1,5 @@
-import {view, map, productsImageMax} from '../index.js';
+import {view, map} from '../index.js';
+import {productsImageMax} from '../constants.js';
 import {productCardOverlay, productDetailOverlay, renderProductOverlay, hideOverlay} from '../components/overlays.js';
 import {handleJumpStrips} from '../components/jumpstrips.js';
 

@@ -1,4 +1,5 @@
-import {map, view, productsImageMax} from '../index.js';
+import {map, view} from '../index.js';
+import {productsImageMax} from '../constants.js';
 import {renderProductOverlay, hideOverlay, productDetailOverlay, productCardOverlay} from '../components/overlays.js';
 
 export const handleClick = function(e) {

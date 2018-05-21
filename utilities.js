@@ -1,7 +1,13 @@
+import IconCache from 'ol/style/iconImageCache';
+
 /*
 * Utilities
 * 
 */
+
+export const iconcache = new IconCache();
+
+export const styleCache = {};
 
 export function textFormatter(str, width, spaceReplacer, maxLength = null) {
   if (maxLength !== null) {

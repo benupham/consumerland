@@ -2,7 +2,7 @@
 * Cart
 * 
 */
-import {productsVectorSource} from '../index.js';
+import {productsVectorSource} from '../features/products.js';
 
 const cart = [];
 const cartContents = document.querySelector('#cart-contents');

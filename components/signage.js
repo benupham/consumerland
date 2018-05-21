@@ -1,7 +1,8 @@
 import Extent from 'ol/extent';
 
 import {signage} from '../components/overlays.js';
-import {map, view, departmentsSource, subdepartmentsSource} from '../index.js';
+import {map, view} from '../index.js';
+import {departmentsSource, subdepartmentsSource} from '../features/circleFeatures.js';
 
 
 /* Signage */ 

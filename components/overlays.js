@@ -1,6 +1,7 @@
 import Overlay from 'ol/overlay';
 import {updateAddCartButton, updateCart} from '../components/cart.js';
-import {productsVectorSource, view} from '../index.js';
+import {view} from '../index.js';
+import {productsVectorSource} from '../features/products.js';
 
 /*
 * Overlays

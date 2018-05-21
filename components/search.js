@@ -1,5 +1,7 @@
 import Control from 'ol/control/control';
-import {map, productsVectorSource, productsImageMax} from '../index.js';
+import {map} from '../index.js';
+import {productsImageMax} from '../constants.js';
+import {productsVectorSource} from '../features/products.js';
 import {productData} from '../data/productData.js';
 import {brandsData} from '../data/brandsData.js';
 import {departmentsData} from '../data/departmentsData.js';
