@@ -1,6 +1,6 @@
 import Overlay from 'ol/overlay';
 import {updateAddCartButton, updateCart} from '../components/cart.js';
-import {productsVectorSource} from '../index.js';
+import {productsVectorSource, view} from '../index.js';
 
 /*
 * Overlays
@@ -19,7 +19,7 @@ export const productCardOverlay = new Overlay({
 export const productDetailOverlay = new Overlay({
   element: document.getElementById('product-overlay'),
   id: 'productDetail',
-  autoPan: true,
+  autoPan: false,
   stopEvent: false
 });
 
@@ -39,7 +39,11 @@ export const openProductDetail = function(e) {
   hideOverlay(productCardOverlay);
   const pId = this.getAttribute('data-pid');
   const p = productsVectorSource.getFeatureById(pId);
+  view.animate({resolution: 1, anchor: p.getGeometry().getCoordinates()});
+  view.animate({center: p.getGeometry().getCoordinates()});
   renderProductOverlay(p,productDetailOverlay);
+
+  //view.animate({center: p.getGeometry().getCoordinates()});
 }
 
 export const renderProductOverlay = function(product, overlay) {
@@ -75,9 +79,14 @@ export const renderProductOverlay = function(product, overlay) {
   name.textContent = product.get('name');
   price.textContent = product.get('price');
 
+  //const resolution = view.getResolution();
   image.src = '';
   image.src = product.get('src');
-  const offset = [-100 - image.offsetLeft, -100 - image.offsetTop];
+  //const imageRatio = 1 / (resolution * 0.5) > 1 ? 1 : 1 / (resolution * 0.5);
+  //const imageOffset = -100 * imageRatio;
+  //image.style.width = 200 * imageRatio + 'px';
+  const imageOffset = -100;
+  const offset = [imageOffset - image.offsetLeft, imageOffset - image.offsetTop];
   overlay.setOffset(offset); 
 } 
 

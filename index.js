@@ -32,7 +32,9 @@ import {textFormatter, dataTool} from './utilities.js';
 import {displayCart, updateCart, updateAddCartButton} from './components/cart.js';
 import {displaySignage} from './components/signage.js';
 import {searchControl, handleSearch} from './components/search.js';
-
+import {handleJumpStrips} from './components/jumpstrips.js';
+import {handleHover, jumpStripsInt} from './events/hover.js';
+import {handleClick} from './events/click.js';
 
 /*
 *  Constants
@@ -249,7 +251,6 @@ const circleFeatureRender = function(featureCollection, colors = null) {
   featureCollection.features.forEach(f => {
     const circle = new Feature({
       'geometry': new Circle(f.geometry.coordinates, f.properties.radius || (100 * Math.sqrt(2))),
-      //'labelPoint': f.geometry.coordinates,
       'name': f.properties.name,
       'price': f.properties.price || '',
       'type': f.properties.type,
@@ -261,14 +262,44 @@ const circleFeatureRender = function(featureCollection, colors = null) {
   return circles;
 }
 
-const standardFont = '16px sans-serif'; 
+const standardFont = '36px sans-serif'; 
 const standardFontColor = new Fill({ color: '#606060' });
 const standardFontStroke = new Stroke({ color: '#fff', width: 2 });
 
 
+/*
+* Product Dot Feature
+* 
+*/
+
+const productsCirclesStyle = function(product, resolution) {
+  const properties = product.getProperties();
+  let style = new Style({
+    fill: new Fill({
+      color: colors[Math.floor(Math.random() * colors.length)],
+    }),
+  })
+  return style;
+}
+
+const productCircles = circleFeatureRender(productData, colors);
+
+const productsCirclesSource = new VectorSource({
+       features: productCircles
+});
+
+const productsCirclesLayer = new VectorLayer({
+  source: productsCirclesSource,
+  style: productsCirclesStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  minResolution: productsImageMax,
+  maxResolution: brandsFillMax
+})
+
+
 const circleFillStyle = function(feature, resolution) {
   const properties = feature.getProperties();
-  console.log(properties);
   let fill = '#fff';
   if (properties.hover == true && resolution > productsImageMax) {
     fill = '#DCDCDC';
@@ -298,13 +329,14 @@ const circleTextStyle = function(feature, resolution) {
     if (!logoIcon) {
       logoIcon = new Icon({
         size: [200,200],
-        scale: 1 / resolution + .3,
         crossOrigin: 'anonymous',
-        src: './product-images/brand-logos/' + src
+        src: './product-images/category-images/' + src
       });
       iconcache[src] = logoIcon;
     }
-    logoIcon.setScale(1 / resolution + .3);
+    let scale = sqrt2 * radius / resolution > 200 ? 1 : (sqrt2 * radius / resolution) / 200;
+    logoIcon.setScale(scale);
+
     style = new Style({
       image: logoIcon,
       geometry: new Point(center)
@@ -326,55 +358,74 @@ const circleTextStyle = function(feature, resolution) {
 
 const circleStyle = function(feature, resolution) {
   const props = feature.getProperties();
-  if (style) {
-    // update style
-    if (props.hover == true && resolution > productsImageMax) {
-      fill = '#DCDCDC';
-      
-    }
+  const name = props.name;
+  const src = props.src || '';
+  const center = props.geometry.getCenter();
+  const radius = props.geometry.getRadius();
+  const scale = sqrt2 * radius / resolution > 256 ? 1 : (sqrt2 * radius / resolution) / 256;
 
-  } else {
-    
-    const name = props.name;
-    const src = props.src;
-    const center = props.geometry.getCenter();
-    const radius = props.geometry.getRadius();
+  let styles = [];
 
-    let fill = '#fff';
-
-    if (src !== '') {
-      let logoIcon = iconcache[src];
-
-      if (!logoIcon) {
-        logoIcon = new Icon({
-          size: [200,200],
-          scale: 1 / resolution + .3,
-          crossOrigin: 'anonymous',
-          src: './product-images/brand-logos/' + src
-        });
-        iconcache[src] = logoIcon;
-      }
-      logoIcon.setScale(1 / resolution + .3);
-      
-      style = new Style({
-        image: logoIcon,
-        geometry: new Point(center)
-      })
-    } else {
-      style = new Style({
-        text: new Text({
-          text: name,
-          font: standardFont,
-          fill: standardFontColor,
-          stroke: standardFontStroke
-        })
-      })  
-    }
+  // Fill/Stroke Style
+  let stroke = '#DCDCDC';
+  if (props.hover == true && resolution > productsImageMax) {
+    stroke = '#808080';
   }
-  style = [
+  const fillStyle = new Style({
+    fill: new Fill({ color: '#fff' }),
+    stroke: new Stroke({ color: stroke, width: 2 }) 
+  })
+  if (resolution <= productsImageMax) {
+    fillStyle.setStroke(null);
+  }
 
-  ]
-  return style
+  // Icon Image Style
+  let iconStyle = null
+  if (src != '') {
+
+    let icon = iconcache[src];
+    if (!icon) {
+      icon = new Icon({
+        size: [256,256],
+        crossOrigin: 'anonymous',
+        src: './product-images/category-images/' + src 
+      });
+      iconcache[src] = icon;
+    }
+    icon.setScale(scale);
+    
+    iconStyle = new Style({
+      image: icon,
+      geometry: new Point(center)
+    })    
+  }
+
+  // Text Style
+  const textStyle = new Style({
+    text: new Text({
+      text: name,
+      font: standardFont,
+      fill: standardFontColor,
+      stroke: standardFontStroke,
+      scale: scale
+    })
+  })  
+
+  if (iconStyle !== null) {
+    styles = [
+      fillStyle,
+      iconStyle
+    ]    
+  } else {
+    styles = [
+      fillStyle,
+      textStyle
+    ]
+  }
+
+  
+
+  return styles
 }
 /* Departments */
 
@@ -386,10 +437,11 @@ export const departmentsSource = new VectorSource({
 
 const departmentsFillLayer = new VectorLayer({
   source: departmentsSource,
-  style: circleFillStyle,
+  style: circleStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
 })
+
 
 const departmentsTextLayer = new VectorLayer({
   source: departmentsSource,
@@ -409,7 +461,7 @@ export const subdepartmentsSource = new VectorSource({
 
 const subdepartmentsFillLayer = new VectorLayer({
   source: subdepartmentsSource,
-  style: circleFillStyle,
+  style: circleStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
   maxResolution: subdeptsFillMax
@@ -437,7 +489,7 @@ const brandsSource = new VectorSource({
 
 const brandsFillLayer = new VectorLayer({
   source: brandsSource,
-  style: circleFillStyle,
+  style: circleStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
   maxResolution: brandsFillMax
@@ -460,11 +512,12 @@ const brandsTextLayer = new VectorLayer({
 export const view = new View({
   center: [55667,-46227],
   // extent: [2400,-9795,92400,-83963],
-  resolution: 10,
+  resolution: 8,
   zoomFactor: 1.25,
   minResolution: 1,
   maxResolution: 100,
 })
+
 
 export const map = new olMap({
   renderer: /** @type {Array<ol.renderer.Type>} */ (['canvas']),
@@ -472,15 +525,22 @@ export const map = new olMap({
     departmentsFillLayer,
     subdepartmentsFillLayer,
     brandsFillLayer,
+    // productsCirclesLayer,
     productsVectorLayer,
     tagLayer,
-    departmentsTextLayer,
-    subdepartmentsTextLayer,
-    brandsTextLayer
+    // departmentsTextLayer,
+    // subdepartmentsTextLayer,
+    // brandsTextLayer
     ],
   target: document.getElementById('map'),
   view: view
 });
+
+export const maxExtent = departmentsSource.getExtent();
+view.fit(maxExtent);
+
+const centerZoom = view.getCenter();  
+
 
 const mapResize = function(e) {
   const mapHeight = document.documentElement.clientHeight;
@@ -497,158 +557,27 @@ map.addOverlay(productDetailOverlay);
 for (let i = 0; i < 4; i++) {
   map.addOverlay(signage[i]);
 }
-
-
-map.on('moveend', (e) => {
-  if (jumpStripActive === true) return; 
-  const signageTimeOut = setTimeout(displaySignage, 100);
-});
-
 map.addControl(searchControl);
 
-
-/*
-* Interactions
-* 
-*/
-
-/* On Hover */ 
-
-let jumpStripsInt = null;
-let jumpStripActive = false;
-const handleJumpStrips = function(e) {
-  // prevent firing if dragging mouse
-  if (e.dragging === true) return;
-
-  map.getTargetElement().style.cursor = 'pointer';
-
-  jumpStripActive = true; 
-
-  const res = view.getResolution();
-  if (res >= 100) window.clearInterval(jumpStripsInt);
-  const size = map.getSize();
-  const limit = [size[0] - 100, size[1] - 100];
-  const pixel = e.pixel;
-  const p = map.getCoordinateFromPixel(e.pixel);
-  const ctr = view.getCenter();
-
-  const x = p[0];
-  const y = p[1];
-
-  const delta = res / 5;
-
-  let velocity = 10;
-  if (pixel[0] < 100 || pixel[1] < 100) {
-    velocity = pixel[0] <= pixel[1] ? (100 - pixel[0]) * delta : (100 - pixel[1]) * delta;
-  } else {
-    velocity = pixel[0] > limit[0] ? (pixel[0] - limit[0]) * delta : (pixel[1] - limit[1]) * delta;
-  }  
-  const angle = Math.atan2(p[1] - ctr[1], p[0] - ctr[0]); 
-  const adj = Math.sin(angle) * velocity;
-  const opp = Math.cos(angle) * velocity; 
-  const newCtr = [ctr[0] + opp, ctr[1] + adj];
-
-  view.setCenter(newCtr);
-
-  const resDelta = delta * 0.05;
-  if (res < 100) {
-    view.setResolution(res + resDelta);
-  }
-
-  // dataTool.innerHTML = `resolution: ${res}<br>resDelta: ${resDelta}<br>pixel: ${pixel}<br>point: ${p}<br>delta: ${delta}<br>velocity: ${velocity}
-  // <br>limit: ${limit}<br>center: ${ctr}`;
-}
-
-let highlight = undefined; 
-const handleHover = function(e) {
-  const resolution = view.getResolution();
-  // if (jumpStripsInt != null) {
-  //   window.clearInterval(jumpStripsInt);
-  //   jumpStripActive = false; 
-  // }
-
-  // const size = map.getSize();
-  // if (resolution < view.getMaxResolution() && (e.pixel[0] < 100 || e.pixel[1] < 100 || e.pixel[0] > size[0] - 100 || e.pixel[1] > size[1] - 100)) {
-  //   jumpStripsInt = window.setInterval(handleJumpStrips, 16, e);
-  //   hideOverlay(productCardOverlay);
-  //   return
-  // } else if (jumpStripsInt != null) {
-  //   window.clearInterval(jumpStripsInt);
-  //   map.getTargetElement().style.cursor = '';
-  //   jumpStripActive = false;
-  // }
-
-  if (map.hasFeatureAtPixel(e.pixel)) {
-    const features = map.getFeaturesAtPixel(e.pixel);
-    const feature = features[0];
-    const featureType = feature.get('type');
-
-    if (featureType == 'product') {
-      renderProductOverlay(feature, productCardOverlay);
-    } 
-    else if ((resolution > productsImageMax) && (featureType == 'brand' || 'dept' || 'subdept')) {
-      hideOverlay(productCardOverlay);
-      map.getTargetElement().style.cursor = 'pointer';
-      if (feature != highlight) {
-        if (highlight) {
-          highlight.set('hover', false);
-          feature.dispatchEvent('change');
-        }
-        feature.set('hover', true);
-        feature.dispatchEvent('change');
-        highlight = feature;
-      }
-
-    } else {
-      hideOverlay(productCardOverlay);
-      map.getTargetElement().style.cursor = '';
-    }
-  } else {
-    hideOverlay(productCardOverlay);
-    map.getTargetElement().style.cursor = '';
-    if (highlight) {
-      highlight.set('hover', false);
-      highlight = undefined;
-    }
-  }
-}
 map.on('pointermove', handleHover);
 map.getTargetElement().addEventListener('mouseleave', function(){
   window.clearInterval(jumpStripsInt);
 })
-
-
-/* On Click */
-
-const handleClick = function(e) {
-  
-  const features = map.getFeaturesAtPixel(e.pixel);
-
-  if (features == null) {
-    hideOverlay(productCardOverlay);
-    return;
-  }
-  const feature = features[0];
-  const featureType = feature.get('type');
-  const zoom = view.getZoom();
-  const res = view.getResolution();
-  const mapSize = map.getSize();
-  const constraint = [mapSize[0] + 500, mapSize[1] + 100] ;
-
-  if (featureType == 'product') {
-    hideOverlay(productCardOverlay);
-    renderProductOverlay(feature, productDetailOverlay);
-
-  } else if ((featureType == 'brand' || 'dept' || 'subdept') && res > productsImageMax) {
-    hideOverlay(productDetailOverlay);
-    view.fit(feature.getGeometry().getExtent(), {size: constraint, duration: 1000});
-
-  } else {
-    hideOverlay(productDetailOverlay);
-  }
-
-}
 map.on('singleclick', handleClick);
+
+
+
+view.on('change:resolution', (e) => {
+  const res = view.getResolution();
+  if (window.jumpStripActive === true) return; 
+  if (res < 80) {
+    const signageTimeOut = setTimeout(displaySignage, 100);    
+  }
+  if (res >= 100) window.clearInterval(jumpStripsInt);
+});
+
+
+
 
 
 
