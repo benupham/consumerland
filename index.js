@@ -1,7 +1,9 @@
 require('ol/ol.css');
 import olMap from 'ol/map';
 import View from 'ol/view';
-import VectorLayer from 'ol/layer/vector';
+
+
+
 
 import {productCardOverlay, productDetailOverlay, signage, renderProductOverlay, openProductDetail, hideOverlay} from './components/overlays.js';
 import {textFormatter, dataTool, iconcache} from './utilities.js';
@@ -25,6 +27,9 @@ import {
 } from './features/circleFeatures.js';
 import {productsImageMax} from './constants.js';
 
+
+
+
 /*
 * Map & View
 * 
@@ -33,15 +38,15 @@ import {productsImageMax} from './constants.js';
 export const view = new View({
   center: [55667,-46227],
   // extent: [2400,-9795,92400,-83963],
-  resolution: 8,
+  resolution: 100,
   zoomFactor: 1.25,
   minResolution: 1,
   maxResolution: 100,
 })
-
+export const maxExtent = departmentsSource.getExtent();
 
 export const map = new olMap({
-  renderer: /** @type {Array<ol.renderer.Type>} */ (['canvas']),
+  renderer: (['canvas']),
   layers: [
     departmentsFillLayer,
     subdepartmentsFillLayer,
@@ -49,16 +54,24 @@ export const map = new olMap({
     // productsCirclesLayer,
     productsVectorLayer,
     tagLayer,
-    // departmentsTextLayer,
-    // subdepartmentsTextLayer,
-    // brandsTextLayer
+    departmentsTextLayer,
+    subdepartmentsTextLayer,
+    brandsTextLayer
     ],
   target: document.getElementById('map'),
   view: view
 });
 
-export const maxExtent = departmentsSource.getExtent();
-view.fit(maxExtent);
+const layers = map.getLayers();
+layers.forEach((l) => {
+  l.on('precompose', (e) => {
+    e.context.globalCompositeOperation = 'source-over';
+  } )
+})
+departmentsTextLayer.on('precompose', (e) => {
+  e.context.globalCompositeOperation = 'source-atop';
+});
+
 
 const centerZoom = view.getCenter();  
 

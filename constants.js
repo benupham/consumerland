@@ -5,7 +5,7 @@
 
 // Resolution
 
-export const productsImageMax = 5;
+export const productsImageMax = 6;
 export const deptsTextMin = 30;
 export const subdeptsTextMax = 30;
 export const subdeptsFillMax = 90;

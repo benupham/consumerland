@@ -9,6 +9,7 @@ import {productData} from '../data/productData';
 import {productsImageMax} from '../constants.js';
 import {textFormatter, iconcache, styleCache} from '../utilities.js';
 
+
 /*
 * Product on Sale, in Cart, Tagged Features and Styles
 * 
@@ -47,7 +48,7 @@ const tagStyle = function (tag, resolution) {
       size: [32,32],
       // scale: 1 / resolution + .3,
       crossOrigin: 'anonymous',
-      src: './product-images/tags/' + src
+      src: '../product-images/tags/' + src
     });
   }
 
@@ -76,4 +77,6 @@ export const tagLayer = new VectorLayer({
   renderMode: 'vector',
   maxResolution: productsImageMax 
 })
+
+
 

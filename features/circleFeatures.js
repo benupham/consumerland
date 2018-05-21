@@ -114,18 +114,19 @@ const circleTextStyle = function(feature, resolution) {
   let style = {};
 
   if (src !== '') {
+    console.log('source', src);
     let logoIcon = iconcache[src];
 
     if (!logoIcon) {
       logoIcon = new Icon({
         size: [200,200],
         crossOrigin: 'anonymous',
-        src: './product-images/category-images/' + src
+        src: '../product-images/category-images/' + src
       });
       iconcache[src] = logoIcon;
     }
-    let scale = sqrt2 * radius / resolution > 200 ? 1 : (sqrt2 * radius / resolution) / 200;
-    logoIcon.setScale(scale);
+    // let scale = sqrt2 * radius / resolution > 200 ? 1 : (sqrt2 * radius / resolution) / 200;
+    // logoIcon.setScale(scale);
 
     style = new Style({
       image: logoIcon,
@@ -182,7 +183,7 @@ const circleStyle = function(feature, resolution) {
       });
       iconcache[src] = icon;
     }
-    icon.setScale(scale);
+    //icon.setScale(scale);
     
     iconStyle = new Style({
       image: icon,
@@ -213,8 +214,6 @@ const circleStyle = function(feature, resolution) {
     ]
   }
 
-  
-
   return styles
 }
 /* Departments */
@@ -227,10 +226,11 @@ export const departmentsSource = new VectorSource({
 
 export const departmentsFillLayer = new VectorLayer({
   source: departmentsSource,
-  style: circleStyle,
+  style: circleFillStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
 })
+
 
 
 export const departmentsTextLayer = new VectorLayer({
@@ -251,7 +251,7 @@ export const subdepartmentsSource = new VectorSource({
 
 export const subdepartmentsFillLayer = new VectorLayer({
   source: subdepartmentsSource,
-  style: circleStyle,
+  style: circleFillStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
   maxResolution: subdeptsFillMax
@@ -279,7 +279,7 @@ const brandsSource = new VectorSource({
 
 export const brandsFillLayer = new VectorLayer({
   source: brandsSource,
-  style: circleStyle,
+  style: circleFillStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
   maxResolution: brandsFillMax
