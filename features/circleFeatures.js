@@ -9,6 +9,7 @@ import Fill from 'ol/style/fill';
 import Text from 'ol/style/text';
 import Style from 'ol/style/style';
 
+
 import {productData} from '../data/productData.js';
 import {departmentsData} from '../data/departmentsData.js';
 import {subdepartmentsData} from '../data/subdepartmentsData.js';
@@ -27,6 +28,7 @@ import {
   colors
 } from '../constants.js';
 import {textFormatter, iconcache, styleCache} from '../utilities.js';
+import {map} from '../index.js';
 
 
 
@@ -62,30 +64,30 @@ const standardFontStroke = new Stroke({ color: '#fff', width: 2 });
 * 
 */
 
-const productsCirclesStyle = function(product, resolution) {
-  const properties = product.getProperties();
-  let style = new Style({
-    fill: new Fill({
-      color: colors[Math.floor(Math.random() * colors.length)],
-    }),
-  })
-  return style;
-}
+// const productsCirclesStyle = function(product, resolution) {
+//   const properties = product.getProperties();
+//   let style = new Style({
+//     fill: new Fill({
+//       color: colors[Math.floor(Math.random() * colors.length)],
+//     }),
+//   })
+//   return style;
+// }
 
-const productCircles = circleFeatureRender(productData, colors);
+// const productCircles = circleFeatureRender(productData, colors);
 
-const productsCirclesSource = new VectorSource({
-       features: productCircles
-});
+// const productsCirclesSource = new VectorSource({
+//        features: productCircles
+// });
 
-export const productsCirclesLayer = new VectorLayer({
-  source: productsCirclesSource,
-  style: productsCirclesStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  minResolution: productsImageMax,
-  maxResolution: brandsFillMax
-})
+// export const productsCirclesLayer = new VectorLayer({
+//   source: productsCirclesSource,
+//   style: productsCirclesStyle,
+//   updateWhileAnimating: true,
+//   updateWhileInteracting: true,
+//   minResolution: productsImageMax,
+//   maxResolution: brandsFillMax
+// })
 
 
 const circleFillStyle = function(feature, resolution) {
@@ -106,30 +108,66 @@ const circleFillStyle = function(feature, resolution) {
   return style
 }
 
+const circleStyleRenderer = function(geo,renderState) {
+  const name = renderState.feature.get('name');
+  const center = renderState.feature.getGeometry().getCenter();
+  const pixel = map.getPixelFromCoordinate(center);
+  const radius = renderState.feature.getGeometry().getRadius();
+  const src = renderState.feature.get('src') || 'default.png';
+  const ctx = renderState.context;
+  const res = renderState.resolution;
+  const r = radius/res;
+  const d = r * 2;
+
+  const img = new Image(d,d);
+  img.src = '../product-images/category-images/' + src;
+
+  img.onload = function(e) {
+    console.log('pixel',pixel,'src',img.src,'d',d)
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(pixel[0],pixel[1], r, 0, Math.PI*2, true);
+    // const pattern = ctx.createPattern(img, 'no-repeat');
+    // ctx.fillStyle = pattern;
+    // ctx.fill();
+    ctx.closePath();
+    ctx.clip();
+    console.log(this)
+    ctx.drawImage(this, pixel[0] - r, pixel[1] - r, d, d);
+    ctx.beginPath();
+    ctx.strokeStyle = 'white';
+    ctx.fillStyle = 'white';
+    ctx.font = standardFont;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(name, pixel[0],pixel[1]);
+    //ctx.strokeText(name, pixel[0],pixel[1]);
+    ctx.fill();
+    ctx.closePath();
+
+    // ctx.beginPath();
+    // ctx.arc(0,0, r, 0, Math.PI*2, true);
+    // ctx.closePath();
+    // ctx.clip();
+
+    ctx.restore();
+   
+
+
+  }
+  
+};
+      
+
 const circleTextStyle = function(feature, resolution) {
   const name = feature.get('name');
-  const src = feature.get('src');
   const center = feature.getGeometry().getCenter();
-  const radius = feature.getGeometry().getRadius();
+  const src = feature.get('src');
   let style = {};
 
   if (src !== '') {
-    console.log('source', src);
-    let logoIcon = iconcache[src];
-
-    if (!logoIcon) {
-      logoIcon = new Icon({
-        size: [200,200],
-        crossOrigin: 'anonymous',
-        src: '../product-images/category-images/' + src
-      });
-      iconcache[src] = logoIcon;
-    }
-    // let scale = sqrt2 * radius / resolution > 200 ? 1 : (sqrt2 * radius / resolution) / 200;
-    // logoIcon.setScale(scale);
-
     style = new Style({
-      image: logoIcon,
+      renderer: circleStyleRenderer,
       geometry: new Point(center)
     })
   } else {

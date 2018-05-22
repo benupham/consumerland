@@ -2,9 +2,6 @@ require('ol/ol.css');
 import olMap from 'ol/map';
 import View from 'ol/view';
 
-
-
-
 import {productCardOverlay, productDetailOverlay, signage, renderProductOverlay, openProductDetail, hideOverlay} from './components/overlays.js';
 import {textFormatter, dataTool, iconcache} from './utilities.js';
 import {displayCart, updateCart, updateAddCartButton} from './components/cart.js';
@@ -15,8 +12,7 @@ import {handleHover, jumpStripsInt} from './events/hover.js';
 import {handleClick} from './events/click.js';
 import {productsVectorLayer} from './features/products.js';
 import {tagLayer} from './features/tags.js';
-import {
-  productsCirclesLayer, 
+import { 
   departmentsFillLayer, 
   departmentsTextLayer,
   departmentsSource,
@@ -62,15 +58,15 @@ export const map = new olMap({
   view: view
 });
 
-const layers = map.getLayers();
-layers.forEach((l) => {
-  l.on('precompose', (e) => {
-    e.context.globalCompositeOperation = 'source-over';
-  } )
-})
-departmentsTextLayer.on('precompose', (e) => {
-  e.context.globalCompositeOperation = 'source-atop';
-});
+// const layers = map.getLayers();
+// layers.forEach((l) => {
+//   l.on('precompose', (e) => {
+//     e.context.globalCompositeOperation = 'source-over';
+//   } )
+// })
+// departmentsTextLayer.on('precompose', (e) => {
+//   e.context.globalCompositeOperation = 'source-atop';
+// });
 
 
 const centerZoom = view.getCenter();  
