@@ -37,14 +37,14 @@ export const handleSearch = function(e) {
   }
 } 
 
-export const searchControl = new Control({
-  element: document.getElementById('search-cart-overlay'),
-});
+// export const searchControl = new Control({
+//   element: document.getElementById('search-cart-overlay'),
+// });
 document.getElementById('search-button').onclick = handleSearch;
 
 document.getElementById('search-input').onkeypress = handleSearch;
 
-document.getElementById('search-cart-overlay').onpointermove = function(e) {e.stopPropagation()};
+//document.getElementById('search-cart-overlay').onpointermove = function(e) {e.stopPropagation()};
 
 
 

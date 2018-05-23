@@ -9,15 +9,6 @@ const cartContents = document.querySelector('#cart-contents');
 
 
 
-export const displayCart = function() {
-  if (cartContents.style.display == 'block') {
-    cartContents.style.display = 'none';
-    return
-  }
-  cartContents.style.display = 'block';
-}
-document.getElementById('cart-open-button').onclick = displayCart;
-
 export const updateCart = function(e) {
   const pId = this.getAttribute('data-pid');
   const product = productsVectorSource.getFeatureById(pId);

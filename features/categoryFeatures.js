@@ -16,7 +16,8 @@ import {brandsData} from '../data/brandsData.js';
 import {
   colors,
   labelColors,
-  circleColors
+  circleColors,
+  productsImageMax,
 } from '../constants.js';
 import {textFormatter, dataTool} from '../utilities.js';
 
@@ -29,9 +30,10 @@ const radiusSorter = function(f) {
   let maxRes = 0;
   let fontSize = '10px sans-serif';
   const ranges = [200,400,800,1400,4310,6400];
-  let v = f.properties.type == 'dept' ? f.properties.radius + 5000 
-    : f.properties.type == 'subdept' ? f.properties.radius + 2000 
-    : f.properties.radius;
+  // let v = f.properties.type == 'dept' ? f.properties.radius + 5000 
+  //   : f.properties.type == 'subdept' ? f.properties.radius + 2000 
+  //   : f.properties.radius;
+  let v = f.properties.radius;
   for (let i = 0; i < ranges.length; i++) {
     if (ranges[i] >= v) {
       v = ranges[i];
@@ -42,7 +44,7 @@ const radiusSorter = function(f) {
   switch(v) {
     case 200:
       maxRes = 5;
-      fontSize = '12px sans-serif';
+      fontSize = '10px sans-serif';
       break;
     case 400:
       maxRes = 10;
@@ -54,11 +56,11 @@ const radiusSorter = function(f) {
       break;
     case 1400:
       maxRes = 25;
-      fontSize = '14px sans-serif';
+      fontSize = '16px sans-serif';
       break;
     case 4310:
       maxRes = 55;
-      fontSize = '16px sans-serif';
+      fontSize = '18px sans-serif';
       break;
     case 6400:
       maxRes = 90;
@@ -157,7 +159,7 @@ const circleFeatureRender = function(featureSets) {
       const values = typeSorter(f);
       const type = f.properties.type;
       const circle = new Feature({
-        geometry: new Circle(f.geometry.coordinates, f.properties.radius || (75 * Math.sqrt(2))),
+        geometry: new Circle(f.geometry.coordinates, f.properties.radius || (100 * Math.sqrt(2))),
         name: f.properties.name,
         type: type,
         radius: f.properties.radius,
@@ -171,7 +173,9 @@ const circleFeatureRender = function(featureSets) {
   return circles;    
 }
 
+
 const circleStyleCache = {};
+
 const circleStyle = function(circle, res) {
   //if (res > circle.get('maxRes')) return null;
   let style = circleStyleCache[circle.get('type')];
@@ -197,11 +201,11 @@ const imageStyle = function(image, res) {
   let style = imageStyleCache[image.get('src')];
   if (!style) {
     let icon = imageIconCache[image.get('src')];
-    let scaleFactor = image.get('type') == 'brand' ? 600 : 300;
+    const scaleFactor = image.get('type') == 'brand' ? 600 : 300;
     const scale = (2*image.get('radius')/ res) / scaleFactor;
     if (!icon) {
       icon = new Icon({
-        src: '../product-images/category-images/' + image.get('src'),
+        src: '../' + image.get('src'),
         size: [200,200],
         crossOrigin: 'anonymous',
         scale: scale > .3 ? scale : .3 
@@ -213,6 +217,7 @@ const imageStyle = function(image, res) {
     })
     imageStyleCache[image.get('type')] = style;
   }
+  if (image.get('type') == 'product') style.getImage().setScale(1/ res);
   return style;
 }
 
@@ -286,6 +291,17 @@ export const brandsImageLayer = new VectorLayer({
   maxResolution: 10
 })
 
+export const productsImageLayer = new VectorLayer({
+  source: new VectorSource({
+    features: labelFeatureRender([productData])
+  }),
+  style: imageStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  //minResolution: null,
+  maxResolution: productsImageMax
+})
+
 export const departmentsCircleLayer = new VectorLayer({
   source: new VectorSource({
     features: circleFeatureRender([departmentsData])
@@ -315,6 +331,16 @@ export const brandsCircleLayer = new VectorLayer({
   maxResolution: 50
 })
 
+export const productsCircleLayer = new VectorLayer({
+  source: new VectorSource({
+    features: circleFeatureRender([productData])
+  }),
+  style: circleStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  //minResolution: null,
+  maxResolution: productsImageMax
+})
 
 
 

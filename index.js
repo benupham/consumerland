@@ -4,7 +4,7 @@ import View from 'ol/view';
 
 import {productCardOverlay, productDetailOverlay, signage, renderProductOverlay, openProductDetail, hideOverlay} from './components/overlays.js';
 import {textFormatter, dataTool, iconcache} from './utilities.js';
-import {displayCart, updateCart, updateAddCartButton} from './components/cart.js';
+//import {displayCart, updateCart, updateAddCartButton} from './components/cart.js';
 import {displaySignage} from './components/signage.js';
 import {searchControl, handleSearch} from './components/search.js';
 import {handleJumpStrips} from './components/jumpstrips.js';
@@ -31,7 +31,9 @@ import {
   brandsCircleLayer,
   departmentsImageLayer,
   subdepartmentsImageLayer,
-  brandsImageLayer
+  brandsImageLayer,
+  productsCircleLayer,
+  productsImageLayer,
 } from './features/categoryFeatures.js';
 
 
@@ -63,7 +65,8 @@ export const map = new olMap({
     subdepartmentsImageLayer,
     departmentsLabelLayer,
     subdepartmentsLabelLayer,
-    productsVectorLayer,
+    productsCircleLayer,
+    productsImageLayer,
     tagLayer,
     brandsImageLayer,
 
@@ -102,7 +105,7 @@ map.addOverlay(productDetailOverlay);
 for (let i = 0; i < 4; i++) {
   map.addOverlay(signage[i]);
 }
-map.addControl(searchControl);
+//map.addControl(searchControl);
 
 map.on('pointermove', handleHover);
 map.getTargetElement().addEventListener('mouseleave', function(){

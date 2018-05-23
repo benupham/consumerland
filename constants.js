@@ -3,6 +3,10 @@
 * 
 */
 
+// Base Directory
+
+// export const baseDir = 
+
 // Resolution
 
 export const productsImageMax = 10;
@@ -43,6 +47,6 @@ export const labelColors = {
 export const circleColors = {
 	dept: 'rgba(249, 198, 90, 0.3)',
 	subdept: 'rgba(0, 133, 62, 0.3)',
-	brand: 'rgba(255, 255, 255, 0.3)',
+	brand: 'rgba(255, 255, 255, 0.3)', // rgba(214, 57, 0, 0.3)  rgba(106, 48, 55, 0.3)
 	product: '#fff'
 }

@@ -31,7 +31,6 @@ for (let i = 0; i < 4; i++) {
     autoPan: false,
     stopEvent: true
   });
-  // map.addOverlay(signage[i]);
 }
 
 export const signage = signs; 
@@ -44,7 +43,6 @@ export const openProductDetail = function(e) {
   view.animate({center: p.getGeometry().getCoordinates()});
   renderProductOverlay(p,productDetailOverlay);
 
-  //view.animate({center: p.getGeometry().getCoordinates()});
 }
 
 export const renderProductOverlay = function(product, overlay) {

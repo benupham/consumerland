@@ -10,26 +10,10 @@ body {
 
 /* SEARCH OVERLAY */
 
-.search-cart-overlay {
-	display: block;
-	position: absolute;
-	top: 1em;
-	right: 1em;
-	width: auto;
-	opacity: 1;
-}
-
-.search-bar {
-	background: white;
-}
 
 .cart-image {
 	height: 50px;
 	width: 50px;
-}
-.cart-contents {
-	display: none;
-	background: white;
 }
 
 #info {

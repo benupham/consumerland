@@ -17,10 +17,37 @@
     
   </head>
   <body>
+    <!-- Navbar -->
+    <nav id="navbar-overlay" class="navbar-overlay navbar navbar-expand-lg navbar-light bg-light border-bottom border-secondary">
+      <a class="navbar-brand" href="#">F & O Greens</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="search-bar" class="col-8 input-group">
+        <input type="text" id="search-input" class="form-control" placeholder="Search for products">
+        <div class="input-group-append">
+          <button id="search-button" class="btn btn-outline-secondary" type="button">Search</button>
+        </div>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Account</a>
+          </li>
+        </ul>
+      </div>
+      <div id="cart" class="dropdown cart">
+        <button id="cart-open-button" class="cart-open-button dropdown-toggle btn btn-secondary" data-toggle="dropdown" type="button">Cart <span id="cart-count">&nbsp;</span>
+        </button>
+        <div id="cart-contents" class="cart-contents dropdown-menu dropdown-menu-right"></div>
+      </div>
+    </nav>
+    
+
     <div id="data-tool" class="data-tool"></div>
     <div id="map"></div>
     <div id="pm-overlays" style="display: none;">
-      
+
       <!-- Search -->
       <div id="search-cart-overlay" class="search-cart-overlay">
         <div id="search-bar" class="search-bar container shadow-sm border border-secondary rounded">
@@ -40,7 +67,7 @@
         <div id="cart-contents" class="cart-contents container shadow-sm border border-secondary rounded mt-3"></div>
       </div>
 
-      <!-- Cart List Item -->
+      <!-- Cart List Item -- technically not an overlay -->
       <div id="cart-item" class="media my-2">
         <img class="cart-image align-self-center mr-3" src="/product-images/missing-item.jpg" />
         <div class="media-body">
