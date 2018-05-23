@@ -14,22 +14,16 @@ import {departmentsData} from '../data/departmentsData.js';
 import {subdepartmentsData} from '../data/subdepartmentsData.js';
 import {brandsData} from '../data/brandsData.js';
 import {
-  // productsImageMax, 
-  // deptsTextMin, 
-  // subdeptsTextMax, 
-  // subdeptsFillMax, 
-  // subdeptsTextMin, 
-  // brandsTextMax, 
-  // brandsFillMax,
-  // sqrt2, 
-  // nameOffset, 
-  // priceOffset,
   colors,
   labelColors,
   circleColors
 } from '../constants.js';
 import {textFormatter, dataTool} from '../utilities.js';
 
+/*
+* Label Features
+* 
+*/
 
 const radiusSorter = function(f) {
   let maxRes = 0;
@@ -78,6 +72,35 @@ const radiusSorter = function(f) {
   return [maxRes,fontSize]
 }
 
+const typeSorter = function(f) {
+  let maxRes = 0;
+  let minRes = 0;
+  let fontSize = '10px sans-serif';
+  let type = f.properties.type;
+  const ranges = ['product','brand','subdept','dept'];
+  switch(type) {
+    case 'product':
+      maxRes = 5;
+      minRes = 0;
+      break;
+    case 'brand':
+      maxRes = 25;
+      minRes = 0;
+      break;
+    case 'subdept':
+      maxRes = 200;
+      minRes = 55;
+      break;
+    case 'dept':
+      maxRes = 200;
+      minRes = 90;
+      break;
+  }
+  return [maxRes,minRes]
+}
+
+
+
 const labelFeatureRender = function (featureSets) {
   const labels = [];
   featureSets.forEach((featureSet) => {
@@ -102,7 +125,7 @@ const labelFeatureRender = function (featureSets) {
 
 const labelStyleCache = {};
 const labelStyle = function(label, res) {
-  if (res > label.get('maxRes')) return null;
+  //if (res > label.get('maxRes')) return null;
   let style = labelStyleCache[label.get('id')];
   if (!style) {
     const fillColor = 
@@ -110,8 +133,11 @@ const labelStyle = function(label, res) {
       text: new Text({
         font: label.get('fontSize'),
         text: label.get('name'),
+        textBaseline: 'middle',
         fill: new Fill({color: labelColors[label.get('type')]}),
-        stroke: new Stroke({color: '#808080', width: 3}) 
+        //stroke: new Stroke({color: '#808080', width: 3}) ,
+        backgroundFill: new Fill({color: 'rgba(0,0,0,0.5'}),
+        padding: [2,5,2,5]
       })
     })
     labelStyleCache[label.get('name')] = style;
@@ -119,26 +145,16 @@ const labelStyle = function(label, res) {
   return style;
 }
 
-const labels = labelFeatureRender(
-  [brandsData,subdepartmentsData,departmentsData]
-);
-
-const labelFeatureSource = new VectorSource({
-  features: labels
-})
-
-export const labelFeatureLayer = new VectorLayer({
-  source: labelFeatureSource,
-  style: labelStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true
-})
+/*
+* Circle Features
+* 
+*/
 
 const circleFeatureRender = function(featureSets) {
   const circles = [];
   featureSets.forEach((featureSet) => {
     featureSet.features.forEach((f) => {
-      const values = radiusSorter(f);
+      const values = typeSorter(f);
       const type = f.properties.type;
       const circle = new Feature({
         geometry: new Circle(f.geometry.coordinates, f.properties.radius || (75 * Math.sqrt(2))),
@@ -157,7 +173,7 @@ const circleFeatureRender = function(featureSets) {
 
 const circleStyleCache = {};
 const circleStyle = function(circle, res) {
-  if (res > circle.get('maxRes')) return null;
+  //if (res > circle.get('maxRes')) return null;
   let style = circleStyleCache[circle.get('type')];
   if (!style) {
     style = new Style({
@@ -168,37 +184,26 @@ const circleStyle = function(circle, res) {
   return style;
 }
 
-const circles = circleFeatureRender(
-  [departmentsData,subdepartmentsData,brandsData]
-);
 
-const circleFeatureSource = new VectorSource({
-  features: circles
-})
-
-export const circleFeatureLayer = new VectorLayer({
-  source: circleFeatureSource,
-  style: circleStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true
-})
+/*
+* Image Features
+* 
+*/
 
 const imageStyleCache = {};
 const imageIconCache = {};
 const imageStyle = function(image, res) {
-  if (res > image.get('maxRes')) return null;
+  //if (res > image.get('maxRes')) return null;
   let style = imageStyleCache[image.get('src')];
   if (!style) {
     let icon = imageIconCache[image.get('src')];
-    const scale = (2*image.get('radius')/ res) / 600;
+    let scaleFactor = image.get('type') == 'brand' ? 600 : 300;
+    const scale = (2*image.get('radius')/ res) / scaleFactor;
     if (!icon) {
       icon = new Icon({
-        src: '../product-images/category-images/test-circle.png'/* + (image.get('src') || 'default.jpg') */ ,
+        src: '../product-images/category-images/' + image.get('src'),
         size: [200,200],
         crossOrigin: 'anonymous',
-        // anchorXUnits: 'pixel',
-        // anchorYUnits: 'pixel',
-        // anchor: [2*image.get('radius')/res,2*image.get('radius')/res],
         scale: scale > .3 ? scale : .3 
       })
       imageIconCache[image.get('src')] = icon;
@@ -211,13 +216,158 @@ const imageStyle = function(image, res) {
   return style;
 }
 
-const imageFeatureSource = new VectorSource({
-  features: labelFeatureRender([departmentsData])
+/*
+* Exports
+*/
+
+export const departmentsLabelLayer = new VectorLayer({
+  source: new VectorSource({
+    features: labelFeatureRender([departmentsData])
+  }),
+  style: labelStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  minResolution: 50,
+  //maxResolution: null
 })
 
-export const imageFeatureLayer = new VectorLayer({
-  source: imageFeatureSource,
+export const subdepartmentsLabelLayer = new VectorLayer({
+  source: new VectorSource({
+    features: labelFeatureRender([subdepartmentsData])
+  }),
+  style: labelStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  minResolution: 10,
+  maxResolution: 50
+})
+
+export const brandsLabelLayer = new VectorLayer({
+  source: new VectorSource({
+    features: labelFeatureRender([brandsData])
+  }),
+  style: labelStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  //minResolution: null,
+  maxResolution: 10
+})
+
+export const departmentsImageLayer = new VectorLayer({
+  source: new VectorSource({
+    features: labelFeatureRender([departmentsData])
+  }),
   style: imageStyle,
   updateWhileAnimating: true,
-  updateWhileInteracting: true
+  updateWhileInteracting: true,
+  minResolution: 50,
+  //maxResolution: null
 })
+
+export const subdepartmentsImageLayer = new VectorLayer({
+  source: new VectorSource({
+    features: labelFeatureRender([subdepartmentsData])
+  }),
+  style: imageStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  minResolution: 10,
+  maxResolution: 50
+})
+
+export const brandsImageLayer = new VectorLayer({
+  source: new VectorSource({
+    features: labelFeatureRender([brandsData])
+  }),
+  style: imageStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  //minResolution: null,
+  maxResolution: 10
+})
+
+export const departmentsCircleLayer = new VectorLayer({
+  source: new VectorSource({
+    features: circleFeatureRender([departmentsData])
+  }),
+  style: circleStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+})
+
+export const subdepartmentsCircleLayer = new VectorLayer({
+  source: new VectorSource({
+    features: circleFeatureRender([subdepartmentsData])
+  }),
+  style: circleStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+})
+
+export const brandsCircleLayer = new VectorLayer({
+  source: new VectorSource({
+    features: circleFeatureRender([brandsData])
+  }),
+  style: circleStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  //minResolution: null,
+  maxResolution: 50
+})
+
+
+
+
+// const labels = labelFeatureRender(
+//   [brandsData,subdepartmentsData,departmentsData]
+// );
+
+// const labelFeatureSource = new VectorSource({
+//   features: labels
+// })
+
+// export const labelFeatureLayer = new VectorLayer({
+//   source: labelFeatureSource,
+//   style: labelStyle,
+//   updateWhileAnimating: true,
+//   updateWhileInteracting: true
+// })
+
+// const circles = circleFeatureRender(
+//   [departmentsData,subdepartmentsData,brandsData]
+// );
+
+// const circleFeatureSource = new VectorSource({
+//   features: circles
+// })
+
+// export const circleFeatureLayer = new VectorLayer({
+//   source: circleFeatureSource,
+//   style: circleStyle,
+//   updateWhileAnimating: true,
+//   updateWhileInteracting: true
+// })
+
+// const departmentImageSource = new VectorSource({
+//   features: labelFeatureRender([departmentsData])
+// })
+
+// export const departmentImageLayer = new VectorLayer({
+//   source: departmentImageSource,
+//   style: imageStyle,
+//   updateWhileAnimating: true,
+//   updateWhileInteracting: true,
+//   minResolution: 90
+// })
+
+// const subdepartmentImageSource = new VectorSource({
+//   features: labelFeatureRender([subdepartmentsData])
+// })
+
+// export const subdepartmentImageLayer = new VectorLayer({
+//   source: subdepartmentImageSource,
+//   style: imageStyle,
+//   updateWhileAnimating: true,
+//   updateWhileInteracting: true,
+//   //minResolution: 90
+// })

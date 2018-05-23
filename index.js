@@ -22,7 +22,17 @@ import {
   brandsTextLayer
 } from './features/circleFeatures.js';
 import {productsImageMax} from './constants.js';
-import {labelFeatureLayer,circleFeatureLayer,imageFeatureLayer} from './features/categoryFeatures.js';
+import {
+  departmentsLabelLayer,
+  subdepartmentsLabelLayer,
+  brandsLabelLayer,
+  departmentsCircleLayer,
+  subdepartmentsCircleLayer,
+  brandsCircleLayer,
+  departmentsImageLayer,
+  subdepartmentsImageLayer,
+  brandsImageLayer
+} from './features/categoryFeatures.js';
 
 
 
@@ -36,7 +46,7 @@ import {labelFeatureLayer,circleFeatureLayer,imageFeatureLayer} from './features
 export const view = new View({
   center: [55667,-46227],
   // extent: [2400,-9795,92400,-83963],
-  resolution: 100, 
+  resolution: 90, 
   zoomFactor: 1.1,
   minResolution: 1,
   maxResolution: 100,
@@ -46,18 +56,18 @@ export const maxExtent = departmentsSource.getExtent();
 export const map = new olMap({
   renderer: (['canvas']),
   layers: [
-    // departmentsFillLayer,
-    // subdepartmentsFillLayer,
-    // brandsFillLayer,
-    // productsCirclesLayer,
-    // productsVectorLayer,
+    departmentsCircleLayer,
+    subdepartmentsCircleLayer,
+    brandsCircleLayer,
+    departmentsImageLayer,
+    subdepartmentsImageLayer,
+    departmentsLabelLayer,
+    subdepartmentsLabelLayer,
+    productsVectorLayer,
     tagLayer,
-    circleFeatureLayer,
-    imageFeatureLayer,
-    labelFeatureLayer
-    // departmentsTextLayer,
-    // subdepartmentsTextLayer,
-    // brandsTextLayer
+    brandsImageLayer,
+
+    // brandsLabelLayer
     ],
   target: document.getElementById('map'),
   view: view
