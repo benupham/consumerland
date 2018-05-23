@@ -22,6 +22,8 @@ import {
   brandsTextLayer
 } from './features/circleFeatures.js';
 import {productsImageMax} from './constants.js';
+import {labelFeatureLayer,circleFeatureLayer,imageFeatureLayer} from './features/categoryFeatures.js';
+
 
 
 
@@ -34,8 +36,8 @@ import {productsImageMax} from './constants.js';
 export const view = new View({
   center: [55667,-46227],
   // extent: [2400,-9795,92400,-83963],
-  resolution: 100,
-  zoomFactor: 1.25,
+  resolution: 100, 
+  zoomFactor: 1.1,
   minResolution: 1,
   maxResolution: 100,
 })
@@ -44,15 +46,18 @@ export const maxExtent = departmentsSource.getExtent();
 export const map = new olMap({
   renderer: (['canvas']),
   layers: [
-    departmentsFillLayer,
-    subdepartmentsFillLayer,
-    brandsFillLayer,
+    // departmentsFillLayer,
+    // subdepartmentsFillLayer,
+    // brandsFillLayer,
     // productsCirclesLayer,
-    productsVectorLayer,
+    // productsVectorLayer,
     tagLayer,
-    departmentsTextLayer,
-    subdepartmentsTextLayer,
-    brandsTextLayer
+    circleFeatureLayer,
+    imageFeatureLayer,
+    labelFeatureLayer
+    // departmentsTextLayer,
+    // subdepartmentsTextLayer,
+    // brandsTextLayer
     ],
   target: document.getElementById('map'),
   view: view
@@ -104,5 +109,6 @@ view.on('change:resolution', (e) => {
     const signageTimeOut = setTimeout(displaySignage, 100);    
   }
   if (res >= 100) window.clearInterval(jumpStripsInt);
+  console.log('resolution',view.getResolution(),'zoom',view.getZoom())
 });
 

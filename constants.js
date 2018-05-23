@@ -5,7 +5,7 @@
 
 // Resolution
 
-export const productsImageMax = 6;
+export const productsImageMax = 12;
 export const deptsTextMin = 30;
 export const subdeptsTextMax = 30;
 export const subdeptsFillMax = 90;
@@ -32,3 +32,17 @@ export const colors = [
   '#E8E8E8',
   '#fff'
 ]
+
+export const labelColors = {
+	dept: '#fff',
+	subdept: '#fff',
+	brand: '#fff',
+	product: '#fff'
+}
+
+export const circleColors = {
+	dept: 'rgba(249, 198, 90, 0.2)',
+	subdept: 'rgba(0, 133, 62, 0.2)',
+	brand: 'rgba(106, 48, 55, 0.2)',
+	product: '#fff'
+}

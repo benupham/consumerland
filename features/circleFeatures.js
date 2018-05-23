@@ -40,6 +40,7 @@ import {map} from '../index.js';
 // Do not use with already-ingested GeoJSON data -- only the actual JSON variable
 const circleFeatureRender = function(featureCollection, colors = null) {
   let circles = [];
+  let radii = [];
   featureCollection.features.forEach(f => {
     const circle = new Feature({
       'geometry': new Circle(f.geometry.coordinates, f.properties.radius || (100 * Math.sqrt(2))),
@@ -48,9 +49,12 @@ const circleFeatureRender = function(featureCollection, colors = null) {
       'type': f.properties.type,
       'src': f.properties.src || ''
     })
+    radii.push(Math.round(f.properties.radius));
     circle.setId(f.id);
     circles.push(circle);
   })
+  radii.sort(function(a, b){return a - b});
+  console.log(circles[0].get('type'),radii);
   return circles;
 }
 
@@ -123,7 +127,6 @@ const circleStyleRenderer = function(geo,renderState) {
   img.src = '../product-images/category-images/' + src;
 
   img.onload = function(e) {
-    console.log('pixel',pixel,'src',img.src,'d',d)
     ctx.save();
     ctx.beginPath();
     ctx.arc(pixel[0],pixel[1], r, 0, Math.PI*2, true);
@@ -132,7 +135,6 @@ const circleStyleRenderer = function(geo,renderState) {
     // ctx.fill();
     ctx.closePath();
     ctx.clip();
-    console.log(this)
     ctx.drawImage(this, pixel[0] - r, pixel[1] - r, d, d);
     ctx.beginPath();
     ctx.strokeStyle = 'white';
