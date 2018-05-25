@@ -4,7 +4,6 @@ images/
 product-images/
 *.json
 storage/
-data/
 *.png
 *.jpg
 *.jpeg

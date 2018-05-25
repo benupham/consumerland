@@ -9,6 +9,7 @@ import Fill from 'ol/style/fill';
 import Text from 'ol/style/text';
 import Style from 'ol/style/style';
 
+import {allFeatureData} from '../data/allFeatureData.js';
 import {productData} from '../data/productData.js';
 import {departmentsData} from '../data/departmentsData.js';
 import {subdepartmentsData} from '../data/subdepartmentsData.js';
@@ -26,6 +27,7 @@ import {textFormatter, dataTool} from '../utilities.js';
 * 
 */
 
+// This needs to be changed to D3 histograms to get relative sizing at all resolutions
 const radiusSorter = function(f) {
   let maxRes = 0;
   let fontSize = '10px sans-serif';
@@ -44,31 +46,31 @@ const radiusSorter = function(f) {
   switch(v) {
     case 200:
       maxRes = 5;
-      fontSize = '10px sans-serif';
+      fontSize = '10px Permanent Marker, Baskerville';
       break;
     case 400:
       maxRes = 10;
-      fontSize = '12px sans-serif';
+      fontSize = '12px Permanent Marker, Baskerville';
       break;
     case 800:
       maxRes = 20;
-      fontSize = '14px sans-serif';
+      fontSize = '14px Permanent Marker, Baskerville';
       break;
     case 1400:
       maxRes = 25;
-      fontSize = '16px sans-serif';
+      fontSize = '16px Permanent Marker, Baskerville';
       break;
     case 4310:
       maxRes = 55;
-      fontSize = '18px sans-serif';
+      fontSize = '18px Permanent Marker, Baskerville';
       break;
     case 6400:
       maxRes = 90;
-      fontSize = '18px sans-serif';
+      fontSize = '18px Permanent Marker, Baskerville';
       break;
     default:
       maxRes = 100;
-      fontSize = '22px sans-serif';
+      fontSize = '22px Permanent Marker, Baskerville';
       break;                 
   }
   return [maxRes,fontSize]
@@ -113,12 +115,13 @@ const labelFeatureRender = function (featureSets) {
         geometry: new Point(f.geometry.coordinates),
         name: name,
         type: f.properties.type,
+        style: 'label',
         radius: f.properties.radius,
         maxRes: values[0],
         fontSize: values[1],
         src: f.properties.src
       });
-      label.setId(f.id);
+      label.setId(f.id + '-label');
       labels.push(label);
     })
   })
@@ -139,7 +142,7 @@ const labelStyle = function(label, res) {
         fill: new Fill({color: labelColors[label.get('type')]}),
         //stroke: new Stroke({color: '#808080', width: 3}) ,
         backgroundFill: new Fill({color: 'rgba(0,0,0,0.5'}),
-        padding: [2,5,2,5]
+        padding: [0,5,0,5]
       })
     })
     labelStyleCache[label.get('name')] = style;
@@ -162,17 +165,17 @@ const circleFeatureRender = function(featureSets) {
         geometry: new Circle(f.geometry.coordinates, f.properties.radius || (100 * Math.sqrt(2))),
         name: f.properties.name,
         type: type,
+        style: 'circle',
         radius: f.properties.radius,
         maxRes: values[0],
-        color: circleColors[type]
+        color: circleColors[type],
       });
-      circle.setId(f.id);
+      circle.setId(f.id + '-circle');
       circles.push(circle);
     })
   })
   return circles;    
 }
-
 
 const circleStyleCache = {};
 
@@ -194,10 +197,34 @@ const circleStyle = function(circle, res) {
 * 
 */
 
+const imageFeatureRender = function (featureSets) {
+  const images = [];
+  featureSets.forEach((featureSet) => {
+    featureSet.features.forEach((f) => {
+      const name = textFormatter(f.properties.name, 18, '\n');
+      const values = radiusSorter(f);
+      const image = new Feature({
+        geometry: new Point(f.geometry.coordinates),
+        name: name,
+        price: f.properties.price || '',
+        type: f.properties.type,
+        style: 'image',
+        radius: f.properties.radius,
+        maxRes: values[0],
+        src: f.properties.src
+      });
+      image.setId(f.id + '-image');
+      images.push(image);
+    })
+  })
+  return images;
+}
+
 const imageStyleCache = {};
 const imageIconCache = {};
 const imageStyle = function(image, res) {
   //if (res > image.get('maxRes')) return null;
+  if (image.get('src') == undefined || image.get('src').indexOf('missing-image') > -1) return null;
   let style = imageStyleCache[image.get('src')];
   if (!style) {
     let icon = imageIconCache[image.get('src')];
@@ -225,6 +252,8 @@ const imageStyle = function(image, res) {
 * Exports
 */
 
+// Departments
+
 export const departmentsLabelLayer = new VectorLayer({
   source: new VectorSource({
     features: labelFeatureRender([departmentsData])
@@ -235,6 +264,28 @@ export const departmentsLabelLayer = new VectorLayer({
   minResolution: 50,
   //maxResolution: null
 })
+
+export const departmentsImageLayer = new VectorLayer({
+  source: new VectorSource({
+    features: imageFeatureRender([departmentsData])
+  }),
+  style: imageStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  minResolution: 50,
+  //maxResolution: null
+})
+
+export const departmentsCircleLayer = new VectorLayer({
+  source: new VectorSource({
+    features: circleFeatureRender([departmentsData])
+  }),
+  style: circleStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+})
+
+// Subdepartments
 
 export const subdepartmentsLabelLayer = new VectorLayer({
   source: new VectorSource({
@@ -247,6 +298,28 @@ export const subdepartmentsLabelLayer = new VectorLayer({
   maxResolution: 50
 })
 
+export const subdepartmentsImageLayer = new VectorLayer({
+  source: new VectorSource({
+    features: imageFeatureRender([subdepartmentsData])
+  }),
+  style: imageStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  minResolution: 10,
+  maxResolution: 50
+})
+
+export const subdepartmentsCircleLayer = new VectorLayer({
+  source: new VectorSource({
+    features: circleFeatureRender([subdepartmentsData])
+  }),
+  style: circleStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+})
+
+// Brands
+
 export const brandsLabelLayer = new VectorLayer({
   source: new VectorSource({
     features: labelFeatureRender([brandsData])
@@ -258,66 +331,15 @@ export const brandsLabelLayer = new VectorLayer({
   maxResolution: 10
 })
 
-export const departmentsImageLayer = new VectorLayer({
-  source: new VectorSource({
-    features: labelFeatureRender([departmentsData])
-  }),
-  style: imageStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  minResolution: 50,
-  //maxResolution: null
-})
-
-export const subdepartmentsImageLayer = new VectorLayer({
-  source: new VectorSource({
-    features: labelFeatureRender([subdepartmentsData])
-  }),
-  style: imageStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  minResolution: 10,
-  maxResolution: 50
-})
-
 export const brandsImageLayer = new VectorLayer({
   source: new VectorSource({
-    features: labelFeatureRender([brandsData])
+    features: imageFeatureRender([brandsData])
   }),
   style: imageStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
   //minResolution: null,
   maxResolution: 10
-})
-
-export const productsImageLayer = new VectorLayer({
-  source: new VectorSource({
-    features: labelFeatureRender([productData])
-  }),
-  style: imageStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  //minResolution: null,
-  maxResolution: productsImageMax
-})
-
-export const departmentsCircleLayer = new VectorLayer({
-  source: new VectorSource({
-    features: circleFeatureRender([departmentsData])
-  }),
-  style: circleStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-})
-
-export const subdepartmentsCircleLayer = new VectorLayer({
-  source: new VectorSource({
-    features: circleFeatureRender([subdepartmentsData])
-  }),
-  style: circleStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
 })
 
 export const brandsCircleLayer = new VectorLayer({
@@ -331,6 +353,19 @@ export const brandsCircleLayer = new VectorLayer({
   maxResolution: 50
 })
 
+// Products
+
+export const productsImageLayer = new VectorLayer({
+  source: new VectorSource({
+    features: imageFeatureRender([productData])
+  }),
+  style: imageStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  //minResolution: null,
+  maxResolution: productsImageMax
+})
+
 export const productsCircleLayer = new VectorLayer({
   source: new VectorSource({
     features: circleFeatureRender([productData])
@@ -342,7 +377,11 @@ export const productsCircleLayer = new VectorLayer({
   maxResolution: productsImageMax
 })
 
+// Product Source
 
+export const productsSource = new VectorSource({
+  features: imageFeatureRender([productData])
+})
 
 // const labels = labelFeatureRender(
 //   [brandsData,subdepartmentsData,departmentsData]

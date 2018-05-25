@@ -1,3 +1,5 @@
+import has from 'ol/has';
+
 import {view, map} from '../index.js';
 import {productsImageMax} from '../constants.js';
 import {productCardOverlay, productDetailOverlay, renderProductOverlay, hideOverlay} from '../components/overlays.js';
@@ -5,7 +7,11 @@ import {handleJumpStrips} from '../components/jumpstrips.js';
 
 export let jumpStripsInt = null;
 let highlight = undefined; 
+
 export const handleHover = function(e) {
+  // Turns off all hover events for touch devices. 
+  if (has.TOUCH === true) return;
+
   const resolution = view.getResolution();
   if (jumpStripsInt != null) {
     window.clearInterval(jumpStripsInt);
@@ -26,9 +32,11 @@ export const handleHover = function(e) {
   if (map.hasFeatureAtPixel(e.pixel)) {
     const features = map.getFeaturesAtPixel(e.pixel);
     const feature = features[0];
+    console.log(feature.get('type'), feature.get('name'))
     const featureType = feature.get('type');
+    const featureStyle = feature.get('style');
 
-    if (featureType == 'product') {
+    if (featureType == 'product' && featureStyle == 'image') {
       renderProductOverlay(feature, productCardOverlay);
     } 
     else if ((resolution > productsImageMax) && (featureType == 'brand' || 'dept' || 'subdept')) {

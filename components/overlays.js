@@ -1,7 +1,10 @@
 import Overlay from 'ol/overlay';
+import MouseWheelZoom from 'ol/interaction/mousewheelzoom';
+
+
 import {updateAddCartButton, updateCart} from '../components/cart.js';
 import {view} from '../index.js';
-import {productsVectorSource} from '../features/products.js';
+import {productsSource} from '../features/categoryFeatures.js';
 
 /*
 * Overlays
@@ -21,7 +24,7 @@ export const productDetailOverlay = new Overlay({
   element: document.getElementById('product-overlay'),
   id: 'productDetail',
   autoPan: false,
-  stopEvent: false
+  stopEvent: true
 });
 
 const signs = {};
@@ -38,20 +41,22 @@ export const signage = signs;
 export const openProductDetail = function(e) {
   hideOverlay(productCardOverlay);
   const pId = this.getAttribute('data-pid');
-  const p = productsVectorSource.getFeatureById(pId);
-  view.animate({resolution: 1, anchor: p.getGeometry().getCoordinates()});
+  const p = productsSource.getFeatureById(pId);
+  view.animate({resolution: 2, anchor: p.getGeometry().getCoordinates()});
   view.animate({center: p.getGeometry().getCoordinates()});
   renderProductOverlay(p,productDetailOverlay);
 
 }
 
 export const renderProductOverlay = function(product, overlay) {
-  // need to hide all visible overlays on render...
-  //SCREAMING OUT for React here...
+
+  // Even with stopEvent=true, pointermove needs to be stopped. 
   overlay.getElement().onpointermove = function(e) {e.stopPropagation()};
-  overlay.getElement().onpointerdown = function(e) {e.stopPropagation()};
+
   overlay.getElement().style.display = 'block';
+
   overlay.set('product', product.getId());
+  console.log(overlay.get('product'));
   const coordinate = product.getGeometry().getCoordinates();
 
   const btn = overlay.getElement().querySelector('.add-to-cart');
@@ -73,6 +78,11 @@ export const renderProductOverlay = function(product, overlay) {
     image.addEventListener('click', openProductDetail);
     name.addEventListener('click', openProductDetail);
     price.addEventListener('click', openProductDetail);
+  }
+  if (overlay.getId() == 'productDetail') {
+    overlay.getElement().querySelector('.close').addEventListener('click', () => {
+      hideOverlay(productDetailOverlay);
+    })
   }
 
   name.textContent = product.get('name');

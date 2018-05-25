@@ -2,16 +2,14 @@
 * Cart
 * 
 */
-import {productsVectorSource} from '../features/products.js';
+import {productsSource} from '../features/categoryFeatures.js';
 
 const cart = [];
 const cartContents = document.querySelector('#cart-contents');
 
-
-
 export const updateCart = function(e) {
   const pId = this.getAttribute('data-pid');
-  const product = productsVectorSource.getFeatureById(pId);
+  const product = productsSource.getFeatureById(pId);
   const src = product.get('src');
   const name = product.get('name');
 
@@ -39,6 +37,7 @@ export const updateCart = function(e) {
   cartContents.appendChild(cartItem);
   product.set('inCart',true);
   updateAddCartButton(true, this);
+  document.getElementById('cart-count').innerHTML = cart.length;
 
 }
 

@@ -3,6 +3,7 @@ import Extent from 'ol/extent';
 import {signage} from '../components/overlays.js';
 import {map, view} from '../index.js';
 import {departmentsSource, subdepartmentsSource} from '../features/circleFeatures.js';
+import {departmentsCircleLayer, subdepartmentsCircleLayer} from '../features/categoryFeatures.js';
 
 
 /* Signage */ 
@@ -15,7 +16,7 @@ export const displaySignage = function() {
   const closestDepts = [];
   const cnt = 4;
   for (let i = 0; i < 4; i++) {
-    const closestDept = departmentsSource.getClosestFeatureToCoordinate(ctr, (f) => {
+    const closestDept = departmentsCircleLayer.getSource().getClosestFeatureToCoordinate(ctr, (f) => {
       // if the feature intersects the ctr, skip 
       if (f.getGeometry().intersectsCoordinate(ctr)) return false;
 
@@ -64,7 +65,7 @@ export const displaySignage = function() {
     sign.getElement().setAttribute('feature', f.getId());
     sign.getElement().addEventListener('click', function(e) {
       const fid = this.getAttribute('feature');
-      view.fit(departmentsSource.getFeatureById(fid).getGeometry(), {
+      view.fit(departmentsCircleLayer.getSource().getFeatureById(fid).getGeometry(), {
         duration: 1000,
         callback: displaySignage
       });

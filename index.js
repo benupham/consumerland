@@ -39,16 +39,14 @@ import {
 
 
 
-
 /*
 * Map & View
 * 
 */
 
 export const view = new View({
-  center: [55667,-46227],
-  // extent: [2400,-9795,92400,-83963],
-  resolution: 90, 
+  center: [62667,-46227],
+  resolution: 100, 
   zoomFactor: 1.1,
   minResolution: 1,
   maxResolution: 100,
@@ -69,23 +67,10 @@ export const map = new olMap({
     productsImageLayer,
     tagLayer,
     brandsImageLayer,
-
-    // brandsLabelLayer
     ],
   target: document.getElementById('map'),
   view: view
 });
-
-// const layers = map.getLayers();
-// layers.forEach((l) => {
-//   l.on('precompose', (e) => {
-//     e.context.globalCompositeOperation = 'source-over';
-//   } )
-// })
-// departmentsTextLayer.on('precompose', (e) => {
-//   e.context.globalCompositeOperation = 'source-atop';
-// });
-
 
 const centerZoom = view.getCenter();  
 
@@ -102,16 +87,16 @@ window.addEventListener('resize', mapResize);
 
 map.addOverlay(productCardOverlay);
 map.addOverlay(productDetailOverlay);
-for (let i = 0; i < 4; i++) {
-  map.addOverlay(signage[i]);
-}
-//map.addControl(searchControl);
+// for (let i = 0; i < 4; i++) {
+//   map.addOverlay(signage[i]);
+// }
+
 
 map.on('pointermove', handleHover);
 map.getTargetElement().addEventListener('mouseleave', function(){
   window.clearInterval(jumpStripsInt);
 })
-map.on('singleclick', handleClick);
+map.on('click', handleClick);
 
 
 
@@ -124,4 +109,5 @@ view.on('change:resolution', (e) => {
   if (res >= 100) window.clearInterval(jumpStripsInt);
   console.log('resolution',view.getResolution(),'zoom',view.getZoom())
 });
+
 
