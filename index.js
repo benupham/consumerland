@@ -12,31 +12,22 @@ import {handleHover, jumpStripsInt} from './events/hover.js';
 import {handleClick} from './events/click.js';
 import {productsVectorLayer} from './features/products.js';
 import {tagLayer} from './features/tags.js';
-import { 
-  departmentsFillLayer, 
-  departmentsTextLayer,
-  departmentsSource,
-  subdepartmentsFillLayer,
-  subdepartmentsTextLayer,
-  brandsFillLayer,
-  brandsTextLayer
-} from './features/circleFeatures.js';
 import {productsImageMax} from './constants.js';
 import {
   departmentsLabelLayer,
   subdepartmentsLabelLayer,
   brandsLabelLayer,
   departmentsCircleLayer,
-  departmentsCircleLabelLayer,
+  // departmentsCircleLabelLayer,
   subdepartmentsCircleLayer,
   brandsCircleLayer,
-  brandsCircleLabelLayer,
+  // brandsCircleLabelLayer,
   departmentsImageLayer,
   subdepartmentsImageLayer,
   brandsImageLayer,
   productsCircleLayer,
   productsImageLayer,
-  subdepartmentsCircleLabelLayer,
+  // subdepartmentsCircleLabelLayer,
 } from './features/categoryFeatures.js';
 
 
@@ -54,7 +45,7 @@ export const view = new View({
   minResolution: 1,
   maxResolution: 100,
 })
-export const maxExtent = departmentsSource.getExtent();
+export const maxExtent = departmentsCircleLayer.getExtent();
 
 export const map = new olMap({
   renderer: (['canvas']),
@@ -83,7 +74,6 @@ const centerZoom = view.getCenter();
 
 const mapResize = function(e) {
   const navbarHeight = document.getElementById('navbar').clientHeight;
-  console.log(navbarHeight)
   const mapHeight = document.documentElement.clientHeight;
   const mapWidth = document.documentElement.clientWidth;
   document.querySelector('#map').style.height = mapHeight + 'px';
@@ -107,7 +97,11 @@ map.on('pointermove', (e) => {
 map.getTargetElement().addEventListener('mouseleave', function(){
   window.clearInterval(jumpStripsInt);
 })
-map.on('click', handleClick);
+map.on('click', (e) => {
+  // hacky but works! 
+  if (e.originalEvent.target.nodeName != 'CANVAS') return;
+  handleClick(e);
+});
 
 
 

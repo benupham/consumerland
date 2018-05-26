@@ -298,3 +298,80 @@ const addIcon = new Style({
 // for (var i = extentSubdepts.length - 1; i >= 0; i--) {
 //   if (extentSubdepts[i].getGeometry().intersectsCoordinate(ctr)) extentSubdepts.splice(i, 1);
 // }
+
+// This needs to be changed to D3 histograms to get relative sizing at all resolutions
+// const radiusSorter = function(f) {
+//   let maxRes = 0;
+//   let fontSize = '10px sans-serif';
+//   const ranges = [200,400,800,1400,4310,6400];
+//   // let v = f.properties.type == 'dept' ? f.properties.radius + 5000 
+//   //   : f.properties.type == 'subdept' ? f.properties.radius + 2000 
+//   //   : f.properties.radius;
+//   let v = f.properties.radius;
+//   for (let i = 0; i < ranges.length; i++) {
+//     if (ranges[i] >= v) {
+//       v = ranges[i];
+//       break;
+//     } 
+//   }
+//   // If radius is equal to or less than the cases below
+//   switch(v) {
+//     case 200:
+//       maxRes = 5;
+//       fontSize = '10px Baskerville';
+//       break;
+//     case 400:
+//       maxRes = 10;
+//       fontSize = '12px Baskerville';
+//       break;
+//     case 800:
+//       maxRes = 20;
+//       fontSize = '14px Baskerville';
+//       break;
+//     case 1400:
+//       maxRes = 25;
+//       fontSize = '16px Baskerville';
+//       break;
+//     case 4310:
+//       maxRes = 55;
+//       fontSize = '18px Baskerville';
+//       break;
+//     case 6400:
+//       maxRes = 90;
+//       fontSize = '18px Baskerville';
+//       break;
+//     default:
+//       maxRes = 100;
+//       fontSize = '22px Baskerville';
+//       break;                 
+//   }
+//   return [maxRes,fontSize]
+// }
+
+// const typeSorter = function(f) {
+//   let maxRes = 0;
+//   let minRes = 0;
+//   let fontSize = '10px sans-serif';
+//   let type = f.properties.type;
+//   const ranges = ['product','brand','subdept','dept'];
+//   switch(type) {
+//     case 'product':
+//       maxRes = 5;
+//       minRes = 0;
+//       break;
+//     case 'brand':
+//       maxRes = 25;
+//       minRes = 0;
+//       break;
+//     case 'subdept':
+//       maxRes = 200;
+//       minRes = 55;
+//       break;
+//     case 'dept':
+//       maxRes = 200;
+//       minRes = 90;
+//       break;
+//   }
+//   return [maxRes,minRes]
+// }
+

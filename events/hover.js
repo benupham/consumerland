@@ -4,6 +4,7 @@ import {view, map} from '../index.js';
 import {productsImageMax} from '../constants.js';
 import {productCardOverlay, productDetailOverlay, renderProductOverlay, hideOverlay} from '../components/overlays.js';
 import {handleJumpStrips} from '../components/jumpstrips.js';
+import {productsSource} from '../features/categoryFeatures.js';
 
 export let jumpStripsInt = null;
 let highlight = undefined; 
@@ -34,9 +35,10 @@ export const handleHover = function(e) {
     const feature = features[0];
     const featureType = feature.get('type');
     const featureStyle = feature.get('style');
+    const pId = feature.getId();
 
     if (featureType == 'product' && featureStyle == 'image') {
-      renderProductOverlay(feature, productCardOverlay);
+      renderProductOverlay(productsSource.getFeatureById(pId), productCardOverlay);
     } 
     else if (featureType == 'brand' || 'dept' || 'subdept') {
       hideOverlay(productCardOverlay);

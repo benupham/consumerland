@@ -5,11 +5,7 @@ import {productsImageMax} from '../constants.js';
 import {renderProductOverlay, hideOverlay, productDetailOverlay, productCardOverlay} from '../components/overlays.js';
 
 export const handleClick = function(e) {
-  console.log(e.originalEvent);
-  console.log(e.pointerEvent);
-  console.log(map.getFeaturesAtPixel(e.pixel));
   if (productDetailOverlay.getElement().style.display == 'block') {
-    console.log(productDetailOverlay.getElement().style.display)
     hideOverlay(productDetailOverlay);
     return;
   }
@@ -29,8 +25,9 @@ export const handleClick = function(e) {
 
 
   } else if (['brand','dept','subdept'].indexOf(featureType) > -1) {
-    console.log('clicked trigger feature: '+feature.get('name'));
-    console.log('clicked trigger featuretype: '+feature.get('type'));
+    // console.log('clicked trigger feature: '+feature.get('name'));
+    // console.log('clicked trigger featuretype: '+feature.get('type'));
+    
     let circle = feature.getGeometry();
     if (featureStyle != 'circle') {
       circle = new Circle(feature.getGeometry().getCoordinates(), feature.get('radius'));  
@@ -41,11 +38,6 @@ export const handleClick = function(e) {
       : featureType == 'subdept' ? 9 
       : 49;
     view.animate({ resolution: zoomTo, center: center});  
-    // view.fit(circle.getExtent(), {
-    //   size: constraint, 
-    //   duration: 1000,
-    // });
-
   } else {
     hideOverlay(productDetailOverlay);
   }

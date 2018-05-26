@@ -54,7 +54,6 @@ const circleFeatureRender = function(featureCollection, colors = null) {
     circles.push(circle);
   })
   radii.sort(function(a, b){return a - b});
-  console.log(circles[0].get('type'),radii);
   return circles;
 }
 
@@ -258,78 +257,78 @@ const circleStyle = function(feature, resolution) {
 }
 /* Departments */
 
-const departments = circleFeatureRender(departmentsData, colors);
+// const departments = circleFeatureRender(departmentsData, colors);
 
-export const departmentsSource = new VectorSource({
-       features: departments
-});
+// export const departmentsSource = new VectorSource({
+//        features: departments
+// });
 
-export const departmentsFillLayer = new VectorLayer({
-  source: departmentsSource,
-  style: circleFillStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-})
+// export const departmentsFillLayer = new VectorLayer({
+//   source: departmentsSource,
+//   style: circleFillStyle,
+//   updateWhileAnimating: true,
+//   updateWhileInteracting: true,
+// })
 
 
 
-export const departmentsTextLayer = new VectorLayer({
-  source: departmentsSource,
-  style: circleTextStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  minResolution: deptsTextMin
-})
+// export const departmentsTextLayer = new VectorLayer({
+//   source: departmentsSource,
+//   style: circleTextStyle,
+//   updateWhileAnimating: true,
+//   updateWhileInteracting: true,
+//   minResolution: deptsTextMin
+// })
 
-/* Subdepartments */
+// /* Subdepartments */
 
-const subdepartments = circleFeatureRender(subdepartmentsData, colors);
+// const subdepartments = circleFeatureRender(subdepartmentsData, colors);
 
-export const subdepartmentsSource = new VectorSource({
-       features: subdepartments
-});
+// export const subdepartmentsSource = new VectorSource({
+//        features: subdepartments
+// });
 
-export const subdepartmentsFillLayer = new VectorLayer({
-  source: subdepartmentsSource,
-  style: circleFillStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  maxResolution: subdeptsFillMax
-})
+// export const subdepartmentsFillLayer = new VectorLayer({
+//   source: subdepartmentsSource,
+//   style: circleFillStyle,
+//   updateWhileAnimating: true,
+//   updateWhileInteracting: true,
+//   maxResolution: subdeptsFillMax
+// })
 
-export const subdepartmentsTextLayer = new VectorLayer({
-  source: subdepartmentsSource,
-  style: circleTextStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  maxResolution: subdeptsTextMax,
-  minResolution: subdeptsTextMin
-})
+// export const subdepartmentsTextLayer = new VectorLayer({
+//   source: subdepartmentsSource,
+//   style: circleTextStyle,
+//   updateWhileAnimating: true,
+//   updateWhileInteracting: true,
+//   maxResolution: subdeptsTextMax,
+//   minResolution: subdeptsTextMin
+// })
 
-/*
-*  Brands 
-* 
-*/
+// /*
+// *  Brands 
+// * 
+// */
 
-const brands = circleFeatureRender(brandsData, colors);
+// const brands = circleFeatureRender(brandsData, colors);
 
-const brandsSource = new VectorSource({
-  features: brands
-})
+// const brandsSource = new VectorSource({
+//   features: brands
+// })
 
-export const brandsFillLayer = new VectorLayer({
-  source: brandsSource,
-  style: circleFillStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  maxResolution: brandsFillMax
-})
+// export const brandsFillLayer = new VectorLayer({
+//   source: brandsSource,
+//   style: circleFillStyle,
+//   updateWhileAnimating: true,
+//   updateWhileInteracting: true,
+//   maxResolution: brandsFillMax
+// })
 
-export const brandsTextLayer = new VectorLayer({
-  source: brandsSource,
-  style: circleTextStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  maxResolution: 10
-})
+// export const brandsTextLayer = new VectorLayer({
+//   source: brandsSource,
+//   style: circleTextStyle,
+//   updateWhileAnimating: true,
+//   updateWhileInteracting: true,
+//   maxResolution: 10
+// })
 

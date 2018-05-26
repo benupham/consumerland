@@ -4,7 +4,7 @@
   "description": "product map app",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --host 0.0.0.0 --open",
+    "start": "webpack-dev-server --open",
     "build": "webpack --config webpack.config.js"
   },
   "author": "Ben Upham",

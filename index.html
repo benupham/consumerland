@@ -13,8 +13,8 @@
     </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!--     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Oswald:300,400,700|Permanent+Marker|Rock+Salt" rel="stylesheet"> -->
+   <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Oswald:300,400,700|Permanent+Marker|Rock+Salt" rel="stylesheet">
     
   </head>
   <body>
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div id="cart" class="col-3 col-sm-2  mt-2 dropdown cart">
-        <button id="cart-open-button" class="cart-open-button dropdown-toggle btn btn-warning" data-toggle="dropdown" type="button">Cart <span id="cart-count">&nbsp;</span>
+        <button id="cart-open-button" class="cart-open-button dropdown-toggle btn btn-warning" data-toggle="dropdown" type="button">Cart <span id="cart-count">0</span>
         </button>
         <div id="cart-contents" class="cart-contents dropdown-menu dropdown-menu-right"></div>
       </div>
@@ -78,7 +78,7 @@
         <div class="card-body">
           <a class="card-title product-name"></a>
           <p class="card-text product-price"></p>
-          <button id="product-card-add-button" class="add-to-cart d-block btn btn-outline-warning" name="add-to-cart">Add to Cart</button>
+          <button id="product-card-add-button" class="add-to-cart d-block btn btn-outline-warning btn-sm" name="add-to-cart">Add to Cart</button>
         </div>
       </div>
 

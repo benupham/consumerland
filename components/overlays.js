@@ -5,7 +5,7 @@ import MouseWheelZoom from 'ol/interaction/mousewheelzoom';
 import {updateAddCartButton, updateCart} from '../components/cart.js';
 import {view} from '../index.js';
 import {productsSource} from '../features/categoryFeatures.js';
-
+import {textFormatter, dataTool} from '../utilities.js';
 /*
 * Overlays
 * 
@@ -39,6 +39,7 @@ for (let i = 0; i < 4; i++) {
 export const signage = signs; 
 
 export const openProductDetail = function(e) {
+  e.stopPropagation();
   hideOverlay(productCardOverlay);
   const pId = this.getAttribute('data-pid');
   const p = productsSource.getFeatureById(pId);
@@ -49,7 +50,11 @@ export const openProductDetail = function(e) {
 }
 
 export const renderProductOverlay = function(product, overlay) {
-
+  console.log('render overlay: ', product.getId(), product.get('fid'), 
+    product.get('style'), product.get('inCart'));
+  if (product.get('inCart') === undefined) {
+    product.set('inCart', false);
+  }
   // Even with stopEvent=true, pointermove needs to be stopped. 
   overlay.getElement().onpointermove = function(e) {e.stopPropagation()};
   if (overlay.getId() == 'productCard') {
@@ -63,8 +68,7 @@ export const renderProductOverlay = function(product, overlay) {
 
   const btn = overlay.getElement().querySelector('.add-to-cart');
   btn.setAttribute('data-pid', product.getId());
-  const inCart = product.get('inCart') || false;
-  updateAddCartButton(inCart, btn);
+  updateAddCartButton(product.get('inCart'), btn);
   btn.addEventListener('click', updateCart);
 
   overlay.setPosition(coordinate);
@@ -87,16 +91,33 @@ export const renderProductOverlay = function(product, overlay) {
     })
   }
 
-  name.textContent = product.get('name');
+  image.src = '';
+  image.src = product.get('src');
+  image.style.width = 200+'px'; 
+  let imageOffset = -100;
+  
+  const res = view.getResolution();
+  if (res > 5 && overlay.getId() === 'productCard') {
+    name.innerHTML = textFormatter(product.get('name'), 15, '<br>', 10);
+    image.style.width = 115+'px'; 
+    imageOffset = -57;   
+  } else if (res > 3 && overlay.getId() === 'productCard') {
+    name.innerHTML = textFormatter(product.get('name'), 25, '<br>', 20);
+    image.style.width = 150+'px'; 
+    imageOffset = -75;   
+  } else {
+    name.innerHTML = product.get('name');    
+  }
+
   price.textContent = product.get('price');
 
   //const resolution = view.getResolution();
-  image.src = '';
-  image.src = product.get('src');
+
   //const imageRatio = 1 / (resolution * 0.5) > 1 ? 1 : 1 / (resolution * 0.5);
   //const imageOffset = -100 * imageRatio;
   //image.style.width = 200 * imageRatio + 'px';
-  const imageOffset = -100;
+
+  
   const offset = [imageOffset - image.offsetLeft, imageOffset - image.offsetTop];
   overlay.setOffset(offset); 
 } 

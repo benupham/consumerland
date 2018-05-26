@@ -66,13 +66,21 @@ export const circleHoverColors = {
 }
 
 // Fonts
+
+export const fontFamily = {
+	dept: 'Baskerville',
+	subdept: 'Baskerville',
+	brand: 'Baskerville',
+	product: 'Baskerville'
+}
+
 export const fontSizes = [
-	'10px Baskerville',
-	'12px Baskerville',
-	'14px Baskerville',
-	'16px Baskerville',
-	'18px Baskerville',
-	'18px Baskerville',
-	'20px Baskerville',
-	'22px Baskerville',
+	10,
+	12,
+	14,
+	16,
+	18,
+	18,
+	20,
+	22,
 ];
