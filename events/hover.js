@@ -32,14 +32,13 @@ export const handleHover = function(e) {
   if (map.hasFeatureAtPixel(e.pixel)) {
     const features = map.getFeaturesAtPixel(e.pixel);
     const feature = features[0];
-    console.log(feature.get('type'), feature.get('name'))
     const featureType = feature.get('type');
     const featureStyle = feature.get('style');
 
     if (featureType == 'product' && featureStyle == 'image') {
       renderProductOverlay(feature, productCardOverlay);
     } 
-    else if ((resolution > productsImageMax) && (featureType == 'brand' || 'dept' || 'subdept')) {
+    else if (featureType == 'brand' || 'dept' || 'subdept') {
       hideOverlay(productCardOverlay);
       map.getTargetElement().style.cursor = 'pointer';
       if (feature != highlight) {

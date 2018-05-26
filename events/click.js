@@ -7,7 +7,7 @@ import {renderProductOverlay, hideOverlay, productDetailOverlay, productCardOver
 export const handleClick = function(e) {
   console.log(e.originalEvent);
   console.log(e.pointerEvent);
-  console.log(e);
+  console.log(map.getFeaturesAtPixel(e.pixel));
   if (productDetailOverlay.getElement().style.display == 'block') {
     console.log(productDetailOverlay.getElement().style.display)
     hideOverlay(productDetailOverlay);
@@ -27,13 +27,24 @@ export const handleClick = function(e) {
     hideOverlay(productCardOverlay);
     renderProductOverlay(feature, productDetailOverlay);
 
-  } else if ((featureType == 'brand' || 'dept' || 'subdept')) {
+
+  } else if (['brand','dept','subdept'].indexOf(featureType) > -1) {
+    console.log('clicked trigger feature: '+feature.get('name'));
+    console.log('clicked trigger featuretype: '+feature.get('type'));
     let circle = feature.getGeometry();
     if (featureStyle != 'circle') {
       circle = new Circle(feature.getGeometry().getCoordinates(), feature.get('radius'));  
-    }     
+    }  
+    const center = feature.getGeometry().getCoordinates() || feature.getGeometry().getCenter();   
     hideOverlay(productDetailOverlay);
-    view.fit(circle.getExtent(), {size: constraint, duration: 1000});
+    const zoomTo = featureType == 'brand' ? 2.5 
+      : featureType == 'subdept' ? 9 
+      : 49;
+    view.animate({ resolution: zoomTo, center: center});  
+    // view.fit(circle.getExtent(), {
+    //   size: constraint, 
+    //   duration: 1000,
+    // });
 
   } else {
     hideOverlay(productDetailOverlay);

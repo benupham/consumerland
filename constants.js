@@ -44,9 +44,35 @@ export const labelColors = {
 	product: '#fff'
 }
 
+export const circleLabelColors = {
+	dept: '#303030',
+	subdept: '#303030',
+	brand: '#303030',
+	product: '#303030'
+}
+
 export const circleColors = {
 	dept: 'rgba(249, 198, 90, 0.3)',
 	subdept: 'rgba(0, 133, 62, 0.3)',
-	brand: 'rgba(255, 255, 255, 0.3)', // rgba(214, 57, 0, 0.3)  rgba(106, 48, 55, 0.3)
+	brand: 'rgba(255, 255, 255, 0.3)', 
 	product: '#fff'
 }
+
+export const circleHoverColors = {
+	dept: 'rgba(249, 198, 90, 0.5)',
+	subdept: 'rgba(0, 133, 62, 0.5)',
+	brand: 'rgba(255, 255, 255, 0.5)', 
+	product: '#fff'
+}
+
+// Fonts
+export const fontSizes = [
+	'10px Baskerville',
+	'12px Baskerville',
+	'14px Baskerville',
+	'16px Baskerville',
+	'18px Baskerville',
+	'18px Baskerville',
+	'20px Baskerville',
+	'22px Baskerville',
+];

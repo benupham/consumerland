@@ -52,7 +52,9 @@ export const renderProductOverlay = function(product, overlay) {
 
   // Even with stopEvent=true, pointermove needs to be stopped. 
   overlay.getElement().onpointermove = function(e) {e.stopPropagation()};
-
+  if (overlay.getId() == 'productCard') {
+    overlay.getElement().onclick = function(e) {e.stopPropagation()};
+  }
   overlay.getElement().style.display = 'block';
 
   overlay.set('product', product.getId());

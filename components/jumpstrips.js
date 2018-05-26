@@ -1,13 +1,34 @@
 import Extent from 'ol/extent';
+import RegularShape from 'ol/style/regularshape';
+import Feature from 'ol/feature';
+import Point from 'ol/geom/point';
+import Fill from 'ol/style/fill';
+import Style from 'ol/style/style';
 
 import {map, view, maxExtent} from '../index.js';
+import {departmentsCircleLayer} from '../features/categoryFeatures.js';
 //import {jumpStripActive} from '../variables.js';
+
+const jumpStripPointer = new Feature({
+  geometry: new Point([46000,-46000]),
+  name: 'jumpStripPointer',
+})
+jumpStripPointer.setStyle(
+new Style({
+    image: new RegularShape({
+      points: 3,
+      fill: new Fill({color: 'red'}),
+      radius: 10
+    })
+})
+)
+//departmentsCircleLayer.getSource().addFeature(jumpStripPointer);
 
 window.jumpStripActive = false;
 export const handleJumpStrips = function(e) {
   // prevent firing if dragging mouse
   if (e.dragging === true) return;
-
+  // console.log(e);
   map.getTargetElement().style.cursor = 'pointer';
   const res = view.getResolution();
 
@@ -16,7 +37,7 @@ export const handleJumpStrips = function(e) {
   const size = map.getSize();
   const limit = [size[0] - 100, size[1] - 100];
   const pixel = e.pixel;
-  const p = map.getCoordinateFromPixel(e.pixel);
+  const p = e.coordinate;
   const ctr = view.getCenter();
 
   const x = p[0];
@@ -31,6 +52,8 @@ export const handleJumpStrips = function(e) {
     velocity = pixel[0] > limit[0] ? (pixel[0] - limit[0]) * delta : (pixel[1] - limit[1]) * delta;
   }  
   const angle = Math.atan2(p[1] - ctr[1], p[0] - ctr[0]); 
+  // jumpStripPointer.getGeometry().setCoordinates(e.coordinate);
+  // jumpStripPointer.getStyle().getImage().setRotation(angle);
   const adj = Math.sin(angle) * velocity;
   const opp = Math.cos(angle) * velocity; 
   const newCtr = [ctr[0] + opp, ctr[1] + adj];
@@ -41,8 +64,6 @@ export const handleJumpStrips = function(e) {
   }
 
   view.setCenter(newCtr);
-  console.log('jumping');
-
 
   const viewExtent = view.calculateExtent();
   if (!Extent.containsExtent(maxExtent,viewExtent)) {

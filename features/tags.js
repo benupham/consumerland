@@ -5,6 +5,7 @@ import VectorSource from 'ol/source/vector';
 import Icon from 'ol/style/icon';
 import Style from 'ol/style/style';
 
+import {allFeatureData} from '../data/allFeatureDataCollection.js';
 import {productData} from '../data/productData';
 import {productsImageMax} from '../constants.js';
 import {textFormatter, iconcache, styleCache} from '../utilities.js';
@@ -16,13 +17,13 @@ import {textFormatter, iconcache, styleCache} from '../utilities.js';
 */
 
 const tagsData = {
-  sale: {color: '', src: 'sale.png'}
+  sale: {color: '', src: 'sale-red.png'}
 }
 
 const tagFeatureRender = function(featureCollection, colors = null, tagType = 'sale') {
   let tags = [];
   featureCollection.features.forEach( (f) => {
-    if (f.properties.price.indexOf('Reg') > -1) {
+    if (f.properties.type == 'product' && f.properties.price.indexOf('Reg') > -1) {
       const tag = new Feature({
         'geometry': new Point([f.geometry.coordinates[0] - 75, f.geometry.coordinates[1] + 75]),
         'name': f.id + '-' + tagType,
@@ -45,7 +46,7 @@ const tagStyle = function (tag, resolution) {
 
   if (!tagIcon) {
     tagIcon = new Icon({
-      size: [32,32],
+      size: [48,48],
       // scale: 1 / resolution + .3,
       crossOrigin: 'anonymous',
       src: '../product-images/tags/' + src
@@ -63,7 +64,7 @@ const tagStyle = function (tag, resolution) {
   return style
 }
 
-const tagFeatures = tagFeatureRender(productData);
+const tagFeatures = tagFeatureRender(allFeatureData);
 const tagSource = new VectorSource({
   features: tagFeatures,
   overlaps: false

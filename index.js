@@ -27,13 +27,16 @@ import {
   subdepartmentsLabelLayer,
   brandsLabelLayer,
   departmentsCircleLayer,
+  departmentsCircleLabelLayer,
   subdepartmentsCircleLayer,
   brandsCircleLayer,
+  brandsCircleLabelLayer,
   departmentsImageLayer,
   subdepartmentsImageLayer,
   brandsImageLayer,
   productsCircleLayer,
   productsImageLayer,
+  subdepartmentsCircleLabelLayer,
 } from './features/categoryFeatures.js';
 
 
@@ -45,9 +48,9 @@ import {
 */
 
 export const view = new View({
-  center: [62667,-46227],
-  resolution: 100, 
-  zoomFactor: 1.1,
+  center: [46000,-46000],
+  resolution: 85, 
+  zoomFactor: 1.25,
   minResolution: 1,
   maxResolution: 100,
 })
@@ -66,7 +69,10 @@ export const map = new olMap({
     productsCircleLayer,
     productsImageLayer,
     tagLayer,
-    brandsImageLayer,
+    // brandsImageLayer,
+    // subdepartmentsCircleLabelLayer,
+    // departmentsCircleLabelLayer,
+    // brandsCircleLabelLayer
     ],
   target: document.getElementById('map'),
   view: view
@@ -76,6 +82,8 @@ const centerZoom = view.getCenter();
 
 
 const mapResize = function(e) {
+  const navbarHeight = document.getElementById('navbar').clientHeight;
+  console.log(navbarHeight)
   const mapHeight = document.documentElement.clientHeight;
   const mapWidth = document.documentElement.clientWidth;
   document.querySelector('#map').style.height = mapHeight + 'px';
@@ -92,7 +100,10 @@ map.addOverlay(productDetailOverlay);
 // }
 
 
-map.on('pointermove', handleHover);
+map.on('pointermove', (e) => {
+  dataTool.querySelector('#data-coord').innerHTML = `coord: ${e.coordinate}`;
+  handleHover(e);
+});
 map.getTargetElement().addEventListener('mouseleave', function(){
   window.clearInterval(jumpStripsInt);
 })
@@ -107,7 +118,9 @@ view.on('change:resolution', (e) => {
     const signageTimeOut = setTimeout(displaySignage, 100);    
   }
   if (res >= 100) window.clearInterval(jumpStripsInt);
-  console.log('resolution',view.getResolution(),'zoom',view.getZoom())
+  //console.log('resolution',view.getResolution(),'zoom',view.getZoom());
+  dataTool.querySelector('#data-zoom').innerHTML = `zoom: ${view.getZoom()}`;
+  dataTool.querySelector('#data-res').innerHTML = `res: ${view.getResolution()}`;
 });
 
 
