@@ -60,6 +60,7 @@ export const map = new olMap({
     productsCircleLayer,
     productsImageLayer,
     tagLayer,
+    brandsLabelLayer,
     // brandsImageLayer,
     // subdepartmentsCircleLabelLayer,
     // departmentsCircleLabelLayer,

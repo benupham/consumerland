@@ -9,8 +9,8 @@ export const handleClick = function(e) {
     hideOverlay(productDetailOverlay);
     return;
   }
-
   const features = map.getFeaturesAtPixel(e.pixel);
+  if (features === null) return;
   const feature = features[0];
   const featureType = feature.get('type');
   const featureStyle = feature.get('style');
@@ -34,8 +34,8 @@ export const handleClick = function(e) {
     }  
     const center = feature.getGeometry().getCoordinates() || feature.getGeometry().getCenter();   
     hideOverlay(productDetailOverlay);
-    const zoomTo = featureType == 'brand' ? 2.5 
-      : featureType == 'subdept' ? 9 
+    const zoomTo = featureType == 'brand' ? 2 
+      : featureType == 'subdept' ? productsImageMax - .5 
       : 49;
     view.animate({ resolution: zoomTo, center: center});  
   } else {

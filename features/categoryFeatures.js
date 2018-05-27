@@ -16,6 +16,8 @@ import {allFeatureData} from '../data/allFeatureDataCollection.js';
 import {
   colors,
   labelColors,
+  labelBackgroundColors,
+  labelStrokes,
   circleLabelColors,
   circleColors,
   circleHoverColors,
@@ -24,7 +26,6 @@ import {
   fontSizes,
 } from '../constants.js';
 import {textFormatter, dataTool} from '../utilities.js';
-
 
 
 /*
@@ -59,7 +60,7 @@ const labelFeatureRender = function (featureSets, type='all') {
           fid : f.id,
           type: f.properties.type,
           style: 'label',
-          //radius: f.properties.radius,
+          radius: f.properties.radius,
           fontSize: fontSize,
           //src: f.properties.src
         });
@@ -73,7 +74,7 @@ const labelFeatureRender = function (featureSets, type='all') {
 
 const labelStyleCache = {};
 const labelStyle = function(label, res) {
-  //if (res > label.get('maxRes')) return null;
+  // if (label.get('radius') < 300) return null;
   let style = labelStyleCache[label.get('id')];
   if (!style) {
     const fillColor = 
@@ -83,8 +84,8 @@ const labelStyle = function(label, res) {
         text: label.get('name'),
         textBaseline: 'middle',
         fill: new Fill({color: labelColors[label.get('type')]}),
-        //stroke: new Stroke({color: '#808080', width: 3}) ,
-        backgroundFill: new Fill({color: 'rgba(0,0,0,0.5'}),
+        stroke: new Stroke({color: labelStrokes[label.get('type')], width: 1}) ,
+        backgroundFill: new Fill({color: labelBackgroundColors[label.get('type')]}),
         padding: [0,5,0,5]
       })
     })
@@ -314,7 +315,7 @@ export const subdepartmentsLabelLayer = new VectorLayer({
   style: labelStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  minResolution: 10,
+  minResolution: productsImageMax,
   maxResolution: 50
 })
 
@@ -335,7 +336,7 @@ export const subdepartmentsImageLayer = new VectorLayer({
   style: imageStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  minResolution: 10,
+  minResolution: productsImageMax,
   maxResolution: 50
 })
 
@@ -358,7 +359,7 @@ export const brandsLabelLayer = new VectorLayer({
   updateWhileAnimating: true,
   updateWhileInteracting: true,
   //minResolution: null,
-  maxResolution: 10
+  maxResolution: productsImageMax
 })
 
 // export const brandsCircleLabelLayer = new VectorLayer({
@@ -379,7 +380,7 @@ export const brandsImageLayer = new VectorLayer({
   updateWhileAnimating: true,
   updateWhileInteracting: true,
   //minResolution: null,
-  maxResolution: 10
+  maxResolution: productsImageMax
 })
 
 export const brandsCircleLayer = new VectorLayer({

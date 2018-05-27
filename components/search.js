@@ -2,7 +2,7 @@ import Control from 'ol/control/control';
 import {map} from '../index.js';
 import {productsImageMax} from '../constants.js';
 import {productsSource} from '../features/categoryFeatures.js';
-import {productData} from '../data/productData.js';
+import {allFeatureData} from '../data/allFeatureDataCollection.js';
 import {brandsData} from '../data/brandsData.js';
 import {departmentsData} from '../data/departmentsData.js';
 import {subdepartmentsData} from '../data/subdepartmentsData.js';
@@ -21,13 +21,15 @@ export const handleSearch = function(e) {
   if (query != '') {
     try {
       console.log('query',query);
-      let products = productData.features;
-      let match = matchSorter(products, query, {keys: ['properties.name'] })
-      console.log('match',match[0].id);
-      const feature = productsSource.getFeatureById(match[0].id + '-image'); 
-      console.log(feature);
+      let items = allFeatureData.features;
+      let match = matchSorter(items, query, {keys: ['properties.name'] })
+      console.log('match', match[0].id);
+      const result = match[0];
+      const coord = result.geometry.coordinates;
+      //const feature = productsSource.getFeatureById(match[0].id + '-image'); 
+      //console.log(feature);
       map.getView().animate({
-        center: feature.getGeometry().getCoordinates(),
+        center: coord,
         resolution: productsImageMax - 5 >= 1 ? productsImageMax - 5 : 1 , //need to make this a variable
       })
     }

@@ -9,7 +9,7 @@
 
 // Resolution
 
-export const productsImageMax = 10;
+export const productsImageMax = 7;
 export const deptsTextMin = 30;
 export const subdeptsTextMax = 30;
 export const subdeptsFillMax = 90;
@@ -38,6 +38,20 @@ export const colors = [
 ]
 
 export const labelColors = {
+	dept: '#E8E8E8',
+	subdept: '#606060',
+	brand: '#606060',
+	product: '#606060'
+}
+
+export const labelBackgroundColors = {
+	dept: 'rgba(0, 0, 0, 0.3)',
+	subdept: 'rgba(0, 0, 0, 0)',
+	brand: 'rgba(0, 0, 0, 0)',
+	product: 'rgba(0, 0, 0, 0)'
+}
+
+export const labelStrokes = {
 	dept: '#fff',
 	subdept: '#fff',
 	brand: '#fff',
@@ -53,25 +67,25 @@ export const circleLabelColors = {
 
 export const circleColors = {
 	dept: 'rgba(249, 198, 90, 0.3)',
-	subdept: 'rgba(0, 133, 62, 0.3)',
-	brand: 'rgba(255, 255, 255, 0.3)', 
+	subdept: 'rgba(0, 133, 62, 0.2)',
+	brand: 'rgba(255, 255, 255, 0.1)', 
 	product: '#fff'
 }
 
 export const circleHoverColors = {
-	dept: 'rgba(249, 198, 90, 0.5)',
-	subdept: 'rgba(0, 133, 62, 0.5)',
-	brand: 'rgba(255, 255, 255, 0.5)', 
+	dept: 'rgba(249, 198, 90, 0.4)',
+	subdept: 'rgba(0, 133, 62, 0.4)',
+	brand: 'rgba(255, 255, 255, 0.4)', 
 	product: '#fff'
 }
 
 // Fonts
 
 export const fontFamily = {
-	dept: 'Baskerville',
-	subdept: 'Baskerville',
-	brand: 'Baskerville',
-	product: 'Baskerville'
+	dept: 'Oswald',
+	subdept: 'Oswald',
+	brand: 'Oswald',
+	product: 'Oswald'
 }
 
 export const fontSizes = [
