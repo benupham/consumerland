@@ -20,22 +20,56 @@
   <body>
     <!-- Navbar -->
     <nav id="navbar" class="navbar navbar-dark bg-dark py-2 navbar-expand-lg shadow-bottom border-bottom border-secondary row">
-      <div class="col-sm-4">
-        <a class="navbar-brand" href="#">F & O Market</a>
-      </div> 
-      <div id="search-bar" class="col-9 col-sm-6 mt-2 input-group">
-        <input type="text" id="search-input" class="form-control" placeholder="Search for products">
-        <div class="input-group-append">
-          <button id="search-button" class="btn btn-warning" type="button">Search</button>
+      <div id="search-bar" class="col-12 col-sm-8 mb-2 mb-sm-0">
+        <div class="input-group">
+          <input type="text" id="search-input" class="form-control" placeholder="Search for products">
+          <div class="input-group-append">
+            <button id="search-button" class="btn btn-warning" type="button">Search</button>
+          </div>          
         </div>
       </div>
-      <div id="cart" class="col-3 col-sm-2  mt-2 dropdown cart">
-        <button id="cart-open-button" class="cart-open-button dropdown-toggle btn btn-warning" data-toggle="dropdown" type="button">Cart <span id="cart-count">0</span>
-        </button>
-        <div id="cart-contents" class="cart-contents dropdown-menu dropdown-menu-right"></div>
+      <div id="cart" class="col-auto px-sm-0 mr-sm-auto dropdown cart">
+          <button id="cart-open-button" class="cart-open-button dropdown-toggle btn btn-warning" data-toggle="dropdown" role="button">Cart <span id="cart-count">0</span></button>
+          <div id="cart-contents" class="cart-contents dropdown-menu dropdown-menu-right"></div>         
+      </div>
+      <div class="nav col-auto ml-sm-auto">
+        <div class="nav-item">
+          <a class="nav-link text-warning" data-toggle="modal" href="#info-modal">
+            Info
+          </a>        
+        </div>
+        <div class="nav-item">
+          <a class="nav-link text-warning" href="mailto:bcupham@gmail.com">
+            Contact
+          </a>        
+        </div>
       </div>
     </nav>
-    
+
+    <!-- Modal -->
+    <div class="modal fade" id="info-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-label">Welcome to ConsumerLand!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>ConsumerLand is an experimental eCommerce UX built because of a nagging concern that we are doing online shopping, and especially online grocery shopping, wrong. 
+            <p>Virtually all online shopping today takes the "database lookup" approach: The user enters a search query, and are returned a list of results. To get different results, the user must enter a new query, returning a new set of results.</p><p>But shopping, and especially shopping for food -- i.e., hunting and gathering -- is an intuitive behavior tied to a sense of space and geography. We browse and roam across territory, double-back, and even go in circles. Whether that is the most efficient behavior is beside the point: It is our most instinctive.</p> 
+            <p>I called this prototype ConsumerLand because the eCommerce grocery store is a "land" -- or more accurately, a map of the land, a place where all of the things you could buy live, waiting for you to discover them.</p>
+            <p>I welcome all feedback and bug reports! Please email me at bcupham@gmail.com or click Contact in the main menu.</p>
+            <p>This interface has not been extensively tested. <b>I recommend viewing on the latest version of Chrome only.</b></p> 
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <div id="data-tool" class="data-tool">
       <div id="data-zoom"></div>

@@ -9,7 +9,7 @@ import Icon from 'ol/style/icon';
 import Fill from 'ol/style/fill';
 import Text from 'ol/style/text';
 import Style from 'ol/style/style';
-// import {histogram} from 'd3-array';
+
 const d3Array = require('d3-array');
 
 import {allFeatureData} from '../data/allFeatureDataCollection.js';
@@ -74,7 +74,7 @@ const labelFeatureRender = function (featureSets, type='all') {
 
 const labelStyleCache = {};
 const labelStyle = function(label, res) {
-  // if (label.get('radius') < 300) return null;
+  if (label.get('radius') < 200) return null;
   let style = labelStyleCache[label.get('id')];
   if (!style) {
     const fillColor = 
@@ -396,10 +396,13 @@ export const brandsCircleLayer = new VectorLayer({
 
 // Products
 
+// Product Source
+
+export const productsSource = new VectorSource({
+  features: imageFeatureRender([allFeatureData], 'product')
+})
 export const productsImageLayer = new VectorLayer({
-  source: new VectorSource({
-    features: imageFeatureRender([allFeatureData], 'product')
-  }),
+  source: productsSource,
   style: imageStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
@@ -418,62 +421,3 @@ export const productsCircleLayer = new VectorLayer({
   maxResolution: productsImageMax
 })
 
-// Product Source
-
-export const productsSource = new VectorSource({
-  features: imageFeatureRender([allFeatureData], 'product')
-})
-
-// const labels = labelFeatureRender(
-//   [brandsData,subdepartmentsData,departmentsData]
-// );
-
-// const labelFeatureSource = new VectorSource({
-//   features: labels
-// })
-
-// export const labelFeatureLayer = new VectorLayer({
-//   source: labelFeatureSource,
-//   style: labelStyle,
-//   updateWhileAnimating: true,
-//   updateWhileInteracting: true
-// })
-
-// const circles = circleFeatureRender(
-//   [departmentsData,subdepartmentsData,brandsData]
-// );
-
-// const circleFeatureSource = new VectorSource({
-//   features: circles
-// })
-
-// export const circleFeatureLayer = new VectorLayer({
-//   source: circleFeatureSource,
-//   style: circleStyle,
-//   updateWhileAnimating: true,
-//   updateWhileInteracting: true
-// })
-
-// const departmentImageSource = new VectorSource({
-//   features: labelFeatureRender([departmentsData])
-// })
-
-// export const departmentImageLayer = new VectorLayer({
-//   source: departmentImageSource,
-//   style: imageStyle,
-//   updateWhileAnimating: true,
-//   updateWhileInteracting: true,
-//   minResolution: 90
-// })
-
-// const subdepartmentImageSource = new VectorSource({
-//   features: labelFeatureRender([subdepartmentsData])
-// })
-
-// export const subdepartmentImageLayer = new VectorLayer({
-//   source: subdepartmentImageSource,
-//   style: imageStyle,
-//   updateWhileAnimating: true,
-//   updateWhileInteracting: true,
-//   //minResolution: 90
-// })

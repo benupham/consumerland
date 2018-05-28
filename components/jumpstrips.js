@@ -5,7 +5,7 @@ import Point from 'ol/geom/point';
 import Fill from 'ol/style/fill';
 import Style from 'ol/style/style';
 
-import {map, view, maxExtent} from '../index.js';
+import {map, view} from '../index.js';
 import {departmentsCircleLayer} from '../features/categoryFeatures.js';
 //import {jumpStripActive} from '../variables.js';
 
@@ -65,6 +65,7 @@ export const handleJumpStrips = function(e) {
 
   view.setCenter(newCtr);
 
+  const maxExtent = departmentsCircleLayer.getExtent();
   const viewExtent = view.calculateExtent();
   if (!Extent.containsExtent(maxExtent,viewExtent)) {
     view.setCenter(ctr);

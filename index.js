@@ -10,7 +10,6 @@ import {searchControl, handleSearch} from './components/search.js';
 import {handleJumpStrips} from './components/jumpstrips.js';
 import {handleHover, jumpStripsInt} from './events/hover.js';
 import {handleClick} from './events/click.js';
-import {productsVectorLayer} from './features/products.js';
 import {tagLayer} from './features/tags.js';
 import {productsImageMax} from './constants.js';
 import {
@@ -31,6 +30,7 @@ import {
 } from './features/categoryFeatures.js';
 
 
+$('#info-modal').modal('show');
 
 
 /*
@@ -45,35 +45,42 @@ export const view = new View({
   minResolution: 1,
   maxResolution: 100,
 })
-export const maxExtent = departmentsCircleLayer.getExtent();
+
 
 export const map = new olMap({
-  renderer: (['canvas']),
+  renderer: ('canvas'),
   layers: [
     departmentsCircleLayer,
     subdepartmentsCircleLayer,
     brandsCircleLayer,
-    departmentsImageLayer,
     subdepartmentsImageLayer,
+    departmentsImageLayer,
     departmentsLabelLayer,
     subdepartmentsLabelLayer,
-    productsCircleLayer,
-    productsImageLayer,
-    tagLayer,
-    brandsLabelLayer,
-    // brandsImageLayer,
-    // subdepartmentsCircleLabelLayer,
-    // departmentsCircleLabelLayer,
-    // brandsCircleLabelLayer
+    // productsCircleLayer,
+    // productsImageLayer,
+    // tagLayer,
+    // brandsLabelLayer,
     ],
   target: document.getElementById('map'),
   view: view
+});
+
+// Speed up initial load
+document.addEventListener('DOMContentLoaded', e => {
+  map.addLayer(productsCircleLayer);
+  map.addLayer(productsImageLayer);
+  map.addLayer(tagLayer);
+  map.addLayer(brandsLabelLayer);
 });
 
 const centerZoom = view.getCenter();  
 
 
 const mapResize = function(e) {
+  if (window.innerWidth < 576) {
+    document.getElementById('cart-contents').classList.toggle('dropdown-menu-right');
+  }
   const navbarHeight = document.getElementById('navbar').clientHeight;
   const mapHeight = document.documentElement.clientHeight;
   const mapWidth = document.documentElement.clientWidth;
@@ -109,9 +116,9 @@ map.on('click', (e) => {
 view.on('change:resolution', (e) => {
   const res = view.getResolution();
   if (window.jumpStripActive === true) return; 
-  if (res < 80) {
-    const signageTimeOut = setTimeout(displaySignage, 100);    
-  }
+  // if (res < 80) {
+  //   const signageTimeOut = setTimeout(displaySignage, 100);    
+  // }
   if (res >= 100) window.clearInterval(jumpStripsInt);
   //console.log('resolution',view.getResolution(),'zoom',view.getZoom());
   dataTool.querySelector('#data-zoom').innerHTML = `zoom: ${view.getZoom()}`;

@@ -38,14 +38,14 @@ export const colors = [
 ]
 
 export const labelColors = {
-	dept: '#E8E8E8',
+	dept: '#606060',
 	subdept: '#606060',
 	brand: '#606060',
 	product: '#606060'
 }
 
 export const labelBackgroundColors = {
-	dept: 'rgba(0, 0, 0, 0.3)',
+	dept: 'rgba(255, 255, 255, 0.7)',
 	subdept: 'rgba(0, 0, 0, 0)',
 	brand: 'rgba(0, 0, 0, 0)',
 	product: 'rgba(0, 0, 0, 0)'

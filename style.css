@@ -128,15 +128,32 @@ body {
 	display: none;
 }
 
+/* MODAL */
+
+.modal {
+  font-family: Optima, Arial, sans-serif;
+}
+
+.modal-title {
+}
+
+.modal-body {
+  font-size: 18px;
+}
 /* NAVBAR */
 
 .navbar {
 	background-color: rgba(0, 133, 62, 1) !important;
 }
 
-.navbar-brand {
+.brand {
 	font-family: 'Rock Salt';
 	color: rgba(249, 198, 90, 1) !important;
+  background-image: url('./other-images/logo.png');
+}
+
+.brand img {
+  width: 100%;
 }
 
 .btn-success {
@@ -148,10 +165,14 @@ body {
 	border-color: rgba(249, 198, 90, 0.9);
 }
 
+.text-warning {
+  color: rgba(249, 198, 90, 1);
+}
+
 /* SEARCH OVERLAY */
 
 .cart-item {
-	min-width: 400px;
+	min-width: 300px;
 }
 
 .cart-image {
@@ -214,5 +235,6 @@ body {
 	color: red; 
 	z-index: 1000;
 	background: white;
+  display: none;
 }
 

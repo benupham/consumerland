@@ -6,7 +6,6 @@ import Icon from 'ol/style/icon';
 import Style from 'ol/style/style';
 
 import {allFeatureData} from '../data/allFeatureDataCollection.js';
-import {productData} from '../data/productData';
 import {productsImageMax} from '../constants.js';
 import {textFormatter, iconcache, styleCache} from '../utilities.js';
 

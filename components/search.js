@@ -1,11 +1,7 @@
 import Control from 'ol/control/control';
 import {map} from '../index.js';
 import {productsImageMax} from '../constants.js';
-import {productsSource} from '../features/categoryFeatures.js';
 import {allFeatureData} from '../data/allFeatureDataCollection.js';
-import {brandsData} from '../data/brandsData.js';
-import {departmentsData} from '../data/departmentsData.js';
-import {subdepartmentsData} from '../data/subdepartmentsData.js';
 import matchSorter from 'match-sorter';
 
 /*
