@@ -30,7 +30,7 @@ import {
 } from './features/categoryFeatures.js';
 
 
-$('#info-modal').modal('show');
+// $('#info-modal').modal('show');
 
 
 /*
@@ -40,10 +40,10 @@ $('#info-modal').modal('show');
 
 export const view = new View({
   center: [46000,-46000],
-  resolution: 85, 
+  resolution: 65, 
   zoomFactor: 1.25,
   minResolution: 1,
-  maxResolution: 100,
+  maxResolution: 75,
 })
 
 
@@ -54,9 +54,9 @@ export const map = new olMap({
     subdepartmentsCircleLayer,
     brandsCircleLayer,
     subdepartmentsImageLayer,
-    departmentsImageLayer,
+    // departmentsImageLayer,
     departmentsLabelLayer,
-    subdepartmentsLabelLayer,
+    // subdepartmentsLabelLayer,
     // productsCircleLayer,
     // productsImageLayer,
     // tagLayer,
@@ -69,6 +69,7 @@ export const map = new olMap({
 // Speed up initial load
 document.addEventListener('DOMContentLoaded', e => {
   map.addLayer(productsCircleLayer);
+  map.addLayer(subdepartmentsLabelLayer);
   map.addLayer(productsImageLayer);
   map.addLayer(tagLayer);
   map.addLayer(brandsLabelLayer);

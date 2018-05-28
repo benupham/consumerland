@@ -359,7 +359,7 @@ export const brandsLabelLayer = new VectorLayer({
   updateWhileAnimating: true,
   updateWhileInteracting: true,
   //minResolution: null,
-  maxResolution: productsImageMax
+  maxResolution: 15
 })
 
 // export const brandsCircleLabelLayer = new VectorLayer({
@@ -380,7 +380,7 @@ export const brandsImageLayer = new VectorLayer({
   updateWhileAnimating: true,
   updateWhileInteracting: true,
   //minResolution: null,
-  maxResolution: productsImageMax
+  maxResolution: 50
 })
 
 export const brandsCircleLayer = new VectorLayer({
@@ -418,6 +418,6 @@ export const productsCircleLayer = new VectorLayer({
   updateWhileAnimating: true,
   updateWhileInteracting: true,
   //minResolution: null,
-  maxResolution: productsImageMax
+  maxResolution: 25
 })
 

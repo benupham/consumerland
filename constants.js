@@ -68,7 +68,7 @@ export const circleLabelColors = {
 export const circleColors = {
 	dept: 'rgba(249, 198, 90, 0.3)',
 	subdept: 'rgba(0, 133, 62, 0.2)',
-	brand: 'rgba(255, 255, 255, 0.1)', 
+	brand: 'rgba(255, 255, 255, 0.2)', 
 	product: '#fff'
 }
 
