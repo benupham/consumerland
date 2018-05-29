@@ -10,14 +10,39 @@
 // Resolution
 
 export const productsImageMax = 7;
-export const deptsTextMin = 30;
-export const subdeptsTextMax = 30;
-export const subdeptsFillMax = 90;
-export const subdeptsTextMin = 10;
-export const brandsTextMax = 10;
-export const brandsFillMax = 20;
+export const productsCircleMax = 25;
 
-export const sqrt2 = Math.sqrt(2);
+export const brandsLabelMax = 35;
+export const brandsLabelMin = 0;
+export const brandsCircleMax = 50;
+export const brandsCircleMin = 0;
+export const brandsImageMax = 25;
+export const brandsImageMin = 0;
+
+export const subdeptsLabelMax = 60;
+export const subdeptsLabelMin = 0;
+export const subdeptsCircleMax = 1000;
+export const subdeptsCircleMin = 0;
+export const subdeptsImageMax = 60;
+export const subdeptsImageMin = 0;
+
+export const deptsLabelMax = 1000;
+export const deptsLabelMin = 0;
+export const deptsCircleMax = 1000;
+export const deptsCircleMin = 0;
+export const deptsImageMax = 1000;
+export const deptsImageMin = 0;
+
+export const maxResolutions = [
+	10,
+	15,
+	20,
+	25,
+	35,
+	45,
+	50,
+	60,
+];
 
 // Offsets
 
@@ -46,9 +71,9 @@ export const labelColors = {
 
 export const labelBackgroundColors = {
 	dept: 'rgba(255, 255, 255, 0.7)',
-	subdept: 'rgba(0, 0, 0, 0)',
-	brand: 'rgba(0, 0, 0, 0)',
-	product: 'rgba(0, 0, 0, 0)'
+	subdept: 'rgba(255, 255, 255, 0.7)',
+	brand: 'rgba(255, 255, 255, 0.7)',
+	product: 'rgba(255, 255, 255, 0.7)'
 }
 
 export const labelStrokes = {
@@ -67,15 +92,15 @@ export const circleLabelColors = {
 
 export const circleColors = {
 	dept: 'rgba(249, 198, 90, 0.3)',
-	subdept: 'rgba(0, 133, 62, 0.2)',
-	brand: 'rgba(255, 255, 255, 0.2)', 
-	product: '#fff'
+	subdept: 'rgba(0, 133, 62, 0.3)',
+	brand: 'rgba(106, 48, 55, 0.2)', 
+	product: 'rgba(255, 255, 255, 1)'
 }
 
 export const circleHoverColors = {
 	dept: 'rgba(249, 198, 90, 0.4)',
 	subdept: 'rgba(0, 133, 62, 0.4)',
-	brand: 'rgba(255, 255, 255, 0.4)', 
+	brand: 'rgba(106, 48, 55, 0.4)', 
 	product: '#fff'
 }
 

@@ -1,4 +1,5 @@
 import Feature from 'ol/feature';
+import Collection from 'ol/collection';
 import Point from 'ol/geom/point';
 import VectorLayer from 'ol/layer/vector';
 import VectorSource from 'ol/source/vector';
@@ -14,6 +15,27 @@ const d3Array = require('d3-array');
 
 import {allFeatureData} from '../data/allFeatureDataCollection.js';
 import {
+  productsImageMax,
+  productsCircleMax,
+  brandsLabelMax,
+  brandsLabelMin,
+  brandsCircleMax,
+  brandsCircleMin,
+  brandsImageMax,
+  brandsImageMin,
+  subdeptsLabelMax,
+  subdeptsLabelMin,
+  subdeptsCircleMax,
+  subdeptsCircleMin,
+  subdeptsImageMax,
+  subdeptsImageMin,
+  deptsLabelMax,
+  deptsLabelMin,
+  deptsCircleMax,
+  deptsCircleMin,
+  deptsImageMax,
+  deptsImageMin,
+  maxResolutions,
   colors,
   labelColors,
   labelBackgroundColors,
@@ -21,17 +43,38 @@ import {
   circleLabelColors,
   circleColors,
   circleHoverColors,
-  productsImageMax,
   fontFamily,
   fontSizes,
 } from '../constants.js';
 import {textFormatter, dataTool} from '../utilities.js';
+import {view} from '../index.js';
 
 
 /*
 * Label Features
 * 
 */
+
+const maxResData = d3Array.histogram()
+.value(d => {
+  if (d.properties.type != 'product') return d.properties.radius;
+})
+.thresholds([200,400,600,800,1600,2000,2800,3500]);
+
+const maxResRange = maxResData(allFeatureData.features);
+console.log(maxResRange)
+
+allFeatureData.features.forEach((f) => {
+  for (let i = 0; i < maxResRange.length; i++) {
+    for (let j = 0; j < maxResRange[i].length; j++) {
+      if (maxResRange[i][j].id == f.id) {
+        f.properties.maxRes = maxResolutions[i];
+        // console.log(f.properties.name, f.properties.maxRes);
+        break;
+      }
+    }
+  }  
+})
 
 const labelFeatureRender = function (featureSets, type='all') {
   const rangeData = d3Array.histogram()
@@ -48,12 +91,13 @@ const labelFeatureRender = function (featureSets, type='all') {
         for (let i = 0; i < range.length; i++) {
           for (let j = 0; j < range[i].length; j++) {
             if (range[i][j].id == f.id) {
-              fontSize = fontSizes[i];
+              fontSize = fontSizes[i] - (['dept','subdept','brand'].indexOf(f.properties.type));
               break;
             }
           }
         }
-        const name = textFormatter(f.properties.name, 18, '\n');
+        let name = textFormatter(f.properties.name, 18, '\n');
+        name = f.properties.type === 'dept' ? name.toUpperCase() : name;
         const label = new Feature({
           geometry: new Point(f.geometry.coordinates),
           name: name,
@@ -62,6 +106,7 @@ const labelFeatureRender = function (featureSets, type='all') {
           style: 'label',
           radius: f.properties.radius,
           fontSize: fontSize,
+          maxRes: f.properties.maxRes
           //src: f.properties.src
         });
         label.setId(f.id + '-label');
@@ -72,9 +117,11 @@ const labelFeatureRender = function (featureSets, type='all') {
   return labels;
 }
 
+
 const labelStyleCache = {};
 const labelStyle = function(label, res) {
-  if (label.get('radius') < 200) return null;
+  // if (label.get('radius') < 200) return null;
+  if (label.get('maxRes') < view.getResolution()) return null;
   let style = labelStyleCache[label.get('id')];
   if (!style) {
     const fillColor = 
@@ -239,13 +286,15 @@ const imageStyle = function(image, res) {
   if (!style) {
     let icon = imageIconCache[image.get('src')];
     const scaleFactor = image.get('type') == 'brand' ? 600 : 300;
-    const scale = (2*image.get('radius')/ res) / scaleFactor;
+    const radius = image.get('radius');
+    // const scale = (2 * radius / res) / scaleFactor;
+    const scale = radius/65 * 2 > 200 ? 1 : radius/65 * 2 / 200;
     if (!icon) {
       icon = new Icon({
         src: '../' + image.get('src'),
         size: [200,200],
         crossOrigin: 'anonymous',
-        scale: scale > .3 ? scale : .3 
+        scale: scale//scale > .3 ? scale : .3 
       })
       imageIconCache[image.get('src')] = icon;
     }
@@ -262,6 +311,7 @@ const imageStyle = function(image, res) {
 * Exports
 */
 
+
 // Departments
 
 export const departmentsLabelLayer = new VectorLayer({
@@ -271,8 +321,8 @@ export const departmentsLabelLayer = new VectorLayer({
   style: labelStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  minResolution: 50,
-  //maxResolution: null
+  minResolution: deptsLabelMin,
+  maxResolution: deptsLabelMax
 })
 
 // export const departmentsCircleLabelLayer = new VectorLayer({
@@ -293,8 +343,8 @@ export const departmentsImageLayer = new VectorLayer({
   style: imageStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  minResolution: 50,
-  // maxResolution: 50
+  minResolution: deptsImageMin,
+  maxResolution: deptsImageMax
 })
 
 export const departmentsCircleLayer = new VectorLayer({
@@ -315,19 +365,9 @@ export const subdepartmentsLabelLayer = new VectorLayer({
   style: labelStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  minResolution: productsImageMax,
-  maxResolution: 50
+  minResolution: subdeptsLabelMin,
+  maxResolution: subdeptsLabelMax
 })
-
-// export const subdepartmentsCircleLabelLayer = new VectorLayer({
-//   source: new VectorSource({
-//     features: circleLabelRender([allFeatureData], 'subdept')
-//   }),
-//   style: circleLabelStyle,
-//   updateWhileAnimating: true,
-//   updateWhileInteracting: true,
-//   maxResolution: 10
-// })
 
 export const subdepartmentsImageLayer = new VectorLayer({
   source: new VectorSource({
@@ -336,8 +376,8 @@ export const subdepartmentsImageLayer = new VectorLayer({
   style: imageStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  minResolution: productsImageMax,
-  maxResolution: 50
+  minResolution: subdeptsImageMin,
+  maxResolution: subdeptsImageMax
 })
 
 export const subdepartmentsCircleLayer = new VectorLayer({
@@ -347,6 +387,8 @@ export const subdepartmentsCircleLayer = new VectorLayer({
   style: circleStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
+  minResolution: subdeptsCircleMin,
+  maxResolution: subdeptsCircleMax
 })
 
 // Brands
@@ -358,8 +400,8 @@ export const brandsLabelLayer = new VectorLayer({
   style: labelStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  //minResolution: null,
-  maxResolution: 15
+  minResolution: brandsLabelMin,
+  maxResolution: brandsLabelMax
 })
 
 // export const brandsCircleLabelLayer = new VectorLayer({
@@ -379,8 +421,8 @@ export const brandsImageLayer = new VectorLayer({
   style: imageStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  //minResolution: null,
-  maxResolution: 50
+  minResolution: brandsImageMin,
+  maxResolution: brandsImageMax
 })
 
 export const brandsCircleLayer = new VectorLayer({
@@ -390,8 +432,8 @@ export const brandsCircleLayer = new VectorLayer({
   style: circleStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  //minResolution: null,
-  maxResolution: 50
+  minResolution: brandsCircleMin,
+  maxResolution: brandsCircleMax
 })
 
 // Products
@@ -406,7 +448,6 @@ export const productsImageLayer = new VectorLayer({
   style: imageStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  //minResolution: null,
   maxResolution: productsImageMax
 })
 
@@ -417,7 +458,7 @@ export const productsCircleLayer = new VectorLayer({
   style: circleStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  //minResolution: null,
-  maxResolution: 25
+  opacity: 1,
+  maxResolution: productsCircleMax
 })
 

@@ -1,4 +1,3 @@
-import Extent from 'ol/extent';
 import RegularShape from 'ol/style/regularshape';
 import Feature from 'ol/feature';
 import Point from 'ol/geom/point';
@@ -64,13 +63,6 @@ export const handleJumpStrips = function(e) {
   }
 
   view.setCenter(newCtr);
-
-  const maxExtent = departmentsCircleLayer.getExtent();
-  const viewExtent = view.calculateExtent();
-  if (!Extent.containsExtent(maxExtent,viewExtent)) {
-    view.setCenter(ctr);
-    return;
-  } 
 
   // dataTool.innerHTML = `resolution: ${res}<br>resDelta: ${resDelta}<br>pixel: ${pixel}<br>point: ${p}<br>delta: ${delta}<br>velocity: ${velocity}
   // <br>limit: ${limit}<br>center: ${ctr}`;

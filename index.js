@@ -1,6 +1,7 @@
 require('ol/ol.css');
 import olMap from 'ol/map';
 import View from 'ol/view';
+import Extent from 'ol/extent';
 
 import {productCardOverlay, productDetailOverlay, signage, renderProductOverlay, openProductDetail, hideOverlay} from './components/overlays.js';
 import {textFormatter, dataTool, iconcache} from './utilities.js';
@@ -38,12 +39,13 @@ import {
 * 
 */
 
+const ctr = [46000,-46000];
 export const view = new View({
-  center: [46000,-46000],
+  center: ctr,
   resolution: 65, 
   zoomFactor: 1.25,
   minResolution: 1,
-  maxResolution: 75,
+  maxResolution: 65,
 })
 
 
@@ -55,7 +57,7 @@ export const map = new olMap({
     brandsCircleLayer,
     subdepartmentsImageLayer,
     // departmentsImageLayer,
-    departmentsLabelLayer,
+    // departmentsLabelLayer,
     // subdepartmentsLabelLayer,
     // productsCircleLayer,
     // productsImageLayer,
@@ -69,10 +71,12 @@ export const map = new olMap({
 // Speed up initial load
 document.addEventListener('DOMContentLoaded', e => {
   map.addLayer(productsCircleLayer);
-  map.addLayer(subdepartmentsLabelLayer);
   map.addLayer(productsImageLayer);
   map.addLayer(tagLayer);
   map.addLayer(brandsLabelLayer);
+  map.addLayer(subdepartmentsLabelLayer);
+  // map.addLayer(departmentsImageLayer);
+  map.addLayer(departmentsLabelLayer);
 });
 
 const centerZoom = view.getCenter();  
@@ -120,10 +124,18 @@ view.on('change:resolution', (e) => {
   // if (res < 80) {
   //   const signageTimeOut = setTimeout(displaySignage, 100);    
   // }
-  if (res >= 100) window.clearInterval(jumpStripsInt);
+  if (res >= 50) window.clearInterval(jumpStripsInt);
   //console.log('resolution',view.getResolution(),'zoom',view.getZoom());
   dataTool.querySelector('#data-zoom').innerHTML = `zoom: ${view.getZoom()}`;
   dataTool.querySelector('#data-res').innerHTML = `res: ${view.getResolution()}`;
 });
 
+const maxExtent = departmentsCircleLayer.getSource().getExtent(); 
+view.on('change:center', (e) => {
+  const viewCenter = view.getCenter();
+  if (!Extent.containsCoordinate(maxExtent,viewCenter)) {
+    view.setCenter(ctr);
+    return;
+  } 
+})
 
