@@ -121,7 +121,7 @@ body {
 	font-weight: 300;
 	font-size: 13px;
 	color: #000;
-	/*background-image: url('../other-images/wood-floor-web.jpg');*/
+	background-image: url('../other-images/wood-floor-web.jpg');
 }
 
 .ol-zoom {
@@ -235,6 +235,6 @@ body {
 	color: red; 
 	z-index: 1000;
 	background: white;
-  /*display: none;*/
+  display: none;
 }
 

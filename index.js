@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', e => {
   map.addLayer(tagLayer);
   map.addLayer(brandsLabelLayer);
   map.addLayer(subdepartmentsLabelLayer);
-  // map.addLayer(departmentsImageLayer);
+  map.addLayer(departmentsImageLayer);
   map.addLayer(departmentsLabelLayer);
 });
 

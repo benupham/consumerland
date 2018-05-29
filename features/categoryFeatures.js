@@ -12,6 +12,9 @@ import Text from 'ol/style/text';
 import Style from 'ol/style/style';
 
 const d3Array = require('d3-array');
+// const d3Scale = require('d3-scale');
+// const d3Chromatic = require('d3-scale-chromatic');
+// const d3Color = require('d3-color');
 
 import {allFeatureData} from '../data/allFeatureDataCollection.js';
 import {
@@ -48,6 +51,45 @@ import {
 } from '../constants.js';
 import {textFormatter, dataTool} from '../utilities.js';
 import {view} from '../index.js';
+
+
+// const colorSchemes = [
+//   d3Chromatic.schemeBuGn[4],
+//   d3Chromatic.schemeBuPu[4],
+//   d3Chromatic.schemeOrRd[4],
+//   d3Chromatic.schemePuBu[4],
+//   d3Chromatic.schemeYlGnBu[4],
+//   d3Chromatic.schemeYlOrBr[4],
+// ]
+
+
+// const deptColorSchemes = {};
+// const deptColors = {};
+// allFeatureData.features.forEach((f, i) => {
+//   if (f.properties.type === 'dept') {
+//     f.properties.colorScheme =  d3Chromatic.schemeGreys[5];//colorSchemes[4];
+//     deptColorSchemes[f.properties.name] = f.properties.colorScheme;
+//     const color = f.properties.colorScheme[Math.floor(Math.random() * f.properties.colorScheme.length)];
+//     f.properties.color = d3Color.color(color);
+//     deptColors[f.properties.name] = f.properties.color;
+//     f.properties.color.opacity = 0.7;
+//     f.properties.hoverColor = f.properties.color.darker(0.3);
+//     console.log(f.properties.name, colorSchemes.indexOf(f.properties.colorScheme));
+//   }
+// })
+// allFeatureData.features.forEach((f, i) => {
+//   if (f.properties.type === 'subdept') {
+//     const parent = f.properties.parent;
+//     const parentColors = deptColorSchemes[parent];
+//     const parentColor = deptColors[parent];
+//     const color = parentColors[Math.floor(Math.random() * parentColors.length)];
+//     // const color = parentColor;
+//     f.properties.color = d3Color.color(color);
+//     f.properties.color.opacity = 0.3 //Math.random();
+//     f.properties.hoverColor = f.properties.color.darker(0.3);
+//     console.log(f.properties.name, f.properties.hoverColor);
+//   }
+// })
 
 
 /*
@@ -152,6 +194,8 @@ const circleFeatureRender = function(featureSets, type='all') {
     featureSet.features.forEach((f) => {
       if (f.properties.type == type || type == 'all') {
         const type = f.properties.type;
+        const color = /* f.properties.color ? f.properties.color.toString() : */ circleColors[type];
+        const hoverColor = /* f.properties.hoverColor ? f.properties.hoverColor.toString() : */ circleHoverColors[type];
         const circle = new Feature({
           geometry: new Circle(f.geometry.coordinates, f.properties.radius || (100 * Math.sqrt(2))),
           name: f.properties.name,
@@ -159,9 +203,8 @@ const circleFeatureRender = function(featureSets, type='all') {
           type: type,
           style: 'circle',
           radius: f.properties.radius,
-          //maxRes: values[0],
-          color: circleColors[type],
-          hoverColor: circleHoverColors[type],
+          color: color,
+          hoverColor: hoverColor,
         });
         circle.setId(f.id + '-circle');
         circles.push(circle);        
@@ -179,14 +222,17 @@ const circleStyle = function(circle, res) {
   if (!style) {
     style = new Style({
       fill: new Fill({color: circle.get('color')})
+      // stroke: new Stroke({color: circle.get('color'), width: 5})
     })
     circleStyleCache[circle.get('fid')] = style;
   }
   if (circle.get('hover') == true) {
     style.getFill().setColor(circle.get('hoverColor'));
+    // style.getStroke().setColor(circle.get('hoverColor'));
   }
   if (circle.get('hover') == false) {
     style.getFill().setColor(circle.get('color'));
+    // style.getStroke().setColor(circle.get('color'));
   }
   circleStyleCache[circle.get('fid')] = style;
   return style;
