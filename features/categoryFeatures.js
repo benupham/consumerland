@@ -306,7 +306,7 @@ const imageFeatureRender = function (featureSets, type='all') {
     featureSet.features.forEach((f) => {
       if (((f.properties.src).indexOf('.') > -1) && (f.properties.type === type || type === 'all'))  {
         const name = textFormatter(f.properties.name, 18, '\n');
-        const src = f.properties.src; 
+        const src = 'https://s3.us-west-1.amazonaws.com/consumerland/' + f.properties.src; 
         const image = new Feature({
           geometry: new Point(f.geometry.coordinates),
           name: f.properties.name,
@@ -337,7 +337,7 @@ const imageStyle = function(image, res) {
     const scale = radius/65 * 2 > 200 ? 1 : radius/65 * 2 / 200;
     if (!icon) {
       icon = new Icon({
-        src: '../' + image.get('src'),
+        src: image.get('src'),
         size: [200,200],
         crossOrigin: 'anonymous',
         scale: scale//scale > .3 ? scale : .3 

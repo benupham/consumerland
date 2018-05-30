@@ -96,7 +96,7 @@ const mapResize = function(e) {
 window.addEventListener('load', mapResize);
 window.addEventListener('resize', mapResize);
 
-map.addOverlay(productCardOverlay);
+//map.addOverlay(productCardOverlay);
 map.addOverlay(productDetailOverlay);
 // for (let i = 0; i < 4; i++) {
 //   map.addOverlay(signage[i]);

@@ -187,7 +187,7 @@ body {
 
 /* PRODUCT CARD OVERLAY */
 
-.product-card {
+.product-preview {
 	position: absolute;
 	background: rgba(255,255,255,1);
 	padding-top: 10px;
@@ -197,7 +197,7 @@ body {
 	font-weight: 700;
 }
 
-.product-card .product-image {
+.product-preview .product-image {
 	height: auto;
 	width: auto;
 	cursor: pointer;
