@@ -5,10 +5,10 @@ import {productsImageMax} from '../constants.js';
 import {renderProductOverlay, hideOverlay, productDetailOverlay, productCardOverlay} from '../components/overlays.js';
 
 export const handleClick = function(e) {
-  if (productDetailOverlay.getElement().style.display == 'block') {
-    hideOverlay(productDetailOverlay);
-    return;
-  }
+  // if (productDetailOverlay.getElement().style.display == 'block') {
+  //   hideOverlay(productDetailOverlay);
+  //   return;
+  // }
   const features = map.getFeaturesAtPixel(e.pixel);
   if (features === null) return;
   const feature = features[0];
@@ -19,11 +19,16 @@ export const handleClick = function(e) {
   const mapSize = map.getSize();
   const constraint = [mapSize[0] + 500, mapSize[1] + 100] ;
 
+  console.log(featureType);
+
   if (featureType == 'product' && featureStyle == 'image') {
     hideOverlay(productCardOverlay);
     renderProductOverlay(feature, productDetailOverlay);
+    e.stopPropagation();
 
-
+  } else if (productDetailOverlay.getElement().style.display == 'block') {
+    hideOverlay(productDetailOverlay);
+    return
   } else if (['brand','dept','subdept'].indexOf(featureType) > -1) {
     // console.log('clicked trigger feature: '+feature.get('name'));
     // console.log('clicked trigger featuretype: '+feature.get('type'));

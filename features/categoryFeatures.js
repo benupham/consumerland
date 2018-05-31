@@ -226,14 +226,14 @@ const circleStyle = function(circle, res) {
     })
     circleStyleCache[circle.get('fid')] = style;
   }
-  if (circle.get('hover') == true) {
-    style.getFill().setColor(circle.get('hoverColor'));
-    // style.getStroke().setColor(circle.get('hoverColor'));
-  }
-  if (circle.get('hover') == false) {
-    style.getFill().setColor(circle.get('color'));
-    // style.getStroke().setColor(circle.get('color'));
-  }
+  // if (circle.get('hover') == true) {
+  //   style.getFill().setColor(circle.get('hoverColor'));
+  //   // style.getStroke().setColor(circle.get('hoverColor'));
+  // }
+  // if (circle.get('hover') == false) {
+  //   style.getFill().setColor(circle.get('color'));
+  //   // style.getStroke().setColor(circle.get('color'));
+  // }
   circleStyleCache[circle.get('fid')] = style;
   return style;
 }
@@ -306,7 +306,7 @@ const imageFeatureRender = function (featureSets, type='all') {
     featureSet.features.forEach((f) => {
       if (((f.properties.src).indexOf('.') > -1) && (f.properties.type === type || type === 'all'))  {
         const name = textFormatter(f.properties.name, 18, '\n');
-        const src = 'https://s3.us-west-1.amazonaws.com/consumerland/' + f.properties.src; 
+        const src = '../' + f.properties.src; 
         const image = new Feature({
           geometry: new Point(f.geometry.coordinates),
           name: f.properties.name,

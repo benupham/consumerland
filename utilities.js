@@ -33,4 +33,15 @@ export function textFormatter(str, width, spaceReplacer, maxLength = null) {
   return str;    
 }
 
+export const debounce = (fn, time) => {
+  let timeout;
+
+  return function() {
+    const functionCall = () => fn.apply(this, arguments);
+    
+    clearTimeout(timeout);
+    timeout = setTimeout(functionCall, time);
+  }
+}
+
 export const dataTool = document.querySelector('#data-tool');

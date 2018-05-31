@@ -50,8 +50,8 @@ export const openProductDetail = function(e) {
 }
 
 export const renderProductOverlay = function(product, overlay) {
-  console.log('render overlay: ', product.getId(), product.get('fid'), 
-    product.get('style'), product.get('inCart'));
+  // console.log('render overlay: ', product.getId(), product.get('fid'), 
+  //   product.get('style'), product.get('inCart'));
   if (product.get('inCart') === undefined) {
     product.set('inCart', false);
   }
@@ -60,10 +60,20 @@ export const renderProductOverlay = function(product, overlay) {
   if (overlay.getId() == 'productCard') {
     overlay.getElement().onclick = function(e) {e.stopPropagation()};
   }
+
+  if (overlay.getId() == 'productDetail') {
+    overlay.getElement().addEventListener('click', (e) => {
+      hideOverlay(overlay);
+    })
+    // overlay.getElement().onclick = function(e) {
+    //   hideOverlay(overlay);
+    // }
+  }
+
   overlay.getElement().style.display = 'block';
 
   overlay.set('product', product.getId());
-  console.log(overlay.get('product'));
+  // console.log(overlay.get('product'));
   const coordinate = product.getGeometry().getCoordinates();
 
   const btn = overlay.getElement().querySelector('.add-to-cart');
@@ -87,7 +97,7 @@ export const renderProductOverlay = function(product, overlay) {
   }
   if (overlay.getId() == 'productDetail') {
     overlay.getElement().querySelector('.close').addEventListener('click', () => {
-      hideOverlay(productDetailOverlay);
+      hideOverlay(overlay);
     })
   }
 
@@ -123,6 +133,7 @@ export const renderProductOverlay = function(product, overlay) {
 } 
 
 export const hideOverlay = function(overlay) {
+
   overlay.getElement().style.display = 'none';
 }
 

@@ -8,6 +8,7 @@ const cart = [];
 const cartContents = document.querySelector('#cart-contents');
 
 export const updateCart = function(e) {
+  console.log(this);
   const pId = this.getAttribute('data-pid');
   const product = productsSource.getFeatureById(pId);
   console.log('update cart',pId, product.get('type'), product.get('fid'), 

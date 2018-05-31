@@ -1,10 +1,50 @@
+import OverviewMap from 'ol/control/overviewmap';
 import Control from 'ol/control/control';
+import View from 'ol/view';
 
-import {updateAddCartButton, updateCart} from '../components/cart.js';
+import {departmentsCircleLayer,departmentsLabelLayer} from '../features/categoryFeatures.js';
 import {view} from '../index.js';
-import {productsSource} from '../features/categoryFeatures.js';
-import {textFormatter, dataTool} from '../utilities.js';
 
-const previewEl = document.getElementById('product-preview');
-const productPreview = new ol.control.Control({element: previewEl});
+const overviewView = new View({
+	// center: [46000,-46000],
+	maxResolution: 250,
+	minResolution: 250,
+	resolution: 200
+})
 
+export const overviewMapControl = new OverviewMap({
+	className: 'overviewmap ol-overviewmap',
+	layers: [departmentsCircleLayer,departmentsLabelLayer],
+	collapsed: false,
+	view: overviewView,
+	target: document.getElementById('overviewmap')
+})
+console.log(overviewMapControl.getCollapsed());
+
+// Breadcrumbs NOT USED RIGHT NOW
+
+export const breadCrumbsControl = new Control({
+	element: document.getElementById('breadcrumbs')
+})
+
+export const updateBreadcrumbs = function(categories) {
+	const breadcrumbs = document.getElementById('breadcrumbs');
+	breadcrumbs.querySelector('#dept-link').innerHTML = '';
+	breadcrumbs.querySelector('#subdept-link').innerHTML = '';
+	breadcrumbs.querySelector('#brand-link').innerHTML = '';
+
+	categories.forEach((c) => {
+		const type = c.get('type');
+		if (type === 'dept') {
+			// will need to fix this for case of 2 depts overlapping 
+			breadcrumbs.querySelector('#dept-link').innerHTML = c.get('name');
+			breadcrumbs.querySelector('#dept-link').setAttribute('data-id', c.getId());
+		} else if (type === 'subdept') {
+			breadcrumbs.querySelector('#subdept-link').innerHTML = c.get('name');
+			breadcrumbs.querySelector('#subdept-link').setAttribute('data-id', c.getId());
+		} else if (type === 'brand') {
+			breadcrumbs.querySelector('#brand-link').innerHTML = c.get('name');
+			breadcrumbs.querySelector('#brand-link').setAttribute('data-id', c.getId());
+		}
+	})
+}

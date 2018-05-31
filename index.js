@@ -4,6 +4,7 @@ import View from 'ol/view';
 import Extent from 'ol/extent';
 
 import {productCardOverlay, productDetailOverlay, signage, renderProductOverlay, openProductDetail, hideOverlay} from './components/overlays.js';
+import {productPreview} from './components/productPreview.js';
 import {textFormatter, dataTool, iconcache} from './utilities.js';
 //import {displayCart, updateCart, updateAddCartButton} from './components/cart.js';
 import {displaySignage} from './components/signage.js';
@@ -29,6 +30,7 @@ import {
   productsImageLayer,
   // subdepartmentsCircleLabelLayer,
 } from './features/categoryFeatures.js';
+import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './components/controls.js';
 
 
 // $('#info-modal').modal('show');
@@ -42,7 +44,7 @@ import {
 const ctr = [46000,-46000];
 export const view = new View({
   center: ctr,
-  resolution: 65, 
+  resolution: 2, 
   zoomFactor: 1.25,
   minResolution: 1,
   maxResolution: 65,
@@ -86,17 +88,26 @@ const mapResize = function(e) {
   if (window.innerWidth < 576) {
     document.getElementById('cart-contents').classList.toggle('dropdown-menu-right');
   }
-  const navbarHeight = document.getElementById('navbar').clientHeight;
-  const mapHeight = document.documentElement.clientHeight;
+  const navbarHeight = document.getElementById('navbar').offsetHeight;
+  const mapHeight = document.documentElement.clientHeight - navbarHeight; 
   const mapWidth = document.documentElement.clientWidth;
   document.querySelector('#map').style.height = mapHeight + 'px';
   map.setSize([mapWidth,mapHeight]);
   map.updateSize();
+  console.log(`navbarHeight: ${document.getElementById('navbar').offsetHeight} \n mapHeight: ${mapHeight} 
+    \n mapWidth: ${mapWidth} \n windowHeight: ${window.innerHeight}`)
+
 }
 window.addEventListener('load', mapResize);
 window.addEventListener('resize', mapResize);
 
-//map.addOverlay(productCardOverlay);
+// map.addOverlay(productCardOverlay);
+map.addControl(overviewMapControl);
+// map.addControl(breadCrumbsControl);
+
+map.addControl(productPreview);
+
+
 map.addOverlay(productDetailOverlay);
 // for (let i = 0; i < 4; i++) {
 //   map.addOverlay(signage[i]);
@@ -111,7 +122,7 @@ map.getTargetElement().addEventListener('mouseleave', function(){
   window.clearInterval(jumpStripsInt);
 })
 map.on('click', (e) => {
-  // hacky but works! 
+  // hacky but works for event propagation issues Map Browser Events
   if (e.originalEvent.target.nodeName != 'CANVAS') return;
   handleClick(e);
 });
@@ -119,13 +130,19 @@ map.on('click', (e) => {
 
 
 view.on('change:resolution', (e) => {
+  // console.log(e);
   const res = view.getResolution();
   if (window.jumpStripActive === true) return; 
   // if (res < 80) {
   //   const signageTimeOut = setTimeout(displaySignage, 100);    
   // }
   if (res >= 50) window.clearInterval(jumpStripsInt);
-  //console.log('resolution',view.getResolution(),'zoom',view.getZoom());
+  const ctr = view.getCenter();
+  const pixel = map.getPixelFromCoordinate(ctr);
+  const features = map.getFeaturesAtPixel(pixel);
+  // console.log(features);
+  // debounce()
+
   dataTool.querySelector('#data-zoom').innerHTML = `zoom: ${view.getZoom()}`;
   dataTool.querySelector('#data-res').innerHTML = `res: ${view.getResolution()}`;
 });

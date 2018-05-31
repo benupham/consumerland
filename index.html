@@ -17,6 +17,23 @@
     
   </head>
   <body>
+
+    <!-- Product Preview Control and Map Overview -->
+    <div id="product-preview" class="product-preview card shadow-sm rounded">
+      <div id="overviewmap"></div>
+      <ul id="preview-categories-list" class="preview-categories-list breadcrumb">
+        <li id="dept-list-item" class="breadcrumb-item"><a id="dept-link"></a></li>
+        <li id="subdept-list-item" class="breadcrumb-item"><a id="subdept-link"></a></li>
+        <li id="brand-list-item" class="breadcrumb-item"><a id="brand-link"></a></li>
+      </ul>
+      <img class="card-img-top product-image" src="./product-images/missing-item.jpg" alt="Product image">
+      <div class="card-body">
+        <a class="card-title product-name"></a>
+        <p class="card-text product-price"></p>
+        <button id="product-preview-add-button" class="add-to-cart d-block btn btn-outline-warning btn-sm" name="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
     <!-- Navbar -->
     <nav id="navbar" class="navbar navbar-dark bg-dark py-2 navbar-expand-lg shadow-bottom border-bottom border-secondary row">
       <div id="search-bar" class="col-12 col-sm-8 mb-2 mb-sm-0">
@@ -104,14 +121,22 @@
         </div>
       </div>
 
+      <!-- Breadcrumbs -->
+      <div id="breadcrumbs">
+       
+      </div>
+
+      
+
       <!-- Product Card Overlay -->
-      <div id="product-preview" class="product-preview card shadow-sm rounded">
+      <div id="product-card" class="product-card card shadow-sm rounded">
         <img class="card-img-top product-image" src="./product-images/missing-item.jpg" alt="Product image">
         <div class="card-body">
           <a class="card-title product-name"></a>
           <p class="card-text product-price"></p>
-          <button id="product-preview-add-button" class="add-to-cart d-block btn btn-outline-warning btn-sm" name="add-to-cart">Add to Cart</button>
+          <button id="product-card-add-button" class="add-to-cart d-block btn btn-outline-warning btn-sm" name="add-to-cart">Add to Cart</button>
         </div>
+
       </div>
 
       <!-- Product Overlay -->

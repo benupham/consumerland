@@ -116,6 +116,7 @@
 /* temp CSS file */
 
 body {
+  overflow: hidden;
 	background: white;
 	font-family: Oswald;
 	font-weight: 300;
@@ -128,6 +129,96 @@ body {
 	display: none;
 }
 
+.overviewmap.ol-control {
+  position: relative;
+}
+
+.overviewmap.ol-overviewmap {
+  top: 0;
+  left: 0;
+  bottom: auto;
+  right: auto;
+  /*background: rgba(255,255,255,1); */
+}
+.overviewmap.ol-overviewmap .ol-overviewmap-map {
+  width: 100%;
+  height: 150px;
+  /*background: rgba(255,255,255,1);*/
+}
+
+.overviewmap .ol-overviewmap-box {
+  border: 2px solid rgba(0, 133, 62, 0.7);
+}
+
+.overviewmap.ol-overviewmap:not(.ol-collapsed) button{
+  bottom: auto;
+  left: 1px;
+  right: auto;
+  top: 1px;
+  position: absolute;
+}
+
+ /* 
+
+.ol-control {
+  position: absolute;
+  background-color: rgba(255,255,255,0.4);
+  border-radius: 4px;
+  padding: 2px;
+}
+.ol-control:hover {
+  background-color: rgba(255,255,255,0.6);
+}
+
+.ol-control button {
+  display: block;
+  margin: 1px;
+  padding: 0;
+  color: white;
+  font-size: 1.14em;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  height: 1.375em;
+  width: 1.375em;
+  line-height: .4em;
+  background-color: rgba(0,60,136,0.5);
+  border: none;
+  border-radius: 2px;
+}
+.ol-control button::-moz-focus-inner {
+  border: none;
+  padding: 0;
+}
+
+.ol-touch .ol-control button {
+  font-size: 1.5em;
+}
+
+.ol-control button:hover,
+.ol-control button:focus {
+  text-decoration: none;
+  background-color: rgba(0,60,136,0.7);
+}
+
+
+
+
+.ol-overviewmap.ol-collapsed .ol-overviewmap-map,
+.ol-overviewmap.ol-uncollapsible button {
+  display: none;
+}
+.ol-overviewmap:not(.ol-collapsed) {
+  background: rgba(255,255,255,0.8);
+}
+.ol-overviewmap-box {
+  border: 2px dotted rgba(0,60,136,0.7);
+}
+
+.ol-overviewmap .ol-overviewmap-box:hover {
+  cursor: move;
+}
+ */
 /* MODAL */
 
 .modal {
@@ -185,21 +276,28 @@ body {
 	width: 40%;
 }
 
-/* PRODUCT CARD OVERLAY */
+/* PRODUCT CARD OVERLAY OR PRODUCT PREVIEW PANE CONTROL */
 
 .product-preview {
 	position: absolute;
+  top: 100px;
+  left: 0.5em;
+  right: auto;
+  bottom: auto;
 	background: rgba(255,255,255,1);
-	padding-top: 10px;
-	z-index: 10;
+	padding: 5px;
+  width: 225px;
+	/*z-index: 10;*/
+  will-change: content;
 }
 .product-price {
 	font-weight: 700;
 }
 
 .product-preview .product-image {
-	height: auto;
-	width: auto;
+	height: 200px;
+	width: 200px;
+  margin: auto;
 	cursor: pointer;
 }
 
