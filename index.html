@@ -20,17 +20,18 @@
 
     <!-- Product Preview Control and Map Overview -->
     <div id="product-preview" class="product-preview card shadow-sm rounded">
-      <div id="overviewmap"></div>
-      <ul id="preview-categories-list" class="preview-categories-list breadcrumb">
-        <li id="dept-list-item" class="breadcrumb-item"><a id="dept-link"></a></li>
-        <li id="subdept-list-item" class="breadcrumb-item"><a id="subdept-link"></a></li>
-        <li id="brand-list-item" class="breadcrumb-item"><a id="brand-link"></a></li>
+      <div id="overviewmap" class="card-img-top"></div>
+      <ul id="preview-categories-list" class="preview-categories-list ">
+        <li id="dept-list-item" class="category-item"><a id="dept-link"></a></li>
+        <li id="subdept-list-item" class="category-item"><a id="subdept-link"></a></li>
+        <li id="brand-list-item" class="category-item"><a id="brand-link"></a></li>
       </ul>
+      <a class="card-title product-name"></a>
+      <p class="card-text product-price"></p>
       <img class="card-img-top product-image" src="./product-images/missing-item.jpg" alt="Product image">
       <div class="card-body">
-        <a class="card-title product-name"></a>
-        <p class="card-text product-price"></p>
-        <button id="product-preview-add-button" class="add-to-cart d-block btn btn-outline-warning btn-sm" name="add-to-cart">Add to Cart</button>
+
+        <button id="product-preview-add-button" class="add-to-cart btn btn-outline-warning btn-sm" name="add-to-cart">Add to Cart</button>
       </div>
     </div>
 

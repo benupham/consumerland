@@ -23,7 +23,7 @@ export const productCardOverlay = new Overlay({
 export const productDetailOverlay = new Overlay({
   element: document.getElementById('product-overlay'),
   id: 'productDetail',
-  autoPan: false,
+  autoPan: true,
   stopEvent: true
 });
 

@@ -21,13 +21,13 @@ export const updatePreview = function (features) {
 			const type = c.get('type');
 			if (type === 'dept') {
 				// will need to fix this for case of 2 depts overlapping 
-				list.querySelector('#dept-link').innerHTML = textFormatter(c.get('name'), 20, '', 10);
+				list.querySelector('#dept-link').innerHTML = textFormatter(c.get('name'), 30, '', 25);
 				list.querySelector('#dept-link').setAttribute('data-id', c.getId());
 			} else if (type === 'subdept') {
-				list.querySelector('#subdept-link').innerHTML = textFormatter(c.get('name'), 20, '', 10);
+				list.querySelector('#subdept-link').innerHTML = textFormatter(c.get('name'), 30, '', 25);
 				list.querySelector('#subdept-link').setAttribute('data-id', c.getId());
 			} else if (type === 'brand') {
-				list.querySelector('#brand-link').innerHTML = textFormatter(c.get('name'), 20, '', 10);
+				list.querySelector('#brand-link').innerHTML = textFormatter(c.get('name'), 30, '', 25);
 				list.querySelector('#brand-link').setAttribute('data-id', c.getId());
 			}
 		})
@@ -47,7 +47,7 @@ export const updatePreview = function (features) {
 		image.style.width = 200+'px'; 
 
 		let name = preview.querySelector('.product-name');
-		name.innerHTML = textFormatter(product.get('name'), 30, '<br>', 65);
+		name.innerHTML = textFormatter(product.get('name'), 40, '<br>');
 		name.setAttribute('data-pid', pId);
 
 		let price = preview.querySelector('.product-price');
