@@ -10,6 +10,7 @@ import matchSorter from 'match-sorter';
 */
 
 export const handleSearch = function(e) {
+  console.log(e);
   if (e.keyCode != 13) {
     return
   }
@@ -35,8 +36,7 @@ export const handleSearch = function(e) {
   }
 } 
 
-document.getElementById('search-button').onclick = handleSearch;
-document.getElementById('search-input').onkeypress = handleSearch;
+
 
 
 

@@ -1,6 +1,8 @@
 import OverviewMap from 'ol/control/overviewmap';
 import Control from 'ol/control/control';
 import View from 'ol/view';
+import DragPan from 'ol/interaction/dragpan';
+
 
 import {departmentsCircleLayer,departmentsLabelLayer} from '../features/categoryFeatures.js';
 import {view} from '../index.js';
@@ -19,7 +21,17 @@ export const overviewMapControl = new OverviewMap({
 	view: overviewView,
 	target: document.getElementById('overviewmap')
 })
-console.log(overviewMapControl.getCollapsed());
+
+// Update Overview map touch with the following 
+/* Binding */
+
+// overlayBox.addEventListener('mousedown', function() {
+//   window.addEventListener('mousemove', move);
+//   window.addEventListener('mouseup', endMoving);
+// });
+const dragPanInteraction = new DragPan();
+overviewMapControl.getOverviewMap().addInteraction(dragPanInteraction);
+
 
 // Breadcrumbs NOT USED RIGHT NOW
 

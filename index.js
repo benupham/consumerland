@@ -3,12 +3,14 @@ import olMap from 'ol/map';
 import View from 'ol/view';
 import Extent from 'ol/extent';
 
+// import './dist/style.css';
+
 import {productCardOverlay, productDetailOverlay, signage, renderProductOverlay, openProductDetail, hideOverlay} from './components/overlays.js';
 import {productPreview} from './components/productPreview.js';
 import {textFormatter, dataTool, iconcache} from './utilities.js';
 //import {displayCart, updateCart, updateAddCartButton} from './components/cart.js';
 import {displaySignage} from './components/signage.js';
-import {searchControl, handleSearch} from './components/search.js';
+import {handleSearch} from './components/search.js';
 import {handleJumpStrips} from './components/jumpstrips.js';
 import {handleHover, jumpStripsInt} from './events/hover.js';
 import {handleClick} from './events/click.js';
@@ -33,7 +35,7 @@ import {
 import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './components/controls.js';
 
 
-// $('#info-modal').modal('show');
+$('#info-modal').modal('show');
 
 
 /*
@@ -44,8 +46,8 @@ import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './compo
 const ctr = [46000,-46000];
 export const view = new View({
   center: ctr,
-  resolution: 2, 
-  zoomFactor: 1.25,
+  resolution: 65, 
+  zoomFactor: 1.5,
   minResolution: 1,
   maxResolution: 65,
 })
@@ -70,7 +72,7 @@ export const map = new olMap({
   view: view
 });
 
-// Speed up initial load
+// Speed up initial load by loading this stuff here.
 document.addEventListener('DOMContentLoaded', e => {
   map.addLayer(productsCircleLayer);
   map.addLayer(productsImageLayer);
@@ -121,7 +123,7 @@ map.on('pointermove', (e) => {
 map.getTargetElement().addEventListener('mouseleave', function(){
   window.clearInterval(jumpStripsInt);
 })
-map.on('click', (e) => {
+map.on('singleclick', (e) => {
   // hacky but works for event propagation issues Map Browser Events
   if (e.originalEvent.target.nodeName != 'CANVAS') return;
   handleClick(e);
@@ -156,3 +158,5 @@ view.on('change:center', (e) => {
   } 
 })
 
+document.getElementById('search-button').onclick = handleSearch;
+document.getElementById('search-input').onkeypress = handleSearch;

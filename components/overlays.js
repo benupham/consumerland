@@ -50,8 +50,8 @@ export const openProductDetail = function(e) {
 }
 
 export const renderProductOverlay = function(product, overlay) {
-  // console.log('render overlay: ', product.getId(), product.get('fid'), 
-  //   product.get('style'), product.get('inCart'));
+  console.log('render overlay: ', product.getId(), product.get('fid'), 
+    product.get('style'), product.get('inCart'));
   if (product.get('inCart') === undefined) {
     product.set('inCart', false);
   }
@@ -133,7 +133,6 @@ export const renderProductOverlay = function(product, overlay) {
 } 
 
 export const hideOverlay = function(overlay) {
-
   overlay.getElement().style.display = 'none';
 }
 

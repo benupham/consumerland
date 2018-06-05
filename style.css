@@ -122,81 +122,29 @@ body {
 	font-weight: 300;
 	font-size: 13px;
 	color: #000;
-	background-image: url('../other-images/wood-floor-web.jpg');
+	background-image: url('https://s3-us-west-1.amazonaws.com/consumerland/other-images/wood-floor-web.jpg');
 }
 
-.ol-zoom {
+.ol-zoom, .ol-attribution {
 	display: none;
 }
 
- /* 
-
-.ol-control {
-  position: absolute;
-  background-color: rgba(255,255,255,0.4);
-  border-radius: 4px;
-  padding: 2px;
-}
-.ol-control:hover {
-  background-color: rgba(255,255,255,0.6);
+.permanent-marker {
+  font-family: 'Permanent Marker', sans-serif;
 }
 
-.ol-control button {
-  display: block;
-  margin: 1px;
-  padding: 0;
-  color: white;
-  font-size: 1.14em;
-  font-weight: bold;
-  text-decoration: none;
-  text-align: center;
-  height: 1.375em;
-  width: 1.375em;
-  line-height: .4em;
-  background-color: rgba(0,60,136,0.5);
-  border: none;
-  border-radius: 2px;
-}
-.ol-control button::-moz-focus-inner {
-  border: none;
-  padding: 0;
-}
-
-.ol-touch .ol-control button {
-  font-size: 1.5em;
-}
-
-.ol-control button:hover,
-.ol-control button:focus {
-  text-decoration: none;
-  background-color: rgba(0,60,136,0.7);
-}
-
-
-
-
-.ol-overviewmap.ol-collapsed .ol-overviewmap-map,
-.ol-overviewmap.ol-uncollapsible button {
-  display: none;
-}
-.ol-overviewmap:not(.ol-collapsed) {
-  background: rgba(255,255,255,0.8);
-}
-.ol-overviewmap-box {
-  border: 2px dotted rgba(0,60,136,0.7);
-}
-
-.ol-overviewmap .ol-overviewmap-box:hover {
-  cursor: move;
-}
- */
 /* MODAL */
 
 .modal {
-  font-family: Optima, Arial, sans-serif;
+  font-family: Arial, sans-serif;
+}
+
+.modal-header {
+  background-color: rgba(0, 133, 62, 1);
 }
 
 .modal-title {
+  color: rgba(249, 198, 90, 1);
 }
 
 .modal-body {
@@ -211,7 +159,7 @@ body {
 .brand {
 	font-family: 'Rock Salt';
 	color: rgba(249, 198, 90, 1) !important;
-  background-image: url('./other-images/logo.png');
+  background-image: url('https://s3-us-west-1.amazonaws.com/consumerland/other-images/logo.png');
 }
 
 .brand img {
@@ -251,15 +199,19 @@ body {
 
 .product-preview {
 	position: absolute;
-  top: 1em;
-  left: 1em;
-  right: auto;
-  bottom: auto;
+  bottom: 1em;
+  right: 1em;
+  left: auto;
+  top: auto;
 	background: rgba(255,255,255,1);
 	padding: 10px;
   width: 300px;
 	/*z-index: 10;*/
   will-change: content;
+}
+
+.preview-info {
+  height: 40px;
 }
 
 
@@ -297,6 +249,9 @@ body {
   display: none;
 }
 
+.product-name {
+  
+}
 .product-price {
 	font-weight: 700;
 }
@@ -312,13 +267,11 @@ body {
 .preview-categories-list {
   list-style: none;
   padding: 0;
+  margin-bottom: 5px;
 }
 .category-item {
   display: inline-block;
   font-size: 12px;
-}
-.category-item:after {
-  content: ' / ';
 }
 
 /* PRODUCT DETAIL OVERLAY */
@@ -332,8 +285,6 @@ body {
 	z-index: 10;
 }
 
-.product-overlay .product-name {
-}
 
 .product-overlay .product-image {
 	height: 200px;
@@ -355,4 +306,20 @@ body {
 	background: white;
   display: none;
 }
+/*
+* MEDIA QUERIES
+*
+*/
 
+/* Phones */
+@media (max-width: 767.98px) {
+  .product-preview {
+    display: none;
+  }
+}
+/* Tablets and below */
+@media (max-width: 991.98px) {
+  .preview-info {
+    display: none;
+  }
+}

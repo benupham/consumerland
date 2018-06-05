@@ -21,17 +21,18 @@
     <!-- Product Preview Control and Map Overview -->
     <div id="product-preview" class="product-preview card shadow-sm rounded">
       <div id="overviewmap" class="card-img-top"></div>
-      <ul id="preview-categories-list" class="preview-categories-list ">
-        <li id="dept-list-item" class="category-item"><a id="dept-link"></a></li>
-        <li id="subdept-list-item" class="category-item"><a id="subdept-link"></a></li>
-        <li id="brand-list-item" class="category-item"><a id="brand-link"></a></li>
-      </ul>
-      <a class="card-title product-name"></a>
-      <p class="card-text product-price"></p>
-      <img class="card-img-top product-image" src="./product-images/missing-item.jpg" alt="Product image">
-      <div class="card-body">
-
-        <button id="product-preview-add-button" class="add-to-cart btn btn-outline-warning btn-sm" name="add-to-cart">Add to Cart</button>
+      <div id="preview-info" class="preview-info">
+        <ul id="preview-categories-list" class="preview-categories-list ">
+          <li id="dept-list-item" class="category-item"><a id="dept-link"></a></li>
+          <li id="subdept-list-item" class="category-item"><a id="subdept-link"></a></li>
+          <li id="brand-list-item" class="category-item"><a id="brand-link"></a></li>
+        </ul>
+        <a class="card-title product-name"></a>
+        <a class="card-text product-price"></a>
+        <img class="card-img-top product-image" src="./product-images/missing-item.jpg" alt="Product image">
+        <div class="card-body">
+          <button id="product-preview-add-button" class="add-to-cart btn btn-outline-warning btn-sm" name="add-to-cart">Add to Cart</button>
+        </div>        
       </div>
     </div>
 
@@ -68,17 +69,20 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title" id="modal-label">Welcome to ConsumerLand!</h4>
+            <h2 class="modal-title" id="modal-label"><span class="permanent-marker">Welcome to ConsumerLand!</span></h2>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <p>ConsumerLand is an experimental eCommerce UX built because of a nagging concern that we are doing online shopping, and especially online grocery shopping, wrong. 
-            <p>Virtually all online shopping today takes the "database lookup" approach: The user enters a search query, and are returned a list of results. To get different results, the user must enter a new query, returning a new set of results.</p><p>But shopping, and especially shopping for food -- i.e., "hunting and gathering" -- is an intuitive behavior tied to a sense of space and geography. We browse and roam across territory, double-back, and even go in circles. Whether that is the most efficient behavior is beside the point: It is our most instinctive.</p> 
-            <p>I called this prototype ConsumerLand because this online grocery store is a "land" -- or more accurately, a map of the land, a place where all of the things you could buy live, waiting for you to discover them.</p>
+            <p>ConsumerLand is an experimental eCommerce UX built because of a nagging concern that designers and developers are doing online shopping -- and especially grocery shopping -- wrong.</p> 
+            <h4 class="alert alert-secondary permanent-marker">Databases vs. Hunter Gatherers</h4>
+            <p>Virtually all online shopping today takes the "database look up" approach: The user enters a search query, and are returned a list of results. To get different results, the user must enter a new query, returning a new set of results.</p><p>But shopping is an intuitive behavior tied to a sense of space and geography. We "hunt and gather". We browse and roam across territory taking a meandering path.</p> 
+            <p>So I asked myself, "What if there was a way to mimic this experience on a webpage?" And ConsumerLand is what I came up with.</p> 
+            <p>I called this prototype ConsumerLand because this online grocery store is a "land" -- or more accurately, a map of the land. ConsumerLand is where all of the things you could buy live, waiting for you to discover them.</p>
+            <h4 class="alert alert-secondary permanent-marker">I'd Love Your Feedback</h4>
             <p>I welcome all feedback and bug reports! Please email me at bcupham@gmail.com or click Contact in the main menu.</p>
-            <p>This interface has not been extensively tested. <b>I recommend viewing on the latest version of Chrome only.</b></p> 
+            <p>This interface has not been cross-browser tested yet. I recommend viewing on the latest version of Chrome only.</p> 
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>

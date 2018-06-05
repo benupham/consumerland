@@ -5,6 +5,7 @@ import {productsImageMax} from '../constants.js';
 import {renderProductOverlay, hideOverlay, productDetailOverlay, productCardOverlay} from '../components/overlays.js';
 
 export const handleClick = function(e) {
+  console.log(e);
   // if (productDetailOverlay.getElement().style.display == 'block') {
   //   hideOverlay(productDetailOverlay);
   //   return;
@@ -19,8 +20,6 @@ export const handleClick = function(e) {
   const mapSize = map.getSize();
   const constraint = [mapSize[0] + 500, mapSize[1] + 100] ;
 
-  console.log(featureType);
-
   if (featureType == 'product' && featureStyle == 'image') {
     hideOverlay(productCardOverlay);
     renderProductOverlay(feature, productDetailOverlay);
@@ -30,8 +29,6 @@ export const handleClick = function(e) {
     hideOverlay(productDetailOverlay);
     return
   } else if (['brand','dept','subdept'].indexOf(featureType) > -1) {
-    // console.log('clicked trigger feature: '+feature.get('name'));
-    // console.log('clicked trigger featuretype: '+feature.get('type'));
     
     let circle = feature.getGeometry();
     if (featureStyle != 'circle') {
@@ -41,7 +38,7 @@ export const handleClick = function(e) {
     hideOverlay(productDetailOverlay);
     const zoomTo = featureType == 'brand' ? 2 
       : featureType == 'subdept' ? productsImageMax - .5 
-      : 49;
+      : 29;
     view.animate({ resolution: zoomTo, center: center});  
   } else {
     hideOverlay(productDetailOverlay);

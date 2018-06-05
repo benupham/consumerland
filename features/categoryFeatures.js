@@ -18,6 +18,7 @@ const d3Array = require('d3-array');
 
 import {allFeatureData} from '../data/allFeatureDataCollection.js';
 import {
+  imagesDir,
   productsImageMax,
   productsCircleMax,
   brandsLabelMax,
@@ -104,14 +105,13 @@ const maxResData = d3Array.histogram()
 .thresholds([200,400,600,800,1600,2000,2800,3500]);
 
 const maxResRange = maxResData(allFeatureData.features);
-console.log(maxResRange)
+
 
 allFeatureData.features.forEach((f) => {
   for (let i = 0; i < maxResRange.length; i++) {
     for (let j = 0; j < maxResRange[i].length; j++) {
       if (maxResRange[i][j].id == f.id) {
         f.properties.maxRes = maxResolutions[i];
-        // console.log(f.properties.name, f.properties.maxRes);
         break;
       }
     }
@@ -306,7 +306,7 @@ const imageFeatureRender = function (featureSets, type='all') {
     featureSet.features.forEach((f) => {
       if (((f.properties.src).indexOf('.') > -1) && (f.properties.type === type || type === 'all'))  {
         const name = textFormatter(f.properties.name, 18, '\n');
-        const src = '../' + f.properties.src; 
+        const src = imagesDir + f.properties.src; 
         const image = new Feature({
           geometry: new Point(f.geometry.coordinates),
           name: f.properties.name,
@@ -493,7 +493,7 @@ export const productsImageLayer = new VectorLayer({
   source: productsSource,
   style: imageStyle,
   updateWhileAnimating: true,
-  updateWhileInteracting: true,
+  updateWhileInteracting: false,
   maxResolution: productsImageMax
 })
 

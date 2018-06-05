@@ -7,6 +7,10 @@
 
 // export const baseDir = 
 
+// Images Directory 
+
+export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland/';
+
 // Resolution
 
 export const productsImageMax = 7;

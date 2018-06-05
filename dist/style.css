@@ -116,25 +116,35 @@
 /* temp CSS file */
 
 body {
+  overflow: hidden;
 	background: white;
 	font-family: Oswald;
 	font-weight: 300;
 	font-size: 13px;
 	color: #000;
-	background-image: url('../other-images/wood-floor-web.jpg');
+	background-image: url('https://s3-us-west-1.amazonaws.com/consumerland/other-images/wood-floor-web.jpg');
 }
 
-.ol-zoom {
+.ol-zoom, .ol-attribution {
 	display: none;
+}
+
+.permanent-marker {
+  font-family: 'Permanent Marker', sans-serif;
 }
 
 /* MODAL */
 
 .modal {
-  font-family: Optima, Arial, sans-serif;
+  font-family: Arial, sans-serif;
+}
+
+.modal-header {
+  background-color: rgba(0, 133, 62, 1);
 }
 
 .modal-title {
+  color: rgba(249, 198, 90, 1);
 }
 
 .modal-body {
@@ -149,7 +159,7 @@ body {
 .brand {
 	font-family: 'Rock Salt';
 	color: rgba(249, 198, 90, 1) !important;
-  background-image: url('./other-images/logo.png');
+  background-image: url('https://s3-us-west-1.amazonaws.com/consumerland/other-images/logo.png');
 }
 
 .brand img {
@@ -185,22 +195,83 @@ body {
 	width: 40%;
 }
 
-/* PRODUCT CARD OVERLAY */
+/* PRODUCT CARD OVERLAY OR PRODUCT PREVIEW PANE CONTROL */
 
-.product-card {
+.product-preview {
 	position: absolute;
+  bottom: 1em;
+  right: 1em;
+  left: auto;
+  top: auto;
 	background: rgba(255,255,255,1);
-	padding-top: 10px;
-	z-index: 10;
+	padding: 10px;
+  width: 300px;
+	/*z-index: 10;*/
+  will-change: content;
+}
+
+.preview-info {
+  height: 40px;
+}
+
+
+.overviewmap.ol-control {
+  position: relative;
+  padding: 0;
+}
+
+.overviewmap.ol-overviewmap {
+  top: 0;
+  left: 0;
+  bottom: auto;
+  right: auto;
+}
+.overviewmap.ol-overviewmap .ol-overviewmap-map {
+  width: 100%;
+  height: 150px;
+  margin: 0;
+}
+
+.overviewmap .ol-overviewmap-box {
+  border: 2px solid red;
+}
+
+.overviewmap.ol-overviewmap:not(.ol-collapsed) button{
+  display: none;
+  bottom: auto;
+  left: 1px;
+  right: auto;
+  top: 1px;
+  position: absolute;
+}
+
+.product-preview .card-body {
+  display: none;
+}
+
+.product-name {
+  
 }
 .product-price {
 	font-weight: 700;
 }
 
-.product-card .product-image {
-	height: auto;
-	width: auto;
+.product-preview .product-image {
+  display: none;
+	height: 200px;
+	width: 200px;
+  margin: auto;
 	cursor: pointer;
+}
+
+.preview-categories-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 5px;
+}
+.category-item {
+  display: inline-block;
+  font-size: 12px;
 }
 
 /* PRODUCT DETAIL OVERLAY */
@@ -214,8 +285,6 @@ body {
 	z-index: 10;
 }
 
-.product-overlay .product-name {
-}
 
 .product-overlay .product-image {
 	height: 200px;
@@ -235,6 +304,22 @@ body {
 	color: red; 
 	z-index: 1000;
 	background: white;
-  /*display: none;*/
+  display: block;
 }
+/*
+* MEDIA QUERIES
+*
+*/
 
+/* Phones */
+@media (max-width: 767.98px) {
+  .product-preview {
+    display: none;
+  }
+}
+/* Tablets and below */
+@media (max-width: 991.98px) {
+  .preview-info {
+    display: none;
+  }
+}
