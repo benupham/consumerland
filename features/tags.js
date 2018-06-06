@@ -6,8 +6,9 @@ import Icon from 'ol/style/icon';
 import Style from 'ol/style/style';
 
 import {allFeatureData} from '../data/allFeatureDataCollection.js';
-import {productsImageMax} from '../constants.js';
+import {imagesDir, productsImageMax} from '../constants.js';
 import {textFormatter, iconcache, styleCache} from '../utilities.js';
+
 
 
 /*
@@ -48,7 +49,7 @@ const tagStyle = function (tag, resolution) {
       size: [48,48],
       // scale: 1 / resolution + .3,
       crossOrigin: 'anonymous',
-      src: '../product-images/tags/' + src
+      src: imagesDir + 'product-images/tags/' + src
     });
   }
 

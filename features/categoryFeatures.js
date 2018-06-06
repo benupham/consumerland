@@ -49,6 +49,7 @@ import {
   circleHoverColors,
   fontFamily,
   fontSizes,
+  fontWeight,
 } from '../constants.js';
 import {textFormatter, dataTool} from '../utilities.js';
 import {view} from '../index.js';
@@ -98,6 +99,7 @@ import {view} from '../index.js';
 * 
 */
 
+// This is used for category labels only
 const maxResData = d3Array.histogram()
 .value(d => {
   if (d.properties.type != 'product') return d.properties.radius;
@@ -105,7 +107,6 @@ const maxResData = d3Array.histogram()
 .thresholds([200,400,600,800,1600,2000,2800,3500]);
 
 const maxResRange = maxResData(allFeatureData.features);
-
 
 allFeatureData.features.forEach((f) => {
   for (let i = 0; i < maxResRange.length; i++) {
@@ -133,6 +134,7 @@ const labelFeatureRender = function (featureSets, type='all') {
         for (let i = 0; i < range.length; i++) {
           for (let j = 0; j < range[i].length; j++) {
             if (range[i][j].id == f.id) {
+              // shrink font size a couple points depending on category level
               fontSize = fontSizes[i] - (['dept','subdept','brand'].indexOf(f.properties.type));
               break;
             }
@@ -169,7 +171,7 @@ const labelStyle = function(label, res) {
     const fillColor = 
     style = new Style({
       text: new Text({
-        font: label.get('fontSize') + 'px' + ' ' + fontFamily[label.get('type')],
+        font: fontWeight[label.get('type')] + ' ' + label.get('fontSize') + 'px' + ' ' + fontFamily[label.get('type')],
         text: label.get('name'),
         textBaseline: 'middle',
         fill: new Fill({color: labelColors[label.get('type')]}),
@@ -302,6 +304,17 @@ const circleLabelStyle = function(circleLabel, res) {
 
 const imageFeatureRender = function (featureSets, type='all') {
   const images = [];
+  let extent = [];
+  if (featureSets.length === 1) {
+    extent = d3Array.extent(featureSets[0].features, function(f) {
+      if (type === f.properties.type || type === 'all') {
+        return f.properties.radius  
+      } 
+    });
+    console.log(extent);    
+  }
+  if (featureSets.length != 1) console.log(featureSets);
+
   featureSets.forEach((featureSet) => {
     featureSet.features.forEach((f) => {
       if (((f.properties.src).indexOf('.') > -1) && (f.properties.type === type || type === 'all'))  {
@@ -315,6 +328,7 @@ const imageFeatureRender = function (featureSets, type='all') {
           type: f.properties.type,
           style: 'image',
           radius: f.properties.radius,
+          relativeRadius: f.properties.radius / extent[1],
           src: src
         });
         image.setId(f.id + '-image');
@@ -333,8 +347,7 @@ const imageStyle = function(image, res) {
     let icon = imageIconCache[image.get('src')];
     const scaleFactor = image.get('type') == 'brand' ? 600 : 300;
     const radius = image.get('radius');
-    // const scale = (2 * radius / res) / scaleFactor;
-    const scale = radius/65 * 2 > 200 ? 1 : radius/65 * 2 / 200;
+    const scale = image.get('relativeRadius') > .5 ? image.get('relativeRadius') : .5;//radius/65 * 2 > 200 ? 1 : radius/65 * 2 / 200;
     if (!icon) {
       icon = new Icon({
         src: image.get('src'),

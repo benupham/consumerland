@@ -69,7 +69,7 @@ export const colors = [
 export const labelColors = {
 	dept: '#606060',
 	subdept: '#606060',
-	brand: '#606060',
+	brand: '#808080',
 	product: '#606060'
 }
 
@@ -115,6 +115,13 @@ export const fontFamily = {
 	subdept: 'Oswald',
 	brand: 'Oswald',
 	product: 'Oswald'
+}
+
+export const fontWeight = {
+	dept: '500',
+	subdept: '400',
+	brand: '300',
+	product: '400'
 }
 
 export const fontSizes = [

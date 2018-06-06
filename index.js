@@ -3,7 +3,7 @@ import olMap from 'ol/map';
 import View from 'ol/view';
 import Extent from 'ol/extent';
 
-// import './dist/style.css';
+import './dist/style.css';
 
 import {productCardOverlay, productDetailOverlay, signage, renderProductOverlay, openProductDetail, hideOverlay} from './components/overlays.js';
 import {productPreview} from './components/productPreview.js';
@@ -59,7 +59,7 @@ export const map = new olMap({
     departmentsCircleLayer,
     subdepartmentsCircleLayer,
     brandsCircleLayer,
-    subdepartmentsImageLayer,
+    // subdepartmentsImageLayer,
     // departmentsImageLayer,
     // departmentsLabelLayer,
     // subdepartmentsLabelLayer,
@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', e => {
   map.addLayer(productsImageLayer);
   map.addLayer(tagLayer);
   map.addLayer(brandsLabelLayer);
+  map.addLayer(subdepartmentsImageLayer);
   map.addLayer(subdepartmentsLabelLayer);
   map.addLayer(departmentsImageLayer);
   map.addLayer(departmentsLabelLayer);
