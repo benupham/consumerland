@@ -276,20 +276,11 @@ body {
   color: rgba(249, 198, 90, 1);
 }
 
-/* SEARCH OVERLAY */
-
-.cart-item {
-	min-width: 300px;
-}
-
-.cart-image {
-	height: 50px;
-	width: 50px;
-}
-
-#info {
-	float: right;
-	width: 40%;
+.autocomplete .ui-menu-item {
+  font-family: Oswald, sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  color: #000;
 }
 
 /* PRODUCT CARD OVERLAY OR PRODUCT PREVIEW PANE CONTROL */
@@ -375,13 +366,12 @@ body {
 
 .product-overlay {
 	position: absolute;
-	height: 330px;
+	height: auto;
 	width: 500px;
 	padding: 20px;
 	background: rgba(255,255,255,1);
 	z-index: 10;
 }
-
 
 .product-overlay .product-image {
 	height: 200px;
@@ -412,6 +402,18 @@ body {
 @media (max-width: 767.98px) {
   .product-preview {
     display: none;
+  }
+  .product-overlay {
+    width: 300px;
+  }
+  .product-overlay .h4 {
+    font-size: 1rem;
+  }
+  .product-overlay .media {
+    flex-wrap: wrap;
+  }
+  .product-overlay img {
+    margin: auto;
   }
 }
 /* Tablets and below */

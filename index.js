@@ -97,8 +97,8 @@ const mapResize = function(e) {
   document.querySelector('#map').style.height = mapHeight + 'px';
   map.setSize([mapWidth,mapHeight]);
   map.updateSize();
-  console.log(`navbarHeight: ${document.getElementById('navbar').offsetHeight} \n mapHeight: ${mapHeight} 
-    \n mapWidth: ${mapWidth} \n windowHeight: ${window.innerHeight}`)
+  // console.log(`navbarHeight: ${document.getElementById('navbar').offsetHeight} \n mapHeight: ${mapHeight} 
+  //   \n mapWidth: ${mapWidth} \n windowHeight: ${window.innerHeight}`)
 
 }
 window.addEventListener('load', mapResize);
@@ -155,6 +155,7 @@ view.on('change:center', (e) => {
   const viewCenter = view.getCenter();
   if (!Extent.containsCoordinate(maxExtent,viewCenter)) {
     view.setCenter(ctr);
+    // view.animate({center: ctr});
     return;
   } 
 })

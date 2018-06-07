@@ -24,9 +24,11 @@ export const productDetailOverlay = new Overlay({
   element: document.getElementById('product-overlay'),
   id: 'productDetail',
   autoPan: true,
-  stopEvent: true
+  stopEvent: true,
+  positioning: 'center-center'
 });
 
+// Signage (not used right now)
 const signs = {};
 for (let i = 0; i < 4; i++) {
   signs[i] = new Overlay({
