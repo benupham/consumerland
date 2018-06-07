@@ -1,6 +1,7 @@
 import Control from 'ol/control/control';
 import {map} from '../index.js';
-import {productsImageMax} from '../constants.js';
+import {productsImageMax, searchResolutions} from '../constants.js';
+import {flyTo} from '../utilities.js';
 import {allFeatureData} from '../data/allFeatureDataCollection.js';
 import matchSorter from 'match-sorter';
 
@@ -12,7 +13,7 @@ import matchSorter from 'match-sorter';
 const searchIndex = allFeatureData.features.map(f => {
   return {
     value: f.properties.name,
-    label: f.properties.name + ' in ' + f.properties.parent,
+    label: (f.properties.type === 'product' ? f.properties.name : f.properties.name + ' in ' + '<span class="feature-parent">' + f.properties.parent + '</span>'),
     count: f.properties.value,
     type: f.properties.type,
     parent: f.properties.parent,
@@ -49,25 +50,34 @@ export const handleSearch = function(e) {
   }
 } 
 
+const termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
 $( "#search-input" ).autocomplete({
   classes: {"ui-autocomplete": "autocomplete"},
   source: function(request, response) {
     console.log(request);
     let match = matchSorter(searchIndex, request.term, {keys: ['value'] });
+    match = match.slice(0,10);
     match.sort((a,b) => {
       return b.count - a.count;
-    })
-    match = match.slice(0,5);
+    });
     console.log(match);
     response(match);
   },
   select: function(e, ui) {
     console.log(e, ui.item.coord);
-    this.value = ui.item.value;
+    $( "#search-input" ).value = ui.item.value;
     map.getView().animate({
       center: ui.item.coord,
-      resolution: productsImageMax - 5 >= 1 ? productsImageMax - 5 : 1 , //need to make this a variable
+      resolution: searchResolutions[ui.item.type] 
     })
+  },
+  open: function(e, ui) {
+    const term = document.getElementById('search-input').value;
+    const styledTerm = termTemplate.replace('%s', term);
+    console.log(term, styledTerm);
+    $('ul.autocomplete li div').each(function() {
+      $(this).html($(this).text().replace(term, styledTerm));
+    });
   }
 
 });

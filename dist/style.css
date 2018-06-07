@@ -210,7 +210,7 @@ body {
 	font-family: Oswald;
 	font-weight: 300;
 	font-size: 13px;
-	color: #000;
+	color: #111;
 	background-image: url('https://s3-us-west-1.amazonaws.com/consumerland/other-images/wood-floor-web.jpg');
 }
 
@@ -278,9 +278,18 @@ body {
 
 .autocomplete .ui-menu-item {
   font-family: Oswald, sans-serif;
-  font-weight: 300;
-  font-size: 13px;
-  color: #000;
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: #111;
+}
+.autocomplete .ui-menu-item-wrapper {
+  padding: 15px 0;
+}
+.autocomplete .ui-autocomplete-term {
+  font-weight: 600;
+}
+.autocomplete .feature-parent {
+  color: rgba(249, 198, 90, 1);
 }
 
 /* PRODUCT CARD OVERLAY OR PRODUCT PREVIEW PANE CONTROL */

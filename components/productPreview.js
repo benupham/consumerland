@@ -52,7 +52,6 @@ export const updatePreview = function (features) {
 		image.setAttribute('data-pid', pId);
 		image.src = '';
 		image.src = product.get('src');
-		console.log(product.get('src'));
 		image.style.width = 200+'px'; 
 		
 		name.innerHTML = textFormatter(product.get('name'), 50, '', 35) + '&nbsp&nbsp<strong>' + product.get('price') + '<strong>';

@@ -48,6 +48,13 @@ export const maxResolutions = [
 	60,
 ];
 
+export const searchResolutions = {
+	dept: 29,
+	subdept: productsImageMax - 0.5,
+	brand: 2,
+	product: 1
+}
+
 // Offsets
 
 export const nameOffset = 120;
