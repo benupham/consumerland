@@ -345,7 +345,7 @@ const imageStyle = function(image, res) {
   let style = imageStyleCache[image.get('src')];
   if (!style) {
     let icon = imageIconCache[image.get('src')];
-    const scaleFactor = image.get('type') == 'brand' ? 600 : 300;
+    const scaleFactor = image.get('type') === 'subdept' ? .8 : 1;
     const radius = image.get('radius');
     const scale = image.get('relativeRadius') > .5 ? image.get('relativeRadius') : .5;//radius/65 * 2 > 200 ? 1 : radius/65 * 2 / 200;
     if (!icon) {
@@ -353,7 +353,7 @@ const imageStyle = function(image, res) {
         src: image.get('src'),
         size: [200,200],
         crossOrigin: 'anonymous',
-        scale: scale//scale > .3 ? scale : .3 
+        scale: scale * scaleFactor
       })
       imageIconCache[image.get('src')] = icon;
     }
@@ -402,7 +402,7 @@ export const departmentsImageLayer = new VectorLayer({
   style: imageStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  minResolution: deptsImageMin,
+  minResolution: subdeptsImageMax,
   maxResolution: deptsImageMax
 })
 
