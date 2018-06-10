@@ -37,6 +37,13 @@ import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './compo
 
 // $('#info-modal').modal('show');
 
+fetch('http://0.0.0.0:8081/data/brands-lookup-file.json')
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    console.log(myJson);
+  });
 
 /*
 * Map & View
