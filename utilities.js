@@ -7,9 +7,11 @@ import {view} from './index.js';
 * 
 */
 
-export const getFeatureJson = function (type) {
-  console.log(type);
-  return fetch('http://localhost:3000/api?type=' + type)
+export const getFeatureJson = function (types) {
+  console.log(types);
+  if (typeof types === 'string' ) types = [types];
+  const q = types.join(',');
+  return fetch('http://localhost:3000/api?type=' + q)
   .then(res => res.json())
   .catch(err => console.log(err)); 
 } 

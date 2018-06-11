@@ -6,9 +6,10 @@ const featureSet = JSON.parse(fs.readFileSync('./data/allFeatureDataCollection.j
 
 app.get("/api", (req, res) => {
     const type = req.query.type;
+    const types = type.split(',');
     const featureReq = [];
     for (feature of featureSet.features) {
-      if (feature.properties.type === type) {
+      if ( types.indexOf(feature.properties.type) > -1 ) {
           featureReq.push(feature);
       }  
     } 
