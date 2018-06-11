@@ -10,6 +10,13 @@ module.exports = {
     publicPath: '/'
   },
   mode: 'development',
+  devServer: {
+    host: 'localhost', 
+    port: 3000,
+    proxy: {
+      '/api': 'http://localhost:8080'
+    }
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html'

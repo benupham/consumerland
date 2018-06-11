@@ -37,14 +37,15 @@ import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './compo
 
 // $('#info-modal').modal('show');
 
-fetch('http://0.0.0.0:8081/data/brands-lookup-file.json')
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(myJson) {
-    console.log(myJson);
-  });
 
+
+fetch('http://localhost:3000/api')
+  .then(function(response) {
+    return response.text();
+  })
+  .then(function(greeting) {
+    console.log(greeting);
+  });
 /*
 * Map & View
 * 
@@ -57,7 +58,7 @@ export const view = new View({
   zoomFactor: 1.5,
   minResolution: 1,
   maxResolution: 65,
-})
+}); 
 
 
 export const map = new olMap({
