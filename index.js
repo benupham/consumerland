@@ -39,13 +39,7 @@ import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './compo
 
 
 
-fetch('http://localhost:3000/api')
-  .then(function(response) {
-    return response.text();
-  })
-  .then(function(greeting) {
-    console.log(greeting);
-  });
+
 /*
 * Map & View
 * 

@@ -123,12 +123,12 @@ const handleHover = function(e) {
 }
 
 
-else if (featureType == 'addIcon') {
-      const product = productsVectorSource.getFeatureById(feature.get('product'));
-      renderRemoveCartIcon(product);
-      addIcon.getGeometry().setCoordinates([]);
+// else if (featureType == 'addIcon') {
+//       const product = productsVectorSource.getFeatureById(feature.get('product'));
+//       renderRemoveCartIcon(product);
+//       addIcon.getGeometry().setCoordinates([]);
 
-    } 
+//     } 
 
 
 
@@ -375,3 +375,41 @@ const addIcon = new Style({
 //   return [maxRes,minRes]
 // }
 
+
+// const colorSchemes = [
+//   d3Chromatic.schemeBuGn[4],
+//   d3Chromatic.schemeBuPu[4],
+//   d3Chromatic.schemeOrRd[4],
+//   d3Chromatic.schemePuBu[4],
+//   d3Chromatic.schemeYlGnBu[4],
+//   d3Chromatic.schemeYlOrBr[4],
+// ]
+
+
+// const deptColorSchemes = {};
+// const deptColors = {};
+// allFeatureData.features.forEach((f, i) => {
+//   if (f.properties.type === 'dept') {
+//     f.properties.colorScheme =  d3Chromatic.schemeGreys[5];//colorSchemes[4];
+//     deptColorSchemes[f.properties.name] = f.properties.colorScheme;
+//     const color = f.properties.colorScheme[Math.floor(Math.random() * f.properties.colorScheme.length)];
+//     f.properties.color = d3Color.color(color);
+//     deptColors[f.properties.name] = f.properties.color;
+//     f.properties.color.opacity = 0.7;
+//     f.properties.hoverColor = f.properties.color.darker(0.3);
+//     console.log(f.properties.name, colorSchemes.indexOf(f.properties.colorScheme));
+//   }
+// })
+// allFeatureData.features.forEach((f, i) => {
+//   if (f.properties.type === 'subdept') {
+//     const parent = f.properties.parent;
+//     const parentColors = deptColorSchemes[parent];
+//     const parentColor = deptColors[parent];
+//     const color = parentColors[Math.floor(Math.random() * parentColors.length)];
+//     // const color = parentColor;
+//     f.properties.color = d3Color.color(color);
+//     f.properties.color.opacity = 0.3 //Math.random();
+//     f.properties.hoverColor = f.properties.color.darker(0.3);
+//     console.log(f.properties.name, f.properties.hoverColor);
+//   }
+// })

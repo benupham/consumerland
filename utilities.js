@@ -7,6 +7,15 @@ import {view} from './index.js';
 * 
 */
 
+export const getFeatureJson = function (type) {
+  console.log(type);
+  return fetch('http://localhost:3000/api?type=' + type)
+  .then(res => res.json())
+  .catch(err => console.log(err)); 
+} 
+//getFeatureJson('product');
+
+
 export const iconcache = new IconCache();
 
 export const styleCache = {};
