@@ -15,7 +15,7 @@ export const getFeatureJson = function (types) {
   .then(res => res.json())
   .catch(err => console.log(err)); 
 } 
-//getFeatureJson('product');
+
 
 
 export const iconcache = new IconCache();

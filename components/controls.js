@@ -3,7 +3,6 @@ import Control from 'ol/control/control';
 import View from 'ol/view';
 import DragPan from 'ol/interaction/dragpan';
 
-
 import {departmentsCircleLayer,departmentsLabelLayer} from '../features/categoryFeatures.js';
 import {view} from '../index.js';
 

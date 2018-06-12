@@ -5,6 +5,7 @@ import Extent from 'ol/extent';
 
 import './dist/style.css';
 
+import {maxExtent} from './features/categoryFeatures.js';
 import {productCardOverlay, productDetailOverlay, signage, renderProductOverlay, openProductDetail, hideOverlay} from './components/overlays.js';
 import {productPreview} from './components/productPreview.js';
 import {textFormatter, dataTool, iconcache} from './utilities.js';
@@ -16,23 +17,7 @@ import {handleHover, jumpStripsInt} from './events/hover.js';
 import {handleClick} from './events/click.js';
 import {tagLayer} from './features/tags.js';
 import {productsImageMax} from './constants.js';
-import {
-  //departmentsLabelLayer,
-  //subdepartmentsLabelLayer,
-  //brandsLabelLayer,
-  //departmentsCircleLayer,
-  // departmentsCircleLabelLayer,
-  //subdepartmentsCircleLayer,
-  //brandsCircleLayer,
-  // brandsCircleLabelLayer,
-  //departmentsImageLayer,
-  //subdepartmentsImageLayer,
-  //brandsImageLayer,
-  //productsCircleLayer,
-  //productsImageLayer,
-  // subdepartmentsCircleLabelLayer,
-} from './features/categoryFeatures.js';
-////import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './components/controls.js';
+import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './components/controls.js';
 
 
 // $('#info-modal').modal('show');
@@ -57,37 +42,11 @@ export const view = new View({
 
 export const map = new olMap({
   renderer: ('canvas'),
-  layers: [
-    //departmentsCircleLayer,
-    //subdepartmentsCircleLayer,
-    //brandsCircleLayer,
-    // subdepartmentsImageLayer,
-    // departmentsImageLayer,
-    // departmentsLabelLayer,
-    // subdepartmentsLabelLayer,
-    // productsCircleLayer,
-    // productsImageLayer,
-    // tagLayer,
-    // brandsLabelLayer,
-    ],
   target: document.getElementById('map'),
   view: view
 });
 
-//Speed up initial load by loading this stuff here.
-document.addEventListener('DOMContentLoaded', e => {
-  // map.addLayer(productsCircleLayer);
-  // map.addLayer(productsImageLayer);
-  // map.addLayer(tagLayer);
-  // map.addLayer(brandsLabelLayer);
-  // map.addLayer(subdepartmentsImageLayer);
-  // map.addLayer(subdepartmentsLabelLayer);
-  //map.addLayer(departmentsImageLayer);
-  //map.addLayer(departmentsLabelLayer);
-});
-
 const centerZoom = view.getCenter();  
-
 
 const mapResize = function(e) {
   if (window.innerWidth < 576) {
@@ -106,8 +65,13 @@ const mapResize = function(e) {
 window.addEventListener('load', mapResize);
 window.addEventListener('resize', mapResize);
 
+/*
+* Controls and Overlays 
+* 
+*/
+
 // map.addOverlay(productCardOverlay);
-// map.addControl(overviewMapControl);
+map.addControl(overviewMapControl);
 // map.addControl(breadCrumbsControl);
 
 map.addControl(productPreview);
@@ -152,15 +116,13 @@ view.on('change:resolution', (e) => {
   dataTool.querySelector('#data-res').innerHTML = `res: ${view.getResolution()}`;
 });
 
-// const maxExtent = departmentsCircleLayer.getSource().getExtent(); 
-// view.on('change:center', (e) => {
-//   const viewCenter = view.getCenter();
-//   if (!Extent.containsCoordinate(maxExtent,viewCenter)) {
-//     view.setCenter(ctr);
-//     // view.animate({center: ctr});
-//     return;
-//   } 
-// })
+view.on('change:center', (e) => {
+  const viewCenter = view.getCenter();
+  if (!Extent.containsCoordinate(maxExtent,viewCenter)) {
+    view.setCenter(ctr);
+    return;
+  } 
+})
 
 document.getElementById('search-button').onclick = handleSearch;
 document.getElementById('search-input').onkeypress = handleSearch;

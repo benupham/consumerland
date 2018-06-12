@@ -5,9 +5,9 @@ import VectorSource from 'ol/source/vector';
 import Icon from 'ol/style/icon';
 import Style from 'ol/style/style';
 
-import {allFeatureData} from '../data/allFeatureDataCollection.js';
+// import {allFeatureData} from '../data/allFeatureDataCollection.js';
 import {imagesDir, productsImageMax} from '../constants.js';
-import {textFormatter, iconcache, styleCache} from '../utilities.js';
+import {textFormatter, iconcache, styleCache, getFeatureJson} from '../utilities.js';
 
 
 
@@ -20,9 +20,9 @@ const tagsData = {
   sale: {color: '', src: 'sale-red.png'}
 }
 
-const tagFeatureRender = function(featureCollection, colors = null, tagType = 'sale') {
+const tagFeatureRender = function(features, colors = null, tagType = 'sale') {
   let tags = [];
-  featureCollection.features.forEach( (f) => {
+  features.forEach( (f) => {
     if (f.properties.type == 'product' && f.properties.price.indexOf('Reg') > -1) {
       const tag = new Feature({
         'geometry': new Point([f.geometry.coordinates[0] - 75, f.geometry.coordinates[1] + 75]),
@@ -64,20 +64,24 @@ const tagStyle = function (tag, resolution) {
   return style
 }
 
-const tagFeatures = tagFeatureRender(allFeatureData);
 const tagSource = new VectorSource({
-  features: tagFeatures,
   overlaps: false
 });
 
 export const tagLayer = new VectorLayer({
   source: tagSource,
   style: tagStyle,
+  zIndex: 4,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
   renderMode: 'vector',
   maxResolution: productsImageMax 
 })
 
+getFeatureJson(['product'])
+.then(res => {
+  const tagFeatures = tagFeatureRender(res);
+  tagSource.addFeatures(tagFeatures);
+})
 
 

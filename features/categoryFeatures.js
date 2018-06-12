@@ -1,5 +1,4 @@
 import Feature from 'ol/feature';
-import Collection from 'ol/collection';
 import Point from 'ol/geom/point';
 import VectorLayer from 'ol/layer/vector';
 import VectorSource from 'ol/source/vector';
@@ -16,7 +15,6 @@ const d3Array = require('d3-array');
 // const d3Chromatic = require('d3-scale-chromatic');
 // const d3Color = require('d3-color');
 
-import {allFeatureData} from '../data/allFeatureDataCollection.js';
 import {
   imagesDir,
   productsImageMax,
@@ -59,25 +57,7 @@ import {view, map} from '../index.js';
 * 
 */
 
-// This is used for category labels only
-const maxResData = d3Array.histogram()
-.value(d => {
-  if (d.properties.type != 'product') return d.properties.radius;
-})
-.thresholds([200,400,600,800,1600,2000,2800,3500]);
 
-const maxResRange = maxResData(allFeatureData.features);
-
-allFeatureData.features.forEach((f) => {
-  for (let i = 0; i < maxResRange.length; i++) {
-    for (let j = 0; j < maxResRange[i].length; j++) {
-      if (maxResRange[i][j].id == f.id) {
-        f.properties.maxRes = maxResolutions[i];
-        break;
-      }
-    }
-  }  
-})
 
 const labelFeatureRender = function (featureSets, type='all') {
   const rangeData = d3Array.histogram()
@@ -329,20 +309,62 @@ const imageStyle = function(image, res) {
 /*
 * Exports
 */
+
+// This is used for category labels only
+const maxResData = d3Array.histogram()
+.value(d => d.properties.radius)
+.thresholds([200,400,600,800,1600,2000,2800,3500]);
+
+
+
+const setMaxRange = function(features, range) {
+  features.forEach((f) => {
+    for (let i = 0; i < range.length; i++) {
+      for (let j = 0; j < range[i].length; j++) {
+        if (range[i][j].id == f.id) {
+          f.properties.maxRes = maxResolutions[i];
+          break;
+        }
+      }
+    }  
+  })  
+}
+
+// Dept Layers defined outside of Promise so they can be exported to the OverviewMap control
+const deptCircleSource = new VectorSource();
+const deptLabelSource = new VectorSource();
+
+export const departmentsCircleLayer = new VectorLayer({
+  style: circleStyle,
+  source: deptCircleSource,
+  zIndex: 0,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+});
+export const departmentsLabelLayer = new VectorLayer({
+  style: labelStyle,
+  source: deptLabelSource,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  zIndex: 10,
+  minResolution: deptsLabelMin,
+  maxResolution: deptsLabelMax
+});
+
+export let maxExtent = [];
+
 const featureData = {};
 getFeatureJson(['dept','subdept','brand'])
 .then(res => {
   featureData.features = res;
+  const maxResRange = maxResData(featureData.features);
+  setMaxRange(featureData.features, maxResRange);
 
-  const departmentsCircleLayer = new VectorLayer({
-    source: new VectorSource({
-      features: circleFeatureRender([featureData], 'dept')
-    }),
-    style: circleStyle,
-    updateWhileAnimating: true,
-    updateWhileInteracting: true,
-  })
-
+  const deptCircleFeatures = circleFeatureRender([featureData], 'dept');
+  deptCircleSource.addFeatures(deptCircleFeatures);
+  const deptLabelFeatures = labelFeatureRender([featureData], 'dept');
+  deptLabelSource.addFeatures(deptLabelFeatures);
+  
   const departmentsImageLayer = new VectorLayer({
     source: new VectorSource({
       features: imageFeatureRender([featureData], 'dept')
@@ -350,20 +372,10 @@ getFeatureJson(['dept','subdept','brand'])
     style: imageStyle,
     updateWhileAnimating: true,
     updateWhileInteracting: true,
+    zIndex: 9,
     minResolution: subdeptsImageMax,
     maxResolution: deptsImageMax
   })
-   
-  const departmentsLabelLayer = new VectorLayer({
-    source: new VectorSource({
-      features: labelFeatureRender([featureData], 'dept')
-    }),
-    style: labelStyle,
-    updateWhileAnimating: true,
-    updateWhileInteracting: true,
-    minResolution: deptsLabelMin,
-    maxResolution: deptsLabelMax
-  });
 
   const subdepartmentsLabelLayer = new VectorLayer({
     source: new VectorSource({
@@ -372,6 +384,7 @@ getFeatureJson(['dept','subdept','brand'])
     style: labelStyle,
     updateWhileAnimating: true,
     updateWhileInteracting: true,
+    zIndex: 8,
     minResolution: subdeptsLabelMin,
     maxResolution: subdeptsLabelMax
   })
@@ -383,6 +396,7 @@ getFeatureJson(['dept','subdept','brand'])
     style: imageStyle,
     updateWhileAnimating: true,
     updateWhileInteracting: true,
+    zIndex: 7,
     minResolution: subdeptsImageMin,
     maxResolution: subdeptsImageMax
   })
@@ -394,6 +408,7 @@ getFeatureJson(['dept','subdept','brand'])
     style: circleStyle,
     updateWhileAnimating: true,
     updateWhileInteracting: true,
+    zIndex: 1,
     minResolution: subdeptsCircleMin,
     maxResolution: subdeptsCircleMax
   })
@@ -405,6 +420,7 @@ getFeatureJson(['dept','subdept','brand'])
     style: labelStyle,
     updateWhileAnimating: true,
     updateWhileInteracting: true,
+    zIndex: 6,
     minResolution: brandsLabelMin,
     maxResolution: brandsLabelMax
   })
@@ -417,6 +433,7 @@ const brandsImageLayer = new VectorLayer({
   style: imageStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
+  zIndex: 5,
   minResolution: brandsImageMin,
   maxResolution: brandsImageMax
 })
@@ -428,6 +445,7 @@ const brandsCircleLayer = new VectorLayer({
   style: circleStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
+  zIndex: 2,
   minResolution: brandsCircleMin,
   maxResolution: brandsCircleMax
 })
@@ -441,22 +459,32 @@ const brandsCircleLayer = new VectorLayer({
   map.addLayer(subdepartmentsLabelLayer);
   map.addLayer(departmentsImageLayer);
   map.addLayer(departmentsLabelLayer);
+  maxExtent = departmentsCircleLayer.getSource().getExtent();
+  
 })
 .catch(err => console.log(err));
 
 // Products
+
+// Defined outside Promise so components can use productsSource for feature look-ups
+export const productsSource = new VectorSource({
+  overlaps: false
+});
+
 const productData = {};
 getFeatureJson(['product'])
 .then(res => {
   productData.features = res;
-  const productsSource = new VectorSource({
-    features: imageFeatureRender([productData], 'product')
-  })
+  
+  const imageFeatures = imageFeatureRender([productData], 'product');
+  productsSource.addFeatures(imageFeatures);
+  
   const productsImageLayer = new VectorLayer({
     source: productsSource,
     style: imageStyle,
     updateWhileAnimating: true,
     updateWhileInteracting: false,
+    zIndex: 4,
     maxResolution: productsImageMax
   });
   
@@ -467,33 +495,9 @@ getFeatureJson(['product'])
     style: circleStyle,
     updateWhileAnimating: true,
     updateWhileInteracting: true,
-    opacity: 1,
+    zIndex: 3,
     maxResolution: productsCircleMax
   });
   map.addLayer(productsCircleLayer);
   map.addLayer(productsImageLayer);
 })
-// Product Source
-
-// export const productsSource = new VectorSource({
-//   features: imageFeatureRender([productData], 'product')
-// })
-// export const productsImageLayer = new VectorLayer({
-//   source: productsSource,
-//   style: imageStyle,
-//   updateWhileAnimating: true,
-//   updateWhileInteracting: false,
-//   maxResolution: productsImageMax
-// })
-
-// export const productsCircleLayer = new VectorLayer({
-//   source: new VectorSource({
-//     features: circleFeatureRender([allFeatureData], 'product')
-//   }),
-//   style: circleStyle,
-//   updateWhileAnimating: true,
-//   updateWhileInteracting: true,
-//   opacity: 1,
-//   maxResolution: productsCircleMax
-// })
-

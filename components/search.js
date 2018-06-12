@@ -1,27 +1,27 @@
 import Control from 'ol/control/control';
 import {map} from '../index.js';
 import {productsImageMax, searchResolutions} from '../constants.js';
-import {flyTo} from '../utilities.js';
-import {allFeatureData} from '../data/allFeatureDataCollection.js';
+import {flyTo, getFeatureJson} from '../utilities.js';
 import matchSorter from 'match-sorter';
 
 /*
 * Search
 * 
 */
-
-const searchIndex = allFeatureData.features.map(f => {
-  return {
-    value: f.properties.name,
-    label: (f.properties.type === 'product' ? f.properties.name : f.properties.name + ' in ' + '<span class="feature-parent">' + f.properties.parent + '</span>'),
-    count: f.properties.value,
-    type: f.properties.type,
-    parent: f.properties.parent,
-    coord: f.geometry.coordinates
-  }
+let searchIndex = [];
+getFeatureJson(['product','brand','dept','subdept'])
+.then(res => {
+  searchIndex = res.map(f => {
+    return {
+      value: f.properties.name,
+      label: (f.properties.type === 'product' ? f.properties.name : f.properties.name + ' in ' + '<span class="feature-parent">' + f.properties.parent + '</span>'),
+      count: f.properties.value,
+      type: f.properties.type,
+      parent: f.properties.parent,
+      coord: f.geometry.coordinates
+    }
+  });
 });
-
-
 
 export const handleSearch = function(e) {
   if (e.keyCode != 13) {
@@ -31,18 +31,17 @@ export const handleSearch = function(e) {
   if (query != '') {
     try {
       console.log('query',query);
-      let items = allFeatureData.features;
-      let match = matchSorter(items, query, {keys: ['properties.name'] });
+      let items = searchIndex;
+      let match = matchSorter(items, query, {keys: ['value'] });
       console.log(match);
-      console.log('match', match[0].id);
+      console.log('match', match[0].value);
       const result = match[0];
-      const coord = result.geometry.coordinates;
-      //const feature = productsSource.getFeatureById(match[0].id + '-image'); 
-      //console.log(feature);
-      // map.getView().animate({
-      //   center: coord,
-      //   resolution: productsImageMax - 5 >= 1 ? productsImageMax - 5 : 1 , //need to make this a variable
-      // })
+      const coord = result.coord;
+      map.getView().animate({
+        center: coord,
+        resolution: searchResolutions[result.type] 
+      })
+      $( "#search-input" ).autocomplete('close');
     }
     catch(err) {
       console.log(query +' not found');
