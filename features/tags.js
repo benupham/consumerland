@@ -5,7 +5,6 @@ import VectorSource from 'ol/source/vector';
 import Icon from 'ol/style/icon';
 import Style from 'ol/style/style';
 
-// import {allFeatureData} from '../data/allFeatureDataCollection.js';
 import {imagesDir, productsImageMax} from '../constants.js';
 import {textFormatter, iconcache, styleCache, getFeatureJson} from '../utilities.js';
 

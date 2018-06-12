@@ -7,8 +7,8 @@ import {view} from './index.js';
 * 
 */
 
+// Call to the Express server for JSON feature data
 export const getFeatureJson = function (types) {
-  console.log(types);
   if (typeof types === 'string' ) types = [types];
   const q = types.join(',');
   return fetch('http://localhost:3000/api?type=' + q)

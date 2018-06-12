@@ -13,7 +13,7 @@ export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland/';
 
 // Resolution
 
-export const productsImageMax = 7;
+export const productsImageMax = 13;
 export const productsCircleMax = 25;
 
 export const brandsLabelMax = 35;

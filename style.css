@@ -1,3 +1,12 @@
+/* latin */
+@font-face {
+  font-family: 'Carter One';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Carter One'), local('CarterOne'), url(https://fonts.gstatic.com/s/carterone/v9/q5uCsoe5IOB2-pXv9UcNExN8hK5SAMo.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* cyrillic */
 @font-face {
   font-family: 'Oswald';
@@ -201,6 +210,7 @@
 
 
 
+
 /* temp CSS file */
 
 body {
@@ -209,22 +219,24 @@ body {
 	font-family: Oswald;
 	font-weight: 300;
 	font-size: 13px;
-	color: #000;
+	color: #111;
 	background-image: url('https://s3-us-west-1.amazonaws.com/consumerland/other-images/wood-floor-web.jpg');
 }
 
 .ol-attribution {
 	display: none;
 }
-
+/* Bowlby+One+SC|Bungee+Shade|Carter+One|Libre+Barcode+39+Extended+Text|Libre+Barcode+39+Text
+|Londrina+Solid|Poiret+One|Racing+Sans+One|Shrikhand|Special+Elite|Spicy+Rice */
 .permanent-marker {
-  font-family: 'Permanent Marker', sans-serif;
+  font-family: 'Carter One', sans-serif;
 }
 
 /* MODAL */
 
 .modal {
   font-family: Arial, sans-serif;
+  color: #212529;
 }
 
 .modal-header {
@@ -237,6 +249,12 @@ body {
 
 .modal-body {
   font-size: 18px;
+}
+
+.modal h4.alert-secondary {
+    color: #383d41;
+    background-color: rgba(249, 198, 90, 0.3);
+    border-color: rgba(249, 198, 90, 0.7);
 }
 /* NAVBAR */
 
@@ -267,20 +285,20 @@ body {
   color: rgba(249, 198, 90, 1);
 }
 
-/* SEARCH OVERLAY */
-
-.cart-item {
-	min-width: 300px;
+.autocomplete .ui-menu-item {
+  font-family: Oswald, sans-serif;
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: #111;
 }
-
-.cart-image {
-	height: 50px;
-	width: 50px;
+.autocomplete .ui-menu-item-wrapper {
+  padding: 15px 0;
 }
-
-#info {
-	float: right;
-	width: 40%;
+.autocomplete .ui-autocomplete-term {
+  font-weight: 600;
+}
+.autocomplete .feature-parent {
+  color: rgba(249, 198, 90, 1);
 }
 
 /* PRODUCT CARD OVERLAY OR PRODUCT PREVIEW PANE CONTROL */
@@ -366,13 +384,12 @@ body {
 
 .product-overlay {
 	position: absolute;
-	height: 330px;
+	height: auto;
 	width: 500px;
 	padding: 20px;
 	background: rgba(255,255,255,1);
 	z-index: 10;
 }
-
 
 .product-overlay .product-image {
 	height: 200px;
@@ -403,6 +420,18 @@ body {
 @media (max-width: 767.98px) {
   .product-preview {
     display: none;
+  }
+  .product-overlay {
+    width: 300px;
+  }
+  .product-overlay .h4 {
+    font-size: 1rem;
+  }
+  .product-overlay .media {
+    flex-wrap: wrap;
+  }
+  .product-overlay img {
+    margin: auto;
   }
 }
 /* Tablets and below */
