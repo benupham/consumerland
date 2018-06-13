@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "consumerland-2bb67"
+    "default": "consumerland-2bb67",
+    "staging": "consumerland-staging"
   }
 }

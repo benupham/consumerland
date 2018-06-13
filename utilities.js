@@ -11,9 +11,11 @@ import {view} from './index.js';
 export const getFeatureJson = function (types) {
   if (typeof types === 'string' ) types = [types];
   const q = types.join(',');
-  return fetch('http://localhost:3000/api?type=' + q)
+  return fetch('/api?type=' + q, {
+    mode: 'no-cors'
+  })
   .then(res => res.json())
-  .catch(err => console.log(err)); 
+  .catch(err => console.log(err));   
 } 
 
 

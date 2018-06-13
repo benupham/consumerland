@@ -23,8 +23,6 @@ import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './compo
 // $('#info-modal').modal('show');
 
 
-
-
 /*
 * Map & View
 * 

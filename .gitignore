@@ -1,4 +1,5 @@
 node_modules/
+awscli-bundle/
 bundle.js
 images/
 product-images/

@@ -9,7 +9,7 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/'
   },
-  mode: 'development',
+  mode: 'production',
   devServer: {
     host: 'localhost', 
     port: 3000,

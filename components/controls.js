@@ -40,7 +40,6 @@ overviewMapControl.getOverviewMap().on('singleclick', (e) => {
 	const ctr = geometry.getCoordinates() || geometry.getCenter();
 	console.log(ctr)
 	mainmap.getView().setCenter(ctr);
-	// console.log(features);
 });
 
 
