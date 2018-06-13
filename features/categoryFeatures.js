@@ -49,7 +49,7 @@ import {
   fontSizes,
   fontWeight,
 } from '../constants.js';
-import {textFormatter, dataTool, getFeatureJson} from '../utilities.js';
+import {textFormatter, dataTool, getFeatureJson, getFeaturesFromFirestore} from '../utilities.js';
 import {view, map} from '../index.js';
 
 /*
@@ -67,8 +67,8 @@ const labelFeatureRender = function (featureSets, type='all') {
   .thresholds(6);
   const labels = [];
   featureSets.forEach((featureSet) => {
-    const range = rangeData(featureSet.features);
-    featureSet.features.forEach((f) => {
+    const range = rangeData(featureSet);
+    featureSet.forEach((f) => {
       let fontSize = '12px Arial';
       if (f.properties.type == type) {
         for (let i = 0; i < range.length; i++) {
@@ -133,7 +133,7 @@ const labelStyle = function(label, res) {
 const circleFeatureRender = function(featureSets, type='all') {
   const circles = [];
   featureSets.forEach((featureSet) => {
-    featureSet.features.forEach((f) => {
+    featureSet.forEach((f) => {
       if (f.properties.type == type || type == 'all') {
         const type = f.properties.type;
         const color = /* f.properties.color ? f.properties.color.toString() : */ circleColors[type];
@@ -189,7 +189,7 @@ const circleStyle = function(circle, res) {
 const circleLabelRender = function(featureSets, type='all') {
   const circles = [];
   featureSets.forEach((featureSet) => {
-    featureSet.features.forEach((f) => {
+    featureSet.forEach((f) => {
       if (f.properties.type == type || type == 'all') {
         const type = f.properties.type;
         const circle = new Feature({
@@ -246,7 +246,7 @@ const imageFeatureRender = function (featureSets, type='all') {
   const images = [];
   let extent = [];
   if (featureSets.length === 1) {
-    extent = d3Array.extent(featureSets[0].features, function(f) {
+    extent = d3Array.extent(featureSets[0], function(f) {
       if (type === f.properties.type || type === 'all') {
         return f.properties.radius  
       } 
@@ -256,7 +256,7 @@ const imageFeatureRender = function (featureSets, type='all') {
   if (featureSets.length != 1) console.log(featureSets);
 
   featureSets.forEach((featureSet) => {
-    featureSet.features.forEach((f) => {
+    featureSet.forEach((f) => {
       if (((f.properties.src).indexOf('.') > -1) && (f.properties.type === type || type === 'all'))  {
         const name = textFormatter(f.properties.name, 18, '\n');
         const src = imagesDir + f.properties.src; 
@@ -353,12 +353,20 @@ export const departmentsLabelLayer = new VectorLayer({
 
 export let maxExtent = [];
 
-const featureData = {};
+// getFeaturesFromFirestore('categoryfeatures')
+// .then(snapshot => {
+//   const features = [];
+//   for (let f of snapshot.docs) {
+//       features.push(f.data());
+//     } 
+//   console.log(features);
+// }) 
+
 getFeatureJson(['dept','subdept','brand'])
 .then(res => {
-  featureData.features = res;
-  const maxResRange = maxResData(featureData.features);
-  setMaxRange(featureData.features, maxResRange);
+  const featureData = res;
+  const maxResRange = maxResData(featureData);
+  setMaxRange(featureData, maxResRange);
 
   const deptCircleFeatures = circleFeatureRender([featureData], 'dept');
   deptCircleSource.addFeatures(deptCircleFeatures);
@@ -464,6 +472,9 @@ const brandsCircleLayer = new VectorLayer({
 })
 .catch(err => console.log(err));
 
+ 
+
+
 // Products
 
 // Defined outside Promise so components can use productsSource for feature look-ups
@@ -471,11 +482,14 @@ export const productsSource = new VectorSource({
   overlaps: false
 });
 
-const productData = {};
-getFeatureJson(['product'])
-.then(res => {
-  productData.features = res;
-  
+
+getFeaturesFromFirestore('product')
+.then(snapshot => {
+  const productData = [];
+  for (let f of snapshot.docs) {
+      productData.push(f.data());
+    } 
+  console.log(productData);  
   const imageFeatures = imageFeatureRender([productData], 'product');
   productsSource.addFeatures(imageFeatures);
   
