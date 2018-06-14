@@ -20,7 +20,7 @@ import {productsImageMax} from './constants.js';
 import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './components/controls.js';
 
 
-// $('#info-modal').modal('show');
+$('#info-modal').modal('show');
 
 
 /*
