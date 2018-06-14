@@ -3,7 +3,7 @@ import olMap from 'ol/map';
 import View from 'ol/view';
 import Extent from 'ol/extent';
 
-import './dist/style.css';
+import './style.css';
 
 import {maxExtent} from './features/categoryFeatures.js';
 import {productCardOverlay, productDetailOverlay, signage, renderProductOverlay, openProductDetail, hideOverlay} from './components/overlays.js';

@@ -482,14 +482,8 @@ export const productsSource = new VectorSource({
   overlaps: false
 });
 
-
-getFeaturesFromFirestore('product')
-.then(snapshot => {
-  const productData = [];
-  for (let f of snapshot.docs) {
-      productData.push(f.data());
-    } 
-  console.log(productData);  
+getFeatureJson(['product'])
+.then(productData => {
   const imageFeatures = imageFeatureRender([productData], 'product');
   productsSource.addFeatures(imageFeatures);
   

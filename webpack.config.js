@@ -9,7 +9,7 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/'
   },
-  mode: 'development',
+  mode: 'production',
   devServer: {
     host: 'localhost', 
     port: 3000,
@@ -29,6 +29,12 @@ module.exports = {
         use: [
           {loader: 'style-loader'},
           {loader: 'css-loader'}
+        ]
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          'url-loader'
         ]
       }
     ]
