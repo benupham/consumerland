@@ -103,23 +103,32 @@ const labelStyleCache = {};
 const labelStyle = function(label, res) {
   // if (label.get('radius') < 200) return null;
   if (label.get('maxRes') < view.getResolution()) return null;
-  let style = labelStyleCache[label.get('id')];
+  let style = labelStyleCache[label.getId()];
+
   if (!style) {
     style = new Style({
       text: new Text({
         font: fontWeight[label.get('type')] + ' ' + label.get('fontSize') + 'px' + ' ' + fontFamily[label.get('type')],
         text: label.get('name'),
         textBaseline: 'middle',
-        fill: new Fill({color: labelColors[label.get('type')]}),
+        //fill: new Fill({color: labelColors[label.get('type')]}),
         stroke: new Stroke({color: labelStrokes[label.get('type')], width: 1}) ,
         backgroundFill: new Fill({color: labelBackgroundColors[label.get('type')]}),
         padding: [0,5,0,5]
       })
     })
-    labelStyleCache[label.get('name')] = style;
+    labelStyleCache[label.getId()] = style;
     
   }
-  if (label.get('hover') === true) style.getText().setFill(new Fill({color: '#303030'}));
+  if (label.get('hover') === true) {
+    style.getText().setBackgroundFill(new Fill({color: '#fff'}));
+    style.getText().setFill(new Fill({color: '#303030'}));
+  }
+  style.getText().setFill(new Fill({color: '#303030'}));
+  if (label.get('hover') != true) {
+    style.getText().setFill(new Fill({color: labelColors[label.get('type')]}));
+    style.getText().setBackgroundFill(new Fill({color: labelBackgroundColors[label.get('type')]}));  
+  }
   return style;
 }
 
@@ -134,8 +143,8 @@ const circleFeatureRender = function(featureSets, type='all') {
     featureSet.forEach((f) => {
       if (f.properties.type == type || type == 'all') {
         const type = f.properties.type;
-        const color = /* f.properties.color ? f.properties.color.toString() : */ circleColors[type];
-        const hoverColor = /* f.properties.hoverColor ? f.properties.hoverColor.toString() : */ circleHoverColors[type];
+        const color = circleColors[type];
+        const hoverColor = circleHoverColors[type];
         const circle = new Feature({
           geometry: new Circle(f.geometry.coordinates, f.properties.radius || (100 * Math.sqrt(2))),
           name: f.properties.name,
@@ -157,30 +166,20 @@ const circleFeatureRender = function(featureSets, type='all') {
 const circleStyleCache = {};
 
 const circleStyle = function(circle, res) {
-
-  let style = circleStyleCache[circle.get('fid')];
+  let style = circleStyleCache[circle.getId()];
   if (!style) {
     style = new Style({
       fill: new Fill({color: circle.get('color')})
-      // stroke: new Stroke({color: circle.get('color'), width: 5})
     })
-    circleStyleCache[circle.get('fid')] = style;
+    circleStyleCache[circle.getId()] = style;
   }
-  // if (circle.get('hover') == true) {
-  //   style.getFill().setColor(circle.get('hoverColor'));
-  //   // style.getStroke().setColor(circle.get('hoverColor'));
-  // }
-  // if (circle.get('hover') == false) {
-  //   style.getFill().setColor(circle.get('color'));
-  //   // style.getStroke().setColor(circle.get('color'));
-  // }
-  circleStyleCache[circle.get('fid')] = style;
+  //circleStyleCache[circle.getId()] = style;
   return style;
 }
 
 
 /*
-* Circle Labels Features
+* Circle Labels Features --- NOT USED
 * 
 */
 
