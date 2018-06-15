@@ -7,7 +7,7 @@ import Style from 'ol/style/style';
 
 import {imagesDir, productsImageMax} from '../constants.js';
 import {textFormatter, iconcache, styleCache, getFeatureJson} from '../utilities.js';
-
+import {map} from '../index.js';
 
 
 /*
@@ -81,6 +81,7 @@ getFeatureJson(['product'])
 .then(res => {
   const tagFeatures = tagFeatureRender(res);
   tagSource.addFeatures(tagFeatures);
+  map.addLayer(tagLayer);
 })
 
 

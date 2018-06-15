@@ -11,9 +11,6 @@ import Text from 'ol/style/text';
 import Style from 'ol/style/style';
 
 const d3Array = require('d3-array');
-// const d3Scale = require('d3-scale');
-// const d3Chromatic = require('d3-scale-chromatic');
-// const d3Color = require('d3-color');
 
 import {
   imagesDir,
@@ -108,7 +105,6 @@ const labelStyle = function(label, res) {
   if (label.get('maxRes') < view.getResolution()) return null;
   let style = labelStyleCache[label.get('id')];
   if (!style) {
-    const fillColor = 
     style = new Style({
       text: new Text({
         font: fontWeight[label.get('type')] + ' ' + label.get('fontSize') + 'px' + ' ' + fontFamily[label.get('type')],
@@ -121,7 +117,9 @@ const labelStyle = function(label, res) {
       })
     })
     labelStyleCache[label.get('name')] = style;
+    
   }
+  if (label.get('hover') === true) style.getText().setFill(new Fill({color: '#303030'}));
   return style;
 }
 

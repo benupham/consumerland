@@ -13,3 +13,4 @@ patent-application/
 *.psd
 firebase-key.json
 functions/firebase-key.json
+node-utility-scripts/
