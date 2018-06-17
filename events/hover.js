@@ -34,6 +34,7 @@ export const handleHover = function(e) {
   // }
 
   if (map.hasFeatureAtPixel(e.pixel)) {
+    map.getTargetElement().style.cursor = 'pointer';
     const features = map.getFeaturesAtPixel(e.pixel);
     debounce(updatePreview, 100).call(null, features);
     const feature = features[0];
@@ -45,8 +46,7 @@ export const handleHover = function(e) {
       renderProductOverlay(productsSource.getFeatureById(pId), productCardOverlay);
     } 
     else if (featureType == 'brand' || 'dept' || 'subdept') {
-      hideOverlay(productCardOverlay);
-      map.getTargetElement().style.cursor = 'pointer';
+      
       if (feature != highlight) {
         if (highlight) {
           highlight.set('hover', false);
@@ -57,13 +57,9 @@ export const handleHover = function(e) {
         highlight = feature;
       }
 
-    } else {
-      hideOverlay(productCardOverlay);
-      map.getTargetElement().style.cursor = '';
-    }
+    } 
   } else {
-    hideOverlay(productCardOverlay);
-    map.getTargetElement().style.cursor = '';
+    map.getTargetElement().style.cursor = 'auto';
     if (highlight) {
       highlight.set('hover', false);
       highlight = undefined;

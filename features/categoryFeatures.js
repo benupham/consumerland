@@ -124,7 +124,7 @@ const labelStyle = function(label, res) {
     style.getText().setBackgroundFill(new Fill({color: '#fff'}));
     style.getText().setFill(new Fill({color: '#303030'}));
   }
-  style.getText().setFill(new Fill({color: '#303030'}));
+  //style.getText().setFill(new Fill({color: '#303030'}));
   if (label.get('hover') != true) {
     style.getText().setFill(new Fill({color: labelColors[label.get('type')]}));
     style.getText().setBackgroundFill(new Fill({color: labelBackgroundColors[label.get('type')]}));  
@@ -173,7 +173,6 @@ const circleStyle = function(circle, res) {
     })
     circleStyleCache[circle.getId()] = style;
   }
-  //circleStyleCache[circle.getId()] = style;
   return style;
 }
 
@@ -372,7 +371,8 @@ getFeatureJson(['dept','subdept','brand'])
   
   const departmentsImageLayer = new VectorLayer({
     source: new VectorSource({
-      features: imageFeatureRender([featureData], 'dept')
+      features: imageFeatureRender([featureData], 'dept'),
+      overlaps: false
     }),
     style: imageStyle,
     updateWhileAnimating: true,
@@ -384,7 +384,8 @@ getFeatureJson(['dept','subdept','brand'])
 
   const subdepartmentsLabelLayer = new VectorLayer({
     source: new VectorSource({
-      features: labelFeatureRender([featureData], 'subdept')
+      features: labelFeatureRender([featureData], 'subdept'),
+      overlaps: false
     }),
     style: labelStyle,
     updateWhileAnimating: true,
@@ -396,7 +397,8 @@ getFeatureJson(['dept','subdept','brand'])
   
   const subdepartmentsImageLayer = new VectorLayer({
     source: new VectorSource({
-      features: imageFeatureRender([featureData], 'subdept')
+      features: imageFeatureRender([featureData], 'subdept'),
+      overlaps: false
     }),
     style: imageStyle,
     updateWhileAnimating: true,
@@ -420,7 +422,8 @@ getFeatureJson(['dept','subdept','brand'])
 
   const brandsLabelLayer = new VectorLayer({
     source: new VectorSource({
-      features: labelFeatureRender([featureData], 'brand')
+      features: labelFeatureRender([featureData], 'brand'),
+      overlaps: false
     }),
     style: labelStyle,
     updateWhileAnimating: true,
@@ -433,7 +436,8 @@ getFeatureJson(['dept','subdept','brand'])
 
 const brandsImageLayer = new VectorLayer({
   source: new VectorSource({
-    features: imageFeatureRender([featureData], 'brand')
+    features: imageFeatureRender([featureData], 'brand'),
+    overlaps: false
   }),
   style: imageStyle,
   updateWhileAnimating: true,
@@ -487,6 +491,7 @@ getFeatureJson(['product'])
   const productsImageLayer = new VectorLayer({
     source: productsSource,
     style: imageStyle,
+    renderMode: 'image',
     updateWhileAnimating: true,
     updateWhileInteracting: false,
     zIndex: 4,
@@ -497,9 +502,10 @@ getFeatureJson(['product'])
     source: new VectorSource({
       features: circleFeatureRender([productData], 'product')
     }),
+    renderMode: 'image',
     style: circleStyle,
     updateWhileAnimating: true,
-    updateWhileInteracting: true,
+    updateWhileInteracting: false,
     zIndex: 3,
     maxResolution: productsCircleMax
   });
