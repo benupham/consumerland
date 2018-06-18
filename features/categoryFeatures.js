@@ -254,7 +254,6 @@ const imageFeatureRender = function (featureSets, type='all') {
   featureSets.forEach((featureSet) => {
     featureSet.forEach((f) => {
       if (((f.properties.src).indexOf('.') > -1) && (f.properties.type === type || type === 'all'))  {
-        const name = textFormatter(f.properties.name, 18, '\n');
         const src = imagesDir + f.properties.src; 
         const image = new Feature({
           geometry: new Point(f.geometry.coordinates),
