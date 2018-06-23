@@ -16,7 +16,7 @@ admin.initializeApp({
 const db = admin.firestore();
 
 // Load features
-const featureSet = JSON.parse(fs.readFileSync(__dirname + '/allFeatureDataCollection.json','utf8'));
+const featureSet = JSON.parse(fs.readFileSync(__dirname + '/allFeatureDataCollectionSprites.json','utf8'));
 const features = featureSet.features; 
 
 // Loads all features into collection "features" unless feature already exists

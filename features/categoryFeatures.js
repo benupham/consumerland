@@ -301,6 +301,61 @@ const imageStyle = function(image, res) {
   return style;
 }
 
+
+// Product Image Feature
+
+const productImageFeatureRender = function (featureSets, type='product') {
+  const images = [];
+
+  featureSets.forEach((featureSet) => {
+    featureSet.forEach((f) => {
+      const src = imagesDir + f.properties.src; 
+      const image = new Feature({
+        geometry: new Point(f.geometry.coordinates),
+        name: f.properties.name,
+        fid: f.id,
+        price: f.properties.price || '',
+        type: f.properties.type,
+        style: 'image',
+        src: src
+      });
+      image.setId(f.id + '-image');
+      if (f.properties.sprite200Src && f.properties.spriteCoord) {
+        image.set('sprite200Src', imagesDir + f.properties.sprite200Src + '-compressed.jpg');
+        image.set('spriteCoord', f.properties.spriteCoord);
+      } 
+      images.push(image);        
+    })
+  })
+  return images;
+}
+
+// Product Image Style
+const productImageStyleCache = {};
+const productImageIconCache = {};
+const productImageStyle = function(image, res) {
+  let style = productImageStyleCache[image.get('src')];
+  if (!style) {
+    let icon = productImageIconCache[image.get('src')];
+    if (!icon) {
+      icon = new Icon({
+        src: image.get('sprite200Src') != undefined ? image.get('sprite200Src') : image.get('src'),
+        size: [200,200],
+        offset: image.get('spriteCoord') != undefined ? image.get('spriteCoord') : [0,0],
+        crossOrigin: 'anonymous'
+      })
+      productImageIconCache[image.get('src')] = icon;
+    }
+    style = new Style({
+      image: icon
+    })
+    productImageStyleCache[image.get('type')] = style;
+  }
+  style.getImage().setScale(1/res);
+  return style;
+}
+
+
 /*
 * Exports
 */
@@ -484,15 +539,15 @@ export const productsSource = new VectorSource({
 
 getFeatureJson(['product'])
 .then(productData => {
-  const imageFeatures = imageFeatureRender([productData], 'product');
+  const imageFeatures = productImageFeatureRender([productData], 'product');
   productsSource.addFeatures(imageFeatures);
   
   const productsImageLayer = new VectorLayer({
     source: productsSource,
-    style: imageStyle,
+    style: productImageStyle,
     renderMode: 'image',
     updateWhileAnimating: true,
-    updateWhileInteracting: false,
+    updateWhileInteracting: true,
     zIndex: 4,
     maxResolution: productsImageMax
   });
@@ -504,7 +559,7 @@ getFeatureJson(['product'])
     renderMode: 'image',
     style: circleStyle,
     updateWhileAnimating: true,
-    updateWhileInteracting: false,
+    updateWhileInteracting: true,
     zIndex: 3,
     maxResolution: productsCircleMax
   });

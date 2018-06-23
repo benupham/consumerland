@@ -102,9 +102,10 @@ export const renderProductOverlay = function(product, overlay) {
   }
 
   image.src = '';
-  image.src = product.get('src');
-  image.style.width = 200+'px'; 
-  let imageOffset = -100;
+  let src = product.get('src').replace('200x', '500x');
+  image.src = src;
+  image.style.width = 250+'px'; 
+  let imageOffset = -130;
   
   const res = view.getResolution();
   if (res > 5 && overlay.getId() === 'productCard') {

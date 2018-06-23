@@ -37,7 +37,7 @@ export const handleClick = function(e) {
     const center = feature.getGeometry().getCoordinates() || feature.getGeometry().getCenter();   
     hideOverlay(productDetailOverlay);
     const zoomTo = featureType == 'brand' ? 2 
-      : featureType == 'subdept' ? productsImageMax - .5 
+      : featureType == 'subdept' ? 6 
       : 29;
     view.animate({ resolution: zoomTo, center: center});  
   } else {
