@@ -137,3 +137,8 @@ export const hideOverlay = function(overlay) {
   overlay.getElement().style.display = 'none';
 }
 
+/*
+*
+* Add to Cart Button Overlay
+*
+*/

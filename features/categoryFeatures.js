@@ -123,11 +123,13 @@ const labelStyle = function(label, res) {
   if (label.get('hover') === true) {
     style.getText().setBackgroundFill(new Fill({color: '#fff'}));
     style.getText().setFill(new Fill({color: '#303030'}));
+    //style.getText().setBackgroundStroke(new Stroke({color: '#000', width: 2}));
   }
   //style.getText().setFill(new Fill({color: '#303030'}));
   if (label.get('hover') != true) {
     style.getText().setFill(new Fill({color: labelColors[label.get('type')]}));
-    style.getText().setBackgroundFill(new Fill({color: labelBackgroundColors[label.get('type')]}));  
+    style.getText().setBackgroundFill(new Fill({color: labelBackgroundColors[label.get('type')]}));
+    //style.getText().setBackgroundStroke(new Stroke({color: '#fff', width: 0}));  
   }
   return style;
 }
@@ -321,7 +323,7 @@ const productImageFeatureRender = function (featureSets, type='product') {
       });
       image.setId(f.id + '-image');
       if (f.properties.sprite200Src && f.properties.spriteCoord) {
-        image.set('sprite200Src', imagesDir + f.properties.sprite200Src + '-compressed.jpg');
+        image.set('sprite200Src', imagesDir + f.properties.sprite200Src);
         image.set('spriteCoord', f.properties.spriteCoord);
       } 
       images.push(image);        
@@ -333,25 +335,76 @@ const productImageFeatureRender = function (featureSets, type='product') {
 // Product Image Style
 const productImageStyleCache = {};
 const productImageIconCache = {};
+const productSpriteIconCache = {};
+
 const productImageStyle = function(image, res) {
-  let style = productImageStyleCache[image.get('src')];
+  let imagesrc = image.get('src');
+  let style = productImageStyleCache[imagesrc];
+
   if (!style) {
-    let icon = productImageIconCache[image.get('src')];
-    if (!icon) {
-      icon = new Icon({
-        src: image.get('sprite200Src') != undefined ? image.get('sprite200Src') : image.get('src'),
-        size: [200,200],
-        offset: image.get('spriteCoord') != undefined ? image.get('spriteCoord') : [0,0],
+    let spriteicon = productSpriteIconCache[imagesrc];
+    let imageicon = productImageIconCache[imagesrc];
+    if (!spriteicon) {
+      let offset = image.get('spriteCoord') != undefined ? image.get('spriteCoord') : [0,0];
+      offset = [offset[0] * .5, offset[1] * .5,];
+      let spritesrc = image.get('sprite200Src') != undefined ? image.get('sprite200Src') : imagesrc;
+      spriteicon = new Icon({
+        src: spritesrc + '-scaled50-compressed.jpg',
+        size: [100,100],
+        offset: offset,
         crossOrigin: 'anonymous'
       })
-      productImageIconCache[image.get('src')] = icon;
+      productSpriteIconCache[imagesrc] = spriteicon;  
     }
-    style = new Style({
-      image: icon
-    })
-    productImageStyleCache[image.get('type')] = style;
+
+    if (!imageicon) {
+      imageicon = new Icon({
+        src: imagesrc,
+        size: [200,200],
+        crossOrigin: 'anonymous'
+      })
+      productImageIconCache[imagesrc] = imageicon;  
+    }
+
+    // const imageStyle = new Style({ image: imageicon });
+    // const spriteStyle = new Style({ image: spriteicon });
+
+    // style = [imageStyle, spriteStyle];
+    // productImageStyleCache[imagesrc] = style;
+
+    style = new Style();
+    
+    
   }
-  style.getImage().setScale(1/res);
+  if (imagesrc.includes('missing-item')) {
+    console.log('missing image style made');
+    style.setImage(productImageIconCache[imagesrc]);
+    style.getImage().setScale(1/res);
+  }
+  else if (res >= 2) {
+    style.setImage(productSpriteIconCache[imagesrc]);
+    style.getImage().setScale(2/res);
+  } else {
+    style.setImage(productImageIconCache[imagesrc]);
+    style.getImage().setScale(1/res);
+  }
+  // if (imagesrc.includes('missing-item')) {
+  //   console.log('rendering missing image')
+  //   style[0].setZIndex(10);
+  //   style[0].getImage().setScale(1/res);
+  // }
+  // else if (res >= 2) {
+  //   console.log('rendering sprite')
+  //   style[0].setZIndex(0);
+  //   style[0].getImage().setScale(1/res);
+  //   style[1].getImage().setScale(2/res);
+  // } 
+  // else if (res < 2) {
+  //   console.log('rendering non-sprite image')
+  //   style[0].setZIndex(10);
+  //   style[0].getImage().setScale(1/res);
+  // }
+  
   return style;
 }
 
