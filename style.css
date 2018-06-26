@@ -243,6 +243,24 @@ body {
 .product-overlay .product-price {
 }
 
+/* Cart */
+.cart-contents {
+  max-height: 700px;
+}
+
+.cart-image {
+  width: 50px;
+  height: 50px;
+  margin: 0.5rem;
+}
+
+.cart-product-name {
+  width: 150px;
+  font-size: .85em; 
+  margin-right: 0.5rem;
+}
+
+
 /* Dev Tools */
 
 .data-tool {
@@ -253,7 +271,7 @@ body {
 	color: red; 
 	z-index: 1000;
 	background: white;
-  display: block;
+  display: none;
 }
 /*
 * MEDIA QUERIES

@@ -4,16 +4,16 @@ const app = express();
 const fs = require('fs');
 
 // Firebase authentication for db queries
-var admin = require("firebase-admin");
+// var admin = require("firebase-admin");
 
-var serviceAccount = require(__dirname + "/firebase-key.json");
+// var serviceAccount = require(__dirname + "/firebase-key.json");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://consumerland-2bb67.firebaseio.com"
-});
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://consumerland-2bb67.firebaseio.com"
+// });
 
-const db = admin.firestore();
+// const db = admin.firestore();
 
 // Load features
 const featureSet = JSON.parse(fs.readFileSync(__dirname + '/allFeatureDataCollectionSprites.json','utf8'));
