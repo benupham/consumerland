@@ -3,7 +3,7 @@ import has from 'ol/has';
 import {view, map} from '../index.js';
 import {productsImageMax} from '../constants.js';
 import {debounce} from '../utilities.js';
-import {productCardOverlay, productDetailOverlay, renderProductOverlay, hideOverlay} from '../components/overlays.js';
+import {productCardOverlay, placeAddToCartIcon} from '../components/overlays.js';
 import {updatePreview} from '../components/productPreview.js';
 import {handleJumpStrips} from '../components/jumpstrips.js';
 import {productsSource} from '../features/categoryFeatures.js';
@@ -43,10 +43,10 @@ export const handleHover = function(e) {
     const pId = feature.getId();
 
     if (featureType == 'product' && featureStyle == 'image') {
-      //renderProductOverlay(productsSource.getFeatureById(pId), productCardOverlay);
+      placeAddToCartIcon(feature);
     } 
     else if (featureType == 'brand' || 'dept' || 'subdept') {
-      
+      placeAddToCartIcon(false);
       if (feature != highlight) {
         if (highlight) {
           highlight.set('hover', false);

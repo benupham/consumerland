@@ -142,29 +142,34 @@ export const hideOverlay = function(overlay) {
 
 /*
 *
-* Add to Cart Icon Overlay
+* Add to/Remove from Cart Icon Overlay
 *
 */
 export const addToCartIcon = new Overlay({
   element: document.getElementById('add-to-cart-icon'),
   id: 'addToCartIcon',
   autoPan: false,
-  stopEvent: true
+  stopEvent: true,
+  positioning: 'center-center'
 });
+
+
 addToCartIcon.getElement().addEventListener('click', function(e) {
-  updateCart();
+  updateCart(e.target.getAttribute('data-pid'));
   // add X mark to product if not in cart
-  placeRemoveFromCartIcon(this.getAttribute('data-pid'));
+  placeRemoveFromCartIcon(e.target.getAttribute('data-pid'));
 });
 
 export const placeAddToCartIcon = function(product) {
-  const icon = addToCartIcon.getElement();
-  icon.setAttribute('data-pid', product.getId());
-
-  if (product.get('inCart') === false) {
-    const coordinate = product.getGeometry().getCoordinates();
-    addToCartIcon.setPosition(coordinate);
+  if (product === false) {
+    addToCartIcon.setPosition([null,null]);
+    return
   }
+
+  const coordinate = product.getGeometry().getCoordinates();
+  addToCartIcon.setPosition(coordinate);
+  const res = view.getResolution();
+  addToCartIcon.setOffset([80/res,-80/res]);
 }
 
 const placeRemoveFromCartIcon = function(pId) {

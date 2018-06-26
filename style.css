@@ -156,6 +156,12 @@ body {
   color: rgba(249, 198, 90, 1);
 }
 
+/* Add to Cart Icon */
+/* .add-to-cart-icon {
+  display: block;
+  position: absolute;
+} */
+
 /* PRODUCT CARD OVERLAY OR PRODUCT PREVIEW PANE CONTROL */
 
 .product-preview {
@@ -282,7 +288,7 @@ body {
 	color: red; 
 	z-index: 1000;
 	background: white;
-  display: none;
+  display: block;
 }
 /*
 * MEDIA QUERIES
