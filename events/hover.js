@@ -43,7 +43,7 @@ export const handleHover = function(e) {
     const pId = feature.getId();
 
     if (featureType == 'product' && featureStyle == 'image') {
-      renderProductOverlay(productsSource.getFeatureById(pId), productCardOverlay);
+      //renderProductOverlay(productsSource.getFeatureById(pId), productCardOverlay);
     } 
     else if (featureType == 'brand' || 'dept' || 'subdept') {
       

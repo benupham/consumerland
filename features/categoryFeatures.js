@@ -249,9 +249,7 @@ const imageFeatureRender = function (featureSets, type='all') {
         return f.properties.radius  
       } 
     });
-    console.log(extent);    
   }
-  if (featureSets.length != 1) console.log(featureSets);
 
   featureSets.forEach((featureSet) => {
     featureSet.forEach((f) => {
@@ -360,7 +358,7 @@ const productImageStyle = function(image, res) {
     if (!imageicon) {
       imageicon = new Icon({
         src: imagesrc,
-        size: [200,200],
+        size: [199,199],
         crossOrigin: 'anonymous'
       })
       productImageIconCache[imagesrc] = imageicon;  
@@ -377,7 +375,6 @@ const productImageStyle = function(image, res) {
     
   }
   if (imagesrc.includes('missing-item')) {
-    console.log('missing image style made');
     style.setImage(productImageIconCache[imagesrc]);
     style.getImage().setScale(1/res);
   }
@@ -388,22 +385,6 @@ const productImageStyle = function(image, res) {
     style.setImage(productImageIconCache[imagesrc]);
     style.getImage().setScale(1/res);
   }
-  // if (imagesrc.includes('missing-item')) {
-  //   console.log('rendering missing image')
-  //   style[0].setZIndex(10);
-  //   style[0].getImage().setScale(1/res);
-  // }
-  // else if (res >= 2) {
-  //   console.log('rendering sprite')
-  //   style[0].setZIndex(0);
-  //   style[0].getImage().setScale(1/res);
-  //   style[1].getImage().setScale(2/res);
-  // } 
-  // else if (res < 2) {
-  //   console.log('rendering non-sprite image')
-  //   style[0].setZIndex(10);
-  //   style[0].getImage().setScale(1/res);
-  // }
   
   return style;
 }
@@ -541,30 +522,30 @@ getFeatureJson(['dept','subdept','brand'])
   })
 
 
-const brandsImageLayer = new VectorLayer({
-  source: new VectorSource({
-    features: imageFeatureRender([featureData], 'brand'),
-    overlaps: false
-  }),
-  style: imageStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  zIndex: 5,
-  minResolution: brandsImageMin,
-  maxResolution: brandsImageMax
-})
+  const brandsImageLayer = new VectorLayer({
+    source: new VectorSource({
+      features: imageFeatureRender([featureData], 'brand'),
+      overlaps: false
+    }),
+    style: imageStyle,
+    updateWhileAnimating: true,
+    updateWhileInteracting: true,
+    zIndex: 5,
+    minResolution: brandsImageMin,
+    maxResolution: brandsImageMax
+  })
 
-const brandsCircleLayer = new VectorLayer({
-  source: new VectorSource({
-    features: circleFeatureRender([featureData], 'brand')
-  }),
-  style: circleStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  zIndex: 2,
-  minResolution: brandsCircleMin,
-  maxResolution: brandsCircleMax
-})
+  const brandsCircleLayer = new VectorLayer({
+    source: new VectorSource({
+      features: circleFeatureRender([featureData], 'brand')
+    }),
+    style: circleStyle,
+    updateWhileAnimating: true,
+    updateWhileInteracting: true,
+    zIndex: 2,
+    minResolution: brandsCircleMin,
+    maxResolution: brandsCircleMax
+  })
 
   map.addLayer(departmentsCircleLayer);
   map.addLayer(subdepartmentsCircleLayer);
@@ -577,6 +558,9 @@ const brandsCircleLayer = new VectorLayer({
   map.addLayer(departmentsLabelLayer);
   maxExtent = departmentsCircleLayer.getSource().getExtent();
   
+})
+.then(() => {
+  document.querySelector('.loading').style.display = 'none';
 })
 .catch(err => console.log(err));
 

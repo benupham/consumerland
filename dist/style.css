@@ -2,8 +2,6 @@
 this is the static style used to prevent 
 style-less display while webpack bundle loads
  */
-
- /* this is the webpack compiled style */
 /* latin */
 @font-face {
   font-family: 'Carter One';
@@ -39,6 +37,7 @@ style-less display while webpack bundle loads
   src: local('Oswald Regular'), local('Oswald-Regular'), url(https://fonts.gstatic.com/s/oswald/v16/TK3iWkUHHAIjg752GT8Gl-1PKw.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
 
 /* latin */
 /* loading 500 weight Oswald (Oswald Medium) using data uri, otherwise it does not show up on inital load */
@@ -78,6 +77,17 @@ body {
 
 .permanent-marker {
   font-family: 'Carter One', sans-serif;
+}
+
+.loading {
+  font-size: 2em;
+  font-weight: 700;
+  color: #606060;
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* MODAL */
@@ -240,12 +250,30 @@ body {
 }
 
 .product-overlay .product-image {
-	height: 200px;
-	width: 200px;
+	height: 250px;
+	width: 250px;
 }
 
 .product-overlay .product-price {
 }
+
+/* Cart */
+.cart-contents {
+  max-height: 700px;
+}
+
+.cart-image {
+  width: 50px;
+  height: 50px;
+  margin: 0.5rem;
+}
+
+.cart-product-name {
+  width: 150px;
+  font-size: .85em; 
+  margin-right: 0.5rem;
+}
+
 
 /* Dev Tools */
 

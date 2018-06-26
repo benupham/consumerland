@@ -76,6 +76,17 @@ body {
   font-family: 'Carter One', sans-serif;
 }
 
+.loading {
+  font-size: 2em;
+  font-weight: 700;
+  color: #606060;
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 /* MODAL */
 
 .modal {

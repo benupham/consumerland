@@ -20,7 +20,7 @@ import {productsImageMax} from './constants.js';
 import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './components/controls.js';
 
 
-$('#info-modal').modal('show');
+// $('#info-modal').modal('show');
 
 
 /*
@@ -31,7 +31,7 @@ $('#info-modal').modal('show');
 const ctr = [46000,-46000];
 export const view = new View({
   center: ctr,
-  resolution: 65, 
+  resolution: 5, 
   zoomFactor: 1.5,
   minResolution: 1,
   maxResolution: 65,
@@ -79,7 +79,6 @@ map.addOverlay(productDetailOverlay);
 // for (let i = 0; i < 4; i++) {
 //   map.addOverlay(signage[i]);
 // }
-
 
 map.on('pointermove', (e) => {
   dataTool.querySelector('#data-coord').innerHTML = `coord: ${e.coordinate}`;

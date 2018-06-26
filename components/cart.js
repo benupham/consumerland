@@ -7,9 +7,7 @@ import {productsSource} from '../features/categoryFeatures.js';
 const cart = [];
 const cartContents = document.querySelector('#cart-contents');
 
-export const updateCart = function(e) {
-  console.log(this);
-  const pId = this.getAttribute('data-pid');
+export const updateCart = function(pId) {
   const product = productsSource.getFeatureById(pId);
   console.log('update cart',pId, product.get('type'), product.get('fid'), 
     product.get('style'), product.get('inCart'));
@@ -21,10 +19,9 @@ export const updateCart = function(e) {
       if (cart[i].pId === pId) {
         cart.splice(i,1);
         cartContents.removeChild(cartContents.childNodes[i]);
-        updateAddCartButton(false, this);
         product.set('inCart',false);
         document.getElementById('cart-count').innerHTML = cart.length;
-        return 
+        return false;
       } 
     }    
   }
@@ -42,8 +39,8 @@ export const updateCart = function(e) {
   cartItem.querySelector('.cart-product-name').textContent = name;
   cartContents.appendChild(cartItem);
   product.set('inCart',true);
-  updateAddCartButton(true, this);
   document.getElementById('cart-count').innerHTML = cart.length;
+  return true;
 
 }
 
