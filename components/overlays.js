@@ -3,7 +3,7 @@ import MouseWheelZoom from 'ol/interaction/mousewheelzoom';
 
 
 import {updateAddCartButton, updateCart} from '../components/cart.js';
-import {view} from '../index.js';
+import {view, map} from '../index.js';
 import {productsSource} from '../features/categoryFeatures.js';
 import {textFormatter, dataTool} from '../utilities.js';
 /*
@@ -110,18 +110,18 @@ export const renderProductOverlay = function(product, overlay) {
   image.style.width = 250+'px'; 
   let imageOffset = -130;
   
-  // const res = view.getResolution();
-  // if (res > 5 && overlay.getId() === 'productCard') {
-  //   name.innerHTML = textFormatter(product.get('name'), 15, '<br>', 10);
-  //   image.style.width = 115+'px'; 
-  //   imageOffset = -57;   
-  // } else if (res > 3 && overlay.getId() === 'productCard') {
-  //   name.innerHTML = textFormatter(product.get('name'), 25, '<br>', 20);
-  //   image.style.width = 150+'px'; 
-  //   imageOffset = -75;   
-  // } else {
-  //   name.innerHTML = product.get('name');    
-  // }
+  const res = view.getResolution();
+  if (res > 5 && overlay.getId() === 'productCard') {
+    name.innerHTML = textFormatter(product.get('name'), 15, '<br>', 10);
+    image.style.width = 115+'px'; 
+    imageOffset = -57;   
+  } else if (res > 3 && overlay.getId() === 'productCard') {
+    name.innerHTML = textFormatter(product.get('name'), 25, '<br>', 20);
+    image.style.width = 150+'px'; 
+    imageOffset = -75;   
+  } else {
+    name.innerHTML = product.get('name');    
+  }
 
   price.textContent = product.get('price');
 
@@ -145,46 +145,72 @@ export const hideOverlay = function(overlay) {
 * Add to/Remove from Cart Icon Overlay
 *
 */
-export const addToCartIcon = new Overlay({
+export const addToCartIconOverlay = new Overlay({
   element: document.getElementById('add-to-cart-icon'),
-  id: 'addToCartIcon',
+  id: 'addToCartIconOverlay',
   autoPan: false,
   stopEvent: true,
   positioning: 'center-center'
 });
 
 
-addToCartIcon.getElement().addEventListener('click', function(e) {
-  updateCart(e.target.getAttribute('data-pid'));
-  // add X mark to product if not in cart
-  placeRemoveFromCartIcon(e.target.getAttribute('data-pid'));
+// addToCartIconOverlay.getElement().addEventListener('click', function(e) {
+//   updateCart(e.target.getAttribute('data-pid'));
+//   // add X mark to product if not in cart
+//   placeRemoveFromCartIcon(e.target.getAttribute('data-pid'));
+// });
+
+addToCartIconOverlay.getElement().addEventListener('click', () => {
+  const pId = addToCartIconOverlay.getElement().getAttribute('data-pid');
+  const coord = addToCartIconOverlay.getElement().getAttribute('data-coord');
+  console.log(pId);
+  const addRemoveIcon = updateCart(pId);
+  if (addRemoveIcon === true) {
+    placeRemoveFromCartIcon(pId, coord);
+  } 
 });
 
-export const placeAddToCartIcon = function(product) {
+export const placeAddToCartIconOverlay = function(product) {
   if (product === false) {
-    addToCartIcon.setPosition([null,null]);
-    return
+    addToCartIconOverlay.setPosition([null,null]);
+    return false;
   }
-
+  const btn = addToCartIconOverlay.getElement();
+  btn.setAttribute('data-pid', product.getId());
+  
   const coordinate = product.getGeometry().getCoordinates();
-  addToCartIcon.setPosition(coordinate);
+  addToCartIconOverlay.setPosition(coordinate);
+  btn.setAttribute('data-coord',coordinate);
+
   const res = view.getResolution();
-  addToCartIcon.setOffset([80/res,-80/res]);
+  addToCartIconOverlay.setOffset([80/res,-80/res]);
 }
 
-const placeRemoveFromCartIcon = function(pId) {
+const placeRemoveFromCartIcon = function(pId, coord) {
   // create new X icon
   const icon = document.createElement('button');
-  icon.id = 'remove-from-cart-icon';
-  icon.className = 'remove-from-cart-icon';
+  const res = view.getResolution();
+  icon.id = 'remove-from-cart-icon' + '-' + pId;
+  icon.innerHTML = '&#10006;';
+  icon.className = 'btn btn-primary remove-from-cart-icon';
   icon.setAttribute('data-pid', pId);
   icon.addEventListener('click', function(){
-    updateCart();
-    const pId = this.getAttribute('data-pid');
-
+    updateCart(pId);
+    icon.remove();
+  });
+  const removeIcon = document.body.appendChild(icon);
+  const removeOverlay = new Overlay({
+    position: coord.split(','),
+    positioning: 'center-center',
+    element: removeIcon,
+    offset: [80/res,-80/res]
   })
 
-  // create new overlay from it
-  // position overlay
-  // add click listener to destroy and update cart
+  console.log(coord)
+  map.addOverlay(removeOverlay);
+  view.on('change:resolution', () => {
+    console.log('hi')
+    const res = view.getResolution();
+    removeOverlay.setOffset([80/res,-80/res]);
+  })
 }

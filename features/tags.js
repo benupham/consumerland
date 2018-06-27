@@ -16,7 +16,9 @@ import {map} from '../index.js';
 */
 
 const tagsData = {
-  sale: {color: '', src: 'sale-red.png'}
+  sale: {color: '', src: 'sale-red.png'},
+  add: {color: '', src: 'add.png'},
+  remove: {color: '', src: 'remove.png'},
 }
 
 const tagFeatureRender = function(features, colors = null, tagType = 'sale') {
@@ -76,12 +78,40 @@ export const tagLayer = new VectorLayer({
   renderMode: 'vector',
   maxResolution: productsImageMax 
 })
+tagLayer.set('name','tag-layer');
 
 getFeatureJson(['product'])
-.then(res => {
-  const tagFeatures = tagFeatureRender(res);
+.then(data => {
+  const tagFeatures = tagFeatureRender(data);
   tagSource.addFeatures(tagFeatures);
   map.addLayer(tagLayer);
+  
 })
 
+const cartAddIcon = new Feature({
+  'geometry': new Point([null, null]),
+  'name': 'cart-add-icon',
+  'type': 'add',
+})
+cartAddIcon.setId('cart-add-icon');
+tagSource.addFeature(cartAddIcon);
+
+export const setCartAddIcon = function(product) {
+  // send nowhere if false
+  if (product === false) {
+    cartAddIcon.getGeometry().setCoordinates([null,null]);
+    return;
+  }
+
+  // get product coord
+  const coordinate = product.getGeometry().getCoordinates();
+  cartAddIcon.getGeometry().setCoordinates([coordinate[0] + 75, coordinate[1] + 75]);
+
+  cartAddIcon.set('pId', product.getId());
+
+}
+
+export const toggleRemoveIcon = function(pId) {
+  // create feature
+}
 

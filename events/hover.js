@@ -3,8 +3,9 @@ import has from 'ol/has';
 import {view, map} from '../index.js';
 import {productsImageMax} from '../constants.js';
 import {debounce} from '../utilities.js';
-import {productCardOverlay, placeAddToCartIcon} from '../components/overlays.js';
+import {productCardOverlay} from '../components/overlays.js';
 import {updatePreview} from '../components/productPreview.js';
+import {setCartAddIcon} from '../features/tags.js';
 import {handleJumpStrips} from '../components/jumpstrips.js';
 import {productsSource} from '../features/categoryFeatures.js';
 
@@ -35,18 +36,21 @@ export const handleHover = function(e) {
 
   if (map.hasFeatureAtPixel(e.pixel)) {
     map.getTargetElement().style.cursor = 'pointer';
-    const features = map.getFeaturesAtPixel(e.pixel);
+    const features = map.getFeaturesAtPixel(e.pixel, {
+      layerFilter: (layer) => { return layer.get('name') != 'tag-layer' ? true : false}
+    });
     debounce(updatePreview, 100).call(null, features);
     const feature = features[0];
     const featureType = feature.get('type');
+    console.log(featureType);
     const featureStyle = feature.get('style');
     const pId = feature.getId();
 
-    if (featureType == 'product' && featureStyle == 'image') {
-      placeAddToCartIcon(feature);
+    if (featureType == 'add' || (featureType == 'product' && featureStyle == 'image')) {
+      setCartAddIcon(feature);
     } 
     else if (featureType == 'brand' || 'dept' || 'subdept') {
-      placeAddToCartIcon(false);
+      setCartAddIcon(false);
       if (feature != highlight) {
         if (highlight) {
           highlight.set('hover', false);

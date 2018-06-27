@@ -6,7 +6,7 @@ import Extent from 'ol/extent';
 import './style.css';
 
 import {maxExtent} from './features/categoryFeatures.js';
-import {productDetailOverlay, addToCartIcon} from './components/overlays.js';
+import {productDetailOverlay, addToCartIconOverlay} from './components/overlays.js';
 import {productPreview} from './components/productPreview.js';
 import {textFormatter, dataTool, iconcache} from './utilities.js';
 //import {displayCart, updateCart, updateAddCartButton} from './components/cart.js';
@@ -76,7 +76,7 @@ map.addControl(productPreview);
 
 
 map.addOverlay(productDetailOverlay);
-map.addOverlay(addToCartIcon);
+map.addOverlay(addToCartIconOverlay);
 
 // for (let i = 0; i < 4; i++) {
 //   map.addOverlay(signage[i]);
