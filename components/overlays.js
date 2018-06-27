@@ -11,15 +11,7 @@ import {textFormatter, dataTool} from '../utilities.js';
 * 
 */
 
-// Product Card Overlay (hover)
-export const productCardOverlay = new Overlay({
-  element: document.getElementById('product-card'),
-  id: 'productCard',
-  autoPan: false,
-  stopEvent: false
-});
-
-// Product Overlay (click)
+// Product Detail Overlay (click)
 export const productDetailOverlay = new Overlay({
   element: document.getElementById('product-overlay'),
   id: 'productDetail',
@@ -27,58 +19,26 @@ export const productDetailOverlay = new Overlay({
   stopEvent: true,
   positioning: 'center-center'
 });
+// Even with stopEvent=true, pointermove needs to be stopped. 
+productDetailOverlay.getElement().onpointermove = function(e) {e.stopPropagation()};
 
-// productDetailOverlay.getElement().addEventListener('click', function(e) {
-//   console.log(e)
-//   const inCart = updateCart(e.target.getAttribute('data-pid'));
-//   updateAddCartButton(inCart, e.target);
-//   console.log('updated cart B');
-// });
-
-// Signage (not used right now)
-const signs = {};
-for (let i = 0; i < 4; i++) {
-  signs[i] = new Overlay({
-    element: document.getElementById('sign-' + i),
-    autoPan: false,
-    stopEvent: true
-  });
-}
-
-export const signage = signs; 
-
-export const openProductDetail = function(e) {
-  e.stopPropagation();
-  hideOverlay(productCardOverlay);
-  const pId = this.getAttribute('data-pid');
-  const p = productsSource.getFeatureById(pId);
-  view.animate({resolution: 2, anchor: p.getGeometry().getCoordinates()});
-  view.animate({center: p.getGeometry().getCoordinates()});
-  renderProductOverlay(p,productDetailOverlay);
-
-}
+productDetailOverlay.getElement().addEventListener('click', function(e) {
+  console.log(e)
+  if (e.target.id === 'product-overlay-add-button') {
+    const pId = e.target.getAttribute('data-pid');
+    updateCart(pId);
+    toggleOverlayButton(e.target, pId);
+  } else {
+    hideOverlay(productDetailOverlay);
+  }
+  
+});
+  
 
 export const renderProductOverlay = function(product, overlay) {
   const pId = product.getId();
   
-  // Even with stopEvent=true, pointermove needs to be stopped. 
-  overlay.getElement().onpointermove = function(e) {e.stopPropagation()};
-  if (overlay.getId() == 'productCard') {
-    overlay.getElement().onclick = function(e) {e.stopPropagation()};
-  }
-
-  if (overlay.getId() == 'productDetail') {
-    overlay.getElement().addEventListener('click', (e) => {
-      if (e.target.id === 'product-overlay-add-button') {
-        updateCart(pId);
-      }
-      hideOverlay(overlay);
-    })
-  }
-
   overlay.getElement().style.display = 'block';
-
-  overlay.set('product', pId);
 
   const coordinate = product.getGeometry().getCoordinates();
 
@@ -95,35 +55,13 @@ export const renderProductOverlay = function(product, overlay) {
   let image = overlay.getElement().querySelector('.product-image');
   image.setAttribute('data-pid', pId);
 
-  if (overlay.getId() == 'productCard') {
-    image.addEventListener('click', openProductDetail);
-    name.addEventListener('click', openProductDetail);
-    price.addEventListener('click', openProductDetail);
-  }
-  if (overlay.getId() == 'productDetail') {
-    overlay.getElement().querySelector('.close').addEventListener('click', () => {
-      hideOverlay(overlay);
-    })
-  }
-
   image.src = '';
   let src = product.get('src').replace('200x', '500x');
   image.src = src;
   image.style.width = 250+'px'; 
   let imageOffset = -130;
   
-  const res = view.getResolution();
-  if (res > 5 && overlay.getId() === 'productCard') {
-    name.innerHTML = textFormatter(product.get('name'), 15, '<br>', 10);
-    image.style.width = 115+'px'; 
-    imageOffset = -57;   
-  } else if (res > 3 && overlay.getId() === 'productCard') {
-    name.innerHTML = textFormatter(product.get('name'), 25, '<br>', 20);
-    image.style.width = 150+'px'; 
-    imageOffset = -75;   
-  } else {
-    name.innerHTML = product.get('name');    
-  }
+  name.innerHTML = product.get('name');    
 
   price.textContent = product.get('price');
   
@@ -133,10 +71,12 @@ export const renderProductOverlay = function(product, overlay) {
 
 const toggleOverlayButton = function(btn, pId) {
   if (checkCart(pId)) {
-    btn.className = 'btn-outline-secondary';
+    btn.classList.add('btn-outline-secondary');
+    btn.classList.remove('btn-outline-warning');
     btn.textContent = 'Remove';
   } else {
-    btn.className = 'btn-outline-warning';
+    btn.classList.remove('btn-outline-secondary');
+    btn.classList.add('btn-outline-warning');
     btn.textContent = 'Add to Cart';
   }
 }
@@ -145,4 +85,16 @@ export const hideOverlay = function(overlay) {
   overlay.getElement().style.display = 'none';
 }
 
+
+// Signage (not used right now)
+const signs = {};
+for (let i = 0; i < 4; i++) {
+  signs[i] = new Overlay({
+    element: document.getElementById('sign-' + i),
+    autoPan: false,
+    stopEvent: true
+  });
+}
+
+export const signage = signs; 
 

@@ -3,6 +3,7 @@
 * 
 */
 import {productsSource} from '../features/categoryFeatures.js';
+import {setCartRemoveIcon} from '../features/tags.js';
 
 const cart = [];
 const cartContents = document.querySelector('#cart-contents');
@@ -16,6 +17,7 @@ export const updateCart = function(pId) {
     for (var i = cart.length - 1; i >= 0; i--) {
       if (cart[i].pId === pId) {
         cart.splice(i,1);
+        setCartRemoveIcon(pId);
         cartContents.removeChild(cartContents.childNodes[i]);
         document.getElementById('cart-count').innerHTML = cart.length;
         return false;
@@ -29,6 +31,7 @@ export const updateCart = function(pId) {
     src: product.get('src'),
     price: product.get('price')
   });
+  setCartRemoveIcon(pId);
 
   const cartItem = document.getElementById('cart-item').cloneNode(true);
   cartItem.id = 'item-' + pId;

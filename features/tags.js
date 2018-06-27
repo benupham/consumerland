@@ -6,9 +6,10 @@ import Icon from 'ol/style/icon';
 import Style from 'ol/style/style';
 
 import {imagesDir, productsImageMax} from '../constants.js';
+import {productsSource} from './categoryFeatures.js';
 import {textFormatter, iconcache, styleCache, getFeatureJson} from '../utilities.js';
 import {map} from '../index.js';
-import { updateCart } from '../components/cart.js';
+import { updateCart, checkCart } from '../components/cart.js';
 
 
 /*
@@ -117,27 +118,30 @@ export const setCartAddIcon = function(product) {
   cartAddIcon.set('pId', product.getId());
 }
 
-export const setCartRemoveIcon = function(cartIcon) {
-
-  // if icon is a removeIcon, remove it
-  if (cartIcon.get('type') === 'remove') {
-    tagSource.removeFeature(cartIcon);
-    console.log('removed ' + cartIcon.get('type'));
-  } 
-
-  //otherwise, generate remove icon from add icon data
-  if (cartIcon.get('type') === 'add') {
-    const cartRemoveIcon = cartIcon.clone();
-    cartRemoveIcon.setId('remove-' + cartIcon.get('pId'));
-    cartRemoveIcon.set('src', tagsData['remove'].src);
-    cartRemoveIcon.set('type', 'remove');
+export const setCartRemoveIcon = function(pId) {
+  
+  if (!checkCart(pId)) {
+    if (tagSource.getFeatureById('remove-' + pId) != null) {
+      const icon = tagSource.getFeatureById('remove-' + pId);
+      tagSource.removeFeature(icon);
+    }
+  } else {
+    const product = productsSource.getFeatureById(pId);
+    const coord = product.getGeometry().getCoordinates();
+    const cartRemoveIcon = new Feature({
+      type: 'remove',
+      src: tagsData['remove'].src,
+      geometry: new Point([coord[0] + 75, coord[1] + 75]),
+      pId: pId
+    });
+    cartRemoveIcon.setId('remove-' + pId);
     tagSource.addFeature(cartRemoveIcon);
   }
+
 } 
 
 export const cartIconHandleClick = function(cartIcon) {
   const pId = cartIcon.get('pId');
   updateCart(pId);
-  setCartRemoveIcon(cartIcon);
 }
 

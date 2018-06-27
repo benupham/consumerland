@@ -2,7 +2,7 @@ import {map, view} from '../index.js';
 import Circle from 'ol/geom/circle';
 
 import {productsImageMax} from '../constants.js';
-import {renderProductOverlay, hideOverlay, productDetailOverlay, productCardOverlay} from '../components/overlays.js';
+import {renderProductOverlay, hideOverlay, productDetailOverlay} from '../components/overlays.js';
 import {cartIconHandleClick} from '../features/tags.js';
 
 export const handleClick = function(e) {

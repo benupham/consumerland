@@ -3,7 +3,6 @@ import has from 'ol/has';
 import {view, map} from '../index.js';
 import {productsImageMax} from '../constants.js';
 import {debounce} from '../utilities.js';
-import {productCardOverlay} from '../components/overlays.js';
 import {updatePreview} from '../components/productPreview.js';
 import {setCartAddIcon} from '../features/tags.js';
 import {handleJumpStrips} from '../components/jumpstrips.js';
