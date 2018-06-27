@@ -1,6 +1,6 @@
 import Control from 'ol/control/control';
 
-import {updateAddCartButton, updateCart} from '../components/cart.js';
+import {updateCart} from '../components/cart.js';
 import {view} from '../index.js';
 import {productsSource} from '../features/categoryFeatures.js';
 import {textFormatter, debounce, dataTool} from '../utilities.js';
@@ -62,7 +62,6 @@ export const updatePreview = function (features) {
 
 		const btn = preview.querySelector('.add-to-cart');
 		btn.setAttribute('data-pid', pId);
-		updateAddCartButton(product.get('inCart'), btn);
 		btn.addEventListener('click', updateCart);
 		
 	}

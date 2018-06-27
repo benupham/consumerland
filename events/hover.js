@@ -42,7 +42,7 @@ export const handleHover = function(e) {
     debounce(updatePreview, 100).call(null, features);
     const feature = features[0];
     const featureType = feature.get('type');
-    console.log(featureType);
+    
     const featureStyle = feature.get('style');
     const pId = feature.getId();
 

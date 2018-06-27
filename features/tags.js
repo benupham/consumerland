@@ -8,6 +8,7 @@ import Style from 'ol/style/style';
 import {imagesDir, productsImageMax} from '../constants.js';
 import {textFormatter, iconcache, styleCache, getFeatureJson} from '../utilities.js';
 import {map} from '../index.js';
+import { updateCart } from '../components/cart.js';
 
 
 /*
@@ -40,7 +41,7 @@ const tagFeatureRender = function(features, colors = null, tagType = 'sale') {
 
 const tagStyle = function (tag, resolution) {
   const type = tag.get('type');
-  const src = tagsData[type].src || 'sale.png';
+  const src = tagsData[type].src;
   let style = {};
 
   let tagIcon = iconcache[src];
@@ -48,18 +49,24 @@ const tagStyle = function (tag, resolution) {
   if (!tagIcon) {
     tagIcon = new Icon({
       size: [48,48],
-      // scale: 1 / resolution + .3,
       crossOrigin: 'anonymous',
       src: imagesDir + 'product-images/tags/' + src
     });
   }
-
-  tagIcon.setScale(1 / resolution);
+  
+  if (type === 'sale') {
+    tagIcon.setScale(1 / resolution);
+  } else {
+    const res = 1 / resolution + .2 > 1 ? 1 : 1 / resolution + .2;
+    tagIcon.setScale(res);
+  }
+  
   
   iconcache[src] = tagIcon;
 
   style = new Style({
-    image: tagIcon
+    image: tagIcon,
+    zIndex: type === 'remove' ? 10 : 0
   })
 
   return style
@@ -108,10 +115,29 @@ export const setCartAddIcon = function(product) {
   cartAddIcon.getGeometry().setCoordinates([coordinate[0] + 75, coordinate[1] + 75]);
 
   cartAddIcon.set('pId', product.getId());
-
 }
 
-export const toggleRemoveIcon = function(pId) {
-  // create feature
+export const setCartRemoveIcon = function(cartIcon) {
+
+  // if icon is a removeIcon, remove it
+  if (cartIcon.get('type') === 'remove') {
+    tagSource.removeFeature(cartIcon);
+    console.log('removed ' + cartIcon.get('type'));
+  } 
+
+  //otherwise, generate remove icon from add icon data
+  if (cartIcon.get('type') === 'add') {
+    const cartRemoveIcon = cartIcon.clone();
+    cartRemoveIcon.setId('remove-' + cartIcon.get('pId'));
+    cartRemoveIcon.set('src', tagsData['remove'].src);
+    cartRemoveIcon.set('type', 'remove');
+    tagSource.addFeature(cartRemoveIcon);
+  }
+} 
+
+export const cartIconHandleClick = function(cartIcon) {
+  const pId = cartIcon.get('pId');
+  updateCart(pId);
+  setCartRemoveIcon(cartIcon);
 }
 

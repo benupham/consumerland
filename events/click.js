@@ -3,9 +3,13 @@ import Circle from 'ol/geom/circle';
 
 import {productsImageMax} from '../constants.js';
 import {renderProductOverlay, hideOverlay, productDetailOverlay, productCardOverlay} from '../components/overlays.js';
+import {cartIconHandleClick} from '../features/tags.js';
 
 export const handleClick = function(e) {
-  console.log(e);
+  if (productDetailOverlay.getElement().style.display == 'block') {
+    hideOverlay(productDetailOverlay);
+    return
+  } 
   // if (productDetailOverlay.getElement().style.display == 'block') {
   //   hideOverlay(productDetailOverlay);
   //   return;
@@ -21,13 +25,9 @@ export const handleClick = function(e) {
   const constraint = [mapSize[0] + 500, mapSize[1] + 100] ;
 
   if (featureType == 'product' && featureStyle == 'image') {
-    hideOverlay(productCardOverlay);
     renderProductOverlay(feature, productDetailOverlay);
     e.stopPropagation();
 
-  } else if (productDetailOverlay.getElement().style.display == 'block') {
-    hideOverlay(productDetailOverlay);
-    return
   } else if (['brand','dept','subdept'].indexOf(featureType) > -1) {
     
     let circle = feature.getGeometry();
@@ -35,13 +35,13 @@ export const handleClick = function(e) {
       circle = new Circle(feature.getGeometry().getCoordinates(), feature.get('radius'));  
     }  
     const center = feature.getGeometry().getCoordinates() || feature.getGeometry().getCenter();   
-    hideOverlay(productDetailOverlay);
+    // hideOverlay(productDetailOverlay);
     const zoomTo = featureType == 'brand' ? 2 
       : featureType == 'subdept' ? 6 
       : 29;
     view.animate({ resolution: zoomTo, center: center});  
-  } else {
-    hideOverlay(productDetailOverlay);
+  } else if (featureType === 'add' || featureType === 'remove') {
+    cartIconHandleClick(feature);
   }
 
 }

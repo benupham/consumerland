@@ -9,17 +9,14 @@ const cartContents = document.querySelector('#cart-contents');
 
 export const updateCart = function(pId) {
   const product = productsSource.getFeatureById(pId);
-  console.log('update cart',pId, product.get('type'), product.get('fid'), 
-    product.get('style'), product.get('inCart'));
   const src = product.get('src');
   const name = product.get('name');
 
-  if (product.get('inCart') === true) {
+  if (checkCart(pId)) {
     for (var i = cart.length - 1; i >= 0; i--) {
       if (cart[i].pId === pId) {
         cart.splice(i,1);
         cartContents.removeChild(cartContents.childNodes[i]);
-        product.set('inCart',false);
         document.getElementById('cart-count').innerHTML = cart.length;
         return false;
       } 
@@ -38,20 +35,16 @@ export const updateCart = function(pId) {
   cartItem.querySelector('img').src = src;
   cartItem.querySelector('.cart-product-name').textContent = name;
   cartContents.appendChild(cartItem);
-  product.set('inCart',true);
   document.getElementById('cart-count').innerHTML = cart.length;
   return true;
 
 }
 
-export const updateAddCartButton = function(inCart, btn) {
-  if (inCart === true) {
-    btn.classList.remove("btn-outline-warning");
-    btn.classList.add('btn-outline-secondary');
-    btn.textContent = 'Remove';
-  } else if (inCart === false) {
-    btn.classList.remove("btn-outline-secondary");
-    btn.classList.add('btn-outline-warning');
-    btn.textContent = 'Add to Cart';
-  }
-}
+export const checkCart = function(pId) {
+  const result = cart.some((item) => {
+    console.log('in cart: ' + item.pId);
+    return item.pId === pId;
+  });
+  return result; 
+} 
+

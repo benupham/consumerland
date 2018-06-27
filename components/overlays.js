@@ -2,7 +2,7 @@ import Overlay from 'ol/overlay';
 import MouseWheelZoom from 'ol/interaction/mousewheelzoom';
 
 
-import {updateAddCartButton, updateCart} from '../components/cart.js';
+import {updateAddCartButton, updateCart, checkCart} from '../components/cart.js';
 import {view, map} from '../index.js';
 import {productsSource} from '../features/categoryFeatures.js';
 import {textFormatter, dataTool} from '../utilities.js';
@@ -28,12 +28,12 @@ export const productDetailOverlay = new Overlay({
   positioning: 'center-center'
 });
 
-productDetailOverlay.getElement().addEventListener('click', function(e) {
-  console.log(e)
-  const inCart = updateCart(e.target.getAttribute('data-pid'));
-  updateAddCartButton(inCart, e.target);
-  console.log('updated cart B');
-});
+// productDetailOverlay.getElement().addEventListener('click', function(e) {
+//   console.log(e)
+//   const inCart = updateCart(e.target.getAttribute('data-pid'));
+//   updateAddCartButton(inCart, e.target);
+//   console.log('updated cart B');
+// });
 
 // Signage (not used right now)
 const signs = {};
@@ -59,9 +59,8 @@ export const openProductDetail = function(e) {
 }
 
 export const renderProductOverlay = function(product, overlay) {
-  if (product.get('inCart') === undefined) {
-    product.set('inCart', false);
-  }
+  const pId = product.getId();
+  
   // Even with stopEvent=true, pointermove needs to be stopped. 
   overlay.getElement().onpointermove = function(e) {e.stopPropagation()};
   if (overlay.getId() == 'productCard') {
@@ -70,28 +69,31 @@ export const renderProductOverlay = function(product, overlay) {
 
   if (overlay.getId() == 'productDetail') {
     overlay.getElement().addEventListener('click', (e) => {
+      if (e.target.id === 'product-overlay-add-button') {
+        updateCart(pId);
+      }
       hideOverlay(overlay);
     })
   }
 
   overlay.getElement().style.display = 'block';
 
-  overlay.set('product', product.getId());
+  overlay.set('product', pId);
 
   const coordinate = product.getGeometry().getCoordinates();
 
   const btn = overlay.getElement().querySelector('.add-to-cart');
-  btn.setAttribute('data-pid', product.getId());
-  updateAddCartButton(product.get('inCart'), btn);
+  btn.setAttribute('data-pid', pId);
+  toggleOverlayButton(btn, pId);
 
   overlay.setPosition(coordinate);
 
   let name = overlay.getElement().querySelector('.product-name');
-  name.setAttribute('data-pid', product.getId());
+  name.setAttribute('data-pid', pId);
   let price = overlay.getElement().querySelector('.product-price');
-  price.setAttribute('data-pid', product.getId());
+  price.setAttribute('data-pid', pId);
   let image = overlay.getElement().querySelector('.product-image');
-  image.setAttribute('data-pid', product.getId());
+  image.setAttribute('data-pid', pId);
 
   if (overlay.getId() == 'productCard') {
     image.addEventListener('click', openProductDetail);
@@ -124,93 +126,23 @@ export const renderProductOverlay = function(product, overlay) {
   }
 
   price.textContent = product.get('price');
-
-  //const resolution = view.getResolution();
-
-  //const imageRatio = 1 / (resolution * 0.5) > 1 ? 1 : 1 / (resolution * 0.5);
-  //const imageOffset = -100 * imageRatio;
-  //image.style.width = 200 * imageRatio + 'px';
-
   
   const offset = [imageOffset - image.offsetLeft, imageOffset - image.offsetTop];
   overlay.setOffset(offset); 
 } 
 
+const toggleOverlayButton = function(btn, pId) {
+  if (checkCart(pId)) {
+    btn.className = 'btn-outline-secondary';
+    btn.textContent = 'Remove';
+  } else {
+    btn.className = 'btn-outline-warning';
+    btn.textContent = 'Add to Cart';
+  }
+}
+
 export const hideOverlay = function(overlay) {
   overlay.getElement().style.display = 'none';
 }
 
-/*
-*
-* Add to/Remove from Cart Icon Overlay
-*
-*/
-export const addToCartIconOverlay = new Overlay({
-  element: document.getElementById('add-to-cart-icon'),
-  id: 'addToCartIconOverlay',
-  autoPan: false,
-  stopEvent: true,
-  positioning: 'center-center'
-});
 
-
-// addToCartIconOverlay.getElement().addEventListener('click', function(e) {
-//   updateCart(e.target.getAttribute('data-pid'));
-//   // add X mark to product if not in cart
-//   placeRemoveFromCartIcon(e.target.getAttribute('data-pid'));
-// });
-
-addToCartIconOverlay.getElement().addEventListener('click', () => {
-  const pId = addToCartIconOverlay.getElement().getAttribute('data-pid');
-  const coord = addToCartIconOverlay.getElement().getAttribute('data-coord');
-  console.log(pId);
-  const addRemoveIcon = updateCart(pId);
-  if (addRemoveIcon === true) {
-    placeRemoveFromCartIcon(pId, coord);
-  } 
-});
-
-export const placeAddToCartIconOverlay = function(product) {
-  if (product === false) {
-    addToCartIconOverlay.setPosition([null,null]);
-    return false;
-  }
-  const btn = addToCartIconOverlay.getElement();
-  btn.setAttribute('data-pid', product.getId());
-  
-  const coordinate = product.getGeometry().getCoordinates();
-  addToCartIconOverlay.setPosition(coordinate);
-  btn.setAttribute('data-coord',coordinate);
-
-  const res = view.getResolution();
-  addToCartIconOverlay.setOffset([80/res,-80/res]);
-}
-
-const placeRemoveFromCartIcon = function(pId, coord) {
-  // create new X icon
-  const icon = document.createElement('button');
-  const res = view.getResolution();
-  icon.id = 'remove-from-cart-icon' + '-' + pId;
-  icon.innerHTML = '&#10006;';
-  icon.className = 'btn btn-primary remove-from-cart-icon';
-  icon.setAttribute('data-pid', pId);
-  icon.addEventListener('click', function(){
-    updateCart(pId);
-    icon.remove();
-  });
-  const removeIcon = document.body.appendChild(icon);
-  const removeOverlay = new Overlay({
-    position: coord.split(','),
-    positioning: 'center-center',
-    element: removeIcon,
-    offset: [80/res,-80/res]
-  })
-
-  console.log(coord)
-  map.addOverlay(removeOverlay);
-  view.on('change:resolution', () => {
-    console.log('hi')
-    const res = view.getResolution();
-    removeOverlay.setOffset([80/res,-80/res]);
-  })
-}
