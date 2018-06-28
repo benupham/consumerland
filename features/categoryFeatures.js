@@ -156,6 +156,7 @@ const circleFeatureRender = function(featureSets, type='all') {
           radius: f.properties.radius,
           color: color,
           hoverColor: hoverColor,
+          src: f.src
         });
         circle.setId(f.id + '-circle');
         circles.push(circle);        

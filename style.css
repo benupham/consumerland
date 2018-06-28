@@ -166,7 +166,7 @@ body {
   left: 0;
   top: 0;
   width: 400px;
-  z-index: 999;
+  z-index: 99;
 }
 .omnibox.open {
   background-color: #f0f0f0;
@@ -227,23 +227,10 @@ body {
   position: absolute;
 }
 
-.product-preview .card-body {
-  display: none;
-}
-
-.product-name {
-  
-}
-.product-price {
-	font-weight: 700;
-}
-
-.product-preview .product-image {
-  display: none;
-	height: 200px;
-	width: 200px;
-  margin: auto;
-	cursor: pointer;
+.preview-image {
+	height: 50px;
+  width: 50px;
+  background-size: contain;
 }
 
 .preview-categories-list {

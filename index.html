@@ -23,48 +23,10 @@
     <!-- Product Preview Control and Map Overview -->
     <div id="product-preview" class="product-preview card shadow-sm rounded">
       <div id="overviewmap" class="card-img-top"></div>
-      <div id="preview-info" class="preview-info">
-        <!-- <ul id="preview-categories-list" class="preview-categories-list ">
-          <li id="dept-list-item" class="category-item"><a id="dept-link"></a></li>
-          <li id="subdept-list-item" class="category-item"><a id="subdept-link"></a></li>
-          <li id="brand-list-item" class="category-item"><a id="brand-link"></a></li>
-        </ul>
-        <a class="card-title product-name"></a>
-        <a class="card-text product-price"></a> -->
-        <!-- <img class="card-img-top product-image" src="./product-images/missing-item.jpg" alt="Product image"> -->
-        <div class="card-body">
-          <button id="product-preview-add-button" class="add-to-cart btn btn-outline-warning btn-sm" name="add-to-cart">Add to Cart</button>
-        </div>        
+      <div id="preview-info" class="preview-info">      
       </div>
     </div>
 
-    <!-- Navbar -->
-    <!-- <nav id="navbar" class="navbar navbar-dark bg-dark py-2 navbar-expand-lg shadow-bottom border-bottom border-secondary row">
-      <div id="search-bar" class="col-12 col-sm-6 mb-2 mb-sm-0">
-        <div class="input-group">
-          <input type="text" id="search-input" class="form-control" placeholder="Search for products">
-          <div class="input-group-append">
-            <button id="search-button" class="btn btn-warning" type="button">Search</button>
-          </div>          
-        </div>
-      </div>
-      <div id="cart" class="col-auto px-sm-0 mr-sm-auto dropdown cart">
-          <button id="cart-open-button" class="cart-open-button dropdown-toggle btn btn-warning" data-toggle="dropdown" role="button">Cart <span id="cart-count">0</span></button>
-          <div id="cart-contents" class="cart-contents dropdown-menu dropdown-menu-right"></div>         
-      </div>
-      <div class="nav col-auto ml-sm-auto">
-        <div class="nav-item">
-          <a class="nav-link text-warning" data-toggle="modal" href="#info-modal">
-            Info
-          </a>        
-        </div>
-        <div class="nav-item">
-          <a class="nav-link text-warning" href="mailto:bcupham@gmail.com">
-            Contact
-          </a>        
-        </div>
-      </div>
-    </nav> -->
 
     <!-- Modal -->
     <div class="modal fade" id="info-modal" tabindex="-1" role="dialog">
@@ -125,14 +87,12 @@
         </div>
 
         <div id="preview" class="row no-gutters preview bg-light rounded p-1 m-2 shadow-sm border">
-          <ul id="preview-categories-list" class="preview-categories-list ">
-              <li id="dept-list-item" class="category-item"><a id="dept-link"></a></li>
-              <li id="subdept-list-item" class="category-item"><a id="subdept-link"></a></li>
-              <li id="brand-list-item" class="category-item"><a id="brand-link"></a></li>
-          </ul>
-          <a class="card-title product-name"></a>
-          <a class="card-text product-price"></a>
-          <img class="card-img-top product-image" src="./product-images/missing-item.jpg" alt="Product image">
+            <div id="preview-item" class="preview-item media m-1">
+                <div id="preview-image" class="preview-image align-self-center mr-3"></div>
+                <div class="media-body align-self-center">
+                  <div id="preview-text" class="preview-text"></div>
+                </div>
+            </div>
         </div>
 
         <div id="suggested" class="row no-gutters suggested bg-light rounded p-1 m-2 shadow-sm border">
