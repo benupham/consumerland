@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>ConsumerLand</title>
-    <link rel="stylesheet" type="text/css" href="./style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="./style.css"> -->
     <!-- <link href="https://fonts.googleapis.com/css?family=Oswald:500" rel="stylesheet"> -->
     <style>
       #map {
@@ -24,14 +24,14 @@
     <div id="product-preview" class="product-preview card shadow-sm rounded">
       <div id="overviewmap" class="card-img-top"></div>
       <div id="preview-info" class="preview-info">
-        <ul id="preview-categories-list" class="preview-categories-list ">
+        <!-- <ul id="preview-categories-list" class="preview-categories-list ">
           <li id="dept-list-item" class="category-item"><a id="dept-link"></a></li>
           <li id="subdept-list-item" class="category-item"><a id="subdept-link"></a></li>
           <li id="brand-list-item" class="category-item"><a id="brand-link"></a></li>
         </ul>
         <a class="card-title product-name"></a>
-        <a class="card-text product-price"></a>
-        <img class="card-img-top product-image" src="./product-images/missing-item.jpg" alt="Product image">
+        <a class="card-text product-price"></a> -->
+        <!-- <img class="card-img-top product-image" src="./product-images/missing-item.jpg" alt="Product image"> -->
         <div class="card-body">
           <button id="product-preview-add-button" class="add-to-cart btn btn-outline-warning btn-sm" name="add-to-cart">Add to Cart</button>
         </div>        
@@ -39,7 +39,7 @@
     </div>
 
     <!-- Navbar -->
-    <nav id="navbar" class="navbar navbar-dark bg-dark py-2 navbar-expand-lg shadow-bottom border-bottom border-secondary row">
+    <!-- <nav id="navbar" class="navbar navbar-dark bg-dark py-2 navbar-expand-lg shadow-bottom border-bottom border-secondary row">
       <div id="search-bar" class="col-12 col-sm-6 mb-2 mb-sm-0">
         <div class="input-group">
           <input type="text" id="search-input" class="form-control" placeholder="Search for products">
@@ -64,7 +64,7 @@
           </a>        
         </div>
       </div>
-    </nav>
+    </nav> -->
 
     <!-- Modal -->
     <div class="modal fade" id="info-modal" tabindex="-1" role="dialog">
@@ -104,28 +104,56 @@
     </div>
     <div class="loading">Loading...</div>
     <div id="map"></div>
+
+
+    <!-- Omnibox-->
+    <div id="omnibox" class="omnibox">
+
+        <div id="search" class="row no-gutters search-row bg-light rounded p-1 m-2 shadow-sm border">
+          <div id="search-bar" class="search-bar col-9 mr-2">
+              <div class="input-group">
+                <input type="text" id="search-input" class="form-control" placeholder="Search here">
+                <div class="input-group-append">
+                  <button id="search-button" class="btn btn-warning" type="button">Search</button>
+                </div>          
+              </div>
+          </div>
+          <div id="cart" class="col-auto dropdown cart">
+              <button id="cart-open-button" class="cart-open-button dropdown-toggle btn btn-warning" data-toggle="dropdown" role="button">Cart <span id="cart-count">0</span></button>
+              <div id="cart-contents" class="cart-contents dropdown-menu dropdown-menu-right"></div>         
+          </div>
+        </div>
+
+        <div id="preview" class="row no-gutters preview bg-light rounded p-1 m-2 shadow-sm border">
+          <ul id="preview-categories-list" class="preview-categories-list ">
+              <li id="dept-list-item" class="category-item"><a id="dept-link"></a></li>
+              <li id="subdept-list-item" class="category-item"><a id="subdept-link"></a></li>
+              <li id="brand-list-item" class="category-item"><a id="brand-link"></a></li>
+          </ul>
+          <a class="card-title product-name"></a>
+          <a class="card-text product-price"></a>
+          <img class="card-img-top product-image" src="./product-images/missing-item.jpg" alt="Product image">
+        </div>
+
+        <div id="suggested" class="row no-gutters suggested bg-light rounded p-1 m-2 shadow-sm border">
+           Suggested Results 
+        </div>
+
+        <div id="departments" class="row no-gutters departments bg-light rounded p-1 m-2 shadow-sm border">
+          Departments 
+        </div>
+
+        <div id="favorites" class="row no-gutters favorites bg-light rounded p-1 m-2 shadow-sm border">
+          Favorites 
+        </div>
+  
+    </div>
+
+    <!-- OVERLAYS hidden until added by Openlayers  -->
     <div id="pm-overlays" style="display: none;">
 
-      <!-- Search NOT USED-->
-      <div id="search-cart-overlay" class="search-cart-overlay">
-        <div id="search-bar" class="search-bar container shadow-sm border border-secondary rounded">
-          <div class="row">
-            <div id="search-bar" class="col-8 input-group my-3">
-              <input type="text" id="search-input" class="form-control" placeholder="Search for products">
-              <div class="input-group-append">
-                <button id="search-button" class="btn btn-outline-secondary" type="button">Search</button>
-              </div>
-            </div>
-            <div id="cart" class="col-4 my-3 cart">
-              <button id="cart-open-button" class="cart-open-button btn btn-secondary dropdown-toggle" type="button">Cart <span id="cart-count">&nbsp;</span>
-              </button>
-            </div>
-          </div>          
-        </div>
-        <div id="cart-contents" class="cart-contents container shadow-sm border border-secondary rounded mt-3"></div>
-      </div>
 
-      <!-- Cart List Item -- technically not an overlay -->
+      <!-- Cart List Item  technically not an overlay -->
       <div id="cart-item" class="cart-item media my-2">
         <img class="cart-image align-self-center mr-3" src="./product-images/missing-item.jpg" />
         <div class="media-body align-self-center">
@@ -167,18 +195,12 @@
         </div>
       </div>
 
-      <!-- Signage -->
+      <!-- Signage, not used -->
       <button id="sign-0" class="sign btn btn-light btn-sm"></button>
       <button id="sign-1" class="sign btn btn-light btn-sm"></button>
       <button id="sign-2" class="sign btn btn-light btn-sm"></button>
       <button id="sign-3" class="sign btn btn-light btn-sm"></button>
 
-      <!-- Add to Cart Icon -->
-      <button id="add-to-cart-icon" type="button" class="btn btn-primary add-to-cart-icon">&#10010;</button>
-
-
-      <!-- Remove from Cart Icon -->
-      <button id="remove-cart-icon" type="button" class="btn btn-primary remove-from-cart-icon">&#10006;</button>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">

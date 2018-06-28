@@ -114,7 +114,8 @@ body {
 /* NAVBAR */
 
 .navbar {
-	background-color: rgba(0, 133, 62, 1) !important;
+  background-color: rgba(0, 133, 62, 1) !important;
+  display: none;
 }
 
 .brand {
@@ -156,11 +157,25 @@ body {
   color: rgba(249, 198, 90, 1);
 }
 
-/* Add to Cart Icon */
-/* .add-to-cart-icon {
+/* OMNIBOX BAR */
+.omnibox {
   display: block;
   position: absolute;
-} */
+  bottom: auto;
+  right: auto;
+  left: 0;
+  top: 0;
+  width: 400px;
+  z-index: 999;
+}
+.omnibox.open {
+  background-color: #f0f0f0;
+  border-right: 1px solid black;
+}
+
+.omnibox .search-row {
+  padding-top: 15px;
+}
 
 /* PRODUCT CARD OVERLAY OR PRODUCT PREVIEW PANE CONTROL */
 
@@ -288,7 +303,7 @@ body {
 	color: red; 
 	z-index: 1000;
 	background: white;
-  display: block;
+  display: none;
 }
 /*
 * MEDIA QUERIES

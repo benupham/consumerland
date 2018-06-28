@@ -1,4 +1,4 @@
-import Control from 'ol/control/control';
+import Overlay from 'ol/overlay';
 import {map} from '../index.js';
 import {productsImageMax, searchResolutions} from '../constants.js';
 import {flyTo, getFeatureJson} from '../utilities.js';
@@ -8,6 +8,12 @@ import matchSorter from 'match-sorter';
 * Search
 * 
 */
+
+// export const omnibox = new Overlay({
+//   element: document.getElementById('omnibox'),
+//   stopEvent: false,
+// })
+
 let searchIndex = [];
 getFeatureJson(['product','brand','dept','subdept'])
 .then(res => {

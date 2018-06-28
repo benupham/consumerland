@@ -5,9 +5,9 @@ import {view} from '../index.js';
 import {productsSource} from '../features/categoryFeatures.js';
 import {textFormatter, debounce, dataTool} from '../utilities.js';
 
-const preview = document.getElementById('product-preview');
+const preview = document.getElementById('preview');
 
-export const productPreview = new Control({element: preview});
+//export const productPreview = new Control({element: preview});
 
 export const updatePreview = function (features) {
 	const list = preview.querySelector('#preview-categories-list');
@@ -60,9 +60,9 @@ export const updatePreview = function (features) {
 		// price.textContent = product.get('price');
 		// price.setAttribute('data-pid', pId);
 
-		const btn = preview.querySelector('.add-to-cart');
-		btn.setAttribute('data-pid', pId);
-		btn.addEventListener('click', updateCart);
+		// const btn = preview.querySelector('.add-to-cart');
+		// btn.setAttribute('data-pid', pId);
+		// btn.addEventListener('click', updateCart);
 		
 	}
 

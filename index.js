@@ -7,11 +7,11 @@ import './style.css';
 
 import {maxExtent} from './features/categoryFeatures.js';
 import {productDetailOverlay} from './components/overlays.js';
-import {productPreview} from './components/productPreview.js';
+// import {productPreview} from './components/productPreview.js';
 import {textFormatter, dataTool, iconcache} from './utilities.js';
 //import {displayCart, updateCart, updateAddCartButton} from './components/cart.js';
 import {displaySignage} from './components/signage.js';
-import {handleSearch} from './components/search.js';
+import {handleSearch, omnibox} from './components/search.js';
 import {handleJumpStrips} from './components/jumpstrips.js';
 import {handleHover, jumpStripsInt} from './events/hover.js';
 import {handleClick} from './events/click.js';
@@ -72,8 +72,9 @@ window.addEventListener('resize', mapResize);
 map.addControl(overviewMapControl);
 // map.addControl(breadCrumbsControl);
 
-map.addControl(productPreview);
+// map.addControl(productPreview);
 
+// map.addOverlay(omnibox);
 
 map.addOverlay(productDetailOverlay);
 
