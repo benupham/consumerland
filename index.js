@@ -50,8 +50,7 @@ const mapResize = function(e) {
   if (window.innerWidth < 576) {
     document.getElementById('cart-contents').classList.toggle('dropdown-menu-right');
   }
-  const navbarHeight = document.getElementById('navbar').offsetHeight;
-  const mapHeight = document.documentElement.clientHeight - navbarHeight; 
+  const mapHeight = document.documentElement.clientHeight; 
   const mapWidth = document.documentElement.clientWidth;
   document.querySelector('#map').style.height = mapHeight + 'px';
   map.setSize([mapWidth,mapHeight]);

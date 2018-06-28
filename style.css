@@ -179,27 +179,17 @@ body {
 
 /* PRODUCT CARD OVERLAY OR PRODUCT PREVIEW PANE CONTROL */
 
-.product-preview {
+.overviewmap {
 	position: absolute;
-  bottom: 1em;
-  right: 1em;
-  left: auto;
+  bottom: 0;
+  right: auto;
+  left: 0;
   top: auto;
 	background: rgba(255,255,255,1);
-	padding: 10px;
-  width: 300px;
-	/*z-index: 10;*/
+  width: 384px;
+  height: 154px;
+	z-index: 10;
   will-change: content;
-}
-
-.preview-info {
-  height: 40px;
-}
-
-
-.overviewmap.ol-control {
-  position: relative;
-  padding: 0;
 }
 
 .overviewmap.ol-overviewmap {

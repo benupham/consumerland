@@ -20,14 +20,6 @@
   </head>
   <body>
 
-    <!-- Product Preview Control and Map Overview -->
-    <div id="product-preview" class="product-preview card shadow-sm rounded">
-      <div id="overviewmap" class="card-img-top"></div>
-      <div id="preview-info" class="preview-info">      
-      </div>
-    </div>
-
-
     <!-- Modal -->
     <div class="modal fade" id="info-modal" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-lg" role="document">
@@ -100,14 +92,29 @@
         </div>
 
         <div id="departments" class="row no-gutters departments bg-light rounded p-1 m-2 shadow-sm border">
-          Departments 
+          <div class="accordion departments" id="departments-accordion">
+            <h5 class="mb-0">
+                <a class="badge badge-warning" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="false" aria-controls="collapseOne">
+                  Produce
+                </a>
+            </h5>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Fresh Fruit</li>
+                    <li class="list-group-item">Fresh Vegetables</li>
+                    <li class="list-group-item">Canned Vegetables Canned Vegetables Canned Vegetables</li> 
+                </ul>
+            </div>
+          </div> 
         </div>
 
         <div id="favorites" class="row no-gutters favorites bg-light rounded p-1 m-2 shadow-sm border">
           Favorites 
         </div>
   
+        
     </div>
+    <div id="overviewmap" class="overviewmap m-2 rounded shadow-sm"></div>
 
     <!-- OVERLAYS hidden until added by Openlayers  -->
     <div id="pm-overlays" style="display: none;">
