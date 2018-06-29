@@ -4,6 +4,7 @@ import View from 'ol/view';
 import Extent from 'ol/extent';
 
 import './style.css';
+import './components/departmentsLinks.js';
 
 import {maxExtent} from './features/categoryFeatures.js';
 import {productDetailOverlay} from './components/overlays.js';

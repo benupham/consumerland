@@ -110,3 +110,9 @@ export const flyTo = function (location, done) {
   }, callback);
 }
 
+// convert name to filename ready string (or variable name)
+export const cleanName = function(name) {
+	const newname = name.trim().toLowerCase().replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+(?=[a-z0-9])/g,'-');
+
+	return newname;
+}
