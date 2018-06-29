@@ -455,6 +455,7 @@ getFeatureJson(['dept','subdept','brand'])
 
   const deptCircleFeatures = circleFeatureRender([featureData], 'dept');
   deptCircleSource.addFeatures(deptCircleFeatures);
+
   const deptLabelFeatures = labelFeatureRender([featureData], 'dept');
   deptLabelSource.addFeatures(deptLabelFeatures);
   
