@@ -63,7 +63,7 @@ body {
 	background: white;
 	font-family: Oswald;
 	font-weight: 300;
-	font-size: 13px;
+	font-size: 14px;
 	color: #111;
 	background-image: url('https://s3-us-west-1.amazonaws.com/consumerland/other-images/wood-floor-web.jpg');
 }
@@ -111,22 +111,6 @@ body {
     background-color: rgba(249, 198, 90, 0.3);
     border-color: rgba(249, 198, 90, 0.7);
 }
-/* NAVBAR */
-
-.navbar {
-  background-color: rgba(0, 133, 62, 1) !important;
-  display: none;
-}
-
-.brand {
-	font-family: 'Rock Salt';
-	color: rgba(249, 198, 90, 1) !important;
-  background-image: url('https://s3-us-west-1.amazonaws.com/consumerland/other-images/logo.png');
-}
-
-.brand img {
-  width: 100%;
-}
 
 .btn-success {
 	background-color: rgba(0, 133, 62, 1);
@@ -139,6 +123,17 @@ body {
 
 .text-warning {
   color: rgba(249, 198, 90, 1);
+}
+
+/* SEARCH & FEATURE PREVIEW */
+.search {
+  display: block;
+  position: absolute;
+  width: 400px;
+  top: 0;
+  left: 0;
+  bottom: auto;
+  right: auto;
 }
 
 .autocomplete .ui-menu-item {
@@ -157,15 +152,22 @@ body {
   color: rgba(249, 198, 90, 1);
 }
 
-/* OMNIBOX BAR */
+.preview-image {
+	height: 50px;
+  width: 50px;
+  background-size: contain;
+}
+
+/* OMNIBOX  */
 .omnibox {
   display: block;
   position: absolute;
   bottom: auto;
   right: auto;
   left: 0;
-  top: 0;
-  width: 400px;
+  top: 125px;
+  width: 200px;
+  height: 100%;
   z-index: 99;
 }
 .omnibox.open {
@@ -173,20 +175,28 @@ body {
   border-right: 1px solid black;
 }
 
-.omnibox .search-row {
+.omnibox .row {
   padding-top: 15px;
 }
 
-/* PRODUCT CARD OVERLAY OR PRODUCT PREVIEW PANE CONTROL */
+.departments {
+  
+}
+
+.departments li > ul {
+  margin-left: 1em;
+}
+
+/* OVERVIEW MAP */
 
 .overviewmap {
 	position: absolute;
   bottom: 0;
-  right: auto;
-  left: 0;
+  right: 0;
+  left: auto;
   top: auto;
 	background: rgba(255,255,255,1);
-  width: 384px;
+  width: 284px;
   height: 154px;
 	z-index: 10;
   will-change: content;
@@ -217,22 +227,6 @@ body {
   position: absolute;
 }
 
-.preview-image {
-	height: 50px;
-  width: 50px;
-  background-size: contain;
-}
-
-.preview-categories-list {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 5px;
-}
-.category-item {
-  display: inline-block;
-  font-size: 12px;
-}
-
 /* PRODUCT DETAIL OVERLAY */
 
 .product-overlay {
@@ -253,6 +247,14 @@ body {
 }
 
 /* Cart */
+.cart {
+  display: block;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  left: auto;
+  bottom: auto;
+}
 .cart-contents {
   max-height: 700px;
 }

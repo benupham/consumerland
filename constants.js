@@ -9,13 +9,13 @@
 
 // Images Directory 
 
-export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland-sprites/';
-// export const imagesDir = './node-utility-scripts/';
+// export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland-sprites/';
+export const imagesDir = './node-utility-scripts/';
 
 // Resolution
 
-export const productsImageMax = 13;
-export const productsCircleMax = 25;
+export const productsImageMax = 15;
+export const productsCircleMax = 15;
 
 export const brandsLabelMax = 35;
 export const brandsLabelMin = 0;
@@ -56,11 +56,6 @@ export const searchResolutions = {
 	product: 1
 }
 
-// Offsets
-
-export const nameOffset = 120;
-export const priceOffset = 146;
-
 // Colors
 
 export const colors = [
@@ -82,10 +77,10 @@ export const labelColors = {
 }
 
 export const labelBackgroundColors = {
-	dept: 'rgba(255, 255, 255, 0.7)',
-	subdept: 'rgba(255, 255, 255, 0.7)',
-	brand: 'rgba(255, 255, 255, 0.7)',
-	product: 'rgba(255, 255, 255, 0.7)'
+	dept: 'rgba(255, 255, 255, 1)',
+	subdept: 'rgba(255, 255, 255, 1)',
+	brand: 'rgba(255, 255, 255, 1)',
+	product: 'rgba(255, 255, 255, 1)'
 }
 
 export const labelStrokes = {

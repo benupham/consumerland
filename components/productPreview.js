@@ -6,9 +6,6 @@ import {productsSource} from '../features/categoryFeatures.js';
 import {textFormatter, debounce, dataTool} from '../utilities.js';
 import {circleColors} from '../constants.js';
 
-const preview = document.getElementById('preview');
-
-//export const productPreview = new Control({element: preview});
 
 export const updatePreview = function (features) {
 	let previewText = document.getElementById('preview-text');

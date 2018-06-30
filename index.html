@@ -59,47 +59,47 @@
     <div class="loading">Loading...</div>
     <div id="map"></div>
 
+    <!-- Search & Preview -->
+
+    <div id="search" class="search rounded bg-white shadow-sm border m-2">
+      <div id="search-bar" class="row no-gutters search-bar bg-white p-1">
+          <div class="input-group">
+            <input type="text" id="search-input" class="form-control" placeholder="Search here">
+            <div class="input-group-append">
+              <button id="search-button" class="btn btn-warning" type="button">Search</button>
+            </div>          
+          </div>
+      </div>
+      <div id="preview" class="row no-gutters preview bg-white p-1">
+          <div id="preview-item" class="preview-item media m-1">
+              <div id="preview-image" class="preview-image align-self-center mr-3"></div>
+              <div class="media-body align-self-center">
+                <div id="preview-text" class="preview-text"></div>
+              </div>
+          </div>
+      </div>
+
+    </div>
+
+    <!-- Cart -->
+    <div id="cart" class="col-auto dropdown cart">
+        <button id="cart-open-button" class="cart-open-button dropdown-toggle btn btn-warning" data-toggle="dropdown" role="button">Cart <span id="cart-count">0</span></button>
+        <div id="cart-contents" class="cart-contents dropdown-menu dropdown-menu-right"></div>         
+    </div>
 
     <!-- Omnibox-->
     <div id="omnibox" class="omnibox">
 
-        <div id="search" class="row no-gutters search-row bg-light rounded p-1 m-2 shadow-sm border">
-          <div id="search-bar" class="search-bar col-9 mr-2">
-              <div class="input-group">
-                <input type="text" id="search-input" class="form-control" placeholder="Search here">
-                <div class="input-group-append">
-                  <button id="search-button" class="btn btn-warning" type="button">Search</button>
-                </div>          
-              </div>
-          </div>
-          <div id="cart" class="col-auto dropdown cart">
-              <button id="cart-open-button" class="cart-open-button dropdown-toggle btn btn-warning" data-toggle="dropdown" role="button">Cart <span id="cart-count">0</span></button>
-              <div id="cart-contents" class="cart-contents dropdown-menu dropdown-menu-right"></div>         
-          </div>
-        </div>
-
-        <div id="preview" class="row no-gutters preview bg-light rounded p-1 m-2 shadow-sm border">
-            <div id="preview-item" class="preview-item media m-1">
-                <div id="preview-image" class="preview-image align-self-center mr-3"></div>
-                <div class="media-body align-self-center">
-                  <div id="preview-text" class="preview-text"></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="suggested" class="row no-gutters suggested bg-light rounded p-1 m-2 shadow-sm border">
+        <!-- <div id="suggested" class="row no-gutters suggested bg-white rounded p-1 m-2 shadow-sm border">
            Suggested Results 
+        </div> -->
+
+        <div id="departments" class="row no-gutters departments bg-white rounded p-1 m-2 shadow-sm border">
         </div>
 
-        <div id="departments" class="row no-gutters departments bg-light rounded p-1 m-2 shadow-sm border">
-          <div class="accordion departments" id="departments-accordion">
-           
-          </div> 
-        </div>
-
-        <div id="favorites" class="row no-gutters favorites bg-light rounded p-1 m-2 shadow-sm border">
+        <!-- <div id="favorites" class="row no-gutters favorites bg-white rounded p-1 m-2 shadow-sm border">
           Favorites 
-        </div>
+        </div> -->
   
         
     </div>
