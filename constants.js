@@ -77,10 +77,10 @@ export const labelColors = {
 }
 
 export const labelBackgroundColors = {
-	dept: 'rgba(255, 255, 255, 1)',
-	subdept: 'rgba(255, 255, 255, 1)',
-	brand: 'rgba(255, 255, 255, 1)',
-	product: 'rgba(255, 255, 255, 1)'
+	dept: 'rgba(255, 255, 255, 0.7)',
+	subdept: 'rgba(255, 255, 255, 0.7)',
+	brand: 'rgba(255, 255, 255, 0.7)',
+	product: 'rgba(255, 255, 255, 0.7)'
 }
 
 export const labelStrokes = {

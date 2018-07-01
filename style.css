@@ -247,14 +247,19 @@ body {
 }
 
 /* Cart */
-.cart {
+/* .cart {
   display: block;
   position: absolute;
   top: 15px;
   right: 15px;
   left: auto;
   bottom: auto;
+} */
+
+.navbar-nav .cart-contents.dropdown-menu {
+  position: absolute;
 }
+
 .cart-contents {
   max-height: 700px;
 }
@@ -266,7 +271,6 @@ body {
 }
 
 .cart-product-name {
-  width: 150px;
   font-size: .85em; 
   margin-right: 0.5rem;
 }
