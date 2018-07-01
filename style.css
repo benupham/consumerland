@@ -65,7 +65,7 @@ body {
 	font-weight: 300;
 	font-size: 14px;
 	color: #111;
-	background-image: url('https://s3-us-west-1.amazonaws.com/consumerland/other-images/wood-floor-web.jpg');
+	/* background-image: url('https://s3-us-west-1.amazonaws.com/consumerland/other-images/wood-floor-web.jpg'); */
 }
 
 .ol-attribution {
@@ -179,10 +179,6 @@ body {
   padding-top: 15px;
 }
 
-.departments {
-  
-}
-
 .departments li > ul {
   margin-left: 1em;
 }
@@ -247,14 +243,14 @@ body {
 }
 
 /* Cart */
-/* .cart {
+.cart {
   display: block;
   position: absolute;
   top: 15px;
   right: 15px;
   left: auto;
   bottom: auto;
-} */
+}
 
 .navbar-nav .cart-contents.dropdown-menu {
   position: absolute;
