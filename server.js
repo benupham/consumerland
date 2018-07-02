@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const fs = require('fs');
 
-const featureSet = JSON.parse(fs.readFileSync('./functions/allFeatureDataCollectionSprites2.json','utf8'));
+const featureSet = JSON.parse(fs.readFileSync('./node-utility-scripts/allFeatureDataCollectionSprites2.json','utf8'));
 
 app.get("/api", (req, res) => {
     const type = req.query.type;

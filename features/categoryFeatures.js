@@ -595,7 +595,7 @@ getFeatureJson(['product'])
     source: new VectorSource({
       features: circleFeatureRender([productData], 'product')
     }),
-    renderMode: 'image',
+    renderMode: 'raster',
     style: circleStyle,
     updateWhileAnimating: true,
     updateWhileInteracting: true,
