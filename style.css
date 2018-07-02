@@ -183,6 +183,10 @@ body {
   margin-left: 1em;
 }
 
+.department-link:hover, .subdepartment-link:hover {
+  cursor: pointer;
+}
+
 /* OVERVIEW MAP */
 
 .overviewmap {
@@ -309,7 +313,7 @@ body {
 }
 /* Tablets and below */
 @media (max-width: 991.98px) {
-  .preview-info {
+  #preview, #departments {
     display: none;
   }
 }

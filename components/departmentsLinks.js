@@ -29,9 +29,9 @@ export const renderDeptsLinks = function() {
 
       subdepartments.forEach(s => {
 
-        if (s.properties.parent === d.properties.name) {
+        if (s.properties.parent === d.id) {
           html += 
-          `<li><a id="$${s.id}-link" data-id="${s.id}" data-coord="${s.geometry.coordinates}" data-type="subdept" class="text-info">${s.properties.name}</a></li>`
+          `<li><a id="$${s.id}-link" data-id="${s.id}" data-coord="${s.geometry.coordinates}" data-type="subdept" class="text-info subdepartment-link">${s.properties.name}</a></li>`
         }
 
       });

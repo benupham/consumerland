@@ -584,7 +584,7 @@ getFeatureJson(['product'])
   const productsImageLayer = new VectorLayer({
     source: productsSource,
     style: productImageStyle,
-    renderMode: 'image',
+    renderMode: 'raster',
     updateWhileAnimating: true,
     updateWhileInteracting: true,
     zIndex: 4,
