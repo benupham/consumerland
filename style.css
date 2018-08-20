@@ -179,12 +179,20 @@ body {
   padding-top: 15px;
 }
 
-.departments li > ul {
-  margin-left: 1em;
+.departments {
+  font-size: 14px;
+  font-weight: 200;
 }
 
-.department-link:hover, .subdepartment-link:hover {
+.departments li > ul {
+  margin-left: 1em;
+  font-size: 12px;
+}
+
+a.department-link:hover, a.subdepartment-link:hover {
   cursor: pointer;
+  color: #111;
+  font-weight: 400;
 }
 
 /* OVERVIEW MAP */

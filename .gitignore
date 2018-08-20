@@ -14,3 +14,5 @@ patent-application/
 firebase-key.json
 functions/firebase-key.json
 node-utility-scripts/
+*.icloud
+*.pdf

@@ -19,6 +19,7 @@ import {handleClick} from './events/click.js';
 import {tagLayer} from './features/tags.js';
 import {productsImageMax} from './constants.js';
 import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './components/controls.js';
+import {renderDeptsLinks} from './components/departmentsLinks';
 
 
 // $('#info-modal').modal('show');
@@ -32,7 +33,7 @@ import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './compo
 const ctr = [46000,-46000];
 export const view = new View({
   center: ctr,
-  resolution: 5, 
+  resolution: 65, 
   zoomFactor: 1.5,
   minResolution: 1,
   maxResolution: 65,
@@ -78,7 +79,7 @@ map.addControl(overviewMapControl);
 
 map.addOverlay(productDetailOverlay);
 
-
+renderDeptsLinks();
 // for (let i = 0; i < 4; i++) {
 //   map.addOverlay(signage[i]);
 // }
