@@ -70,15 +70,6 @@
             </div>          
           </div>
       </div>
-      <div id="preview" class="row no-gutters preview bg-white p-1">
-          <div id="preview-item" class="preview-item media m-1">
-              <div id="preview-image" class="preview-image align-self-center mr-3"></div>
-              <div class="media-body align-self-center">
-                <div id="preview-text" class="preview-text"></div>
-              </div>
-          </div>
-      </div>
-
     </div>
 
     <!-- Cart -->
@@ -105,6 +96,17 @@
     </div>
     <div id="overviewmap" class="overviewmap m-2 rounded shadow-sm"></div>
 
+      <!-- Product Hover Preview -->
+      <div id="product-preview" class="product-preview bg-white shadow-sm">
+        <div id="preview-item" class="preview-item media">
+            <div id="preview-image" class="preview-image align-self-center mr-2"></div>
+            <div class="media-body mr-2 pt-2">
+              <div id="preview-name" class="preview-name"></div>
+              <div id="preview-price" class="preview-price"></div>
+            </div>
+        </div>
+      </div>    
+
     <!-- OVERLAYS hidden until added by Openlayers  -->
     <div id="pm-overlays" style="display: none;">
 
@@ -122,18 +124,7 @@
        
       </div>
 
-      
 
-      <!-- Product Card Overlay (Not Used) -->
-      <div id="product-card" class="product-card card shadow-sm rounded">
-        <img class="card-img-top product-image" src="./product-images/missing-item.jpg" alt="Product image">
-        <div class="card-body">
-          <a class="card-title product-name"></a>
-          <p class="card-text product-price"></p>
-          <button id="product-card-add-button" class="add-to-cart d-block btn btn-outline-warning btn-sm" name="add-to-cart">Add to Cart</button>
-        </div>
-
-      </div>
 
       <!-- Product Detail Overlay -->
       <div id="product-overlay" class="product-overlay container shadow-sm border border-secondary rounded">

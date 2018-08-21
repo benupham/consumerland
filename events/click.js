@@ -2,10 +2,14 @@ import {map, view} from '../index.js';
 import Circle from 'ol/geom/circle';
 
 import {productsImageMax} from '../constants.js';
-import {renderProductOverlay, hideOverlay, productDetailOverlay} from '../components/overlays.js';
+import {hidePreview} from '../components/productPreview.js';
+import {renderProductOverlay, hideOverlay, productDetailOverlay} from '../components/productDetail.js';
 import {cartIconHandleClick} from '../features/tags.js';
 
 export const handleClick = function(e) {
+
+  hidePreview();
+
   if (productDetailOverlay.getElement().style.display == 'block') {
     hideOverlay(productDetailOverlay);
     return

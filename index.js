@@ -7,10 +7,9 @@ import './style.css';
 import './components/departmentsLinks.js';
 
 import {maxExtent} from './features/categoryFeatures.js';
-import {productDetailOverlay} from './components/overlays.js';
-// import {productPreview} from './components/productPreview.js';
+import {productDetailOverlay} from './components/productDetail.js';
+import {hidePreview} from './components/productPreview.js';
 import {textFormatter, dataTool, iconcache} from './utilities.js';
-//import {displayCart, updateCart, updateAddCartButton} from './components/cart.js';
 import {displaySignage} from './components/signage.js';
 import {handleSearch, omnibox} from './components/search.js';
 import {handleJumpStrips} from './components/jumpstrips.js';
@@ -110,8 +109,8 @@ view.on('change:resolution', (e) => {
   const ctr = view.getCenter();
   const pixel = map.getPixelFromCoordinate(ctr);
   const features = map.getFeaturesAtPixel(pixel);
-  // console.log(features);
-  // debounce()
+  
+  hidePreview();
 
   dataTool.querySelector('#data-zoom').innerHTML = `zoom: ${view.getZoom()}`;
   dataTool.querySelector('#data-res').innerHTML = `res: ${view.getResolution()}`;

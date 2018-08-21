@@ -152,12 +152,24 @@ body {
   color: rgba(249, 198, 90, 1);
 }
 
+.product-preview {
+  position: absolute;
+  top: 0;
+  left: -9999px;
+  min-width: 200px;
+}
+
 .preview-image {
-	height: 50px;
-  width: 50px;
+	height: 65px;
+  width: 65px;
   background-size: contain;
 }
 
+/* PRODUCT HOVER CARD */
+
+.product-hover-card {
+
+}
 /* OMNIBOX  */
 .omnibox {
   display: block;

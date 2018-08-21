@@ -1,6 +1,6 @@
 import Extent from 'ol/extent';
 
-import {signage} from '../components/overlays.js';
+import {signage} from '../components/productDetail.js';
 import {map, view} from '../index.js';
 //import {departmentsSource, subdepartmentsSource} from '../features/circleFeatures.js';
 import {departmentsCircleLayer, subdepartmentsCircleLayer} from '../features/categoryFeatures.js';

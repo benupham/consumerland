@@ -38,10 +38,11 @@ export const handleHover = function(e) {
     const features = map.getFeaturesAtPixel(e.pixel, {
       layerFilter: (layer) => { return layer.get('name') != 'tag-layer' ? true : false}
     });
-    debounce(updatePreview, 100).call(null, features);
+
+    debounce(updatePreview, 250).call(null, features, e);
+    
     const feature = features[0];
     const featureType = feature.get('type');
-    
     const featureStyle = feature.get('style');
     const pId = feature.getId();
 
