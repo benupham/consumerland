@@ -22,7 +22,7 @@ import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './compo
 import {renderDeptsLinks} from './components/departmentsLinks';
 
 
-// $('#info-modal').modal('show');
+$('#info-modal').modal('show');
 
 
 /*
