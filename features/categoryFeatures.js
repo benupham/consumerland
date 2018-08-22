@@ -155,6 +155,7 @@ const circleFeatureRender = function(featureSets, type='all') {
           style: 'circle',
           radius: f.properties.radius,
           color: color,
+          hover: false,
           hoverColor: hoverColor,
           src: f.src
         });
@@ -167,14 +168,21 @@ const circleFeatureRender = function(featureSets, type='all') {
 }
 
 const circleStyleCache = {};
+const circleStyleHoverCache = {};
 
 const circleStyle = function(circle, res) {
-  let style = circleStyleCache[circle.getId()];
-  if (!style) {
+  const hover = circle.get('hover');
+  let style = hover === false ? circleStyleCache[circle.getId()] : circleStyleHoverCache[circle.getId()];
+  if (!style && hover === false) {
     style = new Style({
       fill: new Fill({color: circle.get('color')})
     })
     circleStyleCache[circle.getId()] = style;
+  } else if (!style && hover === true) {
+    style = new Style({
+      fill: new Fill({color: circle.get('hoverColor')})
+    })
+    circleStyleHoverCache[circle.getId()] = style;
   }
   return style;
 }

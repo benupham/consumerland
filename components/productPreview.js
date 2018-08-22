@@ -2,8 +2,8 @@ import Control from 'ol/control/control';
 import Overlay from 'ol/overlay';
 
 import {updateCart} from '../components/cart.js';
-import {view} from '../index.js';
-import {productsSource} from '../features/categoryFeatures.js';
+import {map} from '../index.js';
+import {brandsImageLayer} from '../features/categoryFeatures.js';
 import {textFormatter, debounce, dataTool} from '../utilities.js';
 import {circleColors} from '../constants.js';
 
@@ -37,7 +37,6 @@ export const updatePreview = function (features, e) {
 		previewPrice.innerHTML += f.get('price');
 		previewImage.style.backgroundImage = "url('" + f.get('src') + "')";
 	} else if (type === 'subdept') {
-		console.log(f)
 		previewName.innerHTML = '<strong>' + textFormatter(f.get('name'), 50, '', 45) + '</strong>';
 		previewImage.style.backgroundColor = circleColors[type];
 		previewImage.style.backgroundImage = 'none';

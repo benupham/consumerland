@@ -4,6 +4,12 @@ import {view} from '../index.js';
 
 export const renderDeptsLinks = function() {
 
+  const sortNames = (a, b) => {
+    if(a.properties.name < b.properties.name) return -1;
+    if(a.properties.name > b.properties.name) return 1;
+    return 0;
+  }
+
   getFeatureJson(['dept','subdept'])
   .then(featureData => {
     const deptsMenu = document.getElementById('departments');
@@ -11,9 +17,11 @@ export const renderDeptsLinks = function() {
     const departments = featureData.filter(f => {
       return f.properties.type === 'dept';
     })
+    departments.sort(sortNames);
     const subdepartments = featureData.filter(f => {
       return f.properties.type === 'subdept';
     })
+    subdepartments.sort(sortNames);
     console.log(departments, subdepartments)
     let html = `<ul class="accordion departments list-unstyled" id="departments-accordion">`;
 

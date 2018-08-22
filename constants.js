@@ -107,7 +107,7 @@ export const circleColors = {
 export const circleHoverColors = {
 	dept: 'rgba(249, 198, 90, 0.4)',
 	subdept: 'rgba(0, 133, 62, 0.4)',
-	brand: 'rgba(255, 255, 255, 0.4)', 
+	brand: 'rgba(255, 255, 255, 0.3)', 
 	product: '#fff'
 }
 

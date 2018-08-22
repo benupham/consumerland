@@ -9,7 +9,7 @@ import {handleJumpStrips} from '../components/jumpstrips.js';
 import {productsSource} from '../features/categoryFeatures.js';
 
 export let jumpStripsInt = null;
-let highlight = undefined; 
+let highlight = {}; 
 
 export const handleHover = function(e) {
   // Turns off all hover events for touch devices. 
@@ -49,24 +49,27 @@ export const handleHover = function(e) {
     if (featureType == 'add' || (featureType == 'product' && featureStyle == 'image')) {
       setCartAddIcon(feature);
     } 
-    else if (featureType == 'brand' || 'dept' || 'subdept') {
+    else if ((featureType == 'brand' || 'dept' || 'subdept') && (featureStyle === 'circle')) {
+
       setCartAddIcon(false);
-      if (feature != highlight) {
-        if (highlight) {
-          highlight.set('hover', false);
+      if (feature != highlight[featureType]) {
+        
+        if (highlight[featureType] && (featureType === highlight[featureType].get('type'))) {
+          
+          highlight[featureType].set('hover', false);
           feature.dispatchEvent('change');
         }
         feature.set('hover', true);
         feature.dispatchEvent('change');
-        highlight = feature;
+        highlight[featureType] = feature;
       }
 
     } 
   } else {
     map.getTargetElement().style.cursor = 'auto';
-    if (highlight) {
-      highlight.set('hover', false);
-      highlight = undefined;
+    if (highlight[featureType]) {
+      highlight[featureType].set('hover', false);
+      highlight[featureType] = undefined;
     }
   }
 }
