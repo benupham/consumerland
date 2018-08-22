@@ -39,6 +39,7 @@ export const handleHover = function(e) {
       layerFilter: (layer) => { return layer.get('name') != 'tag-layer' ? true : false}
     });
 
+    // this should really be debounced in the preview function
     debounce(updatePreview, 250).call(null, features, e);
     
     const feature = features[0];

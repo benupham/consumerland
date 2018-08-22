@@ -24,7 +24,7 @@ export const brandsCircleMin = 0;
 export const brandsImageMax = 25;
 export const brandsImageMin = 0;
 
-export const subdeptsLabelMax = 60;
+export const subdeptsLabelMax = 1000;
 export const subdeptsLabelMin = 0;
 export const subdeptsCircleMax = 1000;
 export const subdeptsCircleMin = 0;
@@ -71,23 +71,30 @@ export const colors = [
 
 export const labelColors = {
 	dept: '#606060',
-	subdept: '#606060',
-	brand: '#808080',
+	subdept: '#636363',
+	brand: '#606060',
 	product: '#606060'
 }
 
 export const labelBackgroundColors = {
 	dept: 'rgba(255, 255, 255, 0.7)',
-	subdept: 'rgba(255, 255, 255, 0.7)',
-	brand: 'rgba(255, 255, 255, 0.7)',
+	subdept: 'rgba(255, 255, 255, 0.0)',
+	brand: 'rgba(255, 255, 255, 0.0)',
 	product: 'rgba(255, 255, 255, 0.7)'
 }
 
 export const labelStrokes = {
 	dept: '#fff',
-	subdept: '#fff',
-	brand: '#fff',
+	subdept: 'rgba(255, 255, 255, 0.7)',
+	brand: 'rgba(255, 255, 255, 0.7)',
 	product: '#fff'
+}
+
+export const labelStrokeWidth = {
+	dept: 1,
+	subdept: 4,
+	brand: 6,
+	product: 1
 }
 
 export const circleLabelColors = {
@@ -122,7 +129,7 @@ export const fontFamily = {
 
 export const fontWeight = {
 	dept: '500',
-	subdept: '400',
+	subdept: '300',
 	brand: '300',
 	product: '400'
 }

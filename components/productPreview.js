@@ -28,21 +28,22 @@ export const updatePreview = function (features, e) {
 	let previewName = document.getElementById('preview-name');
 	let previewPrice = document.getElementById('preview-price');
 	let previewImage = document.getElementById('preview-image');
+	let previewInfo = document.getElementById('preview-productinfo');
 	previewName.innerHTML = previewPrice.innerHTML = previewImage.style.backgroundColor = '';
 
 	const type = f.get('type');
 
 	if (type === 'product' && f.get('style') === 'image') {
-		previewName.innerHTML = '<strong>' + textFormatter(f.get('name'), 50, '', 45) + '</strong>';
-		previewPrice.innerHTML += f.get('price');
+		previewName.innerHTML = '<strong>' + textFormatter(f.get('name'), 40, '<br>', 75) + '</strong>';
+		previewPrice.innerHTML = f.get('price');
 		previewImage.style.backgroundImage = "url('" + f.get('src') + "')";
-	} else if (type === 'subdept') {
-		previewName.innerHTML = '<strong>' + textFormatter(f.get('name'), 50, '', 45) + '</strong>';
-		previewImage.style.backgroundColor = circleColors[type];
-		previewImage.style.backgroundImage = 'none';
 	} else {
-		hidePreview();
-		return;
+		previewName.innerHTML = '<h6 class="mt-1">' + textFormatter(f.get('name'), 40, '<br>', 75) + '</h6>';
+		previewImage.style.backgroundImage = "url('" + f.get('src') + "')";
+		//previewInfo.innerHTML = f.get('children') + ' Products';
+	// } else {
+	// 	hidePreview();
+	// 	return;
 	}
 	positionPreview(e);
 	

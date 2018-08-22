@@ -39,6 +39,7 @@ import {
   labelColors,
   labelBackgroundColors,
   labelStrokes,
+  labelStrokeWidth,
   circleLabelColors,
   circleColors,
   circleHoverColors,
@@ -112,7 +113,7 @@ const labelStyle = function(label, res) {
         text: label.get('name'),
         textBaseline: 'middle',
         //fill: new Fill({color: labelColors[label.get('type')]}),
-        stroke: new Stroke({color: labelStrokes[label.get('type')], width: 1}) ,
+        stroke: new Stroke({color: labelStrokes[label.get('type')], width: labelStrokeWidth[label.get('type')]}) ,
         backgroundFill: new Fill({color: labelBackgroundColors[label.get('type')]}),
         padding: [0,5,0,5]
       })
@@ -157,7 +158,8 @@ const circleFeatureRender = function(featureSets, type='all') {
           color: color,
           hover: false,
           hoverColor: hoverColor,
-          src: f.src
+          src: imagesDir + (f.properties.sampleImg || f.properties.src),
+          children: f.properties.value || '' 
         });
         circle.setId(f.id + '-circle');
         circles.push(circle);        
