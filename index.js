@@ -32,7 +32,7 @@ import {renderDeptsLinks} from './components/departmentsLinks';
 const ctr = [46000,-46000];
 export const view = new View({
   center: ctr,
-  resolution: 65, 
+  resolution: 59, 
   zoomFactor: 1.5,
   minResolution: 1,
   maxResolution: 65,

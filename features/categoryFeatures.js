@@ -4,6 +4,7 @@ import VectorLayer from 'ol/layer/vector';
 import VectorSource from 'ol/source/vector';
 import Circle from 'ol/geom/circle';
 import Polygon from 'ol/geom/polygon';
+import CircleStyle from 'ol/style/circle';
 import Stroke from 'ol/style/stroke';
 import Icon from 'ol/style/icon';
 import Fill from 'ol/style/fill';
@@ -112,6 +113,8 @@ const labelStyle = function(label, res) {
         font: fontWeight[label.get('type')] + ' ' + label.get('fontSize') + 'px' + ' ' + fontFamily[label.get('type')],
         text: label.get('name'),
         textBaseline: 'middle',
+        textAlign: 'left',
+        offsetX: 30,
         //fill: new Fill({color: labelColors[label.get('type')]}),
         stroke: new Stroke({color: labelStrokes[label.get('type')], width: labelStrokeWidth[label.get('type')]}) ,
         backgroundFill: new Fill({color: labelBackgroundColors[label.get('type')]}),
@@ -264,8 +267,8 @@ const imageFeatureRender = function (featureSets, type='all') {
 
   featureSets.forEach((featureSet) => {
     featureSet.forEach((f) => {
-      if (((f.properties.src).indexOf('.') > -1) && (f.properties.type === type || type === 'all'))  {
-        const src = imagesDir + f.properties.src; 
+      if ((f.properties.type === type || type === 'all'))  {
+        const src = imagesDir + (f.properties.sampleImg || f.properties.src); 
         const image = new Feature({
           geometry: new Point(f.geometry.coordinates),
           name: f.properties.name,
@@ -275,7 +278,8 @@ const imageFeatureRender = function (featureSets, type='all') {
           style: 'image',
           radius: f.properties.radius,
           relativeRadius: f.properties.radius / extent[1],
-          src: src
+          src: src,
+          maxRes: f.properties.maxRes
         });
         image.setId(f.id + '-image');
         images.push(image);        
@@ -287,25 +291,41 @@ const imageFeatureRender = function (featureSets, type='all') {
 
 const imageStyleCache = {};
 const imageIconCache = {};
+
 const imageStyle = function(image, res) {
+  if (image.get('maxRes') < view.getResolution()) return null;
   let style = imageStyleCache[image.get('src')];
   if (!style) {
     let icon = imageIconCache[image.get('src')];
-    const scaleFactor = image.get('type') === 'subdept' ? .8 : 1;
+    const scaleFactor = .30;
     const radius = image.get('radius');
-    const scale = image.get('relativeRadius') > .5 ? image.get('relativeRadius') : .5;//radius/65 * 2 > 200 ? 1 : radius/65 * 2 / 200;
+    const scale = image.get('relativeRadius');// > .2 ? image.get('relativeRadius') : .5;//radius/65 * 2 > 200 ? 1 : radius/65 * 2 / 200;
     if (!icon) {
       icon = new Icon({
         src: image.get('src'),
         size: [200,200],
         crossOrigin: 'anonymous',
-        scale: scale * scaleFactor
+        scale: scaleFactor / Math.SQRT2,
+        anchor: [0.5, 0.5]
       })
       imageIconCache[image.get('src')] = icon;
     }
-    style = new Style({
-      image: icon
+    const circleStyle = new Style({
+      image: new CircleStyle({
+        fill: new Fill({
+          color: '#fff'
+        }),
+        stroke: new Stroke({
+          color: '#F0F0F0',
+          width: 1
+        }),
+        radius: 100 * scaleFactor 
+      })
+    }); 
+    const Iconstyle = new Style({
+      image: icon 
     })
+    style = [circleStyle, Iconstyle];
     imageStyleCache[image.get('type')] = style;
   }
   if (image.get('type') == 'product') style.getImage().setScale(1/ res);
@@ -566,7 +586,7 @@ getFeatureJson(['dept','subdept','brand'])
   map.addLayer(brandsLabelLayer);
   map.addLayer(subdepartmentsImageLayer);
   map.addLayer(subdepartmentsLabelLayer);
-  map.addLayer(departmentsImageLayer);
+  //map.addLayer(departmentsImageLayer);
   map.addLayer(departmentsLabelLayer);
   maxExtent = departmentsCircleLayer.getSource().getExtent();
   

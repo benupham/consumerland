@@ -17,7 +17,7 @@ export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland-sprite
 export const productsImageMax = 15;
 export const productsCircleMax = 15;
 
-export const brandsLabelMax = 35;
+export const brandsLabelMax = 50;
 export const brandsLabelMin = 0;
 export const brandsCircleMax = 50;
 export const brandsCircleMin = 0;

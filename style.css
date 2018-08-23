@@ -60,7 +60,7 @@
 
 body {
   overflow: hidden;
-	background: white;
+	background: #f2f2f2;
 	font-family: Oswald;
 	font-weight: 300;
 	font-size: 14px;
@@ -306,7 +306,7 @@ a.department-link:hover, a.subdepartment-link:hover {
 	color: red; 
 	z-index: 1000;
 	background: white;
-  display: none;
+  display: block;
 }
 /*
 * MEDIA QUERIES
