@@ -44,8 +44,10 @@ import {
   circleLabelColors,
   circleColors,
   circleHoverColors,
+  imageScale,
   fontFamily,
   fontSizes,
+  fontSizesByType,
   fontWeight,
 } from '../constants.js';
 import {textFormatter, dataTool, getFeatureJson, getFeaturesFromFirestore} from '../utilities.js';
@@ -114,11 +116,11 @@ const labelStyle = function(label, res) {
         text: label.get('name'),
         textBaseline: 'middle',
         textAlign: 'left',
-        offsetX: 30,
+        offsetX: 35,
         //fill: new Fill({color: labelColors[label.get('type')]}),
         stroke: new Stroke({color: labelStrokes[label.get('type')], width: labelStrokeWidth[label.get('type')]}) ,
         backgroundFill: new Fill({color: labelBackgroundColors[label.get('type')]}),
-        padding: [0,5,0,5]
+        padding: [0,3,0,3]
       })
     })
     labelStyleCache[label.getId()] = style;
@@ -259,7 +261,7 @@ const imageFeatureRender = function (featureSets, type='all') {
   let extent = [];
   if (featureSets.length === 1) {
     extent = d3Array.extent(featureSets[0], function(f) {
-      if (type === f.properties.type || type === 'all') {
+      if (type === f.properties.type) {
         return f.properties.radius  
       } 
     });
@@ -297,9 +299,9 @@ const imageStyle = function(image, res) {
   let style = imageStyleCache[image.get('src')];
   if (!style) {
     let icon = imageIconCache[image.get('src')];
-    const scaleFactor = .30;
+    const scaleFactor = imageScale[image.get('type')];
     const radius = image.get('radius');
-    const scale = image.get('relativeRadius');// > .2 ? image.get('relativeRadius') : .5;//radius/65 * 2 > 200 ? 1 : radius/65 * 2 / 200;
+    const scale = image.get('relativeRadius') > .7 ? image.get('relativeRadius') : .7;//radius/65 * 2 > 200 ? 1 : radius/65 * 2 / 200;
     if (!icon) {
       icon = new Icon({
         src: image.get('src'),
@@ -319,7 +321,7 @@ const imageStyle = function(image, res) {
           color: '#F0F0F0',
           width: 1
         }),
-        radius: 100 * scaleFactor 
+        radius: 100 * scaleFactor
       })
     }); 
     const Iconstyle = new Style({

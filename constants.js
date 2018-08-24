@@ -14,29 +14,29 @@ export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland-sprite
 
 // Resolution
 
-export const productsImageMax = 15;
-export const productsCircleMax = 15;
+export const productsImageMax = 10;
+export const productsCircleMax = 10;
 
-export const brandsLabelMax = 50;
+export const brandsLabelMax = 20;
 export const brandsLabelMin = 0;
 export const brandsCircleMax = 50;
 export const brandsCircleMin = 0;
-export const brandsImageMax = 25;
-export const brandsImageMin = 0;
+export const brandsImageMax = 20;
+export const brandsImageMin = 10;
 
 export const subdeptsLabelMax = 1000;
 export const subdeptsLabelMin = 0;
 export const subdeptsCircleMax = 1000;
 export const subdeptsCircleMin = 0;
-export const subdeptsImageMax = 60;
-export const subdeptsImageMin = 0;
+export const subdeptsImageMax = 1000;
+export const subdeptsImageMin = 20;
 
 export const deptsLabelMax = 1000;
 export const deptsLabelMin = 0;
 export const deptsCircleMax = 1000;
 export const deptsCircleMin = 0;
 export const deptsImageMax = 1000;
-export const deptsImageMin = 0;
+export const deptsImageMin = 60;
 
 export const maxResolutions = [
 	10,
@@ -92,8 +92,8 @@ export const labelStrokes = {
 
 export const labelStrokeWidth = {
 	dept: 1,
-	subdept: 4,
-	brand: 6,
+	subdept: 3,
+	brand: 4,
 	product: 1
 }
 
@@ -118,6 +118,14 @@ export const circleHoverColors = {
 	product: '#fff'
 }
 
+export const imageScale = {
+	dept: .5,
+	subdept: .325,
+	brand: .2, 
+	product: 1
+}
+
+
 // Fonts
 
 export const fontFamily = {
@@ -129,9 +137,15 @@ export const fontFamily = {
 
 export const fontWeight = {
 	dept: '500',
-	subdept: '300',
+	subdept: '500',
 	brand: '300',
 	product: '400'
+}
+
+export const fontSizesByType = {
+	dept: '20',
+	subdept: '16',
+	brand: '14'
 }
 
 export const fontSizes = [
