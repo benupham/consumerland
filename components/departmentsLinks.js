@@ -22,7 +22,7 @@ export const renderDeptsLinks = function() {
       return f.properties.type === 'subdept';
     })
     subdepartments.sort(sortNames);
-    console.log(departments, subdepartments)
+
     let html = `<ul class="accordion departments list-unstyled" id="departments-accordion">`;
 
     departments.forEach( d => {
@@ -37,7 +37,7 @@ export const renderDeptsLinks = function() {
 
       subdepartments.forEach(s => {
 
-        if (s.properties.parent === d.id) {
+        if (s.properties.parent === d.properties.name) {
           html += 
           `<li><a id="$${s.id}-link" data-id="${s.id}" data-coord="${s.geometry.coordinates}" data-type="subdept" class="subdepartment-link">${s.properties.name}</a></li>`
         }

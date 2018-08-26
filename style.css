@@ -178,33 +178,47 @@ body {
   right: auto;
   left: 0;
   top: 125px;
-  width: 200px;
+  width: 400px;
   height: 100%;
   z-index: 99;
+  cursor: default;
 }
 .omnibox.open {
   background-color: #f0f0f0;
   border-right: 1px solid black;
 }
 
-.omnibox .row {
-  padding-top: 15px;
-}
-
 .departments {
+  background-color: #f0f0f0;
+  max-height: 700px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.departments .media {
+  background-color: #fff;
+  width: 100%;
+}
+
+.departments .media-body {
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.departments .omni-list-name {
   font-size: 14px;
-  font-weight: 200;
-}
-
-.departments li > ul {
-  margin-left: 1em;
-  font-size: 12px;
-}
-
-a.department-link:hover, a.subdepartment-link:hover {
-  cursor: pointer;
-  color: #111;
   font-weight: 400;
+  display: block;
+}
+
+.departments .child-link {
+  font-size: 11px;
+  font-weight: 200;
+  cursor: pointer;
+}
+
+.departments .child-link:hover, .departments .child-link:active {
+  text-decoration: underline;
 }
 
 /* OVERVIEW MAP */
@@ -263,8 +277,6 @@ a.department-link:hover, a.subdepartment-link:hover {
 	width: 250px;
 }
 
-.product-overlay .product-price {
-}
 
 /* Cart */
 .cart {
@@ -306,7 +318,7 @@ a.department-link:hover, a.subdepartment-link:hover {
 	color: red; 
 	z-index: 1000;
 	background: white;
-  display: block;
+  display: none;
 }
 /*
 * MEDIA QUERIES

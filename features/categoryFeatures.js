@@ -637,3 +637,4 @@ getFeatureJson(['product'])
   map.addLayer(productsCircleLayer);
   map.addLayer(productsImageLayer);
 })
+

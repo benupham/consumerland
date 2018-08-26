@@ -3,6 +3,7 @@ import {map} from '../index.js';
 import {productsImageMax, searchResolutions} from '../constants.js';
 import {flyTo, getFeatureJson} from '../utilities.js';
 import matchSorter from 'match-sorter';
+import {Omnibox} from './omnibox.js'
 
 /*
 * Search
@@ -14,7 +15,7 @@ import matchSorter from 'match-sorter';
 //   stopEvent: false,
 // })
 
-let searchIndex = [];
+export let searchIndex = [];
 getFeatureJson(['product','brand','dept','subdept'])
 .then(res => {
   searchIndex = res.map(f => {
@@ -24,9 +25,14 @@ getFeatureJson(['product','brand','dept','subdept'])
       count: f.properties.value,
       type: f.properties.type,
       parent: f.properties.parent,
-      coord: f.geometry.coordinates
+      coord: f.geometry.coordinates,
+      image: f.properties.sampleImg || f.properties.src
     }
   });
+  const elem = document.getElementById('departments');
+  const testCategory = res.find(f => f.properties.type === 'dept');
+  const omnibox = new Omnibox(elem, res, testCategory);
+  omnibox.renderList();
 });
 
 export const handleSearch = function(e) {
