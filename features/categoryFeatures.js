@@ -36,7 +36,6 @@ import {
   deptsImageMax,
   deptsImageMin,
   maxResolutions,
-  colors,
   labelColors,
   labelBackgroundColors,
   labelStrokes,
@@ -318,10 +317,10 @@ const imageStyle = function(image, res) {
           color: '#fff'
         }),
         stroke: new Stroke({
-          color: '#F0F0F0',
-          width: 1
+          color: labelColors[image.get('type')],
+          width: 3
         }),
-        radius: 100 * scaleFactor
+        radius: 105 * scaleFactor
       })
     }); 
     const Iconstyle = new Style({

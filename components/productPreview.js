@@ -8,19 +8,17 @@ import {textFormatter, debounce, dataTool} from '../utilities.js';
 import {circleColors} from '../constants.js';
 
 
-// export const productPreviewOverlay = new Overlay({
-//   element: document.getElementById('preview'),
-//   id: 'productPreview',
-//   autoPan: false,
-//   stopEvent: false,
-//   positioning: 'center-center'
-// });
-
 let previewedFeature = null;
 
-export const updatePreview = function (features, e) {
-	const f = features[0];
+export const updatePreview = function(e) {
+	const features = map.getFeaturesAtPixel(e.pixel);
+	if (features === null) {
+		hidePreview();
+		previewedFeature = null;
+		return
+	}
 	
+	const f = features[0];
 	if (previewedFeature === f) return;
 
 	previewedFeature = f; 
@@ -40,10 +38,7 @@ export const updatePreview = function (features, e) {
 	} else {
 		previewName.innerHTML = '<h6 class="mt-1">' + textFormatter(f.get('name'), 40, '<br>', 75) + '</h6>';
 		previewImage.style.backgroundImage = "url('" + f.get('src') + "')";
-		//previewInfo.innerHTML = f.get('children') + ' Products';
-	// } else {
-	// 	hidePreview();
-	// 	return;
+
 	}
 	positionPreview(e);
 	

@@ -68,7 +68,7 @@ body {
 	/* background-image: url('https://s3-us-west-1.amazonaws.com/consumerland/other-images/wood-floor-web.jpg'); */
 }
 
-.ol-attribution {
+.ol-attribution, .ol-zoom {
 	display: none;
 }
 
@@ -125,15 +125,48 @@ body {
   color: rgba(249, 198, 90, 1);
 }
 
-/* SEARCH & FEATURE PREVIEW */
-.search {
+/* FEATURE PREVIEW */
+.product-preview {
+  position: absolute;
+  top: 0;
+  left: -9999px;
+  min-width: 200px;
+}
+
+.preview-image {
+	height: 70px;
+  width: 70px;
+  background-size: contain;
+}
+
+/* PRODUCT HOVER CARD */
+.product-hover-card {
+
+}
+/* OMNIBOX  */
+.omnibox {
   display: block;
   position: absolute;
-  width: 400px;
-  top: 0;
-  left: 0;
   bottom: auto;
   right: auto;
+  left: 0;
+  top: 0;
+  background-color: #f0f0f0;
+  width: 300px;
+  height: 100vh;
+  z-index: 99;
+  cursor: default;
+}
+.omnibox.open {
+  background-color: #f0f0f0;
+  border-right: 1px solid black;
+}
+
+.search-bar {
+  width: 95%;
+}
+.search-bar .input-group input.form-control {
+  border: none;
 }
 
 .autocomplete .ui-menu-item {
@@ -152,52 +185,29 @@ body {
   color: rgba(249, 198, 90, 1);
 }
 
-.product-preview {
-  position: absolute;
-  top: 0;
-  left: -9999px;
-  min-width: 200px;
-}
-
-.preview-image {
-	height: 70px;
-  width: 70px;
-  background-size: contain;
-}
-
-/* PRODUCT HOVER CARD */
-
-.product-hover-card {
-
-}
-/* OMNIBOX  */
-.omnibox {
-  display: block;
-  position: absolute;
-  bottom: auto;
-  right: auto;
-  left: 0;
-  top: 125px;
-  width: 400px;
-  height: 100%;
-  z-index: 99;
-  cursor: default;
-}
-.omnibox.open {
-  background-color: #f0f0f0;
-  border-right: 1px solid black;
-}
-
 .departments {
-  background-color: #f0f0f0;
-  max-height: 700px;
+  background-color: #fff;
+  height: 90%;
+  position: relative;
+}
+
+.departments .omni-list {
   overflow-y: scroll;
   overflow-x: hidden;
+  height: 93%;
+}
+
+.departments .omni-list-header {
+  height: 7%;
 }
 
 .departments .media {
   background-color: #fff;
   width: 100%;
+  cursor: pointer;
+}
+.departments .media.type-product {
+  cursor: default;
 }
 
 .departments .media-body {
@@ -206,8 +216,8 @@ body {
 }
 
 .departments .omni-list-name {
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 300;
   display: block;
 }
 
@@ -234,6 +244,7 @@ body {
   height: 154px;
 	z-index: 10;
   will-change: content;
+  display: none;
 }
 
 .overviewmap.ol-overviewmap {
@@ -312,8 +323,8 @@ body {
 
 .data-tool {
 	position: absolute; 
-	top: 20px; 
-	left: 30px; 
+	bottom: 20px; 
+	right: 30px; 
 	font-size: 16px; 
 	color: red; 
 	z-index: 1000;

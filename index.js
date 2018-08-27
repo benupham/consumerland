@@ -11,12 +11,12 @@ import {productDetailOverlay} from './components/productDetail.js';
 import {hidePreview} from './components/productPreview.js';
 import {textFormatter, dataTool, iconcache} from './utilities.js';
 import {displaySignage} from './components/signage.js';
-import {handleSearch, omnibox} from './components/search.js';
+import {handleSearch, omnibox} from './components/omnibox.js';
 import {handleJumpStrips} from './components/jumpstrips.js';
 import {handleHover, jumpStripsInt} from './events/hover.js';
 import {handleClick} from './events/click.js';
 import {tagLayer} from './features/tags.js';
-import {productsImageMax} from './constants.js';
+import {mapMaxResolution, mapCenter} from './constants.js';
 import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './components/controls.js';
 import {renderDeptsLinks} from './components/departmentsLinks';
 
@@ -29,10 +29,10 @@ import {renderDeptsLinks} from './components/departmentsLinks';
 * 
 */
 
-const ctr = [46000,-46000];
+const ctr = mapCenter;
 export const view = new View({
-  center: ctr,
-  resolution: 59, 
+  center: mapCenter,
+  resolution: mapMaxResolution, 
   zoomFactor: 1.5,
   minResolution: 1,
   maxResolution: 65,
@@ -68,20 +68,10 @@ window.addEventListener('resize', mapResize);
 * 
 */
 
-// map.addOverlay(productCardOverlay);
 map.addControl(overviewMapControl);
-// map.addControl(breadCrumbsControl);
-
-// map.addControl(productPreview);
-
-// map.addOverlay(omnibox);
 
 map.addOverlay(productDetailOverlay);
 
-//renderDeptsLinks();
-// for (let i = 0; i < 4; i++) {
-//   map.addOverlay(signage[i]);
-// }
 
 map.on('pointermove', (e) => {
   dataTool.querySelector('#data-coord').innerHTML = `coord: ${e.coordinate}`;
@@ -98,7 +88,8 @@ map.on('singleclick', (e) => {
 
 
 
-view.on('change:resolution', (e) => {
+view.on('change:resolution', (e) => {  
+  hidePreview();
   // console.log(e);
   const res = view.getResolution();
   if (window.jumpStripActive === true) return; 
@@ -109,14 +100,15 @@ view.on('change:resolution', (e) => {
   const ctr = view.getCenter();
   const pixel = map.getPixelFromCoordinate(ctr);
   const features = map.getFeaturesAtPixel(pixel);
-  
-  hidePreview();
+
 
   dataTool.querySelector('#data-zoom').innerHTML = `zoom: ${view.getZoom()}`;
   dataTool.querySelector('#data-res').innerHTML = `res: ${view.getResolution()}`;
 });
 
 view.on('change:center', (e) => {
+  hidePreview();
+
   const viewCenter = view.getCenter();
   if (!Extent.containsCoordinate(maxExtent,viewCenter)) {
     view.setCenter(ctr);

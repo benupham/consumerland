@@ -14,6 +14,9 @@ export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland-sprite
 
 // Resolution
 
+export const mapMaxResolution = 70;
+export const mapCenter = [46000,-46000];
+
 export const productsImageMax = 10;
 export const productsCircleMax = 10;
 
@@ -38,14 +41,6 @@ export const deptsCircleMin = 0;
 export const deptsImageMax = 1000;
 export const deptsImageMin = 60;
 
-// For zooming to features from external controls
-export const featureZoomRes = {
-	dept: subdeptsImageMin - 1,
-	subdept: brandsImageMin - 1,
-	brand: 3,
-	product: 1
-}
-
 // For hiding/showing category labels, images, etc. 
 export const maxResolutions = [
 	10,
@@ -67,26 +62,15 @@ export const searchResolutions = {
 
 // Colors
 
-export const colors = [
-  '#303030',
-  '#606060',
-  '#808080',
-  '#A9A9A9',
-  '#C0C0C0',
-  '#DCDCDC',
-  '#E8E8E8',
-  '#fff'
-]
-
 export const labelColors = {
-	dept: '#606060',
-	subdept: '#636363',
-	brand: '#606060',
-	product: '#606060'
+	dept: 'rgba(102,194,165, 1)',
+	subdept: 'rgba(252,141,98, 1)',
+	brand: 'rgba(141,160,203, 1)',
+	product: 'rgba(231,138,195, 1)'
 }
 
 export const labelBackgroundColors = {
-	dept: 'rgba(255, 255, 255, 0.7)',
+	dept: 'rgba(255, 255, 255, 1)',
 	subdept: 'rgba(255, 255, 255, 0.0)',
 	brand: 'rgba(255, 255, 255, 0.0)',
 	product: 'rgba(255, 255, 255, 0.7)'
@@ -101,8 +85,8 @@ export const labelStrokes = {
 
 export const labelStrokeWidth = {
 	dept: 1,
-	subdept: 3,
-	brand: 4,
+	subdept: 1,
+	brand: 1,
 	product: 1
 }
 
@@ -128,9 +112,9 @@ export const circleHoverColors = {
 }
 
 export const imageScale = {
-	dept: .5,
-	subdept: .325,
-	brand: .2, 
+	dept: .45,
+	subdept: .3,
+	brand: .18, 
 	product: 1
 }
 
@@ -146,9 +130,9 @@ export const fontFamily = {
 
 export const fontWeight = {
 	dept: '500',
-	subdept: '500',
+	subdept: '300',
 	brand: '300',
-	product: '400'
+	product: '300'
 }
 
 export const fontSizesByType = {

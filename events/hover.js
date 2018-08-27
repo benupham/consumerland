@@ -3,7 +3,7 @@ import has from 'ol/has';
 import {view, map} from '../index.js';
 import {productsImageMax} from '../constants.js';
 import {debounce} from '../utilities.js';
-import {updatePreview} from '../components/productPreview.js';
+import {updatePreview, hidePreview} from '../components/productPreview.js';
 import {setCartAddIcon} from '../features/tags.js';
 import {handleJumpStrips} from '../components/jumpstrips.js';
 import {productsSource} from '../features/categoryFeatures.js';
@@ -14,6 +14,8 @@ let highlight = {};
 export const handleHover = function(e) {
   // Turns off all hover events for touch devices. 
   if (has.TOUCH === true) return;
+  
+  debounce(updatePreview, 250).call(null, e);
 
   const resolution = view.getResolution();
   const size = map.getSize();
@@ -23,24 +25,12 @@ export const handleHover = function(e) {
     window.jumpStripActive = false; 
   }
 
-  // if (resolution < view.getMaxResolution() && (e.pixel[0] < 100 || e.pixel[1] < 100 || e.pixel[0] > size[0] - 100 || e.pixel[1] > size[1] - 100)) {
-  //   jumpStripsInt = window.setInterval(handleJumpStrips, 16, e);
-  //   hideOverlay(productCardOverlay);
-  //   return
-  // } else if (jumpStripsInt != null) {
-  //   window.clearInterval(jumpStripsInt);
-  //   map.getTargetElement().style.cursor = '';
-  //   window.jumpStripActive = false;
-  // }
-
   if (map.hasFeatureAtPixel(e.pixel)) {
     map.getTargetElement().style.cursor = 'pointer';
     const features = map.getFeaturesAtPixel(e.pixel, {
       layerFilter: (layer) => { return layer.get('name') != 'tag-layer' ? true : false}
     });
 
-    // this should really be debounced in the preview function
-    debounce(updatePreview, 250).call(null, features, e);
     
     const feature = features[0];
     const featureType = feature.get('type');
@@ -67,10 +57,14 @@ export const handleHover = function(e) {
 
     } 
   } else {
+    hidePreview();
     map.getTargetElement().style.cursor = 'auto';
-    if (highlight[featureType]) {
-      highlight[featureType].set('hover', false);
-      highlight[featureType] = undefined;
+    for (let key in highlight) {
+      highlight[key].set('hover', false);
     }
+    // if (featureType && highlight[featureType]) {
+    //   highlight[featureType].set('hover', false);
+    //   highlight[featureType] = undefined;
+    // }
   }
 }

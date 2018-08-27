@@ -61,16 +61,7 @@
 
     <!-- Search & Preview -->
 
-    <div id="search" class="search rounded bg-white shadow-sm border m-2">
-      <div id="search-bar" class="row no-gutters search-bar bg-white p-1">
-          <div class="input-group">
-            <input type="text" id="search-input" class="form-control" placeholder="Search here">
-            <div class="input-group-append">
-              <button id="search-button" class="btn btn-warning" type="button">Search</button>
-            </div>          
-          </div>
-      </div>
-    </div>
+
 
     <!-- Cart -->
     <div id="cart" class="col-auto dropdown cart">
@@ -79,11 +70,14 @@
     </div>
 
     <!-- Omnibox-->
-    <div id="omnibox" class="omnibox">
-
-        <div id="departments" class="row no-gutters departments rounded p-1 m-2 shadow-sm border">
+    <div id="omnibox" class="omnibox shadow-sm">
+        <div id="search-bar" class="input-group search-bar bg-white shadow-sm m-2 p-1">
+              <input type="text" id="search-input" class="form-control" placeholder="Search here">
+              <div class="input-group-append">
+                <button id="search-button" class="btn btn-warning" type="button">Search</button>
+              </div>          
         </div>
-        
+      <div id="departments" class="departments p-1 m-2 shadow-sm border"></div>
     </div>
 
     <div id="overviewmap" class="overviewmap m-2 rounded shadow-sm"></div>
