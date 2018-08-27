@@ -78,7 +78,7 @@ map.addControl(overviewMapControl);
 
 map.addOverlay(productDetailOverlay);
 
-renderDeptsLinks();
+//renderDeptsLinks();
 // for (let i = 0; i < 4; i++) {
 //   map.addOverlay(signage[i]);
 // }

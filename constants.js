@@ -38,6 +38,15 @@ export const deptsCircleMin = 0;
 export const deptsImageMax = 1000;
 export const deptsImageMin = 60;
 
+// For zooming to features from external controls
+export const featureZoomRes = {
+	dept: subdeptsImageMin - 1,
+	subdept: brandsImageMin - 1,
+	brand: 3,
+	product: 1
+}
+
+// For hiding/showing category labels, images, etc. 
 export const maxResolutions = [
 	10,
 	15,
@@ -105,15 +114,15 @@ export const circleLabelColors = {
 }
 
 export const circleColors = {
-	dept: 'rgba(249, 198, 90, 0.3)',
-	subdept: 'rgba(0, 133, 62, 0.3)',
-	brand: 'rgba(255, 255, 255, 0.2)', 
+	dept: 'rgba(249, 198, 90, 0.15)',
+	subdept: 'rgba(0, 133, 62, 0.15)',
+	brand: 'rgba(255, 255, 255, 0.15)', 
 	product: 'rgba(255, 255, 255, 1)'
 }
 
 export const circleHoverColors = {
-	dept: 'rgba(249, 198, 90, 0.4)',
-	subdept: 'rgba(0, 133, 62, 0.4)',
+	dept: 'rgba(249, 198, 90, 0.2)',
+	subdept: 'rgba(0, 133, 62, 0.2)',
 	brand: 'rgba(255, 255, 255, 0.3)', 
 	product: '#fff'
 }

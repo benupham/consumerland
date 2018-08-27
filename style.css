@@ -318,7 +318,7 @@ body {
 	color: red; 
 	z-index: 1000;
 	background: white;
-  display: none;
+  display: block;
 }
 /*
 * MEDIA QUERIES
