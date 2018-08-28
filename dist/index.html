@@ -61,25 +61,7 @@
 
     <!-- Search & Preview -->
 
-    <div id="search" class="search rounded bg-white shadow-sm border m-2">
-      <div id="search-bar" class="row no-gutters search-bar bg-white p-1">
-          <div class="input-group">
-            <input type="text" id="search-input" class="form-control" placeholder="Search here">
-            <div class="input-group-append">
-              <button id="search-button" class="btn btn-warning" type="button">Search</button>
-            </div>          
-          </div>
-      </div>
-      <div id="preview" class="row no-gutters preview bg-white p-1">
-          <div id="preview-item" class="preview-item media m-1">
-              <div id="preview-image" class="preview-image align-self-center mr-3"></div>
-              <div class="media-body align-self-center">
-                <div id="preview-text" class="preview-text"></div>
-              </div>
-          </div>
-      </div>
 
-    </div>
 
     <!-- Cart -->
     <div id="cart" class="col-auto dropdown cart">
@@ -89,21 +71,28 @@
 
     <!-- Omnibox-->
     <div id="omnibox" class="omnibox">
-
-        <!-- <div id="suggested" class="row no-gutters suggested bg-white rounded p-1 m-2 shadow-sm border">
-           Suggested Results 
-        </div> -->
-
-        <div id="departments" class="row no-gutters departments bg-white rounded p-1 m-2 shadow-sm border">
+        <div id="search-bar" class="input-group search-bar bg-white shadow-sm m-2 p-1 border">
+              <input type="text" id="search-input" class="form-control" placeholder="Search here">
+              <div class="input-group-append">
+                <button id="search-button" class="btn btn-warning" type="button">Search</button>
+              </div>          
         </div>
-
-        <!-- <div id="favorites" class="row no-gutters favorites bg-white rounded p-1 m-2 shadow-sm border">
-          Favorites 
-        </div> -->
-  
-        
+      <div id="departments" class="departments p-1 m-2 shadow-sm border"></div>
     </div>
+
     <div id="overviewmap" class="overviewmap m-2 rounded shadow-sm"></div>
+
+      <!-- Product Hover Preview -->
+      <div id="product-preview" class="product-preview bg-white shadow-sm">
+        <div id="preview-item" class="preview-item media">
+            <div id="preview-image" class="preview-image align-self-center mr-2"></div>
+            <div class="media-body mr-2 pt-1">
+              <div id="preview-name" class="preview-name"></div>
+              <div id="preview-price" class="preview-price"></div>
+              <div id="preview-productinfo" class="preview-productinfo"></div>
+            </div>
+        </div>
+      </div>    
 
     <!-- OVERLAYS hidden until added by Openlayers  -->
     <div id="pm-overlays" style="display: none;">
@@ -122,18 +111,7 @@
        
       </div>
 
-      
 
-      <!-- Product Card Overlay (Not Used) -->
-      <div id="product-card" class="product-card card shadow-sm rounded">
-        <img class="card-img-top product-image" src="./product-images/missing-item.jpg" alt="Product image">
-        <div class="card-body">
-          <a class="card-title product-name"></a>
-          <p class="card-text product-price"></p>
-          <button id="product-card-add-button" class="add-to-cart d-block btn btn-outline-warning btn-sm" name="add-to-cart">Add to Cart</button>
-        </div>
-
-      </div>
 
       <!-- Product Detail Overlay -->
       <div id="product-overlay" class="product-overlay container shadow-sm border border-secondary rounded">

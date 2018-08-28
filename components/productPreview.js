@@ -1,9 +1,7 @@
 import Control from 'ol/control/control';
 import Overlay from 'ol/overlay';
 
-import {updateCart} from '../components/cart.js';
 import {map} from '../index.js';
-import {brandsImageLayer} from '../features/categoryFeatures.js';
 import {textFormatter, debounce, dataTool} from '../utilities.js';
 import {circleColors, labelColors} from '../constants.js';
 

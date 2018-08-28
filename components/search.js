@@ -1,9 +1,9 @@
-import Overlay from 'ol/overlay';
-import {map} from '../index.js';
-import {productsImageMax, searchResolutions} from '../constants.js';
-import {flyTo, getFeatureJson} from '../utilities.js';
-import matchSorter from 'match-sorter';
-import {Omnibox} from './omnibox.js'
+// import Overlay from 'ol/overlay';
+// import {map} from '../index.js';
+// import {productsImageMax, searchResolutions} from '../constants.js';
+// import {flyTo, getFeatureJson} from '../utilities.js';
+// import matchSorter from 'match-sorter';
+// import {Omnibox} from './omnibox.js'
 
 /*
 * Search

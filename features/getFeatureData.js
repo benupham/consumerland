@@ -1,25 +1,14 @@
-/* 
-create feature sources
-get category data from server
-create category layers
-add category layers
-create omnibox index with category data
-
-get product data from server
-finish omnibox index with product data
-initialize omnibox
-create product layer --- NEED TO COMBINE PRODUCT CIRCLES WITH PRODUCT IMG
-add product layer
-*/
 import VectorLayer from 'ol/layer/vector';
 import VectorSource from 'ol/source/vector';
+
 
 const d3Array = require('d3-array');
 
 import {productImageFeatureRender, productImageStyle} from './products';
 import {circleFeatureRender, circleStyle} from './circles';
 import {labelFeatureRender, labelStyle, imageFeatureRender, imageStyle} from './labels';
-import {tagsFeatureRender, tagsStyle} from './tags2';
+import {tagsFeatureRender, tagsStyle, cartAddIcon} from './tags2';
+import {Omnibox} from '../components/omnibox';
 
 import {
   productsImageMax,
@@ -47,6 +36,8 @@ import {view, map} from '../index.js';
 import { isNullOrUndefined } from 'util';
 
 
+
+
 // These two functions create a universal maximum resolution for all category features
 // They are applied when data is first collected, rather than on a per-layer basis
 const maxResData = d3Array.histogram()
@@ -72,7 +63,7 @@ const setMaxRange = function(features, range) {
 
 // Exported so components can use productsSource for feature look-ups
 export const productsSource = new VectorSource({overlaps: false});
-const tagsSource = new VectorSource({overlaps: false});
+export const tagsSource = new VectorSource({overlaps: false});
 const deptsCircleSource = new VectorSource({overlaps: false});
 const deptsLabelSource = new VectorSource();
 const deptsImageSource = new VectorSource();
@@ -103,8 +94,6 @@ export const tagsLayer = new VectorLayer({
   renderMode: 'vector',
   maxResolution: productsImageMax 
 })
-tagsLayer.set('name','tag-layer');
-
 
 // Exported to be used in Overview Map
 export const deptsCircleLayer = new VectorLayer({
@@ -197,18 +186,6 @@ const brandsCircleLayer = new VectorLayer({
   maxResolution: brandsCircleMax
 })
 
-map.addLayer(productsCircleLayer);
-map.addLayer(tagsLayer);
-map.addLayer(productsImageLayer);
-map.addLayer(deptsCircleLayer);
-map.addLayer(subdeptsCircleLayer);
-map.addLayer(brandsCircleLayer);
-map.addLayer(brandsImageLayer);
-map.addLayer(brandsLabelLayer);
-map.addLayer(subdeptsImageLayer);
-map.addLayer(subdeptsLabelLayer);
-//map.addLayer(deptsImageLayer);
-map.addLayer(deptsLabelLayer);
 
 // This is defined when dept circles are finished loading, to create bounding area for map
 export let maxExtent = [];
@@ -236,23 +213,47 @@ getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
   brandsLabelSource.addFeatures(labelFeatureRender([categoryData], 'brand'));
   brandsImageSource.addFeatures(imageFeatureRender([categoryData], 'brand'));
 
+  //map.addLayer(productsCircleLayer);
+
+  map.addLayer(deptsCircleLayer);
+  map.addLayer(subdeptsCircleLayer);
+  map.addLayer(brandsCircleLayer);
+  map.addLayer(brandsImageLayer);
+  map.addLayer(brandsLabelLayer);
+  map.addLayer(subdeptsImageLayer);
+  map.addLayer(subdeptsLabelLayer);
+  //map.addLayer(deptsImageLayer);
+  map.addLayer(deptsLabelLayer);
+
   maxExtent = deptsCircleLayer.getSource().getExtent();
 
   return categoryData; 
   
 })
-.getFeatureJson(['product'], 'productsfeatures')
-.then(productData => {
-
-  productsSource.addFeatures(productImageFeatureRender([productData], 'product'));
-  tagsSource.addFeatures(tagsFeatureRender(productData));
-
-  featureData = categoryData.concat(productData);
+.then(categoryData => {
+  getFeatureJson(['product'], 'productsfeatures')
+  .then(productData => {
   
-})
-.then(() => {
-  document.querySelector('.loading').style.display = 'none';
-})
+    productsSource.addFeatures(productImageFeatureRender([productData], 'product'));
+    tagsSource.addFeatures(tagsFeatureRender(productData));
+    tagsSource.addFeature(cartAddIcon);
+    tagsLayer.set('name','tag-layer');
+
+    map.addLayer(tagsLayer);
+    map.addLayer(productsImageLayer);
+  
+    featureData = categoryData.concat(productData);
+    console.log(featureData)
+    const elem = document.getElementById('departments');
+    const omnibox = new Omnibox(elem, featureData);
+    omnibox.init();
+
+    
+  })
+  .then(() => {
+    document.querySelector('.loading').style.display = 'none';
+  })
+}) 
 .catch(err => console.log(err));
 
  

@@ -2,8 +2,8 @@
 * Cart
 * 
 */
-import {productsSource} from '../features/categoryFeatures.js';
-import {setCartRemoveIcon} from '../features/tags.js';
+import {productsSource} from '../features/getFeatureData';
+import {setCartRemoveIcon} from '../features/tags2.js';
 
 const cart = [];
 const cartContents = document.querySelector('#cart-contents');

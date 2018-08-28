@@ -4,7 +4,7 @@ import Circle from 'ol/geom/circle';
 import {productsImageMax, searchResolutions} from '../constants.js';
 import {hidePreview} from '../components/productPreview.js';
 import {renderProductOverlay, hideOverlay, productDetailOverlay} from '../components/productDetail.js';
-import {cartIconHandleClick} from '../features/tags.js';
+import {cartIconHandleClick} from '../features/tags2.js';
 import {omnibox} from '../components/omnibox.js';
 
 export const handleClick = function(e) {

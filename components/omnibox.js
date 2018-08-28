@@ -1,125 +1,129 @@
 import {imagesDir, featureZoomRes} from '../constants.js';
-import {view} from '../index.js';
-import Overlay from 'ol/overlay';
-import {map} from '../index.js';
+import {view, map} from '../index.js';
 import {productsImageMax, searchResolutions, mapMaxResolution, mapCenter, labelColors} from '../constants.js';
 import {flyTo, getFeatureJson} from '../utilities.js';
 import matchSorter from 'match-sorter';
+import {featureData} from '../features/getFeatureData';
 
 /*
 * Search
 * 
 */
 
-let searchIndex = [];
-getFeatureJson(['product','brand','dept','subdept'], 'omnibox')
-.then(res => {
-
-  const elem = document.getElementById('departments');
-  const omnibox = new Omnibox(elem, res);
-  omnibox.renderList();
-
-  searchIndex = res.map(f => {
-    return {
-      value: f.properties.name,
-      label: (f.properties.type === 'product' ? f.properties.name : f.properties.name + ' in ' + '<span class="feature-parent">' + f.properties.parent + '</span>'),
-      count: f.properties.value,
-      type: f.properties.type,
-      parent:  f.properties.parent,
-      coord: f.geometry.coordinates,
-      id: f.id
-    }
-  });
-});
-
-export const handleSearch = function(e) {
-  if (e.keyCode != 13 && e.target.id != 'search-button' && e.target.dataset.id === undefined) {
-    return
-  }
-  let fid = '';
-  if (e.target.dataset.id !== undefined) {
-    fid = Number(e.target.dataset.id);
-    const feature = searchIndex.find(f => f.id === fid);
-    document.getElementById('search-input').value = feature.value; 
-  } 
-  console.log(fid)
-  const query = fid != '' ? fid : document.getElementById('search-input').value;
-
-  try {
-    console.log('query',query);
-    let items = searchIndex;
-    const key = fid != '' ? 'id' : 'value';
-    let match = matchSorter(items, query, {keys: ['value', 'id'] });
-    console.log(match);
-    console.log('match', match[0].value);
-    const result = match[0];
-    const coord = result.coord;
-    map.getView().animate({
-      center: coord,
-      resolution: searchResolutions[result.type] 
-    })
-    $( "#search-input" ).autocomplete('close');
-  }
-  catch(err) {
-    console.log(query +' not found');
-  }
-} 
-
-const termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
-$( "#search-input" ).autocomplete({
-  classes: {"ui-autocomplete": "autocomplete"},
-  source: function(request, response) {
-    console.log(request);
-    let match = matchSorter(searchIndex, request.term, {keys: ['value'] });
-    match = match.slice(0,10);
-    match.sort((a,b) => {
-      return b.count - a.count;
-    });
-    console.log(match);
-    response(match);
-  },
-  select: function(e, ui) {
-    console.log(e, ui.item.coord);
-    $( "#search-input" ).value = ui.item.value;
-    map.getView().animate({
-      center: ui.item.coord,
-      resolution: searchResolutions[ui.item.type] 
-    })
-  },
-  open: function(e, ui) {
-    const term = document.getElementById('search-input').value;
-    const styledTerm = termTemplate.replace('%s', term);
-    console.log(term, styledTerm);
-    $('ul.autocomplete li div').each(function() {
-      $(this).html($(this).text().replace(term, styledTerm));
-    });
-  },
-
-}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-  const parent = searchIndex.find(p => p.id === item.parent);
-  item.parentName = parent.value; 
-  item.label = item.value + ' in ' + '<span class="feature-parent">' + item.parentName + '</span>'
-  return $( "<li>" )
-    .data( "ui-autocomplete-item", item )
-    .append( "<a>" + item.label + "</a>" )
-    .appendTo( ul );
-};;
 
 
-class Omnibox {
+
+// const termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
+// $( "#search-input" ).autocomplete({
+//   classes: {"ui-autocomplete": "autocomplete"},
+//   source: function(request, response) {
+//     console.log(request);
+//     let match = matchSorter(searchIndex, request.term, {keys: ['value'] });
+//     match = match.slice(0,10);
+//     match.sort((a,b) => {
+//       return b.count - a.count;
+//     });
+//     console.log(match);
+//     response(match);
+//   },
+//   select: function(e, ui) {
+//     console.log(e, ui.item.coord);
+//     $( "#search-input" ).value = ui.item.value;
+//     map.getView().animate({
+//       center: ui.item.coord,
+//       resolution: searchResolutions[ui.item.type] 
+//     })
+//   },
+//   open: function(e, ui) {
+//     const term = document.getElementById('search-input').value;
+//     const styledTerm = termTemplate.replace('%s', term);
+//     console.log(term, styledTerm);
+//     $('ul.autocomplete li div').each(function() {
+//       $(this).html($(this).text().replace(term, styledTerm));
+//     });
+//   },
+
+// }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+//   const parent = searchIndex.find(p => p.id === item.parent);
+//   item.parentName = parent.value; 
+//   item.label = item.value + ' in ' + '<span class="feature-parent">' + item.parentName + '</span>'
+//   return $( "<li>" )
+//     .data( "ui-autocomplete-item", item )
+//     .append( "<a>" + item.label + "</a>" )
+//     .appendTo( ul );
+// };;
+
+
+export class Omnibox {
   constructor(elem, featureData) {
     this.renderList = this.renderList.bind(this);
     elem.addEventListener('click', (e) => this.onClick(e));
+    document.getElementById('search-button').addEventListener('click', (e) => this.handleSearch(e));
+    document.getElementById('search-input').addEventListener('keypress', (e) => this.handleSearch(e));
     this.elem = elem;
     this.featureData = featureData;
+    this.searchIndex = [];
   }
   
+  init() {
+    this.renderList();
+    this.getSearchIndex();
+  }
+
+  getSearchIndex() {
+    this.searchIndex = (this.featureData.map(f => {
+      return {
+        value: f.properties.name,
+        label: (f.properties.type === 'product' ? f.properties.name : f.properties.name + ' in ' + '<span class="feature-parent">' + f.properties.parent + '</span>'),
+        count: f.properties.value,
+        type: f.properties.type,
+        parent:  f.properties.parent,
+        coord: f.geometry.coordinates,
+        id: f.id
+      }
+    }))
+  }
+
+  handleSearch(e) {
+    if (e.keyCode != 13 && e.target.id != 'search-button' && e.target.dataset.id === undefined) {
+      return
+    }
+    let fid = '';
+    if (e.target.dataset.id !== undefined) {
+      fid = Number(e.target.dataset.id);
+      const feature = this.searchIndex.find(f => f.id === fid);
+      document.getElementById('search-input').value = feature.value; 
+    } 
+    console.log(fid)
+    const query = fid != '' ? fid : document.getElementById('search-input').value;
+  
+    try {
+      console.log('query',query);
+      let items = this.searchIndex;
+      const key = fid != '' ? 'id' : 'value';
+      let match = matchSorter(items, query, {keys: ['value', 'id'] });
+      console.log(match);
+      console.log('match', match[0].value);
+      const result = match[0];
+      const coord = result.coord;
+      map.getView().animate({
+        center: coord,
+        resolution: searchResolutions[result.type] 
+      })
+      $( "#search-input" ).autocomplete('close');
+    }
+    catch(err) {
+      console.log(query +' not found');
+    }
+  } 
+
+
   onClick(e) {
     if (e.target.dataset.id === 'undefined') {
       view.animate({ resolution: mapMaxResolution, center: mapCenter })
       this.renderList();
     } else {
-      handleSearch(e);
+      this.handleSearch(e);
       const fid = Number(e.target.dataset.id);
       const f = this.featureData.find(c => c.id === fid); 
       f.properties.type != 'product' && this.renderList(f);
@@ -196,3 +200,5 @@ class Omnibox {
 
   }
 }
+
+

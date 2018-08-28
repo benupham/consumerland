@@ -3,9 +3,7 @@ import MouseWheelZoom from 'ol/interaction/mousewheelzoom';
 
 
 import {updateAddCartButton, updateCart, checkCart} from './cart.js';
-import {view, map} from '../index.js';
-import {productsSource} from '../features/categoryFeatures.js';
-import {textFormatter, dataTool} from '../utilities.js';
+
 /*
 * Overlays
 * 

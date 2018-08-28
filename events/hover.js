@@ -4,9 +4,7 @@ import {view, map} from '../index.js';
 import {productsImageMax, searchResolutions} from '../constants.js';
 import {debounce} from '../utilities.js';
 import {updatePreview, hidePreview} from '../components/productPreview.js';
-import {setCartAddIcon} from '../features/tags.js';
-import {handleJumpStrips} from '../components/jumpstrips.js';
-import {productsSource} from '../features/categoryFeatures.js';
+import {setCartAddIcon} from '../features/tags2.js';
 
 export let jumpStripsInt = null;
 let highlight = {}; 

@@ -1,24 +1,21 @@
-require('ol/ol.css');
-import olMap from 'ol/map';
+import 'ol/ol.css';
 import View from 'ol/view';
 import Extent from 'ol/extent';
+import olMap from 'ol/map';
+
+
 
 import './style.css';
-import './components/departmentsLinks.js';
 
-import {maxExtent} from './features/categoryFeatures.js';
+import {maxExtent} from './features/getFeatureData';
 import {productDetailOverlay} from './components/productDetail.js';
 import {hidePreview} from './components/productPreview.js';
 import {textFormatter, dataTool, iconcache} from './utilities.js';
-import {displaySignage} from './components/signage.js';
-import {handleSearch, omnibox} from './components/omnibox.js';
-import {handleJumpStrips} from './components/jumpstrips.js';
+import {handleSearch} from './components/omnibox.js';
 import {handleHover, jumpStripsInt} from './events/hover.js';
 import {handleClick} from './events/click.js';
-import {tagLayer} from './features/tags.js';
 import {mapMaxResolution, mapCenter} from './constants.js';
 import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './components/controls.js';
-import {renderDeptsLinks} from './components/departmentsLinks';
 
 
 // $('#info-modal').modal('show');
@@ -29,6 +26,11 @@ import {renderDeptsLinks} from './components/departmentsLinks';
 * 
 */
 
+export const map = new olMap({
+  renderer: ('canvas'),
+  target: document.getElementById('map')
+});
+
 const ctr = mapCenter;
 export const view = new View({
   center: mapCenter,
@@ -38,12 +40,9 @@ export const view = new View({
   maxResolution: mapMaxResolution,
 }); 
 
+map.setView(view);
 
-export const map = new olMap({
-  renderer: ('canvas'),
-  target: document.getElementById('map'),
-  view: view
-});
+
 
 const centerZoom = view.getCenter();  
 
@@ -116,5 +115,3 @@ view.on('change:center', (e) => {
   } 
 })
 
-document.getElementById('search-button').onclick = handleSearch;
-document.getElementById('search-input').onkeypress = handleSearch;

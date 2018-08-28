@@ -7,7 +7,7 @@ import {imagesDir} from '../constants.js';
 
 // Product Image Feature
 
-const productImageFeatureRender = function (featureSets, type='product') {
+export const productImageFeatureRender = function (featureSets, type='product') {
   const images = [];
 
   featureSets.forEach((featureSet) => {
@@ -38,7 +38,7 @@ const productImageStyleCache = {};
 const productImageIconCache = {};
 const productSpriteIconCache = {};
 
-const productImageStyle = function(image, res) {
+export const productImageStyle = function(image, res) {
   let imagesrc = image.get('src');
   let style = productImageStyleCache[imagesrc];
 
@@ -92,7 +92,3 @@ const productImageStyle = function(image, res) {
   return style;
 }
 
-
-/*
-* Exports
-*/

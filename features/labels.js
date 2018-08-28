@@ -1,9 +1,5 @@
 import Feature from 'ol/feature';
 import Point from 'ol/geom/point';
-import VectorLayer from 'ol/layer/vector';
-import VectorSource from 'ol/source/vector';
-import Circle from 'ol/geom/circle';
-import Polygon from 'ol/geom/polygon';
 import CircleStyle from 'ol/style/circle';
 import Stroke from 'ol/style/stroke';
 import Icon from 'ol/style/icon';
@@ -15,50 +11,24 @@ const d3Array = require('d3-array');
 
 import {
   imagesDir,
-  productsImageMax,
-  productsCircleMax,
-  brandsLabelMax,
-  brandsLabelMin,
-  brandsCircleMax,
-  brandsCircleMin,
-  brandsImageMax,
-  brandsImageMin,
-  subdeptsLabelMax,
-  subdeptsLabelMin,
-  subdeptsCircleMax,
-  subdeptsCircleMin,
-  subdeptsImageMax,
-  subdeptsImageMin,
-  deptsLabelMax,
-  deptsLabelMin,
-  deptsCircleMax,
-  deptsCircleMin,
-  deptsImageMax,
-  deptsImageMin,
-  maxResolutions,
   labelColors,
   labelStyleChange,
-  labelBackgroundColors,
   labelStrokes,
   labelStrokeWidth,
-  circleLabelColors,
-  circleColors,
-  circleHoverColors,
   imageScale,
   fontFamily,
   fontSizes,
-  fontSizesByType,
   fontWeight,
 } from '../constants.js';
-import {textFormatter, dataTool, getFeatureJson, getFeaturesFromFirestore} from '../utilities.js';
-import {view, map} from '../index.js';
+import {textFormatter} from '../utilities.js';
+import {view} from '../index.js';
 import { isNullOrUndefined } from 'util';
 
 /*
 * Label Features
 * 
 */
-const labelFeatureRender = function (featureSets, type='all') {
+export const labelFeatureRender = function (featureSets, type='all') {
   const rangeData = d3Array.histogram()
   .value(d => {
     if (d.properties.type == type || type == 'all') return d.properties.radius;
@@ -103,7 +73,7 @@ const labelFeatureRender = function (featureSets, type='all') {
 const labelStyleCache = {};
 const resolutionCache = {};
 
-const labelStyle = function(label, res) {
+export const labelStyle = function(label, res) {
   if (label.get('maxRes') < view.getResolution()) return null;
 
   let style = labelStyleCache[label.getId()];
@@ -153,7 +123,7 @@ const labelStyle = function(label, res) {
 * 
 */
 
-const imageFeatureRender = function (featureSets, type='all') {
+export const imageFeatureRender = function (featureSets, type='all') {
   const images = [];
   let extent = [];
   if (featureSets.length === 1) {
@@ -191,7 +161,7 @@ const imageFeatureRender = function (featureSets, type='all') {
 const imageStyleCache = {};
 const imageIconCache = {};
 
-const imageStyle = function(image, res) {
+export const imageStyle = function(image, res) {
   if (image.get('maxRes') < view.getResolution()) return null;
   let style = imageStyleCache[image.get('src')];
   if (!style) {
@@ -232,21 +202,4 @@ const imageStyle = function(image, res) {
 }
 
 
-/*
-* Exports
-*/
-
-
-// Dept Layers defined outside of Promise so they can be exported to the OverviewMap control
-const deptLabelSource = new VectorSource();
-
-export const departmentsLabelLayer = new VectorLayer({
-  style: labelStyle,
-  source: deptLabelSource,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  zIndex: 10,
-  minResolution: deptsLabelMin,
-  maxResolution: deptsLabelMax
-});
 
