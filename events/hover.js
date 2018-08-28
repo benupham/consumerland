@@ -1,7 +1,7 @@
 import has from 'ol/has';
 
 import {view, map} from '../index.js';
-import {productsImageMax} from '../constants.js';
+import {productsImageMax, searchResolutions} from '../constants.js';
 import {debounce} from '../utilities.js';
 import {updatePreview, hidePreview} from '../components/productPreview.js';
 import {setCartAddIcon} from '../features/tags.js';
@@ -42,6 +42,8 @@ export const handleHover = function(e) {
     } 
     else if ((featureType == 'brand' || 'dept' || 'subdept') && (featureStyle === 'circle')) {
 
+      setMouseCursor(featureType, resolution);
+
       setCartAddIcon(false);
       if (feature != highlight[featureType]) {
         
@@ -66,5 +68,16 @@ export const handleHover = function(e) {
     //   highlight[featureType].set('hover', false);
     //   highlight[featureType] = undefined;
     // }
+  }
+}
+
+const setMouseCursor = function(type = null, res = null) {
+  const map = document.getElementById('map');
+  if (res > searchResolutions[type]) {
+    map.style.cursor = 'zoom-in';
+  } else if (res < searchResolutions[type]) {
+    map.style.cursor = 'zoom-out';
+  } else {
+    map.style.cursor = 'default';
   }
 }

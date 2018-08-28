@@ -1,7 +1,7 @@
 import {map, view} from '../index.js';
 import Circle from 'ol/geom/circle';
 
-import {productsImageMax} from '../constants.js';
+import {productsImageMax, searchResolutions} from '../constants.js';
 import {hidePreview} from '../components/productPreview.js';
 import {renderProductOverlay, hideOverlay, productDetailOverlay} from '../components/productDetail.js';
 import {cartIconHandleClick} from '../features/tags.js';
@@ -40,9 +40,7 @@ export const handleClick = function(e) {
     }  
     const center = feature.getGeometry().getCoordinates() || feature.getGeometry().getCenter();   
     // hideOverlay(productDetailOverlay);
-    const zoomTo = featureType == 'brand' ? 2 
-      : featureType == 'subdept' ? 6 
-      : 29;
+    const zoomTo = searchResolutions[featureType];
     view.animate({ resolution: zoomTo, center: center});  
   } else if (featureType === 'add' || featureType === 'remove') {
     cartIconHandleClick(feature);

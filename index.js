@@ -35,7 +35,7 @@ export const view = new View({
   resolution: mapMaxResolution, 
   zoomFactor: 1.5,
   minResolution: 1,
-  maxResolution: 65,
+  maxResolution: mapMaxResolution,
 }); 
 
 

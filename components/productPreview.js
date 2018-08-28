@@ -20,6 +20,11 @@ export const updatePreview = function(e) {
 	
 	const f = features[0];
 	if (previewedFeature === f) return;
+	if (f.get('type') === 'product' && f.get('style') === 'circle') {
+		hidePreview();
+		previewedFeature = null;
+		return
+	}
 
 	previewedFeature = f; 
 	

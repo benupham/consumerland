@@ -37,19 +37,20 @@ export const handleSearch = function(e) {
   if (e.keyCode != 13 && e.target.id != 'search-button' && e.target.dataset.id === undefined) {
     return
   }
-
+  let fid = '';
   if (e.target.dataset.id !== undefined) {
-    const fid = Number(e.target.dataset.id);
+    fid = Number(e.target.dataset.id);
     const feature = searchIndex.find(f => f.id === fid);
     document.getElementById('search-input').value = feature.value; 
   } 
-
-  const query = document.getElementById('search-input').value;
+  console.log(fid)
+  const query = fid != '' ? fid : document.getElementById('search-input').value;
 
   try {
     console.log('query',query);
     let items = searchIndex;
-    let match = matchSorter(items, query, {keys: ['value'] });
+    const key = fid != '' ? 'id' : 'value';
+    let match = matchSorter(items, query, {keys: ['value', 'id'] });
     console.log(match);
     console.log('match', match[0].value);
     const result = match[0];
@@ -108,9 +109,6 @@ $( "#search-input" ).autocomplete({
 
 export class Omnibox {
   constructor(elem, featureData) {
-    // Depts, subdept and brands split from products to speed processing
-    this.categories = featureData.filter(f => f.properties.type != 'product');
-    this.products = featureData.filter(f => f.properties.type === 'product');
     this.renderList = this.renderList.bind(this);
     elem.addEventListener('click', (e) => this.onClick(e));
     this.elem = elem;
@@ -136,11 +134,11 @@ export class Omnibox {
 
     const header = category === null ? "All Departments" : category.properties.name;
     const headerColor = category === null ? "inherit" : category.properties.type;
-    html += `<div id="omni-list-header" class="omni-list-header bg-white p-1 shadow-sm mb-1 h4" style="color: ${labelColors[headerColor]};">`;
+    html += `<div id="omni-list-header" class="omni-list-header bg-white p-1 shadow-sm mb-1">`;
     if (category !== null) {
-      html += `<button id="omni-list-back" data-id="${category.properties.parent}" type="button" class="btn btn-outline-secondary">Back</button>`
+      html += `<button id="omni-list-back" data-id="${category.properties.parent}" type="button" class="btn btn-sm btn-outline-secondary mr-2">Back</button>`
     }
-    html += `${header}</div>`;
+    html += `<span class="align-middle h5" style="color: ${labelColors[headerColor]};">${header}</span></div>`;
     
     html += `<div id="omni-list" class="omni-list">`;
 
