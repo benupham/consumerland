@@ -5,7 +5,7 @@ import {updateCart} from '../components/cart.js';
 import {map} from '../index.js';
 import {brandsImageLayer} from '../features/categoryFeatures.js';
 import {textFormatter, debounce, dataTool} from '../utilities.js';
-import {circleColors} from '../constants.js';
+import {circleColors, labelColors} from '../constants.js';
 
 
 let previewedFeature = null;
@@ -22,6 +22,8 @@ export const updatePreview = function(e) {
 	if (previewedFeature === f) return;
 
 	previewedFeature = f; 
+
+	console.log(f)
 	
 	let previewName = document.getElementById('preview-name');
 	let previewPrice = document.getElementById('preview-price');
@@ -36,7 +38,7 @@ export const updatePreview = function(e) {
 		previewPrice.innerHTML = f.get('price');
 		previewImage.style.backgroundImage = "url('" + f.get('src') + "')";
 	} else {
-		previewName.innerHTML = '<h6 class="mt-1">' + textFormatter(f.get('name'), 40, '<br>', 75) + '</h6>';
+		previewName.innerHTML = '<h6 class="mt-1" style="color:' + labelColors[f.get('type')] + ';">' + textFormatter(f.get('name'), 40, '<br>', 75) + '</h6>';
 		previewImage.style.backgroundImage = "url('" + f.get('src') + "')";
 
 	}

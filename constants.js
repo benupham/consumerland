@@ -69,6 +69,12 @@ export const labelColors = {
 	product: 'rgba(231,138,195, 1)'
 }
 
+export const labelStyleChange = {
+	dept: deptsImageMax,
+	subdept: subdeptsImageMin,
+	brand: brandsImageMin
+}
+
 export const labelBackgroundColors = {
 	dept: 'rgba(255, 255, 255, 1)',
 	subdept: 'rgba(255, 255, 255, 0.0)',
@@ -98,17 +104,17 @@ export const circleLabelColors = {
 }
 
 export const circleColors = {
-	dept: 'rgba(249, 198, 90, 0.15)',
-	subdept: 'rgba(0, 133, 62, 0.15)',
-	brand: 'rgba(255, 255, 255, 0.15)', 
+	dept: 'rgba(102,194,165, .1)',
+	subdept: 'rgba(252,141,98, .1)',
+	brand: 'rgba(255, 255, 255, .1)',
 	product: 'rgba(255, 255, 255, 1)'
 }
 
 export const circleHoverColors = {
-	dept: 'rgba(249, 198, 90, 0.2)',
-	subdept: 'rgba(0, 133, 62, 0.2)',
-	brand: 'rgba(255, 255, 255, 0.3)', 
-	product: '#fff'
+	dept: 'rgba(102,194,165, .2)',
+	subdept: 'rgba(252,141,98, .2)',
+	brand: 'rgba(255, 255, 255, .2)',
+	product: 'rgba(255, 255, 255, 1)'
 }
 
 export const imageScale = {

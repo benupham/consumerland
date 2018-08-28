@@ -2,7 +2,7 @@ import {imagesDir, featureZoomRes} from '../constants.js';
 import {view} from '../index.js';
 import Overlay from 'ol/overlay';
 import {map} from '../index.js';
-import {productsImageMax, searchResolutions, mapMaxResolution, mapCenter} from '../constants.js';
+import {productsImageMax, searchResolutions, mapMaxResolution, mapCenter, labelColors} from '../constants.js';
 import {flyTo, getFeatureJson} from '../utilities.js';
 import matchSorter from 'match-sorter';
 import {Omnibox} from './omnibox.js';
@@ -137,7 +137,8 @@ export class Omnibox {
     
 
     const header = category === null ? "All Departments" : category.properties.name;
-    html += `<div id="omni-list-header" class="omni-list-header bg-white p-1 shadow-sm mb-1 h4">`;
+    const headerColor = category === null ? "inherit" : category.properties.type;
+    html += `<div id="omni-list-header" class="omni-list-header bg-white p-1 shadow-sm mb-1 h4" style="color: ${labelColors[headerColor]};">`;
     if (category !== null) {
       html += `<button id="omni-list-back" data-id="${category.properties.parent}" type="button" class="btn btn-outline-secondary">Back</button>`
     }
@@ -185,7 +186,7 @@ export class Omnibox {
       `<div id="omni-list-item-${f.id}" data-id="${f.id}" class="media shadow-sm mb-1 p-1 type-${f.properties.type}">
         <img src="${imagesDir + (f.properties.sampleImg || f.properties.src)}" alt="${f.properties.name}" class="omni-image preview-image mr-2"  data-id="${f.id}">
         <div class="media-body mr-1">
-          <div class="omni-list-name"  data-id="${f.id}">${f.properties.name}</div>
+          <div class="omni-list-name" data-id="${f.id}" style="color: ${labelColors[f.properties.type]};">${f.properties.name}</div>
           <div id="omni-list-item-price" data-id="${f.id}" class="preview-price">${f.properties.price || ''}</div>
         </div>
       </div>`
