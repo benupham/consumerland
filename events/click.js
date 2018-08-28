@@ -5,9 +5,9 @@ import {productsImageMax} from '../constants.js';
 import {hidePreview} from '../components/productPreview.js';
 import {renderProductOverlay, hideOverlay, productDetailOverlay} from '../components/productDetail.js';
 import {cartIconHandleClick} from '../features/tags.js';
+import {omnibox} from '../components/omnibox.js';
 
 export const handleClick = function(e) {
-
   hidePreview();
 
   if (productDetailOverlay.getElement().style.display == 'block') {

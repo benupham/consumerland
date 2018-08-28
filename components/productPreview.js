@@ -22,8 +22,6 @@ export const updatePreview = function(e) {
 	if (previewedFeature === f) return;
 
 	previewedFeature = f; 
-
-	console.log(f)
 	
 	let previewName = document.getElementById('preview-name');
 	let previewPrice = document.getElementById('preview-price');

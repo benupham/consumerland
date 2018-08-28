@@ -21,7 +21,7 @@ export const productsImageMax = 10;
 export const productsCircleMax = 10;
 
 export const brandsLabelMax = 20;
-export const brandsLabelMin = 0;
+export const brandsLabelMin = 3;
 export const brandsCircleMax = 50;
 export const brandsCircleMin = 0;
 export const brandsImageMax = 20;
@@ -70,7 +70,7 @@ export const labelColors = {
 }
 
 export const labelStyleChange = {
-	dept: deptsImageMax,
+	dept: deptsImageMin,
 	subdept: subdeptsImageMin,
 	brand: brandsImageMin
 }
@@ -106,14 +106,14 @@ export const circleLabelColors = {
 export const circleColors = {
 	dept: 'rgba(102,194,165, .1)',
 	subdept: 'rgba(252,141,98, .1)',
-	brand: 'rgba(255, 255, 255, .1)',
+	brand: 'rgba(255, 255, 255, .3)',
 	product: 'rgba(255, 255, 255, 1)'
 }
 
 export const circleHoverColors = {
 	dept: 'rgba(102,194,165, .2)',
 	subdept: 'rgba(252,141,98, .2)',
-	brand: 'rgba(255, 255, 255, .2)',
+	brand: 'rgba(255, 255, 255, .4)',
 	product: 'rgba(255, 255, 255, 1)'
 }
 

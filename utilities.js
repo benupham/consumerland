@@ -22,10 +22,10 @@ import {view} from './index.js';
 */
 
 // Call to the Express server for locally saved JSON feature data
-export const getFeatureJson = function (types) {
+export const getFeatureJson = function (types, requester='') {
   if (typeof types === 'string' ) types = [types];
   const q = types.join(',');
-  return fetch('/api?type=' + q, {
+  return fetch('/api?type=' + q + '&requester=' + requester, {
     mode: 'no-cors'
   })
   .then(res => res.json())

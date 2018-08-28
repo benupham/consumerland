@@ -52,6 +52,7 @@ import {
 } from '../constants.js';
 import {textFormatter, dataTool, getFeatureJson, getFeaturesFromFirestore} from '../utilities.js';
 import {view, map} from '../index.js';
+import { isNullOrUndefined } from 'util';
 
 /*
 * Label Features
@@ -79,7 +80,6 @@ const labelFeatureRender = function (featureSets, type='all') {
           }
         }
         let name = textFormatter(f.properties.name, 18, '\n');
-        name = f.properties.type === 'dept' ? name.toUpperCase() : name;
         const label = new Feature({
           geometry: new Point(f.geometry.coordinates),
           name: name,
@@ -102,28 +102,30 @@ const labelFeatureRender = function (featureSets, type='all') {
 
 const labelStyleCache = {};
 const resolutionCache = {};
-let styleChange = false; 
 
 const labelStyle = function(label, res) {
   if (label.get('maxRes') < view.getResolution()) return null;
 
   let style = labelStyleCache[label.getId()];
 
-  // If style resolution value is more than a certain number, a view res is less, reset style
-  // NEEDS to cover opposite situation, zooming out 
-  if (resolutionCache[label.getId()] > labelStyleChange[label.get('type')] && view.getResolution() < labelStyleChange[label.get('type')] ) {
-    styleChange = true; 
+  if (resolutionCache[label.getId()] >= labelStyleChange[label.get('type')] 
+  && view.getResolution() <= labelStyleChange[label.get('type')]) {
+    label.set('styleChange', true);
     style = null;
-    
+  } else if (resolutionCache[label.getId()] <= labelStyleChange[label.get('type')] 
+  && view.getResolution() >= labelStyleChange[label.get('type')]) {
+    label.set('styleChange', false); 
+    style = null;
   }
   const labelType = label.get('type');
-
-  if (!style) {
-    const text = styleChange === true ? label.get('name').toUpperCase() : label.get('name');
+  if (labelType === 'dept') label.set('styleChange', true);
+  if (isNullOrUndefined(style)) {
+    const styleChange = label.get('styleChange');
+    const text = label.get('name');
     const textAlign = styleChange === true ? 'center' : 'left';
     const offsetX = styleChange === true ? 0 : imageScale[labelType] * 120;
     const backgroundFillColor = styleChange === true ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0)'; 
-
+    
     style = new Style({
       text: new Text({
         font: fontWeight[labelType] + ' ' + label.get('fontSize') + 'px' + ' ' + fontFamily[labelType],
@@ -138,10 +140,9 @@ const labelStyle = function(label, res) {
       })
     })
     labelStyleCache[label.getId()] = style;
-    
+    resolutionCache[label.getId()] = view.getResolution();
   }
 
-  resolutionCache[label.getId()] = view.getResolution();
   return style;
 }
 
@@ -484,7 +485,7 @@ export let maxExtent = [];
 //   console.log(features);
 // }) 
 
-getFeatureJson(['dept','subdept','brand'])
+getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
 .then(res => {
   const featureData = res;
   const maxResRange = maxResData(featureData);
@@ -613,7 +614,7 @@ export const productsSource = new VectorSource({
   overlaps: false
 });
 
-getFeatureJson(['product'])
+getFeatureJson(['product'], 'productsfeatures')
 .then(productData => {
   const imageFeatures = productImageFeatureRender([productData], 'product');
   productsSource.addFeatures(imageFeatures);

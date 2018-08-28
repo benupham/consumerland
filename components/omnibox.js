@@ -5,8 +5,6 @@ import {map} from '../index.js';
 import {productsImageMax, searchResolutions, mapMaxResolution, mapCenter, labelColors} from '../constants.js';
 import {flyTo, getFeatureJson} from '../utilities.js';
 import matchSorter from 'match-sorter';
-import {Omnibox} from './omnibox.js';
-import {productsSource} from '../features/categoryFeatures.js';
 
 /*
 * Search
@@ -14,7 +12,7 @@ import {productsSource} from '../features/categoryFeatures.js';
 */
 
 let searchIndex = [];
-getFeatureJson(['product','brand','dept','subdept'])
+export const omnibox = getFeatureJson(['product','brand','dept','subdept'], 'omnibox')
 .then(res => {
 
   const elem = document.getElementById('departments');
@@ -32,7 +30,7 @@ getFeatureJson(['product','brand','dept','subdept'])
       id: f.id
     }
   });
-  console.log(searchIndex)
+  return omnibox;
 });
 
 export const handleSearch = function(e) {

@@ -88,7 +88,7 @@ export const tagLayer = new VectorLayer({
 })
 tagLayer.set('name','tag-layer');
 
-getFeatureJson(['product'])
+getFeatureJson(['product'], 'tags')
 .then(data => {
   const tagFeatures = tagFeatureRender(data);
   tagSource.addFeatures(tagFeatures);
