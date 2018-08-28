@@ -49,7 +49,7 @@ import {
   fontSizes,
   fontSizesByType,
   fontWeight,
-} from '../constants.js';
+} from '../constants';
 import {textFormatter, dataTool, getFeatureJson, getFeaturesFromFirestore} from '../utilities.js';
 import {view, map} from '../index.js';
 import { isNullOrUndefined } from 'util';
@@ -68,7 +68,7 @@ const labelFeatureRender = function (featureSets, type='all') {
   featureSets.forEach((featureSet) => {
     const range = rangeData(featureSet);
     featureSet.forEach((f) => {
-      let fontSize = '12px Arial';
+      let fontSize = '12px Oswald';
       if (f.properties.type == type) {
         for (let i = 0; i < range.length; i++) {
           for (let j = 0; j < range[i].length; j++) {
@@ -121,6 +121,8 @@ const labelStyle = function(label, res) {
   if (labelType === 'dept') label.set('styleChange', true);
   if (isNullOrUndefined(style)) {
     const styleChange = label.get('styleChange');
+
+    const fontSize = styleChange === true ? label.get('fontSize')*1.5 : label.get('fontSize');
     const text = label.get('name');
     const textAlign = styleChange === true ? 'center' : 'left';
     const offsetX = styleChange === true ? 0 : imageScale[labelType] * 120;
@@ -128,7 +130,7 @@ const labelStyle = function(label, res) {
     
     style = new Style({
       text: new Text({
-        font: fontWeight[labelType] + ' ' + label.get('fontSize') + 'px' + ' ' + fontFamily[labelType],
+        font: fontWeight[labelType] + ' ' + fontSize + 'px' + ' ' + fontFamily[labelType],
         text: text,
         textBaseline: 'middle',
         textAlign: textAlign,

@@ -12,7 +12,7 @@ import matchSorter from 'match-sorter';
 */
 
 let searchIndex = [];
-export const omnibox = getFeatureJson(['product','brand','dept','subdept'], 'omnibox')
+getFeatureJson(['product','brand','dept','subdept'], 'omnibox')
 .then(res => {
 
   const elem = document.getElementById('departments');
@@ -30,7 +30,6 @@ export const omnibox = getFeatureJson(['product','brand','dept','subdept'], 'omn
       id: f.id
     }
   });
-  return omnibox;
 });
 
 export const handleSearch = function(e) {
@@ -107,7 +106,7 @@ $( "#search-input" ).autocomplete({
 };;
 
 
-export class Omnibox {
+class Omnibox {
   constructor(elem, featureData) {
     this.renderList = this.renderList.bind(this);
     elem.addEventListener('click', (e) => this.onClick(e));

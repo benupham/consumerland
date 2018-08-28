@@ -43,10 +43,10 @@ export const deptsImageMin = 60;
 
 // For hiding/showing category labels, images, etc. 
 export const maxResolutions = [
+	5,
 	10,
-	15,
 	20,
-	25,
+	30,
 	35,
 	45,
 	50,
@@ -141,19 +141,13 @@ export const fontWeight = {
 	product: '300'
 }
 
-export const fontSizesByType = {
-	dept: '20',
-	subdept: '16',
-	brand: '14'
-}
-
 export const fontSizes = [
-	10,
+	11,
 	12,
+	13,
 	14,
-	16,
-	18,
-	18,
-	20,
-	22,
+	15,
+	17,
+	17,
+	18
 ];

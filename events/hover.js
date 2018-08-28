@@ -78,6 +78,6 @@ const setMouseCursor = function(type = null, res = null) {
   } else if (res < searchResolutions[type]) {
     map.style.cursor = 'zoom-out';
   } else {
-    map.style.cursor = 'default';
+    map.style.cursor = 'pointer';
   }
 }
