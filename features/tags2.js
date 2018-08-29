@@ -28,6 +28,7 @@ export const tagsFeatureRender = function(features, colors = null, tagType = 'sa
         'geometry': new Point([f.geometry.coordinates[0] - 75, f.geometry.coordinates[1] + 75]),
         'name': f.id + '-' + tagType,
         'type': tagType,
+        'style': 'tag'
       })
       tag.setId(f.id + '-' + tagType);
       tags.push(tag);      
@@ -78,6 +79,7 @@ export const cartAddIcon = new Feature({
   'geometry': new Point([null, null]),
   'name': 'cart-add-icon',
   'type': 'add',
+  'style': 'tag'
 })
 cartAddIcon.setId('cart-add-icon');
 

@@ -53,7 +53,7 @@ export const productImageStyle = function(image, res) {
         src: spritesrc + '-scaled50-compressed.jpg',
         size: [99,99],
         offset: offset,
-        crossOrigin: 'anonymous'
+        // crossOrigin: 'anonymous'
       })
       productSpriteIconCache[imagesrc] = spriteicon;  
     }
@@ -62,7 +62,7 @@ export const productImageStyle = function(image, res) {
       imageicon = new Icon({
         src: imagesrc,
         size: [199,199],
-        crossOrigin: 'anonymous'
+        // crossOrigin: 'anonymous'
       })
       productImageIconCache[imagesrc] = imageicon;  
     }

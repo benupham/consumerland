@@ -8,7 +8,7 @@ import {productImageFeatureRender, productImageStyle} from './products';
 import {circleFeatureRender, circleStyle} from './circles';
 import {labelFeatureRender, labelStyle, imageFeatureRender, imageStyle} from './labels';
 import {tagsFeatureRender, tagsStyle, cartAddIcon} from './tags2';
-import {Omnibox} from '../components/omnibox';
+import {omnibox} from '../components/omnibox';
 
 import {
   productsImageMax,
@@ -257,10 +257,8 @@ getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
     map.addLayer(productsCircleLayer);
   
     featureData = categoryData.concat(productData);
-    console.log(featureData)
-    const elem = document.getElementById('departments');
-    const omnibox = new Omnibox(elem, featureData);
-    omnibox.init();
+
+    omnibox.getFeatureData(featureData);
 
     
   })
@@ -269,11 +267,6 @@ getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
   })
 }) 
 .catch(err => console.log(err));
-
- 
-
-
-// Products
 
 
 

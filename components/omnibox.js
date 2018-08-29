@@ -4,6 +4,7 @@ import {productsImageMax, searchResolutions, mapMaxResolution, mapCenter, labelC
 import {flyTo, getFeatureJson} from '../utilities.js';
 import matchSorter from 'match-sorter';
 import {featureData} from '../features/getFeatureData';
+import { isNullOrUndefined } from 'util';
 
 /*
 * Search
@@ -54,21 +55,27 @@ import {featureData} from '../features/getFeatureData';
 // };;
 
 
-export class Omnibox {
-  constructor(elem, featureData) {
+class Omnibox {
+  constructor(elem) {
     this.renderList = this.renderList.bind(this);
     elem.addEventListener('click', (e) => this.onClick(e));
     document.getElementById('search-button').addEventListener('click', (e) => this.handleSearch(e));
     document.getElementById('search-input').addEventListener('keypress', (e) => this.handleSearch(e));
     this.elem = elem;
-    this.featureData = featureData;
+    this.featureData = [];
     this.searchIndex = [];
   }
-  
-  init() {
+
+  getFeatureData(data) {
+    this.featureData = data; 
     this.renderList();
     this.getSearchIndex();
   }
+  
+  // init() {
+  //   this.renderList();
+  //   this.getSearchIndex();
+  // }
 
   goToFeature(coord, type) {
     map.getView().animate({
@@ -126,13 +133,16 @@ export class Omnibox {
     }
   } 
 
+  onMapClick(fid) {
+    const f = this.featureData.find(c => c.id === fid);
+    f.properties.type != 'product' && this.renderList(f);
+  }
 
   onClick(e) {
-    if (e.target.dataset.id === 'undefined') {
+    if (isNullOrUndefined(e.target.dataset.id) || e.target.dataset.id === 'all-dept') {
       view.animate({ resolution: mapMaxResolution, center: mapCenter })
       this.renderList();
     } else {
-      // this.handleSearch(e);
       const fid = Number(e.target.dataset.id);
       const f = this.featureData.find(c => c.id === fid); 
       this.goToFeature(f.geometry.coordinates, f.properties.type)
@@ -149,36 +159,52 @@ export class Omnibox {
     const headerColor = category === null ? "inherit" : category.properties.type;
     html += `<div id="omni-list-header" class="omni-list-header bg-white p-1 shadow-sm mb-1">`;
     if (category !== null) {
-      html += `<button id="omni-list-back" data-id="${category.properties.parent}" type="button" class="btn btn-sm btn-outline-secondary mr-2">Back</button>`
+      html += `<button id="omni-list-back" data-id="${category.properties.parent || 'all-dept'}" type="button" class="btn btn-sm btn-outline-secondary mr-2">Back</button>`
     }
     html += `<span class="align-middle h5" style="color: ${labelColors[headerColor]};">${header}</span></div>`;
     
     html += `<div id="omni-list" class="omni-list">`;
 
+    let featureArray = [];
     if (category === null) {
-      this.featureData.forEach(f => {
-        if (f.properties.type === 'dept') {
-          html += this.renderListItem(f);
-        }
+      featureArray = this.featureData.filter(i => {
+        return i.properties.type === 'dept'; 
       });
     } else {
-      this.featureData.forEach(f => {
-        if (f.properties.parent === category.id) {
-          html += this.renderListItem(f);
-        }
+      featureArray = this.featureData.filter(i => {          
+        return i.properties.parent === category.id; 
       });
     }
+
+    featureArray.sort((a,b) => {
+      if(a.properties.name < b.properties.name) return -1;
+      if(a.properties.name > b.properties.name) return 1;
+      return 0;
+    });
+    featureArray.forEach(f => {
+      html += this.renderListItem(f);
+    });
+
     html += `</div>`;
     this.elem.innerHTML = html;
   }
 
   getChildrenArray(f) {
-    return (this.featureData.filter(i => {
+    let array = this.featureData.filter(i => {
       // need to filter by dept because of generic "Sales" subdept
-      if (i.properties.dept === f.properties.dept || f.properties.type === 'dept') {
-        return i.properties.parent === f.properties.name; 
-      }
-    }));
+        if (i.properties.dept === f.properties.dept || f.properties.type === 'dept') {
+          return i.properties.parent === f.properties.name; 
+        }
+      });
+
+    return (
+      array.sort((a,b) => {
+        console.log(a,b)
+        if(a.properties.name < b.properties.name) return -1;
+        if(a.properties.name > b.properties.name) return 1;
+        return 0;
+      })
+    );
   }
 
   renderChildrenLinks(f) {
@@ -210,5 +236,6 @@ export class Omnibox {
 
   }
 }
-
+const elem = document.getElementById('departments');
+export const omnibox = new Omnibox(elem);
 

@@ -9,7 +9,7 @@
 
 // Images Directory 
 
-export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland-sprites/';
+export const imagesDir = 'http://s3-us-west-1.amazonaws.com/consumerland-sprites/';
 // export const imagesDir = './node-utility-scripts/';
 
 // Resolution
@@ -66,7 +66,7 @@ export const labelColors = {
 	dept: 'rgba(102,194,165, 1)',
 	subdept: 'rgba(252,141,98, 1)',
 	brand: 'rgba(141,160,203, 1)',
-	product: '#111'
+	product: 'inherit'
 }
 
 export const labelStyleChange = {

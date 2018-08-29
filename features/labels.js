@@ -175,7 +175,7 @@ export const imageStyle = function(image, res) {
       icon = new Icon({
         src: image.get('src'),
         size: [200,200],
-        crossOrigin: 'anonymous',
+        // crossOrigin: 'anonymous',
         scale: scaleFactor / Math.SQRT2,
         anchor: [0.5, 0.5]
       })

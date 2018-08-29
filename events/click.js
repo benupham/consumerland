@@ -32,12 +32,10 @@ export const handleClick = function(e) {
     renderProductOverlay(feature, productDetailOverlay);
     e.stopPropagation();
 
-  } else if (['brand','dept','subdept'].indexOf(featureType) > -1) {
+  } else if (['brand','dept','subdept'].includes(featureType)) {
+    console.log(feature)
+    omnibox.onMapClick(feature.get('fid'));
     
-    let circle = feature.getGeometry();
-    if (featureStyle != 'circle') {
-      circle = new Circle(feature.getGeometry().getCoordinates(), feature.get('radius'));  
-    }  
     const center = feature.getGeometry().getCoordinates() || feature.getGeometry().getCenter();   
     // hideOverlay(productDetailOverlay);
     const zoomTo = searchResolutions[featureType];
