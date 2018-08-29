@@ -63,6 +63,7 @@ const setMaxRange = function(features, range) {
 
 // Exported so components can use productsSource for feature look-ups
 export const productsSource = new VectorSource({overlaps: false});
+const productsCircleSource = new VectorSource({overlaps: false});
 export const tagsSource = new VectorSource({overlaps: false});
 const deptsCircleSource = new VectorSource({overlaps: false});
 const deptsLabelSource = new VectorSource();
@@ -84,6 +85,17 @@ const productsImageLayer = new VectorLayer({
   zIndex: 4,
   maxResolution: productsImageMax
 });
+
+const productsCircleLayer = new VectorLayer({
+  source: productsCircleSource,
+  renderMode: 'raster',
+  style: circleStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  zIndex: 3,
+  maxResolution: productsCircleMax
+});
+
 
 export const tagsLayer = new VectorLayer({
   source: tagsSource,
@@ -235,12 +247,14 @@ getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
   .then(productData => {
   
     productsSource.addFeatures(productImageFeatureRender([productData], 'product'));
+    productsCircleSource.addFeatures(circleFeatureRender([productData], 'product'));
     tagsSource.addFeatures(tagsFeatureRender(productData));
     tagsSource.addFeature(cartAddIcon);
     tagsLayer.set('name','tag-layer');
 
     map.addLayer(tagsLayer);
     map.addLayer(productsImageLayer);
+    map.addLayer(productsCircleLayer);
   
     featureData = categoryData.concat(productData);
     console.log(featureData)
