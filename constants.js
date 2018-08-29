@@ -66,7 +66,7 @@ export const labelColors = {
 	dept: 'rgba(102,194,165, 1)',
 	subdept: 'rgba(252,141,98, 1)',
 	brand: 'rgba(141,160,203, 1)',
-	product: 'rgba(231,138,195, 1)'
+	product: '#111'
 }
 
 export const labelStyleChange = {
@@ -91,8 +91,8 @@ export const labelStrokes = {
 
 export const labelStrokeWidth = {
 	dept: 1,
-	subdept: 1,
-	brand: 1,
+	subdept: 3,
+	brand: 3,
 	product: 1
 }
 

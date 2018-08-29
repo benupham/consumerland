@@ -219,6 +219,10 @@ body {
   font-weight: 300;
   display: block;
 }
+.departments .type-product .omni-list-name {
+  font-size: 14px;
+  font-weight: 500;
+}
 
 .departments .child-link {
   font-size: 11px;

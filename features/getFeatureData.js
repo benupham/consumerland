@@ -82,7 +82,7 @@ const productsImageLayer = new VectorLayer({
   renderMode: 'raster',
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  zIndex: 4,
+  zIndex: 3,
   maxResolution: productsImageMax
 });
 
@@ -92,7 +92,7 @@ const productsCircleLayer = new VectorLayer({
   style: circleStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  zIndex: 3,
+  zIndex: 2,
   maxResolution: productsCircleMax
 });
 

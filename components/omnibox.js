@@ -70,6 +70,13 @@ export class Omnibox {
     this.getSearchIndex();
   }
 
+  goToFeature(coord, type) {
+    map.getView().animate({
+      center: coord,
+      resolution: searchResolutions[type] 
+    })
+  }
+
   getSearchIndex() {
     this.searchIndex = (this.featureData.map(f => {
       return {
@@ -105,11 +112,13 @@ export class Omnibox {
       console.log(match);
       console.log('match', match[0].value);
       const result = match[0];
-      const coord = result.coord;
-      map.getView().animate({
-        center: coord,
-        resolution: searchResolutions[result.type] 
-      })
+      // const coord = result.coord;
+      // const type = result.type;
+      // map.getView().animate({
+      //   center: coord,
+      //   resolution: searchResolutions[type] 
+      // })
+      this.goToFeature(result.coord, result.type);
       $( "#search-input" ).autocomplete('close');
     }
     catch(err) {
@@ -123,9 +132,10 @@ export class Omnibox {
       view.animate({ resolution: mapMaxResolution, center: mapCenter })
       this.renderList();
     } else {
-      this.handleSearch(e);
+      // this.handleSearch(e);
       const fid = Number(e.target.dataset.id);
       const f = this.featureData.find(c => c.id === fid); 
+      this.goToFeature(f.geometry.coordinates, f.properties.type)
       f.properties.type != 'product' && this.renderList(f);
     }
   }

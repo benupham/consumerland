@@ -78,7 +78,9 @@ export const labelStyle = function(label, res) {
 
   let style = labelStyleCache[label.getId()];
 
-  if (resolutionCache[label.getId()] >= labelStyleChange[label.get('type')] 
+  if (!style && view.getResolution() <= labelStyleChange[label.get('type')]) {
+    label.set('styleChange', true);
+  } else if (resolutionCache[label.getId()] >= labelStyleChange[label.get('type')] 
   && view.getResolution() <= labelStyleChange[label.get('type')]) {
     label.set('styleChange', true);
     style = null;

@@ -51,7 +51,7 @@ export const productImageStyle = function(image, res) {
       let spritesrc = image.get('sprite200Src') != undefined ? image.get('sprite200Src') : imagesrc;
       spriteicon = new Icon({
         src: spritesrc + '-scaled50-compressed.jpg',
-        size: [100,100],
+        size: [99,99],
         offset: offset,
         crossOrigin: 'anonymous'
       })
