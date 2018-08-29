@@ -67,12 +67,6 @@ export const productImageStyle = function(image, res) {
       productImageIconCache[imagesrc] = imageicon;  
     }
 
-    // const imageStyle = new Style({ image: imageicon });
-    // const spriteStyle = new Style({ image: spriteicon });
-
-    // style = [imageStyle, spriteStyle];
-    // productImageStyleCache[imagesrc] = style;
-
     style = new Style();
     
     
