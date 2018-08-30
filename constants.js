@@ -9,7 +9,7 @@
 
 // Images Directory 
 
-export const imagesDir = 'http://s3-us-west-1.amazonaws.com/consumerland-sprites/';
+export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland-sprites/';
 // export const imagesDir = './node-utility-scripts/';
 
 // Resolution

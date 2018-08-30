@@ -217,9 +217,11 @@ class Omnibox {
   }
 
   renderListItem(f) {
+    // Only because brands have a placeholder src value for brand logos
+    const src = f.properties.src.includes('.') ? f.properties.src : 'product-images/missing-item.jpg' ;
     return (
       `<div id="omni-list-item-${f.id}" data-id="${f.id}" class="media shadow-sm mb-1 p-1 type-${f.properties.type}">
-        <img src="${imagesDir + (f.properties.sampleImg || f.properties.src)}" alt="${f.properties.name}" class="omni-image preview-image mr-2"  data-id="${f.id}">
+        <img src="${imagesDir + (f.properties.sampleImg || src )}" alt="${f.properties.name}" class="omni-image preview-image mr-2"  data-id="${f.id}">
         <div class="media-body mr-1">
           <div class="omni-list-name" data-id="${f.id}" style="color: ${labelColors[f.properties.type]};">${f.properties.name}</div>
           <div id="omni-list-item-price" data-id="${f.id}" class="preview-price">${f.properties.price || ''}</div>

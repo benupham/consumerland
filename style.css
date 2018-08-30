@@ -134,8 +134,8 @@ body {
 }
 
 .preview-image {
-	height: 55px;
-  width: 55px;
+	height: 70px;
+  width: 70px;
   background-size: contain;
 }
 
@@ -207,6 +207,11 @@ body {
 }
 .departments .media.type-product {
   cursor: default;
+}
+
+.departments .omni-image {
+  width: 55px;
+  height: 55px;
 }
 
 .departments .media-body {
