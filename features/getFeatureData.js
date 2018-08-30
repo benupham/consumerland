@@ -88,23 +88,24 @@ const productsImageLayer = new VectorLayer({
   maxResolution: productsImageMax
 });
 
-const productsCircleLayer = new VectorLayer({
-  source: productsCircleSource,
-  renderMode: 'raster',
-  style: circleStyle,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  zIndex: 2,
-  maxResolution: productsCircleMax
-});
+// const productsCircleLayer = new VectorLayer({
+//   source: productsCircleSource,
+//   renderMode: 'raster',
+//   style: circleStyle,
+//   updateWhileAnimating: true,
+//   updateWhileInteracting: true,
+//   zIndex: 2,
+//   maxResolution: productsCircleMax
+// });
 
 const productsLabelLayer = new VectorLayer({
   source: productsLabelSource,
   style: productLabelStyle,
   updateWhileAnimating: true,
-  updateWhileInteracting: false,
+  updateWhileInteracting: true,
+  renderBuffer: 150,
   maxResolution: productsImageMax,
-  zIndex: 5
+  zIndex: 10
 })
 
 export const tagsLayer = new VectorLayer({

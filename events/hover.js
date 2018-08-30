@@ -16,12 +16,6 @@ export const handleHover = function(e) {
   debounce(updatePreview, 500).call(null, e);
 
   const resolution = view.getResolution();
-  const size = map.getSize();
-
-  if (jumpStripsInt != null) {
-    window.clearInterval(jumpStripsInt);
-    window.jumpStripActive = false; 
-  }
 
   if (map.hasFeatureAtPixel(e.pixel)) {
     map.getTargetElement().style.cursor = 'pointer';
@@ -34,6 +28,11 @@ export const handleHover = function(e) {
     const featureType = feature.get('type');
     const featureStyle = feature.get('style');
     const pId = feature.getId();
+
+    console.log(featureType, featureStyle)
+
+    const featuresList = features.map(f => f.get('type'));
+    console.log(featuresList)
 
     if (featureType == 'add' || (featureType == 'product' && featureStyle == 'image')) {
       setCartAddIcon(feature);
