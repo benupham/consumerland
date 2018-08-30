@@ -272,9 +272,6 @@ getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
     featureData = categoryData.concat(productData);
 
     omnibox.getFeatureData(featureData);
-
-    console.log(productsLabelSource.getFeatures())
-
     
   })
   .then(() => {

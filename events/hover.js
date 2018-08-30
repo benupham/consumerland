@@ -13,7 +13,7 @@ export const handleHover = function(e) {
   // Turns off all hover events for touch devices. 
   if (has.TOUCH === true) return;
   
-  debounce(updatePreview, 250).call(null, e);
+  debounce(updatePreview, 500).call(null, e);
 
   const resolution = view.getResolution();
   const size = map.getSize();

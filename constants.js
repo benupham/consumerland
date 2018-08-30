@@ -130,10 +130,10 @@ export const imageScale = {
 // Fonts
 
 export const fontFamily = {
-	dept: 'Arial',
-	subdept: 'Arial',
-	brand: 'Arial',
-	product: 'Arial'
+	dept: 'Arial, Helvetica, sans-serif',
+	subdept: 'Arial, Helvetica, sans-serif',
+	brand: 'Arial, Helvetica, sans-serif',
+	product: 'Arial, Helvetica, sans-serif'
 }
 
 export const fontWeight = {

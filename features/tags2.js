@@ -7,6 +7,7 @@ import {imagesDir, productsImageMax} from '../constants.js';
 import {productsSource, tagsSource} from './getFeatureData';
 import {textFormatter, iconcache, styleCache, getFeatureJson} from '../utilities.js';
 import { updateCart, checkCart } from '../components/cart.js';
+import { omnibox } from '../components/omnibox.js';
 
 
 /*
@@ -28,7 +29,8 @@ export const tagsFeatureRender = function(features, colors = null, tagType = 'sa
         'geometry': new Point([f.geometry.coordinates[0] - 75, f.geometry.coordinates[1] + 75]),
         'name': f.id + '-' + tagType,
         'type': tagType,
-        'style': 'tag'
+        'style': 'tag',
+        'fid': f.id
       })
       tag.setId(f.id + '-' + tagType);
       tags.push(tag);      
@@ -93,34 +95,33 @@ export const setCartAddIcon = function(product) {
   // get product coord
   const coordinate = product.getGeometry().getCoordinates();
   cartAddIcon.getGeometry().setCoordinates([coordinate[0] + 75, coordinate[1] + 75]);
-
-  cartAddIcon.set('pId', product.getId());
+  cartAddIcon.set('fid', product.get('fid'));
 }
 
-export const setCartRemoveIcon = function(pId) {
-  
-  if (!checkCart(pId)) {
-    if (tagsSource.getFeatureById('remove-' + pId) != null) {
-      const icon = tagsSource.getFeatureById('remove-' + pId);
+export const setCartRemoveIcon = function(fid) {
+  fid = Number(fid);
+  if (!checkCart(fid)) {
+    if (tagsSource.getFeatureById('remove-' + fid) != null) {
+      const icon = tagsSource.getFeatureById('remove-' + fid);
       tagsSource.removeFeature(icon);
     }
   } else {
-    const product = productsSource.getFeatureById(pId);
-    const coord = product.getGeometry().getCoordinates();
+    const product = omnibox.featureData.find(f => f.id === fid);
+    const coord = product.geometry.coordinates;
     const cartRemoveIcon = new Feature({
       type: 'remove',
       src: tagsData['remove'].src,
       geometry: new Point([coord[0] + 75, coord[1] + 75]),
-      pId: pId
+      fid: fid
     });
-    cartRemoveIcon.setId('remove-' + pId);
+    cartRemoveIcon.setId('remove-' + fid);
     tagsSource.addFeature(cartRemoveIcon);
   }
 
 } 
 
 export const cartIconHandleClick = function(cartIcon) {
-  const pId = cartIcon.get('pId');
-  updateCart(pId);
+  const fid = cartIcon.get('fid');
+  updateCart(fid);
 }
 
