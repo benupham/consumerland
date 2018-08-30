@@ -205,9 +205,6 @@ body {
   width: 100%;
   cursor: pointer;
 }
-.departments .media.type-product {
-  cursor: default;
-}
 
 .departments .omni-image {
   width: 55px;

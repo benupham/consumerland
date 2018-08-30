@@ -105,7 +105,7 @@ const productsLabelLayer = new VectorLayer({
   updateWhileInteracting: true,
   renderBuffer: 150,
   maxResolution: productsImageMax,
-  zIndex: 10
+  zIndex: 4
 })
 
 export const tagsLayer = new VectorLayer({

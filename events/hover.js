@@ -21,7 +21,7 @@ export const handleHover = function(e) {
     map.getTargetElement().style.cursor = 'pointer';
     const features = map.getFeaturesAtPixel(e.pixel, {
       layerFilter: (layer) => { return layer.get('name') != 'tag-layer' ? true : false}
-    });
+    }, 8);
 
     
     const feature = features[0];

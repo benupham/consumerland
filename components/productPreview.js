@@ -1,7 +1,7 @@
 import Control from 'ol/control/control';
 import Overlay from 'ol/overlay';
 
-import {map} from '../index.js';
+import {map, view} from '../index.js';
 import {textFormatter, debounce, dataTool} from '../utilities.js';
 import {circleColors, labelColors} from '../constants.js';
 
@@ -16,14 +16,18 @@ export const updatePreview = function(e) {
 		return
 	}
 	
+	
+
 	const f = features[0];
 	if (previewedFeature === f) return;
 	if (f.get('style') === 'tag') return;
-	if (f.get('type') === 'product' && f.get('style') === 'circle') {
+	if (['product', 'brand'].includes(f.get('type')) && view.getResolution() <= 2 ) {
 		hidePreview();
 		previewedFeature = null;
 		return
 	}
+
+	console.log(f.get('type') === ('product' || 'brand'))
 
 	previewedFeature = f; 
 	
