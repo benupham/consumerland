@@ -28,7 +28,7 @@ export const handleClick = function(e) {
   const mapSize = map.getSize();
   const constraint = [mapSize[0] + 500, mapSize[1] + 100] ;
 
-  if (featureType == 'product' && featureStyle == 'image') {
+  if (featureType == 'product') {
     renderProductOverlay(feature, productDetailOverlay);
     e.stopPropagation();
 

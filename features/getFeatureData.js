@@ -4,7 +4,7 @@ import VectorSource from 'ol/source/vector';
 
 const d3Array = require('d3-array');
 
-import {productImageFeatureRender, productImageStyle} from './products';
+import {productImageFeatureRender, productImageStyle, productLabelFeatureRender, productLabelStyle} from './products';
 import {circleFeatureRender, circleStyle} from './circles';
 import {labelFeatureRender, labelStyle, imageFeatureRender, imageStyle} from './labels';
 import {tagsFeatureRender, tagsStyle, cartAddIcon} from './tags2';
@@ -30,6 +30,7 @@ import {
   deptsImageMax,
   deptsImageMin,
   maxResolutions,
+  productsLabelMax,
 } from '../constants.js';
 import {textFormatter, dataTool, getFeatureJson, getFeaturesFromFirestore} from '../utilities.js';
 import {view, map} from '../index.js';
@@ -64,6 +65,7 @@ const setMaxRange = function(features, range) {
 // Exported so components can use productsSource for feature look-ups
 export const productsSource = new VectorSource({overlaps: false});
 const productsCircleSource = new VectorSource({overlaps: false});
+const productsLabelSource = new VectorSource();
 export const tagsSource = new VectorSource({overlaps: false});
 const deptsCircleSource = new VectorSource({overlaps: false});
 const deptsLabelSource = new VectorSource();
@@ -96,6 +98,14 @@ const productsCircleLayer = new VectorLayer({
   maxResolution: productsCircleMax
 });
 
+const productsLabelLayer = new VectorLayer({
+  source: productsLabelSource,
+  style: productLabelStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: false,
+  maxResolution: productsImageMax,
+  zIndex: 5
+})
 
 export const tagsLayer = new VectorLayer({
   source: tagsSource,
@@ -248,17 +258,22 @@ getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
   
     productsSource.addFeatures(productImageFeatureRender([productData], 'product'));
     productsCircleSource.addFeatures(circleFeatureRender([productData], 'product'));
+    productsLabelSource.addFeatures(productLabelFeatureRender([productData], 'product'));
+
     tagsSource.addFeatures(tagsFeatureRender(productData));
     tagsSource.addFeature(cartAddIcon);
     tagsLayer.set('name','tag-layer');
 
     map.addLayer(tagsLayer);
     map.addLayer(productsImageLayer);
-    map.addLayer(productsCircleLayer);
+    // map.addLayer(productsCircleLayer);
+    map.addLayer(productsLabelLayer);
   
     featureData = categoryData.concat(productData);
 
     omnibox.getFeatureData(featureData);
+
+    console.log(productsLabelSource.getFeatures())
 
     
   })

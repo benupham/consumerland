@@ -13,12 +13,13 @@ export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland-sprite
 // export const imagesDir = './node-utility-scripts/';
 
 // Resolution
-
+export const mapStartResolution = 3;
 export const mapMaxResolution = 100;
 export const mapCenter = [46000,-46000];
 
 export const productsImageMax = 10;
 export const productsCircleMax = 10;
+export const productsLabelMax = 4;
 
 export const brandsLabelMax = 20;
 export const brandsLabelMin = 3;
@@ -66,13 +67,14 @@ export const labelColors = {
 	dept: 'rgba(102,194,165, 1)',
 	subdept: 'rgba(252,141,98, 1)',
 	brand: 'rgba(141,160,203, 1)',
-	product: 'inherit'
+	product: '#808080'
 }
 
 export const labelStyleChange = {
 	dept: deptsImageMin,
 	subdept: subdeptsImageMin,
-	brand: brandsImageMin
+	brand: brandsImageMin,
+	product: productsImageMax
 }
 
 export const labelBackgroundColors = {
@@ -93,7 +95,7 @@ export const labelStrokeWidth = {
 	dept: 1,
 	subdept: 3,
 	brand: 3,
-	product: 1
+	product: 3
 }
 
 export const circleLabelColors = {
@@ -106,14 +108,14 @@ export const circleLabelColors = {
 export const circleColors = {
 	dept: 'rgba(102,194,165, .1)',
 	subdept: 'rgba(252,141,98, .1)',
-	brand: 'rgba(255, 255, 255, .3)',
+	brand: 'rgba(255, 255, 255, 1)',
 	product: 'rgba(255, 255, 255, 1)'
 }
 
 export const circleHoverColors = {
 	dept: 'rgba(102,194,165, .2)',
 	subdept: 'rgba(252,141,98, .2)',
-	brand: 'rgba(255, 255, 255, .4)',
+	brand: 'rgba(255, 255, 255, 1)',
 	product: 'rgba(255, 255, 255, 1)'
 }
 
@@ -128,10 +130,10 @@ export const imageScale = {
 // Fonts
 
 export const fontFamily = {
-	dept: 'Oswald',
-	subdept: 'Oswald',
-	brand: 'Oswald',
-	product: 'Oswald'
+	dept: 'Arial',
+	subdept: 'Arial',
+	brand: 'Arial',
+	product: 'Arial'
 }
 
 export const fontWeight = {
@@ -140,6 +142,8 @@ export const fontWeight = {
 	brand: '300',
 	product: '300'
 }
+
+export const productLabelFontSize = 12;
 
 export const fontSizes = [
 	11,

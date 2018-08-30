@@ -1,9 +1,13 @@
 import Feature from 'ol/feature';
 import Point from 'ol/geom/point';
 import Icon from 'ol/style/icon';
+import Stroke from 'ol/style/stroke';
+import Fill from 'ol/style/fill';
+import Text from 'ol/style/text';
 import Style from 'ol/style/style';
 
-import {imagesDir} from '../constants.js';
+import {imagesDir, fontFamily, fontWeight, labelColors, labelStrokes, labelStrokeWidth, productLabelFontSize} from '../constants.js';
+import {textFormatter} from '../utilities.js';
 
 // Product Image Feature
 
@@ -86,3 +90,52 @@ export const productImageStyle = function(image, res) {
   return style;
 }
 
+
+export const productLabelFeatureRender = function (featureSets, type='product') {
+  const labels = [];
+
+  featureSets.forEach((featureSet) => {
+    featureSet.forEach((f) => {
+      const label = new Feature({
+        geometry: new Point(f.geometry.coordinates),
+        name: textFormatter(f.properties.name, 28, '\n', 55),
+        fid: f.id,
+        price: f.properties.price || '',
+        type: f.properties.type,
+        style: 'label'
+      });
+      label.setId(f.id + '-label');
+      labels.push(label);        
+    })
+  })
+  return labels;
+}
+
+const productLabelStyleCache = {};
+
+export const productLabelStyle = function(label, res) {
+  let style = productLabelStyleCache[label.getId()];
+
+  if (!style) {
+
+    const productText = label.get('name') + '\n' + label.get('price');
+
+    style = new Style({
+      text: new Text({
+        font: fontWeight['product'] + ' ' + productLabelFontSize + 'px' + ' ' + fontFamily['product'],
+        text: productText,
+        textBaseline: 'top',
+        textAlign: 'center',
+        offsetY: 120,
+        fill: new Fill({color: labelColors['product']}),
+        stroke: new Stroke({color: labelStrokes['product'], width: labelStrokeWidth['product']}) ,
+        // backgroundFill: new Fill({color: backgroundFillColor}),
+        // padding: [0,3,0,3]
+      })
+    })
+    productLabelStyleCache[label.getId()] = style;
+  }
+  style.getText().setOffsetY(120/res);
+  style.getText().setFont(fontWeight['product'] + ' ' + (productLabelFontSize/res) + 'px' + ' ' + fontFamily['product'])
+  return style;
+}

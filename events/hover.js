@@ -62,10 +62,6 @@ export const handleHover = function(e) {
     for (let key in highlight) {
       highlight[key].set('hover', false);
     }
-    // if (featureType && highlight[featureType]) {
-    //   highlight[featureType].set('hover', false);
-    //   highlight[featureType] = undefined;
-    // }
   }
 }
 

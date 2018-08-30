@@ -14,7 +14,7 @@ import {textFormatter, dataTool, iconcache} from './utilities.js';
 import {handleSearch} from './components/omnibox.js';
 import {handleHover, jumpStripsInt} from './events/hover.js';
 import {handleClick} from './events/click.js';
-import {mapMaxResolution, mapCenter} from './constants.js';
+import {mapMaxResolution, mapStartResolution, mapCenter} from './constants.js';
 import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './components/controls.js';
 
 
@@ -34,7 +34,7 @@ export const map = new olMap({
 const ctr = mapCenter;
 export const view = new View({
   center: mapCenter,
-  resolution: mapMaxResolution, 
+  resolution: mapStartResolution, 
   zoomFactor: 1.5,
   minResolution: 1,
   maxResolution: mapMaxResolution,
