@@ -13,36 +13,41 @@ export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland-sprite
 // export const imagesDir = './node-utility-scripts/';
 
 // Resolution
+export const mapStartResolution = 100;
+export const mapMaxResolution = 100;
+export const mapCenter = [46000,-46000];
 
-export const productsImageMax = 15;
-export const productsCircleMax = 15;
+export const productsImageMax = 10;
+export const productsCircleMax = 10;
+export const productsLabelMax = 4;
 
-export const brandsLabelMax = 35;
-export const brandsLabelMin = 0;
+export const brandsLabelMax = 20;
+export const brandsLabelMin = 3;
 export const brandsCircleMax = 50;
 export const brandsCircleMin = 0;
-export const brandsImageMax = 25;
-export const brandsImageMin = 0;
+export const brandsImageMax = 20;
+export const brandsImageMin = 10;
 
-export const subdeptsLabelMax = 60;
-export const subdeptsLabelMin = 0;
+export const subdeptsLabelMax = 1000;
+export const subdeptsLabelMin = 3;
 export const subdeptsCircleMax = 1000;
 export const subdeptsCircleMin = 0;
-export const subdeptsImageMax = 60;
-export const subdeptsImageMin = 0;
+export const subdeptsImageMax = 1000;
+export const subdeptsImageMin = 20;
 
 export const deptsLabelMax = 1000;
-export const deptsLabelMin = 0;
+export const deptsLabelMin = 3;
 export const deptsCircleMax = 1000;
 export const deptsCircleMin = 0;
 export const deptsImageMax = 1000;
-export const deptsImageMin = 0;
+export const deptsImageMin = 60;
 
+// For hiding/showing category labels, images, etc. 
 export const maxResolutions = [
+	5,
 	10,
-	15,
 	20,
-	25,
+	30,
 	35,
 	45,
 	50,
@@ -52,42 +57,45 @@ export const maxResolutions = [
 export const searchResolutions = {
 	dept: 29,
 	subdept: productsImageMax - 0.5,
-	brand: 2,
+	brand: brandsLabelMin,
 	product: 1
 }
 
 // Colors
 
-export const colors = [
-  '#303030',
-  '#606060',
-  '#808080',
-  '#A9A9A9',
-  '#C0C0C0',
-  '#DCDCDC',
-  '#E8E8E8',
-  '#fff'
-]
-
 export const labelColors = {
-	dept: '#606060',
-	subdept: '#606060',
-	brand: '#808080',
-	product: '#606060'
+	dept: 'rgba(102,194,165, 1)',
+	subdept: 'rgba(252,141,98, 1)',
+	brand: 'rgba(141,160,203, 1)',
+	product: '#808080'
+}
+
+export const labelStyleChange = {
+	dept: deptsImageMin,
+	subdept: subdeptsImageMin,
+	brand: brandsImageMin,
+	product: productsImageMax
 }
 
 export const labelBackgroundColors = {
-	dept: 'rgba(255, 255, 255, 0.7)',
-	subdept: 'rgba(255, 255, 255, 0.7)',
-	brand: 'rgba(255, 255, 255, 0.7)',
+	dept: 'rgba(255, 255, 255, 1)',
+	subdept: 'rgba(255, 255, 255, 0.0)',
+	brand: 'rgba(255, 255, 255, 0.0)',
 	product: 'rgba(255, 255, 255, 0.7)'
 }
 
 export const labelStrokes = {
 	dept: '#fff',
-	subdept: '#fff',
-	brand: '#fff',
+	subdept: 'rgba(255, 255, 255, 0.7)',
+	brand: 'rgba(255, 255, 255, 0.7)',
 	product: '#fff'
+}
+
+export const labelStrokeWidth = {
+	dept: 1,
+	subdept: 3,
+	brand: 3,
+	product: 3
 }
 
 export const circleLabelColors = {
@@ -98,42 +106,52 @@ export const circleLabelColors = {
 }
 
 export const circleColors = {
-	dept: 'rgba(249, 198, 90, 0.3)',
-	subdept: 'rgba(0, 133, 62, 0.3)',
-	brand: 'rgba(255, 255, 255, 0.2)', 
+	dept: 'rgba(102,194,165, .1)',
+	subdept: 'rgba(252,141,98, .1)',
+	brand: 'rgba(255, 255, 255, 1)',
 	product: 'rgba(255, 255, 255, 1)'
 }
 
 export const circleHoverColors = {
-	dept: 'rgba(249, 198, 90, 0.4)',
-	subdept: 'rgba(0, 133, 62, 0.4)',
-	brand: 'rgba(255, 255, 255, 0.4)', 
-	product: '#fff'
+	dept: 'rgba(102,194,165, .2)',
+	subdept: 'rgba(252,141,98, .2)',
+	brand: 'rgba(255, 255, 255, 1)',
+	product: 'rgba(255, 255, 255, 1)'
 }
+
+export const imageScale = {
+	dept: .45,
+	subdept: .3,
+	brand: .18, 
+	product: 1
+}
+
 
 // Fonts
 
 export const fontFamily = {
-	dept: 'Oswald',
-	subdept: 'Oswald',
-	brand: 'Oswald',
-	product: 'Oswald'
+	dept: 'Arial, Helvetica, sans-serif',
+	subdept: 'Arial, Helvetica, sans-serif',
+	brand: 'Arial, Helvetica, sans-serif',
+	product: 'Arial, Helvetica, sans-serif'
 }
 
 export const fontWeight = {
 	dept: '500',
-	subdept: '400',
+	subdept: '300',
 	brand: '300',
-	product: '400'
+	product: '300'
 }
 
+export const productLabelFontSize = 12;
+
 export const fontSizes = [
-	10,
+	11,
 	12,
+	13,
 	14,
-	16,
-	18,
-	18,
-	20,
-	22,
+	15,
+	17,
+	17,
+	18
 ];

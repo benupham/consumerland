@@ -16,3 +16,4 @@ functions/firebase-key.json
 node-utility-scripts/
 *.icloud
 *.pdf
+*.code-workspace

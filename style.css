@@ -60,15 +60,15 @@
 
 body {
   overflow: hidden;
-	background: white;
-	font-family: Oswald;
+	background: #f2f2f2;
+	font-family: Arial;
 	font-weight: 300;
 	font-size: 14px;
-	color: #111;
+	color: #474747;
 	/* background-image: url('https://s3-us-west-1.amazonaws.com/consumerland/other-images/wood-floor-web.jpg'); */
 }
 
-.ol-attribution {
+.ol-attribution, .ol-zoom {
 	display: none;
 }
 
@@ -125,15 +125,49 @@ body {
   color: rgba(249, 198, 90, 1);
 }
 
-/* SEARCH & FEATURE PREVIEW */
-.search {
-  display: block;
+/* FEATURE PREVIEW */
+.product-preview {
   position: absolute;
-  width: 400px;
   top: 0;
-  left: 0;
+  left: -9999px;
+  min-width: 200px;
+}
+
+.preview-image {
+	height: 70px;
+  width: 70px;
+  background-size: contain;
+}
+
+/* PRODUCT HOVER CARD */
+.product-hover-card {
+
+}
+/* OMNIBOX  */
+.omnibox {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
   bottom: auto;
   right: auto;
+  left: 0;
+  top: 0;
+  width: 300px;
+  max-height: 100vh;
+  z-index: 99;
+  cursor: default;
+}
+.omnibox.open {
+  background-color: #f0f0f0;
+  border-right: 1px solid black;
+}
+
+.search-bar {
+  width: 95%;
+  min-height: 50px;
+}
+.search-bar .input-group input.form-control {
+  border: none;
 }
 
 .autocomplete .ui-menu-item {
@@ -152,47 +186,59 @@ body {
   color: rgba(249, 198, 90, 1);
 }
 
-.preview-image {
-	height: 50px;
-  width: 50px;
-  background-size: contain;
-}
-
-/* OMNIBOX  */
-.omnibox {
-  display: block;
-  position: absolute;
-  bottom: auto;
-  right: auto;
-  left: 0;
-  top: 125px;
-  width: 200px;
-  height: 100%;
-  z-index: 99;
-}
-.omnibox.open {
-  background-color: #f0f0f0;
-  border-right: 1px solid black;
-}
-
-.omnibox .row {
-  padding-top: 15px;
-}
-
 .departments {
-  font-size: 14px;
-  font-weight: 200;
+  background-color: #fff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.departments li > ul {
-  margin-left: 1em;
-  font-size: 12px;
+.departments .omni-list {
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
-a.department-link:hover, a.subdepartment-link:hover {
+.departments .omni-list-breadcrumb a.breadcrumb-link {
   cursor: pointer;
-  color: #111;
-  font-weight: 400;
+}
+
+.departments .omni-list-header {
+}
+
+.departments .media {
+  background-color: #fff;
+  width: 100%;
+  cursor: pointer;
+}
+
+.departments .omni-image {
+  width: 55px;
+  height: 55px;
+}
+
+.departments .media-body {
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.departments .omni-list-name {
+  font-size: 16px;
+  font-weight: 300;
+  display: block;
+}
+.departments .type-product .omni-list-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.departments .child-link {
+  font-size: 11px;
+  font-weight: 200;
+  cursor: pointer;
+}
+
+.departments .child-link:hover, .departments .child-link:active {
+  text-decoration: underline;
 }
 
 /* OVERVIEW MAP */
@@ -208,6 +254,7 @@ a.department-link:hover, a.subdepartment-link:hover {
   height: 154px;
 	z-index: 10;
   will-change: content;
+  display: none;
 }
 
 .overviewmap.ol-overviewmap {
@@ -251,8 +298,6 @@ a.department-link:hover, a.subdepartment-link:hover {
 	width: 250px;
 }
 
-.product-overlay .product-price {
-}
 
 /* Cart */
 .cart {
@@ -288,13 +333,13 @@ a.department-link:hover, a.subdepartment-link:hover {
 
 .data-tool {
 	position: absolute; 
-	top: 20px; 
-	left: 30px; 
+	bottom: 20px; 
+	right: 30px; 
 	font-size: 16px; 
 	color: red; 
 	z-index: 1000;
 	background: white;
-  display: none;
+  display: block;
 }
 /*
 * MEDIA QUERIES

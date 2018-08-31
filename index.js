@@ -1,25 +1,21 @@
-require('ol/ol.css');
-import olMap from 'ol/map';
+import 'ol/ol.css';
 import View from 'ol/view';
 import Extent from 'ol/extent';
+import olMap from 'ol/map';
+
+
 
 import './style.css';
-import './components/departmentsLinks.js';
 
-import {maxExtent} from './features/categoryFeatures.js';
-import {productDetailOverlay} from './components/overlays.js';
-// import {productPreview} from './components/productPreview.js';
+import {maxExtent} from './features/getFeatureData';
+import {productDetailOverlay} from './components/productDetail.js';
+import {hidePreview} from './components/productPreview.js';
 import {textFormatter, dataTool, iconcache} from './utilities.js';
-//import {displayCart, updateCart, updateAddCartButton} from './components/cart.js';
-import {displaySignage} from './components/signage.js';
-import {handleSearch, omnibox} from './components/search.js';
-import {handleJumpStrips} from './components/jumpstrips.js';
+import {handleSearch} from './components/omnibox.js';
 import {handleHover, jumpStripsInt} from './events/hover.js';
 import {handleClick} from './events/click.js';
-import {tagLayer} from './features/tags.js';
-import {productsImageMax} from './constants.js';
+import {mapMaxResolution, mapStartResolution, mapCenter} from './constants.js';
 import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './components/controls.js';
-import {renderDeptsLinks} from './components/departmentsLinks';
 
 
 $('#info-modal').modal('show');
@@ -30,21 +26,23 @@ $('#info-modal').modal('show');
 * 
 */
 
-const ctr = [46000,-46000];
-export const view = new View({
-  center: ctr,
-  resolution: 65, 
-  zoomFactor: 1.5,
-  minResolution: 1,
-  maxResolution: 65,
-}); 
-
-
 export const map = new olMap({
   renderer: ('canvas'),
-  target: document.getElementById('map'),
-  view: view
+  target: document.getElementById('map')
 });
+
+const ctr = mapCenter;
+export const view = new View({
+  center: mapCenter,
+  resolution: mapStartResolution, 
+  zoomFactor: 1.5,
+  minResolution: 1,
+  maxResolution: mapMaxResolution,
+}); 
+
+map.setView(view);
+
+
 
 const centerZoom = view.getCenter();  
 
@@ -69,20 +67,10 @@ window.addEventListener('resize', mapResize);
 * 
 */
 
-// map.addOverlay(productCardOverlay);
 map.addControl(overviewMapControl);
-// map.addControl(breadCrumbsControl);
-
-// map.addControl(productPreview);
-
-// map.addOverlay(omnibox);
 
 map.addOverlay(productDetailOverlay);
 
-renderDeptsLinks();
-// for (let i = 0; i < 4; i++) {
-//   map.addOverlay(signage[i]);
-// }
 
 map.on('pointermove', (e) => {
   dataTool.querySelector('#data-coord').innerHTML = `coord: ${e.coordinate}`;
@@ -99,7 +87,8 @@ map.on('singleclick', (e) => {
 
 
 
-view.on('change:resolution', (e) => {
+view.on('change:resolution', (e) => {  
+  hidePreview();
   // console.log(e);
   const res = view.getResolution();
   if (window.jumpStripActive === true) return; 
@@ -110,14 +99,15 @@ view.on('change:resolution', (e) => {
   const ctr = view.getCenter();
   const pixel = map.getPixelFromCoordinate(ctr);
   const features = map.getFeaturesAtPixel(pixel);
-  // console.log(features);
-  // debounce()
+
 
   dataTool.querySelector('#data-zoom').innerHTML = `zoom: ${view.getZoom()}`;
   dataTool.querySelector('#data-res').innerHTML = `res: ${view.getResolution()}`;
 });
 
 view.on('change:center', (e) => {
+  hidePreview();
+
   const viewCenter = view.getCenter();
   if (!Extent.containsCoordinate(maxExtent,viewCenter)) {
     view.setCenter(ctr);
@@ -125,5 +115,3 @@ view.on('change:center', (e) => {
   } 
 })
 
-document.getElementById('search-button').onclick = handleSearch;
-document.getElementById('search-input').onkeypress = handleSearch;

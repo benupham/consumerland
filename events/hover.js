@@ -1,71 +1,74 @@
 import has from 'ol/has';
 
 import {view, map} from '../index.js';
-import {productsImageMax} from '../constants.js';
+import {productsImageMax, searchResolutions} from '../constants.js';
 import {debounce} from '../utilities.js';
-import {updatePreview} from '../components/productPreview.js';
-import {setCartAddIcon} from '../features/tags.js';
-import {handleJumpStrips} from '../components/jumpstrips.js';
-import {productsSource} from '../features/categoryFeatures.js';
+import {updatePreview, hidePreview} from '../components/productPreview.js';
+import {setCartAddIcon} from '../features/tags2.js';
 
 export let jumpStripsInt = null;
-let highlight = undefined; 
+let highlight = {}; 
 
 export const handleHover = function(e) {
   // Turns off all hover events for touch devices. 
   if (has.TOUCH === true) return;
+  
+  debounce(updatePreview, 500).call(null, e);
 
   const resolution = view.getResolution();
-  const size = map.getSize();
-
-  if (jumpStripsInt != null) {
-    window.clearInterval(jumpStripsInt);
-    window.jumpStripActive = false; 
-  }
-
-  // if (resolution < view.getMaxResolution() && (e.pixel[0] < 100 || e.pixel[1] < 100 || e.pixel[0] > size[0] - 100 || e.pixel[1] > size[1] - 100)) {
-  //   jumpStripsInt = window.setInterval(handleJumpStrips, 16, e);
-  //   hideOverlay(productCardOverlay);
-  //   return
-  // } else if (jumpStripsInt != null) {
-  //   window.clearInterval(jumpStripsInt);
-  //   map.getTargetElement().style.cursor = '';
-  //   window.jumpStripActive = false;
-  // }
 
   if (map.hasFeatureAtPixel(e.pixel)) {
     map.getTargetElement().style.cursor = 'pointer';
     const features = map.getFeaturesAtPixel(e.pixel, {
       layerFilter: (layer) => { return layer.get('name') != 'tag-layer' ? true : false}
-    });
-    debounce(updatePreview, 100).call(null, features);
+    }, 8);
+
+    
     const feature = features[0];
     const featureType = feature.get('type');
-    
     const featureStyle = feature.get('style');
     const pId = feature.getId();
+
+    const featuresList = features.map(f => f.get('type'));
+
 
     if (featureType == 'add' || (featureType == 'product' && featureStyle == 'image')) {
       setCartAddIcon(feature);
     } 
-    else if (featureType == 'brand' || 'dept' || 'subdept') {
+    else if ((featureType == 'brand' || 'dept' || 'subdept') && (featureStyle === 'circle')) {
+
+      setMouseCursor(featureType, resolution);
+
       setCartAddIcon(false);
-      if (feature != highlight) {
-        if (highlight) {
-          highlight.set('hover', false);
+      if (feature != highlight[featureType]) {
+        
+        if (highlight[featureType] && (featureType === highlight[featureType].get('type'))) {
+          
+          highlight[featureType].set('hover', false);
           feature.dispatchEvent('change');
         }
         feature.set('hover', true);
         feature.dispatchEvent('change');
-        highlight = feature;
+        highlight[featureType] = feature;
       }
 
     } 
   } else {
+    hidePreview();
     map.getTargetElement().style.cursor = 'auto';
-    if (highlight) {
-      highlight.set('hover', false);
-      highlight = undefined;
+    for (let key in highlight) {
+      highlight[key].set('hover', false);
     }
+  }
+}
+
+const setMouseCursor = function(type = null, res = null) {
+  const map = document.getElementById('map');
+  if (res > searchResolutions[type]) {
+    map.style.cursor = 'zoom-in';
+  } else if (res < searchResolutions[type]) {
+    map.style.cursor = 'zoom-out';
+  } else {
+    map.style.cursor = 'pointer';
   }
 }

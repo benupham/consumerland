@@ -3,7 +3,7 @@ import Control from 'ol/control/control';
 import View from 'ol/view';
 import DragPan from 'ol/interaction/dragpan';
 
-import {departmentsCircleLayer,departmentsLabelLayer} from '../features/categoryFeatures.js';
+import {deptsCircleLayer,deptsLabelLayer} from '../features/getFeatureData';
 import {view} from '../index.js';
 
 const overviewView = new View({
@@ -15,7 +15,7 @@ const overviewView = new View({
 
 export const overviewMapControl = new OverviewMap({
 	className: 'overviewmap ol-overviewmap',
-	layers: [departmentsCircleLayer,departmentsLabelLayer],
+	layers: [deptsCircleLayer,deptsLabelLayer],
 	collapsed: false,
 	view: overviewView,
 	target: document.getElementById('overviewmap')

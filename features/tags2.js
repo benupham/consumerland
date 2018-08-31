@@ -1,15 +1,13 @@
 import Feature from 'ol/feature';
 import Point from 'ol/geom/point';
-import VectorLayer from 'ol/layer/vector';
-import VectorSource from 'ol/source/vector';
 import Icon from 'ol/style/icon';
 import Style from 'ol/style/style';
 
 import {imagesDir, productsImageMax} from '../constants.js';
-import {productsSource} from './categoryFeatures.js';
+import {productsSource, tagsSource} from './getFeatureData';
 import {textFormatter, iconcache, styleCache, getFeatureJson} from '../utilities.js';
-import {map} from '../index.js';
 import { updateCart, checkCart } from '../components/cart.js';
+import { omnibox } from '../components/omnibox.js';
 
 
 /*
@@ -23,7 +21,7 @@ const tagsData = {
   remove: {color: '', src: 'remove.png'},
 }
 
-const tagFeatureRender = function(features, colors = null, tagType = 'sale') {
+export const tagsFeatureRender = function(features, colors = null, tagType = 'sale') {
   let tags = [];
   features.forEach( (f) => {
     if (f.properties.type == 'product' && f.properties.price.indexOf('Reg') > -1) {
@@ -31,6 +29,8 @@ const tagFeatureRender = function(features, colors = null, tagType = 'sale') {
         'geometry': new Point([f.geometry.coordinates[0] - 75, f.geometry.coordinates[1] + 75]),
         'name': f.id + '-' + tagType,
         'type': tagType,
+        'style': 'tag',
+        'fid': f.id
       })
       tag.setId(f.id + '-' + tagType);
       tags.push(tag);      
@@ -40,7 +40,7 @@ const tagFeatureRender = function(features, colors = null, tagType = 'sale') {
 }
 
 
-const tagStyle = function (tag, resolution) {
+export const tagsStyle = function (tag, resolution) {
   const type = tag.get('type');
   const src = tagsData[type].src;
   let style = {};
@@ -73,36 +73,17 @@ const tagStyle = function (tag, resolution) {
   return style
 }
 
-const tagSource = new VectorSource({
-  overlaps: false
-});
 
-export const tagLayer = new VectorLayer({
-  source: tagSource,
-  style: tagStyle,
-  zIndex: 4,
-  updateWhileAnimating: true,
-  updateWhileInteracting: true,
-  renderMode: 'vector',
-  maxResolution: productsImageMax 
-})
-tagLayer.set('name','tag-layer');
 
-getFeatureJson(['product'], 'tags')
-.then(data => {
-  const tagFeatures = tagFeatureRender(data);
-  tagSource.addFeatures(tagFeatures);
-  map.addLayer(tagLayer);
-  
-})
 
-const cartAddIcon = new Feature({
+// TAG FUNCTIONS
+export const cartAddIcon = new Feature({
   'geometry': new Point([null, null]),
   'name': 'cart-add-icon',
   'type': 'add',
+  'style': 'tag'
 })
 cartAddIcon.setId('cart-add-icon');
-tagSource.addFeature(cartAddIcon);
 
 export const setCartAddIcon = function(product) {
   // send nowhere if false
@@ -114,34 +95,33 @@ export const setCartAddIcon = function(product) {
   // get product coord
   const coordinate = product.getGeometry().getCoordinates();
   cartAddIcon.getGeometry().setCoordinates([coordinate[0] + 75, coordinate[1] + 75]);
-
-  cartAddIcon.set('pId', product.getId());
+  cartAddIcon.set('fid', product.get('fid'));
 }
 
-export const setCartRemoveIcon = function(pId) {
-  
-  if (!checkCart(pId)) {
-    if (tagSource.getFeatureById('remove-' + pId) != null) {
-      const icon = tagSource.getFeatureById('remove-' + pId);
-      tagSource.removeFeature(icon);
+export const setCartRemoveIcon = function(fid) {
+  fid = Number(fid);
+  if (!checkCart(fid)) {
+    if (tagsSource.getFeatureById('remove-' + fid) != null) {
+      const icon = tagsSource.getFeatureById('remove-' + fid);
+      tagsSource.removeFeature(icon);
     }
   } else {
-    const product = productsSource.getFeatureById(pId);
-    const coord = product.getGeometry().getCoordinates();
+    const product = omnibox.featureData.find(f => f.id === fid);
+    const coord = product.geometry.coordinates;
     const cartRemoveIcon = new Feature({
       type: 'remove',
       src: tagsData['remove'].src,
       geometry: new Point([coord[0] + 75, coord[1] + 75]),
-      pId: pId
+      fid: fid
     });
-    cartRemoveIcon.setId('remove-' + pId);
-    tagSource.addFeature(cartRemoveIcon);
+    cartRemoveIcon.setId('remove-' + fid);
+    tagsSource.addFeature(cartRemoveIcon);
   }
 
 } 
 
 export const cartIconHandleClick = function(cartIcon) {
-  const pId = cartIcon.get('pId');
-  updateCart(pId);
+  const fid = cartIcon.get('fid');
+  updateCart(fid);
 }
 

@@ -1,11 +1,15 @@
 import {map, view} from '../index.js';
 import Circle from 'ol/geom/circle';
 
-import {productsImageMax} from '../constants.js';
-import {renderProductOverlay, hideOverlay, productDetailOverlay} from '../components/overlays.js';
-import {cartIconHandleClick} from '../features/tags.js';
+import {productsImageMax, searchResolutions} from '../constants.js';
+import {hidePreview} from '../components/productPreview.js';
+import {renderProductOverlay, hideOverlay, productDetailOverlay} from '../components/productDetail.js';
+import {cartIconHandleClick} from '../features/tags2.js';
+import {omnibox} from '../components/omnibox.js';
 
 export const handleClick = function(e) {
+  hidePreview();
+
   if (productDetailOverlay.getElement().style.display == 'block') {
     hideOverlay(productDetailOverlay);
     return
@@ -24,21 +28,17 @@ export const handleClick = function(e) {
   const mapSize = map.getSize();
   const constraint = [mapSize[0] + 500, mapSize[1] + 100] ;
 
-  if (featureType == 'product' && featureStyle == 'image') {
-    renderProductOverlay(feature, productDetailOverlay);
+  if (featureType == 'product') {
+    renderProductOverlay(feature.get('fid'), productDetailOverlay);
     e.stopPropagation();
 
-  } else if (['brand','dept','subdept'].indexOf(featureType) > -1) {
+  } else if (['brand','dept','subdept'].includes(featureType)) {
+    console.log(feature)
+    omnibox.onMapClick(feature.get('fid'));
     
-    let circle = feature.getGeometry();
-    if (featureStyle != 'circle') {
-      circle = new Circle(feature.getGeometry().getCoordinates(), feature.get('radius'));  
-    }  
     const center = feature.getGeometry().getCoordinates() || feature.getGeometry().getCenter();   
     // hideOverlay(productDetailOverlay);
-    const zoomTo = featureType == 'brand' ? 2 
-      : featureType == 'subdept' ? 6 
-      : 29;
+    const zoomTo = searchResolutions[featureType];
     view.animate({ resolution: zoomTo, center: center});  
   } else if (featureType === 'add' || featureType === 'remove') {
     cartIconHandleClick(feature);
