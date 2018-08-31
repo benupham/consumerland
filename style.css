@@ -196,7 +196,7 @@ body {
   height: 94%;
 }
 
-.omni-list-breadcrumb a {
+.departments .omni-list-breadcrumb a.breadcrumb-link {
   cursor: pointer;
 }
 

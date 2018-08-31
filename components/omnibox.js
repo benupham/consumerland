@@ -11,50 +11,6 @@ import { isNullOrUndefined } from 'util';
 * 
 */
 
-
-
-
-// const termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
-// $( "#search-input" ).autocomplete({
-//   classes: {"ui-autocomplete": "autocomplete"},
-//   source: function(request, response) {
-//     console.log(request);
-//     let match = matchSorter(searchIndex, request.term, {keys: ['value'] });
-//     match = match.slice(0,10);
-//     match.sort((a,b) => {
-//       return b.count - a.count;
-//     });
-//     console.log(match);
-//     response(match);
-//   },
-//   select: function(e, ui) {
-//     console.log(e, ui.item.coord);
-//     $( "#search-input" ).value = ui.item.value;
-//     map.getView().animate({
-//       center: ui.item.coord,
-//       resolution: searchResolutions[ui.item.type] 
-//     })
-//   },
-//   open: function(e, ui) {
-//     const term = document.getElementById('search-input').value;
-//     const styledTerm = termTemplate.replace('%s', term);
-//     console.log(term, styledTerm);
-//     $('ul.autocomplete li div').each(function() {
-//       $(this).html($(this).text().replace(term, styledTerm));
-//     });
-//   },
-
-// }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-//   const parent = searchIndex.find(p => p.id === item.parent);
-//   item.parentName = parent.value; 
-//   item.label = item.value + ' in ' + '<span class="feature-parent">' + item.parentName + '</span>'
-//   return $( "<li>" )
-//     .data( "ui-autocomplete-item", item )
-//     .append( "<a>" + item.label + "</a>" )
-//     .appendTo( ul );
-// };;
-
-
 class Omnibox {
   constructor(elem) {
     this.renderList = this.renderList.bind(this);
@@ -71,11 +27,6 @@ class Omnibox {
     this.renderList();
     this.getSearchIndex();
   }
-  
-  // init() {
-  //   this.renderList();
-  //   this.getSearchIndex();
-  // }
 
   goToFeature(coord, type) {
     map.getView().animate({
@@ -95,7 +46,8 @@ class Omnibox {
         coord: f.geometry.coordinates,
         id: f.id
       }
-    }))
+    }));
+    console.log(this.searchIndex)
   }
 
   handleSearch(e) {
@@ -150,7 +102,7 @@ class Omnibox {
     let html = ``;
 
     const breadcrumb = this.renderBreadcrumb(category);
-    html += `<div id="omni-list-breadcrumb" class="mr-1 mb-2 text-black-50">${breadcrumb}</div>`
+    html += `<div id="omni-list-breadcrumb" class="omni-list-breadcrumb mr-1 mb-2 text-black-50">${breadcrumb}</div>`
 
     const header = category === null ? "Departments" : category.properties.name;
     const headerColor = category === null ? "inherit" : category.properties.type;
@@ -218,8 +170,8 @@ class Omnibox {
     const src = f.properties.src.includes('.') ? f.properties.src : 'product-images/missing-item.jpg' ;
     return (
       `<div id="omni-list-item-${f.id}" data-id="${f.id}" class="media shadow-sm mb-1 p-1 type-${f.properties.type}">
-        <img src="${imagesDir + (f.properties.sampleImg || src )}" alt="${f.properties.name}" class="omni-image preview-image mr-2"  data-id="${f.id}">
-        <div class="media-body mr-1">
+        <img src="${imagesDir + (f.properties.sampleImg || src )}" alt="${f.properties.name}" class="omni-image preview-image mr-2 order-1"  data-id="${f.id}">
+        <div class="media-body mr-1 ml-3 ">
           <div class="omni-list-name" data-id="${f.id}" style="color: ${labelColors[f.properties.type]};">${f.properties.name}</div>
           <div id="omni-list-item-price" data-id="${f.id}" class="preview-price">${f.properties.price || ''}</div>
         </div>
@@ -241,7 +193,7 @@ class Omnibox {
       do {
         this.featureData.forEach(f => {
           if (f.id === parent.properties.parent) {
-            const parentLink = `<a class="small" data-id="${f.id}">${f.properties.name}</a> / `;
+            const parentLink = `<a class="small breadcrumb-link" data-id="${f.id}">${f.properties.name}</a> / `;
             breadcrumb = parentLink + breadcrumb;
             parent = f; 
             console.log(parent.properties.name)
@@ -250,10 +202,54 @@ class Omnibox {
         })  
       } while (i < 5); 
     }
-    breadcrumb = `<a class="small" data-id="all-dept">Departments / </a>` + breadcrumb; 
+    breadcrumb = `<a class="small breadcrumb-link" data-id="all-dept">Departments / </a>` + breadcrumb; 
     return breadcrumb
   }
+  
 }
 const elem = document.getElementById('departments');
 export const omnibox = new Omnibox(elem);
 
+// Autcomplete functionality for search
+
+
+// const termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
+
+// $( "#search-input" ).autocomplete({
+//   classes: {"ui-autocomplete": "autocomplete"},
+//   source: function(request, response) {
+//     console.log(request);
+//     let match = matchSorter(this.searchIndex, request.term, {keys: ['value'] });
+//     match = match.slice(0,10);
+//     match.sort((a,b) => {
+//       return b.count - a.count;
+//     });
+//     console.log(match);
+//     response(match);
+//   },
+//   select: function(e, ui) {
+//     console.log(e, ui.item.coord);
+//     $( "#search-input" ).value = ui.item.value;
+//     map.getView().animate({
+//       center: ui.item.coord,
+//       resolution: searchResolutions[ui.item.type] 
+//     })
+//   },
+//   open: function(e, ui) {
+//     const term = document.getElementById('search-input').value;
+//     const styledTerm = termTemplate.replace('%s', term);
+//     console.log(term, styledTerm);
+//     $('ul.autocomplete li div').each(function() {
+//       $(this).html($(this).text().replace(term, styledTerm));
+//     });
+//   },
+
+// }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+//   const parent = searchIndex.find(p => p.id === item.parent);
+//   item.parentName = parent.value; 
+//   item.label = item.value + ' in ' + '<span class="feature-parent">' + item.parentName + '</span>'
+//   return $( "<li>" )
+//     .data( "ui-autocomplete-item", item )
+//     .append( "<a>" + item.label + "</a>" )
+//     .appendTo( ul );
+// };
