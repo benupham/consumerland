@@ -145,14 +145,15 @@ body {
 }
 /* OMNIBOX  */
 .omnibox {
-  display: block;
+  display: flex;
+  flex-direction: column;
   position: absolute;
   bottom: auto;
   right: auto;
   left: 0;
   top: 0;
   width: 300px;
-  height: 100vh;
+  max-height: 100vh;
   z-index: 99;
   cursor: default;
 }
@@ -163,6 +164,7 @@ body {
 
 .search-bar {
   width: 95%;
+  min-height: 50px;
 }
 .search-bar .input-group input.form-control {
   border: none;
@@ -186,14 +188,14 @@ body {
 
 .departments {
   background-color: #fff;
-  height: 90%;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .departments .omni-list {
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 94%;
 }
 
 .departments .omni-list-breadcrumb a.breadcrumb-link {
@@ -201,7 +203,6 @@ body {
 }
 
 .departments .omni-list-header {
-  height: 6%;
 }
 
 .departments .media {
