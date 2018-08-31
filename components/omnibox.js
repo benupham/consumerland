@@ -119,12 +119,6 @@ class Omnibox {
       console.log(match);
       console.log('match', match[0].value);
       const result = match[0];
-      // const coord = result.coord;
-      // const type = result.type;
-      // map.getView().animate({
-      //   center: coord,
-      //   resolution: searchResolutions[type] 
-      // })
       this.goToFeature(result.coord, result.type);
       $( "#search-input" ).autocomplete('close');
     }
@@ -139,7 +133,8 @@ class Omnibox {
   }
 
   onClick(e) {
-    if (isNullOrUndefined(e.target.dataset.id) || e.target.dataset.id === 'all-dept') {
+    if (isNullOrUndefined(e.target.dataset.id)) return;
+    if (e.target.dataset.id === 'all-dept') {
       view.animate({ resolution: mapMaxResolution, center: mapCenter })
       this.renderList();
     } else {
@@ -153,14 +148,16 @@ class Omnibox {
   renderList(category = null) {
 
     let html = ``;
-    
 
-    const header = category === null ? "All Departments" : category.properties.name;
+    const breadcrumb = this.renderBreadcrumb(category);
+    html += `<div id="omni-list-breadcrumb" class="mr-1 mb-2 text-black-50">${breadcrumb}</div>`
+
+    const header = category === null ? "Departments" : category.properties.name;
     const headerColor = category === null ? "inherit" : category.properties.type;
     html += `<div id="omni-list-header" class="omni-list-header bg-white p-1 shadow-sm mb-1">`;
-    if (category !== null) {
-      html += `<button id="omni-list-back" data-id="${category.properties.parent || 'all-dept'}" type="button" class="btn btn-sm btn-outline-secondary mr-2">Back</button>`
-    }
+    // if (category !== null) {
+    //   html += `<button id="omni-list-back" data-id="${category.properties.parent || 'all-dept'}" type="button" class="btn btn-sm btn-outline-secondary mr-2">Back</button>`
+    // }
     html += `<span class="align-middle h5" style="color: ${labelColors[headerColor]};">${header}</span></div>`;
     
     html += `<div id="omni-list" class="omni-list">`;
@@ -234,8 +231,27 @@ class Omnibox {
 
   }
 
-  renderBreadcrumb() {
-
+  renderBreadcrumb(category) {
+    let breadcrumb = ' ';
+    if (category === null) {
+      return ' '
+    } else { 
+      let parent = category;
+      let i = 0;
+      do {
+        this.featureData.forEach(f => {
+          if (f.id === parent.properties.parent) {
+            const parentLink = `<a class="small" data-id="${f.id}">${f.properties.name}</a> / `;
+            breadcrumb = parentLink + breadcrumb;
+            parent = f; 
+            console.log(parent.properties.name)
+          }  
+        i++;  
+        })  
+      } while (i < 5); 
+    }
+    breadcrumb = `<a class="small" data-id="all-dept">Departments / </a>` + breadcrumb; 
+    return breadcrumb
   }
 }
 const elem = document.getElementById('departments');

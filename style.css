@@ -196,6 +196,10 @@ body {
   height: 94%;
 }
 
+.omni-list-breadcrumb a {
+  cursor: pointer;
+}
+
 .departments .omni-list-header {
   height: 6%;
 }

@@ -29,10 +29,8 @@ export const handleHover = function(e) {
     const featureStyle = feature.get('style');
     const pId = feature.getId();
 
-    console.log(featureType, featureStyle)
-
     const featuresList = features.map(f => f.get('type'));
-    console.log(featuresList)
+
 
     if (featureType == 'add' || (featureType == 'product' && featureStyle == 'image')) {
       setCartAddIcon(feature);
