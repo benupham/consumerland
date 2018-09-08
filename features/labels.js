@@ -98,7 +98,7 @@ export const labelStyle = function(label, res) {
     const text = label.get('name');
     const textAlign = styleChange === true ? 'center' : 'left';
     const offsetX = styleChange === true ? 0 : imageScale[labelType] * 120;
-    const backgroundFillColor = styleChange === true ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0)'; 
+    const backgroundFillColor = styleChange === true ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 0)'; 
     
     style = new Style({
       text: new Text({

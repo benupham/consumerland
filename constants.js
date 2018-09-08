@@ -86,16 +86,16 @@ export const labelBackgroundColors = {
 
 export const labelStrokes = {
 	dept: '#fff',
-	subdept: 'rgba(255, 255, 255, 0.7)',
-	brand: 'rgba(255, 255, 255, 0.7)',
+	subdept: 'rgba(255, 255, 255, 1)',
+	brand: 'rgba(255, 255, 255, 1)',
 	product: '#fff'
 }
 
 export const labelStrokeWidth = {
-	dept: 1,
-	subdept: 3,
-	brand: 3,
-	product: 3
+	dept: 5,
+	subdept: 5,
+	brand: 5,
+	product: 5
 }
 
 export const circleLabelColors = {
