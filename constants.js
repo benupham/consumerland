@@ -19,7 +19,7 @@ export const mapCenter = [75000,40000];
 
 export const productsImageMax = 10;
 export const productsCircleMax = 10;
-export const productsLabelMax = 4;
+export const productsLabelMax = 5;
 
 export const brandsLabelMax = 20;
 export const brandsLabelMin = 3;
@@ -62,6 +62,28 @@ export const searchResolutions = {
 }
 
 // Colors
+
+export const deptColors = {
+	"18872": "#1f77b4",
+	"8333": "#aec7e8",
+	"1965": "#ff7f0e",
+	"12674": "#ffbb78",
+	"4550": "#2ca02c",
+	"11222": "#98df8a",
+	"6138": "#d62728",
+	"930": "#ff9896",
+	"7412": "#9467bd",
+	"16985": "#c5b0d5",
+	"15601": "#8c564b",
+	"23780": "#c49c94",
+	"18267": "#e377c2",
+	"15047": "#f7b6d2",
+	"16343": "#7f7f7f",
+	"23047": "#c7c7c7",
+	"17835": "#bcbd22",
+	"23511": "#dbdb8d",
+	"17785": "#17becf"
+}
 
 export const labelColors = {
 	dept: 'rgba(102,194,165, 1)',

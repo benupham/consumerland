@@ -104,7 +104,7 @@ const productsLabelLayer = new VectorLayer({
   updateWhileAnimating: true,
   updateWhileInteracting: true,
   renderBuffer: 150,
-  maxResolution: productsImageMax,
+  maxResolution: productsLabelMax,
   zIndex: 4
 })
 
@@ -238,8 +238,8 @@ getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
 
   //map.addLayer(productsCircleLayer);
 
-  map.addLayer(deptsCircleLayer);
-  map.addLayer(subdeptsCircleLayer);
+  // map.addLayer(deptsCircleLayer);
+  // map.addLayer(subdeptsCircleLayer);
   map.addLayer(brandsCircleLayer);
   map.addLayer(brandsImageLayer);
   map.addLayer(brandsLabelLayer);

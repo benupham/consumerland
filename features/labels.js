@@ -19,6 +19,7 @@ import {
   fontFamily,
   fontSizes,
   fontWeight,
+  deptColors,
 } from '../constants.js';
 import {textFormatter} from '../utilities.js';
 import {view} from '../index.js';
@@ -56,6 +57,7 @@ export const labelFeatureRender = function (featureSets, type='all') {
           fid : f.id,
           type: f.properties.type,
           style: 'label',
+          color: deptColors[f.properties.dept] || deptColors[f.id], 
           radius: f.properties.radius,
           fontSize: fontSize,
           maxRes: f.properties.maxRes
@@ -107,7 +109,7 @@ export const labelStyle = function(label, res) {
         textBaseline: 'middle',
         textAlign: textAlign,
         offsetX: offsetX,
-        fill: new Fill({color: labelColors[labelType]}),
+        fill: new Fill({color: label.get('color')}),
         stroke: new Stroke({color: labelStrokes[labelType], width: labelStrokeWidth[labelType]}) ,
         backgroundFill: new Fill({color: backgroundFillColor}),
         padding: [0,3,0,3]
@@ -147,6 +149,7 @@ export const imageFeatureRender = function (featureSets, type='all') {
           price: f.properties.price || '',
           type: f.properties.type,
           style: 'image',
+          color: deptColors[f.properties.dept] || deptColors[f.id],
           radius: f.properties.radius,
           relativeRadius: f.properties.radius / extent[1],
           src: src,
@@ -187,7 +190,7 @@ export const imageStyle = function(image, res) {
           color: '#fff'
         }),
         stroke: new Stroke({
-          color: labelColors[image.get('type')],
+          color: image.get('color'),
           width: 3
         }),
         radius: 105 * scaleFactor

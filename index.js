@@ -35,7 +35,7 @@ const ctr = mapCenter;
 export const view = new View({
   center: mapCenter,
   resolution: mapStartResolution, 
-  zoomFactor: 1.5,
+  zoomFactor: 1.1,
   minResolution: 1,
   maxResolution: mapMaxResolution,
 }); 
