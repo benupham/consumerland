@@ -28,7 +28,7 @@ export const brandsCircleMin = 0;
 export const brandsImageMax = 20;
 export const brandsImageMin = 10;
 
-export const subdeptsLabelMax = 1000;
+export const subdeptsLabelMax = 30;
 export const subdeptsLabelMin = 3;
 export const subdeptsCircleMax = 1000;
 export const subdeptsCircleMin = 0;
@@ -128,8 +128,8 @@ export const circleLabelColors = {
 }
 
 export const circleColors = {
-	dept: 'rgba(102,194,165, .1)',
-	subdept: 'rgba(252,141,98, .1)',
+	// dept: 'rgba(102,194,165, .1)',
+	// subdept: 'rgba(252,141,98, .1)',
 	brand: 'rgba(255, 255, 255, 1)',
 	product: 'rgba(255, 255, 255, 1)'
 }

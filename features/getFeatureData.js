@@ -88,15 +88,15 @@ const productsImageLayer = new VectorLayer({
   maxResolution: productsImageMax
 });
 
-// const productsCircleLayer = new VectorLayer({
-//   source: productsCircleSource,
-//   renderMode: 'raster',
-//   style: circleStyle,
-//   updateWhileAnimating: true,
-//   updateWhileInteracting: true,
-//   zIndex: 2,
-//   maxResolution: productsCircleMax
-// });
+const productsCircleLayer = new VectorLayer({
+  source: productsCircleSource,
+  renderMode: 'raster',
+  style: circleStyle,
+  updateWhileAnimating: true,
+  updateWhileInteracting: true,
+  zIndex: 2,
+  maxResolution: productsCircleMax
+});
 
 const productsLabelLayer = new VectorLayer({
   source: productsLabelSource,
@@ -175,7 +175,8 @@ const subdeptsCircleLayer = new VectorLayer({
   updateWhileInteracting: true,
   zIndex: 1,
   minResolution: subdeptsCircleMin,
-  maxResolution: subdeptsCircleMax
+  maxResolution: subdeptsCircleMax,
+  opacity: 0.4
 })
 
 const brandsLabelLayer = new VectorLayer({
@@ -206,7 +207,8 @@ const brandsCircleLayer = new VectorLayer({
   updateWhileInteracting: true,
   zIndex: 2,
   minResolution: brandsCircleMin,
-  maxResolution: brandsCircleMax
+  maxResolution: brandsCircleMax,
+  opacity: 1
 })
 
 
@@ -239,7 +241,7 @@ getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
   //map.addLayer(productsCircleLayer);
 
   // map.addLayer(deptsCircleLayer);
-  // map.addLayer(subdeptsCircleLayer);
+  map.addLayer(subdeptsCircleLayer);
   map.addLayer(brandsCircleLayer);
   map.addLayer(brandsImageLayer);
   map.addLayer(brandsLabelLayer);
@@ -258,7 +260,7 @@ getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
   .then(productData => {
   
     productsSource.addFeatures(productImageFeatureRender([productData], 'product'));
-    productsCircleSource.addFeatures(circleFeatureRender([productData], 'product'));
+    // productsCircleSource.addFeatures(circleFeatureRender([productData], 'product'));
     productsLabelSource.addFeatures(productLabelFeatureRender([productData], 'product'));
 
     tagsSource.addFeatures(tagsFeatureRender(productData));

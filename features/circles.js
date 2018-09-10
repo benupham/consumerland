@@ -6,8 +6,10 @@ import Style from 'ol/style/style';
 import {
   imagesDir,
   circleColors,
-  circleHoverColors
+  circleHoverColors,
+  deptColors
 } from '../constants.js';
+import {view} from '../index.js';
 
 
 /*
@@ -21,7 +23,7 @@ export const circleFeatureRender = function(featureSets, type='all') {
     featureSet.forEach((f) => {
       if (f.properties.type == type || type == 'all') {
         const type = f.properties.type;
-        const color = circleColors[type];
+        const color = circleColors[type] ? circleColors[type] : undefined;
         const hoverColor = circleHoverColors[type];
         const circle = new Feature({
           geometry: new Circle(f.geometry.coordinates, f.properties.radius || (100 * Math.sqrt(2))),
@@ -29,12 +31,13 @@ export const circleFeatureRender = function(featureSets, type='all') {
           fid: f.id,
           type: type,
           style: 'circle',
+          color: color || deptColors[f.properties.dept] || deptColors[f.id],
           radius: f.properties.radius,
-          color: color,
           hover: false,
           hoverColor: hoverColor,
           src: imagesDir + (f.properties.sampleImg || f.properties.src),
-          children: f.properties.value || '' 
+          children: f.properties.value || '',
+          maxRes: f.properties.maxRes 
         });
         circle.setId(f.id + '-circle');
         circles.push(circle);        
@@ -48,6 +51,7 @@ const circleStyleCache = {};
 const circleStyleHoverCache = {};
 
 export const circleStyle = function(circle, res) {
+  if (circle.get('maxRes') < view.getResolution()) return null;
   const hover = circle.get('hover');
   let style = hover === false ? circleStyleCache[circle.getId()] : circleStyleHoverCache[circle.getId()];
   if (!style && hover === false) {
