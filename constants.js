@@ -15,7 +15,7 @@ export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland-sprite
 // Resolution
 export const mapStartResolution = 100;
 export const mapMaxResolution = 100;
-export const mapCenter = [46000,-46000];
+export const mapCenter = [75000,40000];
 
 export const productsImageMax = 10;
 export const productsCircleMax = 10;
