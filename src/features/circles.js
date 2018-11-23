@@ -17,6 +17,7 @@ import {view} from '../index.js';
 * 
 */
 
+// Rendering Function 
 export const circleFeatureRender = function(featureSets, type='all') {
   const circles = [];
   featureSets.forEach((featureSet) => {
@@ -50,6 +51,7 @@ export const circleFeatureRender = function(featureSets, type='all') {
 const circleStyleCache = {};
 const circleStyleHoverCache = {};
 
+// Style Function
 export const circleStyle = function(circle, res) {
   if (circle.get('maxRes') < view.getResolution()) return null;
   const hover = circle.get('hover');
