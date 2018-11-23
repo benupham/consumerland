@@ -10,7 +10,7 @@ import './style.css';
 import {maxExtent} from './features/getFeatureData';
 import {productDetailOverlay} from './components/productDetail.js';
 import {hidePreview} from './components/productPreview.js';
-import {textFormatter, dataTool, iconcache} from './utilities.js';
+import {textFormatter, dataTool, iconcache} from './utilities';
 import {handleSearch} from './components/omnibox.js';
 import {handleHover, jumpStripsInt} from './events/hover.js';
 import {handleClick} from './events/click.js';

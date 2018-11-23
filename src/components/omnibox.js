@@ -166,7 +166,7 @@ class Omnibox {
   }
 
   renderListItem(f) {
-    // Only because brands have a placeholder src value for brand logos
+    // Only because brands have a placeholder src value for brand logos that doesn't have a file extension
     const src = f.properties.src.includes('.') ? f.properties.src : 'product-images/missing-item.jpg' ;
     return (
       `<div id="omni-list-item-${f.id}" data-id="${f.id}" class="media border-bottom mb-1 p-1 type-${f.properties.type}">
