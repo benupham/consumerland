@@ -13,7 +13,7 @@ export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland-sprite
 // export const imagesDir = './node-utility-scripts/';
 
 // Resolution
-export const mapStartResolution = 62;
+export const mapStartResolution = 42;
 export const mapMaxResolution = 100;
 export const mapCenter = [75000,40000];
 

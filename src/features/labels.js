@@ -168,18 +168,22 @@ const imageIconCache = {};
 
 export const imageStyle = function(image, res) {
   if (image.get('maxRes') < view.getResolution()) return null;
+  
   let style = imageStyleCache[image.get('src')];
+  
   if (!style) {
     let icon = imageIconCache[image.get('src')];
     const scaleFactor = imageScale[image.get('type')];
     const radius = image.get('radius');
+    const imgRadius = image.get('radius') / res;
+    console.log(imgRadius)
     const scale = image.get('relativeRadius') > .7 ? image.get('relativeRadius') : .7;//radius/65 * 2 > 200 ? 1 : radius/65 * 2 / 200;
     if (!icon) {
       icon = new Icon({
         src: image.get('src'),
         size: [200,200],
         // crossOrigin: 'anonymous',
-        scale: scaleFactor / Math.SQRT2,
+        scale: radius / 200 / res,
         anchor: [0.5, 0.5]
       })
       imageIconCache[image.get('src')] = icon;
@@ -193,7 +197,7 @@ export const imageStyle = function(image, res) {
           color: image.get('color'),
           width: 3
         }),
-        radius: 105 * scaleFactor
+        radius: imgRadius
       })
     }); 
     const Iconstyle = new Style({

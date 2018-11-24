@@ -243,9 +243,9 @@ getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
   // map.addLayer(deptsCircleLayer);
   map.addLayer(subdeptsCircleLayer);
   map.addLayer(brandsCircleLayer);
-  // map.addLayer(brandsImageLayer);
+  map.addLayer(brandsImageLayer);
   // map.addLayer(brandsLabelLayer);
-  // map.addLayer(subdeptsImageLayer);
+  map.addLayer(subdeptsImageLayer);
   // map.addLayer(subdeptsLabelLayer);
   //map.addLayer(deptsImageLayer);
   map.addLayer(deptsLabelLayer);
