@@ -4,7 +4,7 @@ const app = express();
 const fs = require('fs');
 
 // Load features
-const featureSet = JSON.parse(fs.readFileSync(__dirname + '/allFeatureDataCollectionSprites5.json','utf8'));
+const featureSet = JSON.parse(fs.readFileSync(__dirname + '/working-feature-set.json','utf8'));
 const features = featureSet.features; 
 
 // Serve features

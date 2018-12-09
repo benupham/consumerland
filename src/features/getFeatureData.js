@@ -258,7 +258,7 @@ getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
 .then(categoryData => {
   getFeatureJson(['product'], 'productsfeatures')
   .then(productData => {
-  
+    
     productsSource.addFeatures(productImageFeatureRender([productData], 'product'));
     // productsCircleSource.addFeatures(circleFeatureRender([productData], 'product'));
     productsLabelSource.addFeatures(productLabelFeatureRender([productData], 'product'));
