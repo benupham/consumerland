@@ -51,6 +51,10 @@ const setMaxRange = function(features, range) {
       for (let j = 0; j < range[i].length; j++) {
         if (range[i][j].id == f.id) {
           f.properties.maxRes = maxResolutions[i];
+          if (f.properties.type == 'dept') {
+            console.log(f.properties.name, f.properties.maxRes)
+
+          }
           break;
         }
       }
@@ -240,14 +244,14 @@ getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
 
   //map.addLayer(productsCircleLayer);
 
-  // map.addLayer(deptsCircleLayer);
+  map.addLayer(deptsCircleLayer);
   map.addLayer(subdeptsCircleLayer);
   map.addLayer(brandsCircleLayer);
   map.addLayer(brandsImageLayer);
   // map.addLayer(brandsLabelLayer);
   map.addLayer(subdeptsImageLayer);
   // map.addLayer(subdeptsLabelLayer);
-  //map.addLayer(deptsImageLayer);
+  map.addLayer(deptsImageLayer);
   map.addLayer(deptsLabelLayer);
 
   maxExtent = deptsCircleLayer.getSource().getExtent();

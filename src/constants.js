@@ -14,8 +14,8 @@ export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland-sprite
 
 // Resolution
 export const mapStartResolution = 42;
-export const mapMaxResolution = 1000;
-export const mapCenter = [75000,40000];
+export const mapMaxResolution = 150;
+export const mapCenter = [134550,79000];
 
 export const productsImageMax = 10;
 export const productsCircleMax = 10;
@@ -32,16 +32,17 @@ export const subdeptsLabelMax = 30;
 export const subdeptsLabelMin = 3;
 export const subdeptsCircleMax = 1000;
 export const subdeptsCircleMin = 0;
-export const subdeptsImageMax = 1000;
+export const subdeptsImageMax = 70;
 export const subdeptsImageMin = 20;
 
 export const deptsLabelMax = 1000;
 export const deptsLabelMin = 3;
 export const deptsCircleMax = 1000;
 export const deptsCircleMin = 0;
-export const deptsImageMax = 1000;
+export const deptsImageMax = 100;
 export const deptsImageMin = 60;
 
+// THIS OVERRIDES THE ABOVE MAX/MIN
 // For hiding/showing category labels, images, etc. 
 export const maxResolutions = [
 	5,
@@ -51,7 +52,7 @@ export const maxResolutions = [
 	35,
 	45,
 	50,
-	60,
+	200
 ];
 
 export const searchResolutions = {
@@ -128,8 +129,8 @@ export const circleLabelColors = {
 }
 
 export const circleColors = {
-	// dept: 'rgba(102,194,165, .1)',
-	// subdept: 'rgba(252,141,98, .1)',
+	dept: 'rgba(102,194,165, .1)',
+	subdept: 'rgba(252,141,98, .1)',
 	brand: 'rgba(255, 255, 255, 1)',
 	product: 'rgba(255, 255, 255, 1)'
 }

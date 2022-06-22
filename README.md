@@ -1,1 +1,3 @@
-View the demo here: https://consumerland-2bb67.firebaseapp.com/. 
+To run locally:
+1. go to /functions and run node index.js
+2. go root and npm start

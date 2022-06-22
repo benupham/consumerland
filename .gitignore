@@ -17,3 +17,4 @@ node-utility-scripts/
 *.icloud
 *.pdf
 *.code-workspace
+.DS_Store
