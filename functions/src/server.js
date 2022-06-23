@@ -1,4 +1,3 @@
-const functions = require('firebase-functions');
 const express = require("express");
 const app = express();
 const fs = require('fs');
@@ -23,6 +22,6 @@ app.get("/api", (req, res) => {
     res.json(featureReq);
     console.log('request was: ', type);
 });
-app.listen(port, () => console.log(`Listening on port ${port}!`));
 
-// exports.app = functions.https.onRequest(app);
+module.exports = app;
+
