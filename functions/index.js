@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const fs = require('fs');
 
+const port = process.env.PORT || 8080;
+
 // Load features
 const featureSet = JSON.parse(fs.readFileSync(__dirname + '/working-feature-set.json','utf8'));
 const features = featureSet.features; 
@@ -21,6 +23,6 @@ app.get("/api", (req, res) => {
     res.json(featureReq);
     console.log('request was: ', type);
 });
-app.listen(8080, () => console.log("Listening on port 8080!"));
+app.listen(port, () => console.log(`Listening on port ${port}!`));
 
-exports.app = functions.https.onRequest(app);
+// exports.app = functions.https.onRequest(app);
