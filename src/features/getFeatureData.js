@@ -32,7 +32,7 @@ import {
   maxResolutions,
   productsLabelMax,
 } from '../constants.js';
-import {textFormatter, dataTool, getFeatureJson, getFeaturesFromFirestore} from '../utilities.js';
+import {textFormatter, dataTool, getFeatureJson, getFeaturesFromFirestore, getProductsInExtent} from '../utilities.js';
 import {view, map} from '../index.js';
 import { isNullOrUndefined } from 'util';
 
@@ -52,7 +52,7 @@ const setMaxRange = function(features, range) {
         if (range[i][j].id == f.id) {
           f.properties.maxRes = maxResolutions[i];
           if (f.properties.type == 'dept') {
-            console.log(f.properties.name, f.properties.maxRes)
+            // console.log(f.properties.name, f.properties.maxRes)
 
           }
           break;
@@ -256,38 +256,54 @@ getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
 
   maxExtent = deptsCircleLayer.getSource().getExtent();
 
+  document.querySelector('.loading').style.display = 'none';
+
   return categoryData; 
   
 })
-.then(categoryData => {
-  getFeatureJson(['product'], 'productsfeatures')
-  .then(productData => {
+.catch(err => console.log(err));
+
+
+
+export const updateProductsLayer = async function () {
+  
+  try {
     
+    const productData = await getProductsInExtent()
+  
+    if (productData.length == 0) return
+  
+    document.querySelector('.loading').style.display = 'block';
+
+    productsSource.clear()
+    productsLabelSource.clear()
+    tagsSource.clear()
+  
     productsSource.addFeatures(productImageFeatureRender([productData], 'product'));
     // productsCircleSource.addFeatures(circleFeatureRender([productData], 'product'));
     productsLabelSource.addFeatures(productLabelFeatureRender([productData], 'product'));
-
+  
     tagsSource.addFeatures(tagsFeatureRender(productData));
     tagsSource.addFeature(cartAddIcon);
     tagsLayer.set('name','tag-layer');
-
+  
     map.addLayer(tagsLayer);
     map.addLayer(productsImageLayer);
     // map.addLayer(productsCircleLayer);
     map.addLayer(productsLabelLayer);
   
     featureData = categoryData.concat(productData);
-
-    omnibox.getFeatureData(featureData);
-    
-  })
-  .then(() => {
+  
+    // omnibox.getFeatureData(featureData);
     document.querySelector('.loading').style.display = 'none';
-  })
-}) 
-.catch(err => console.log(err));
+    
+    
+  } catch (error) {
+    document.querySelector('.loading').style.display = 'none';
+    console.log(error)
+  }
+  
 
-
-
+}
 
 

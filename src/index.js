@@ -7,10 +7,10 @@ import olMap from 'ol/map';
 
 import './style.css';
 
-import {maxExtent} from './features/getFeatureData';
+import {maxExtent, updateProductsLayer} from './features/getFeatureData';
 import {productDetailOverlay} from './components/productDetail.js';
 import {hidePreview} from './components/productPreview.js';
-import {textFormatter, dataTool, iconcache} from './utilities';
+import {textFormatter, dataTool, iconcache, debounce} from './utilities';
 import {handleSearch} from './components/omnibox.js';
 import {handleHover, jumpStripsInt} from './events/hover.js';
 import {handleClick} from './events/click.js';
@@ -89,6 +89,7 @@ map.on('singleclick', (e) => {
 
 view.on('change:resolution', (e) => {  
   hidePreview();
+  debounce(updateProductsLayer(),100)
   // console.log(e);
   const res = view.getResolution();
   if (window.jumpStripActive === true) return; 
@@ -103,10 +104,13 @@ view.on('change:resolution', (e) => {
 
   dataTool.querySelector('#data-zoom').innerHTML = `zoom: ${view.getZoom()}`;
   dataTool.querySelector('#data-res').innerHTML = `res: ${view.getResolution()}`;
+  const extent = view.calculateExtent()
+  dataTool.querySelector('#data-extent').innerHTML = `extent: ${Math.round(extent[0])}, ${Math.round(extent[1])}, ${Math.round(extent[2])}, ${Math.round(extent[3])}}`;
 });
 
 view.on('change:center', (e) => {
   hidePreview();
+  debounce(updateProductsLayer(),100)
 
   const viewCenter = view.getCenter();
   if (!Extent.containsCoordinate(maxExtent,viewCenter)) {

@@ -14,6 +14,7 @@ app.use(function(req, res, next) {
 // Load features
 const featureSet = JSON.parse(fs.readFileSync(__dirname + '/working-feature-set.json','utf8'));
 const features = featureSet.features; 
+const products = features.filter(f => f.properties.type === 'product')
 
 // Serve features
 app.get("/api", (req, res) => {
@@ -28,6 +29,23 @@ app.get("/api", (req, res) => {
     //res.set('Cache-Control', 'public, max-age=3000, s-maxage=6000'); 
     res.json(featureReq);
     console.log('request was: ', type);
+});
+
+app.get("/products", (req, res) => {
+  const extent = [req.query.minx, req.query.miny, req.query.maxx, req.query.maxy];
+  console.log(extent)
+  const productsRes = products.filter( (p, i) => {
+    const x = Math.round(p.geometry.coordinates[0])
+    const y = Math.round(p.geometry.coordinates[1])
+
+    if ( x > extent[0] && x < extent[2] && y > extent[1] && y < extent[3] ) {
+      return true  
+    } 
+    return false 
+  })
+  //res.set('Cache-Control', 'public, max-age=3000, s-maxage=6000'); 
+  res.json(productsRes);
+  console.log('number of products: ', productsRes.length);
 });
 
 module.exports = app;

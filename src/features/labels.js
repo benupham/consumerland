@@ -176,7 +176,7 @@ export const imageStyle = function(image, res) {
     const scaleFactor = imageScale[image.get('type')];
     const radius = image.get('radius');
     const imgRadius = image.get('radius') / res;
-    console.log(imgRadius)
+    // console.log(imgRadius)
     const scale = image.get('relativeRadius') > .7 ? image.get('relativeRadius') : .7;//radius/65 * 2 > 200 ? 1 : radius/65 * 2 / 200;
     if (!icon) {
       icon = new Icon({

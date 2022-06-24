@@ -33,8 +33,8 @@ export const handleClick = function(e) {
     e.stopPropagation();
 
   } else if (['brand','dept','subdept'].includes(featureType)) {
-    console.log(feature)
-    omnibox.onMapClick(feature.get('fid'));
+    // console.log(feature)
+    // omnibox.onMapClick(feature.get('fid'));
     
     const center = feature.getGeometry().getCoordinates() || feature.getGeometry().getCenter();   
     // hideOverlay(productDetailOverlay);

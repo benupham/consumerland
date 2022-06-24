@@ -1,4 +1,5 @@
 import IconCache from 'ol/style/iconImageCache';
+import { productsCircleMax, productsImageMax, productsLabelMax } from './constants.js'
 
 import {view} from './index.js';
 
@@ -21,23 +22,34 @@ import {view} from './index.js';
 * 
 */
 
+//https://cofr6smqq6.execute-api.us-west-1.amazonaws.com/production
+
 // Call to the Express server for locally saved JSON feature data
 export const getFeatureJson = function (types, requester='') {
   if (typeof types === 'string' ) types = [types];
   const q = types.join(',');
-  return fetch('https://cofr6smqq6.execute-api.us-west-1.amazonaws.com/production/api?type=' + q + '&requester=' + requester)
+  return fetch('/api?type=' + q + '&requester=' + requester)
   .then(res => res.json())
   .catch(err => console.log(err));   
 } 
 
-// Call to Firebase Firestore for database stored JSON feature data
-export function getFeaturesFromFirestore(type) {
-  const features = [];
-  return db.collection(type).get()
-  .catch(err => console.log(err));
+export const areProductsVisible = function() {
+  const resolution = view.getResolution()
+  if (resolution > productsImageMax && resolution > productsLabelMax && resolution > productsCircleMax) return false
+
+  return true
 }
 
+export const getProductsInExtent = function () {
+  if (areProductsVisible() === false) return []
 
+  const extent = view.calculateExtent()
+  console.log('extent',extent)
+  return fetch(`/products?minx=${extent[0]}&miny=${extent[1]}&maxx=${extent[2]}&maxy=${extent[3]}`)
+  .then(res => res.json())
+  .catch(err => console.log(err))
+
+}
 
 export const iconcache = new IconCache();
 

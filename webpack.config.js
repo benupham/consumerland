@@ -14,9 +14,12 @@ module.exports = {
     host: 'localhost',
     contentBase: './src',
     port: 3010,
-    proxy: {
-      '/api': 'http://localhost:8080'
-    }
+    proxy: [
+      {
+        context: ['/api', '/products'],
+        target: 'http://localhost:8080'
+      }
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
