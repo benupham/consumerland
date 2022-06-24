@@ -4,6 +4,13 @@ const fs = require('fs');
 
 const port = process.env.PORT || 8080;
 
+// Enable CORS for all methods
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "*")
+  next()
+});
+
 // Load features
 const featureSet = JSON.parse(fs.readFileSync(__dirname + '/working-feature-set.json','utf8'));
 const features = featureSet.features; 

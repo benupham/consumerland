@@ -25,9 +25,7 @@ import {view} from './index.js';
 export const getFeatureJson = function (types, requester='') {
   if (typeof types === 'string' ) types = [types];
   const q = types.join(',');
-  return fetch('/api?type=' + q + '&requester=' + requester, {
-    mode: 'no-cors'
-  })
+  return fetch('https://cofr6smqq6.execute-api.us-west-1.amazonaws.com/production/api?type=' + q + '&requester=' + requester)
   .then(res => res.json())
   .catch(err => console.log(err));   
 } 
