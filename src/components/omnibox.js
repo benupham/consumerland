@@ -1,7 +1,7 @@
 import {imagesDir, featureZoomRes} from '../constants.js';
 import {view, map} from '../index.js';
 import {productsImageMax, searchResolutions, mapMaxResolution, mapCenter, labelColors} from '../constants.js';
-import {flyTo, getFeatureJson} from '../utilities.js';
+import {flyTo, getFeatureJson, getOmniboxList} from '../utilities.js';
 import matchSorter from 'match-sorter';
 import {featureData} from '../features/getFeatureData';
 import { isNullOrUndefined } from 'util';
@@ -23,9 +23,9 @@ class Omnibox {
   }
 
   getFeatureData(data) {
-    this.featureData = data; 
+    // this.featureData = data; 
     this.renderList();
-    this.getSearchIndex();
+    // this.getSearchIndex();
   }
 
   goToFeature(coord, type) {
@@ -35,6 +35,7 @@ class Omnibox {
     })
   }
 
+  // needs to be updated to API 
   getSearchIndex() {
     this.searchIndex = (this.featureData.map(f => {
       return {
@@ -80,7 +81,7 @@ class Omnibox {
   } 
 
   onMapClick(fid) {
-    const f = this.featureData.find(c => c.id === fid);
+    // const f = this.featureData.find(c => c.id === fid);
     f.properties.type != 'product' && this.renderList(f);
   }
 
@@ -90,22 +91,22 @@ class Omnibox {
       view.animate({ resolution: mapMaxResolution, center: mapCenter })
       this.renderList();
     } else {
-      const fid = Number(e.target.dataset.id);
+      const fid = parseInt(e.target.dataset.id);
       const f = this.featureData.find(c => c.id === fid); 
       this.goToFeature(f.geometry.coordinates, f.properties.type)
       f.properties.type != 'product' && this.renderList(f);
     }
   }
 
-  renderList(category = null) {
-
+  async renderList(category = 0) {
+    console.log(`renderlist ${category}`)
     let html = ``;
 
     const breadcrumb = this.renderBreadcrumb(category);
     html += `<div id="omni-list-breadcrumb" class="omni-list-breadcrumb mr-1 mb-2 text-black-50">${breadcrumb}</div>`
 
-    const header = category === null ? "Departments" : category.properties.name;
-    const headerColor = category === null ? "inherit" : category.properties.type;
+    const header = category === 0 ? "Departments" : category.properties.name;
+    const headerColor = category === 0 ? "inherit" : category.properties.type;
     html += `<div id="omni-list-header" class="omni-list-header bg-white p-1 shadow-sm mb-1">`;
     // if (category !== null) {
     //   html += `<button id="omni-list-back" data-id="${category.properties.parent || 'all-dept'}" type="button" class="btn btn-sm btn-outline-secondary mr-2">Back</button>`
@@ -114,23 +115,16 @@ class Omnibox {
     
     html += `<div id="omni-list" class="omni-list">`;
 
-    let featureArray = [];
-    if (category === null) {
-      featureArray = this.featureData.filter(i => {
-        return i.properties.type === 'dept'; 
-      });
-    } else {
-      featureArray = this.featureData.filter(i => {          
-        return i.properties.parent === category.id; 
-      });
-    }
+    const featureList = await getOmniboxList(category) || []
 
-    featureArray.sort((a,b) => {
+    console.log(`featureList ${featureList}`)
+
+    featureList.sort((a,b) => {
       if(a.properties.name < b.properties.name) return -1;
       if(a.properties.name > b.properties.name) return 1;
       return 0;
     });
-    featureArray.forEach(f => {
+    featureList.forEach(f => {
       html += this.renderListItem(f);
     });
 
@@ -138,36 +132,37 @@ class Omnibox {
     this.elem.innerHTML = html;
   }
 
-  getChildrenArray(f) {
-    let array = this.featureData.filter(i => {
-      // need to filter by dept because of generic "Sales" subdept
-        if (i.properties.dept === f.properties.dept || f.properties.type === 'dept') {
-          return i.properties.parent === f.properties.name; 
-        }
-      });
+  // getChildrenArray(f) {
+  //   let array = this.featureData.filter(i => {
+  //     // need to filter by dept because of generic "Sales" subdept
+  //       if (i.properties.dept === f.properties.dept || f.properties.type === 'dept') {
+  //         return i.properties.parent === f.properties.name; 
+  //       }
+  //     });
 
-    return (
-      array.sort((a,b) => {
-        console.log(a,b)
-        if(a.properties.name < b.properties.name) return -1;
-        if(a.properties.name > b.properties.name) return 1;
-        return 0;
-      })
-    );
-  }
+  //   return (
+  //     array.sort((a,b) => {
+  //       console.log(a,b)
+  //       if(a.properties.name < b.properties.name) return -1;
+  //       if(a.properties.name > b.properties.name) return 1;
+  //       return 0;
+  //     })
+  //   );
+  // }
 
-  renderChildrenLinks(f) {
-    const children = this.getChildrenArray(f);
-    let html = '';
-    children.forEach(c => {
-      html += `<a href="#" id="child-link-${c.id}" class="child-link">${c.properties.name}</a>, `
-    });
-    return html; 
-  }
+  // renderChildrenLinks(f) {
+  //   const children = this.getChildrenArray(f);
+  //   let html = '';
+  //   children.forEach(c => {
+  //     html += `<a href="#" id="child-link-${c.id}" class="child-link">${c.properties.name}</a>, `
+  //   });
+  //   return html; 
+  // }
 
   renderListItem(f) {
     // Only because brands have a placeholder src value for brand logos that doesn't have a file extension
     const src = f.properties.src.includes('.') ? f.properties.src : 'product-images/missing-item.jpg' ;
+    
     return (
       `<div id="omni-list-item-${f.id}" data-id="${f.id}" class="media border-bottom mb-1 p-1 type-${f.properties.type}">
         <img src="${imagesDir + (f.properties.sampleImg || src )}" alt="${f.properties.name}" class="omni-image preview-image mr-2 order-1"  data-id="${f.id}">
@@ -179,11 +174,12 @@ class Omnibox {
     )
   } 
 
-  renderTagButtons(feature) {
+  // renderTagButtons(feature) {
 
-  }
+  // }
 
   renderBreadcrumb(category) {
+    return ' '
     let breadcrumb = ' ';
     if (category === null) {
       return ' '
@@ -207,8 +203,10 @@ class Omnibox {
   }
   
 }
+
 const elem = document.getElementById('departments');
 export const omnibox = new Omnibox(elem);
+// omnibox.renderList()
 
 // Autcomplete functionality for search
 

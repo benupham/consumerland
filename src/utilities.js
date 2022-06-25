@@ -28,7 +28,7 @@ import {view} from './index.js';
 export const getFeatureJson = function (types, requester='') {
   if (typeof types === 'string' ) types = [types];
   const q = types.join(',');
-  return fetch('/api?type=' + q + '&requester=' + requester)
+  return fetch('https://cofr6smqq6.execute-api.us-west-1.amazonaws.com/production/api?type=' + q + '&requester=' + requester)
   .then(res => res.json())
   .catch(err => console.log(err));   
 } 
@@ -44,11 +44,17 @@ export const getProductsInExtent = function () {
   if (areProductsVisible() === false) return []
 
   const extent = view.calculateExtent()
-  console.log('extent',extent)
-  return fetch(`/products?minx=${extent[0]}&miny=${extent[1]}&maxx=${extent[2]}&maxy=${extent[3]}`)
+  return fetch(`https://cofr6smqq6.execute-api.us-west-1.amazonaws.com/production/products?minx=${extent[0]}&miny=${extent[1]}&maxx=${extent[2]}&maxy=${extent[3]}`)
   .then(res => res.json())
   .catch(err => console.log(err))
 
+}
+
+export const getOmniboxList = function(fid = 0) {
+  console.log(`omnibox request ${fid}`)
+  return fetch(`/omnibox?fid=${fid}`)
+  .then(res => res.json())
+  .catch(err => console.log(err))
 }
 
 export const iconcache = new IconCache();

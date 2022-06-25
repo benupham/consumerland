@@ -3,14 +3,8 @@
 * 
 */
 
-// Base Directory
-
-// export const baseDir = 
-
 // Images Directory 
-
 export const imagesDir = 'https://s3-us-west-1.amazonaws.com/consumerland-sprites/';
-// export const imagesDir = './node-utility-scripts/';
 
 // Resolution
 export const mapStartResolution = 42;
@@ -44,6 +38,7 @@ export const deptsImageMin = 60;
 
 // THIS OVERRIDES THE ABOVE MAX/MIN
 // For hiding/showing category labels, images, etc. 
+// It sets up a spectrum based on the radius of (# of products in) a category
 export const maxResolutions = [
 	5,
 	10,
@@ -63,7 +58,6 @@ export const searchResolutions = {
 }
 
 // Colors
-
 export const deptColors = {
 	"18872": "#1f77b4",
 	"8333": "#aec7e8",
@@ -151,7 +145,6 @@ export const imageScale = {
 
 
 // Fonts
-
 export const fontFamily = {
 	dept: 'Arial, Helvetica, sans-serif',
 	subdept: 'Arial, Helvetica, sans-serif',

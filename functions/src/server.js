@@ -14,6 +14,7 @@ app.use(function(req, res, next) {
 // Load features
 const featureSet = JSON.parse(fs.readFileSync(__dirname + '/working-feature-set.json','utf8'));
 const features = featureSet.features; 
+// console.log(`features length: ${features.length}`)
 const products = features.filter(f => f.properties.type === 'product')
 
 // Serve features
@@ -46,6 +47,18 @@ app.get("/products", (req, res) => {
   //res.set('Cache-Control', 'public, max-age=3000, s-maxage=6000'); 
   res.json(productsRes);
   console.log('number of products: ', productsRes.length);
+});
+
+app.get("/omnibox", (req, res) => {
+  const fid = parseInt(req.query.fid)
+  console.log(fid)
+  if (fid == 0) return res.json(features.filter( f => f.properties.type === 'dept'))
+
+  const featuresRes = features.filter( f => f.properties.parent === fid)
+  //res.set('Cache-Control', 'public, max-age=3000, s-maxage=6000'); 
+  console.log('omnibox: ', featuresRes.length);
+  res.json(featuresRes);
+  
 });
 
 module.exports = app;

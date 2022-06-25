@@ -16,7 +16,7 @@ module.exports = {
     port: 3010,
     proxy: [
       {
-        context: ['/api', '/products'],
+        context: ['/omnibox','/api', '/products'],
         target: 'http://localhost:8080'
       }
     ]

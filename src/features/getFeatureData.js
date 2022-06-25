@@ -258,7 +258,7 @@ getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
 
   document.querySelector('.loading').style.display = 'none';
 
-  return categoryData; 
+  omnibox.renderList();
   
 })
 .catch(err => console.log(err));
@@ -292,15 +292,13 @@ export const updateProductsLayer = async function () {
     // map.addLayer(productsCircleLayer);
     map.addLayer(productsLabelLayer);
   
-    featureData = categoryData.concat(productData);
-  
-    // omnibox.getFeatureData(featureData);
     document.querySelector('.loading').style.display = 'none';
-    
     
   } catch (error) {
+
     document.querySelector('.loading').style.display = 'none';
     console.log(error)
+
   }
   
 

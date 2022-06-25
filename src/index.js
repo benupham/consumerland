@@ -3,8 +3,6 @@ import View from 'ol/view';
 import Extent from 'ol/extent';
 import olMap from 'ol/map';
 
-
-
 import './style.css';
 
 import {maxExtent, updateProductsLayer} from './features/getFeatureData';
@@ -17,9 +15,7 @@ import {handleClick} from './events/click.js';
 import {mapMaxResolution, mapStartResolution, mapCenter} from './constants.js';
 import {overviewMapControl, breadCrumbsControl, updateBreadcrumbs} from './components/controls.js';
 
-
 // $('#info-modal').modal('show');
-
 
 /*
 * Map & View
@@ -42,10 +38,6 @@ export const view = new View({
 
 map.setView(view);
 
-
-
-const centerZoom = view.getCenter();  
-
 const mapResize = function(e) {
   if (window.innerWidth < 576) {
     document.getElementById('cart-contents').classList.toggle('dropdown-menu-right');
@@ -62,6 +54,7 @@ const mapResize = function(e) {
 window.addEventListener('load', mapResize);
 window.addEventListener('resize', mapResize);
 
+
 /*
 * Controls and Overlays 
 * 
@@ -70,7 +63,6 @@ window.addEventListener('resize', mapResize);
 map.addControl(overviewMapControl);
 
 map.addOverlay(productDetailOverlay);
-
 
 map.on('pointermove', (e) => {
   dataTool.querySelector('#data-coord').innerHTML = `coord: ${e.coordinate}`;
@@ -85,22 +77,16 @@ map.on('singleclick', (e) => {
   handleClick(e);
 });
 
-
-
 view.on('change:resolution', (e) => {  
   hidePreview();
   debounce(updateProductsLayer(),100)
-  // console.log(e);
-  const res = view.getResolution();
-  if (window.jumpStripActive === true) return; 
-  // if (res < 80) {
-  //   const signageTimeOut = setTimeout(displaySignage, 100);    
-  // }
-  if (res >= 50) window.clearInterval(jumpStripsInt);
-  const ctr = view.getCenter();
-  const pixel = map.getPixelFromCoordinate(ctr);
-  const features = map.getFeaturesAtPixel(pixel);
 
+  // const res = view.getResolution();
+  // if (window.jumpStripActive === true) return; 
+
+  // if (res >= 50) window.clearInterval(jumpStripsInt);
+  // const pixel = map.getPixelFromCoordinate(view.getCenter());
+  // const features = map.getFeaturesAtPixel(pixel);
 
   dataTool.querySelector('#data-zoom').innerHTML = `zoom: ${view.getZoom()}`;
   dataTool.querySelector('#data-res').innerHTML = `res: ${view.getResolution()}`;
@@ -112,9 +98,9 @@ view.on('change:center', (e) => {
   hidePreview();
   debounce(updateProductsLayer(),100)
 
-  const viewCenter = view.getCenter();
-  if (!Extent.containsCoordinate(maxExtent,viewCenter)) {
-    view.setCenter(ctr);
+  // Recenter map if user tries to pan into netherspace
+  if (!Extent.containsCoordinate(maxExtent,view.getCenter())) {
+    view.setCenter(mapCenter);
     return;
   } 
 })

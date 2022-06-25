@@ -27,7 +27,7 @@ export const updatePreview = function(e) {
 		return
 	}
 
-	console.log(f.get('type') === ('product' || 'brand'))
+	// console.log(f.get('type') === ('product' || 'brand'))
 
 	previewedFeature = f; 
 	
