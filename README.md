@@ -20,3 +20,5 @@ From root, run amplify publish. It may say there's no changes to deploy, deploy 
 
 OTHER NOTES
 * '/omnibox','/api', '/products' API endpoints are proxied locally to :8080 in webpack-config
+
+GIT STRUCTURE
