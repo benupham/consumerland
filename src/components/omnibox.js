@@ -86,27 +86,28 @@ class Omnibox {
   }
 
   onClick(e) {
+    console.log(e.target.parentElement)
     if (isNullOrUndefined(e.target.dataset.id)) return;
     if (e.target.dataset.id === 'all-dept') {
       view.animate({ resolution: mapMaxResolution, center: mapCenter })
       this.renderList();
     } else {
-      const fid = parseInt(e.target.dataset.id);
-      const f = this.featureData.find(c => c.id === fid); 
-      this.goToFeature(f.geometry.coordinates, f.properties.type)
-      f.properties.type != 'product' && this.renderList(f);
+      const featureData = e.target.dataset
+      const fid = parseInt(featureData.id);
+      this.goToFeature((featureData.coord).split(","), featureData.type)
+      featureData.type != 'product' && this.renderList(featureData)
     }
   }
 
-  async renderList(category = 0) {
-    console.log(`renderlist ${category}`)
+  async renderList(featureData = 0) {
+    console.log(`renderlist ${featureData}`)
     let html = ``;
 
-    const breadcrumb = this.renderBreadcrumb(category);
-    html += `<div id="omni-list-breadcrumb" class="omni-list-breadcrumb mr-1 mb-2 text-black-50">${breadcrumb}</div>`
+    // const breadcrumb = this.renderBreadcrumb(category);
+    // html += `<div id="omni-list-breadcrumb" class="omni-list-breadcrumb mr-1 mb-2 text-black-50">${breadcrumb}</div>`
 
-    const header = category === 0 ? "Departments" : category.properties.name;
-    const headerColor = category === 0 ? "inherit" : category.properties.type;
+    const header = featureData === 0 ? "Departments" : featureData.name;
+    const headerColor = featureData === 0 ? "inherit" : featureData.type;
     html += `<div id="omni-list-header" class="omni-list-header bg-white p-1 shadow-sm mb-1">`;
     // if (category !== null) {
     //   html += `<button id="omni-list-back" data-id="${category.properties.parent || 'all-dept'}" type="button" class="btn btn-sm btn-outline-secondary mr-2">Back</button>`
@@ -115,16 +116,16 @@ class Omnibox {
     
     html += `<div id="omni-list" class="omni-list">`;
 
-    const featureList = await getOmniboxList(category) || []
+    const omniboxList = await getOmniboxList(featureData.id || 0) || []
 
-    console.log(`featureList ${featureList}`)
+    // console.log(`omniboxList ${omniboxList}`)
 
-    featureList.sort((a,b) => {
+    omniboxList.sort((a,b) => {
       if(a.properties.name < b.properties.name) return -1;
       if(a.properties.name > b.properties.name) return 1;
       return 0;
     });
-    featureList.forEach(f => {
+    omniboxList.forEach(f => {
       html += this.renderListItem(f);
     });
 
@@ -132,43 +133,20 @@ class Omnibox {
     this.elem.innerHTML = html;
   }
 
-  // getChildrenArray(f) {
-  //   let array = this.featureData.filter(i => {
-  //     // need to filter by dept because of generic "Sales" subdept
-  //       if (i.properties.dept === f.properties.dept || f.properties.type === 'dept') {
-  //         return i.properties.parent === f.properties.name; 
-  //       }
-  //     });
-
-  //   return (
-  //     array.sort((a,b) => {
-  //       console.log(a,b)
-  //       if(a.properties.name < b.properties.name) return -1;
-  //       if(a.properties.name > b.properties.name) return 1;
-  //       return 0;
-  //     })
-  //   );
-  // }
-
-  // renderChildrenLinks(f) {
-  //   const children = this.getChildrenArray(f);
-  //   let html = '';
-  //   children.forEach(c => {
-  //     html += `<a href="#" id="child-link-${c.id}" class="child-link">${c.properties.name}</a>, `
-  //   });
-  //   return html; 
-  // }
-
   renderListItem(f) {
     // Only because brands have a placeholder src value for brand logos that doesn't have a file extension
-    const src = f.properties.src.includes('.') ? f.properties.src : 'product-images/missing-item.jpg' ;
+    const src = f.properties.src.includes('.') ? f.properties.src : 'product-images/missing-item.jpg'
+    const id = f.id
+    const coordinates = f.geometry.coordinates
+    const name = f.properties.name
+    const type = f.properties.type
     
     return (
-      `<div id="omni-list-item-${f.id}" data-id="${f.id}" class="media border-bottom mb-1 p-1 type-${f.properties.type}">
-        <img src="${imagesDir + (f.properties.sampleImg || src )}" alt="${f.properties.name}" class="omni-image preview-image mr-2 order-1"  data-id="${f.id}">
+      `<div id="omni-list-item-${id}" data-id="${id}" data-coord="${coordinates[0]},${coordinates[1]}" data-name="${name}" data-type="${type}" class="media border-bottom mb-1 p-1 type-${type}">
+        <img src="${imagesDir + (f.properties.sampleImg || src )}" alt="${name}" class="omni-image preview-image mr-2 order-1"  data-id="${id}" data-coord="${coordinates[0]},${coordinates[1]}" data-name="${name}" data-type="${type}" >
         <div class="media-body mr-1 ml-3 ">
-          <div class="omni-list-name" data-id="${f.id}" style="color: ${labelColors[f.properties.type]};">${f.properties.name}</div>
-          <div id="omni-list-item-price" data-id="${f.id}" class="preview-price">${f.properties.price || ''}</div>
+          <div class="omni-list-name" data-id="${id}" data-coord="${coordinates[0]},${coordinates[1]}" data-name="${name}" data-type="${type}" style="color: ${labelColors[type]};">${name}</div>
+          <div id="omni-list-item-price" data-id="${id}" class="preview-price">${f.properties.price || ''}</div>
         </div>
       </div>`
     )

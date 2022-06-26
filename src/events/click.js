@@ -29,7 +29,7 @@ export const handleClick = function(e) {
   const constraint = [mapSize[0] + 500, mapSize[1] + 100] ;
 
   if (featureType == 'product') {
-    renderProductOverlay(feature.get('fid'), productDetailOverlay);
+    renderProductOverlay(feature, productDetailOverlay);
     e.stopPropagation();
 
   } else if (['brand','dept','subdept'].includes(featureType)) {

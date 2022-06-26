@@ -10,11 +10,9 @@ import { imagesDir } from '../constants';
 const cart = [];
 const cartContents = document.querySelector('#cart-contents');
 
-export const updateCart = function(fid) {
-  fid = Number(fid);
+export const updateCart = function(fid, name, src) {
+  fid = parseInt(fid);
   const product = omnibox.featureData.find(f => f.id === fid);
-  const src = imagesDir + product.properties.src;
-  const name = product.properties.name;
 
   if (checkCart(fid)) {
     for (var i = cart.length - 1; i >= 0; i--) {
@@ -30,9 +28,8 @@ export const updateCart = function(fid) {
 
   cart.push({
     fid: fid,
-    name: product.properties.name,
-    src: product.properties.src,
-    price: product.properties.price
+    name: name,
+    src: src
   });
   setCartRemoveIcon(fid);
 

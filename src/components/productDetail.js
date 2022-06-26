@@ -24,9 +24,9 @@ productDetailOverlay.getElement().onpointermove = function(e) {e.stopPropagation
 
 productDetailOverlay.getElement().addEventListener('click', function(e) {
   if (e.target.id === 'product-overlay-add-button') {
-    const fid = Number(e.target.getAttribute('data-fid'));
-    updateCart(fid);
-    toggleOverlayButton(e.target, fid);
+    const data = e.target.dataset
+    updateCart(data.fid, data.name, data.src);
+    toggleOverlayButton(e.target, data.fid);
   } else {
     hideOverlay(productDetailOverlay);
   }
@@ -34,16 +34,18 @@ productDetailOverlay.getElement().addEventListener('click', function(e) {
 });
   
 
-export const renderProductOverlay = function(fid, overlay) {
-  fid = Number(fid);
-  const feature = omnibox.featureData.find(f => f.id === fid);
+export const renderProductOverlay = function(feature, overlay) {
+  const fid = parseInt(feature.getId());
+  const properties = feature.getProperties()
   
   overlay.getElement().style.display = 'block';
 
-  const coordinate = feature.geometry.coordinates;
+  const coordinate = properties.geometry.flatCoordinates;
 
   const btn = overlay.getElement().querySelector('.add-to-cart');
   btn.setAttribute('data-fid', fid);
+  btn.setAttribute('data-src', properties.src);
+  btn.setAttribute('data-name', properties.name);
   toggleOverlayButton(btn, fid);
 
   overlay.setPosition(coordinate);
@@ -56,14 +58,14 @@ export const renderProductOverlay = function(fid, overlay) {
   image.setAttribute('data-fid', fid);
 
   image.src = '';
-  let src = imagesDir + feature.properties.src.replace('200x', '500x');
+  let src = properties.src.replace('200x', '500x');
   image.src = src;
   image.style.width = 250+'px'; 
   let imageOffset = -130;
   
-  name.innerHTML = feature.properties.name;    
+  name.innerHTML = properties.name;    
 
-  price.textContent = feature.properties.price;
+  price.textContent = properties.price;
   
   const offset = [imageOffset - image.offsetLeft, imageOffset - image.offsetTop];
   overlay.setOffset(offset); 
