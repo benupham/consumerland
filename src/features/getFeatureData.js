@@ -282,10 +282,6 @@ export const updateProductsLayer = async function () {
     productsSource.addFeatures(productImageFeatureRender([productData], 'product'));
     // productsCircleSource.addFeatures(circleFeatureRender([productData], 'product'));
     productsLabelSource.addFeatures(productLabelFeatureRender([productData], 'product'));
-
-    productsSource.forEachFeature( e => {
-      console.log(this)
-    })
   
     tagsSource.addFeatures(tagsFeatureRender(productData));
     tagsSource.addFeature(cartAddIcon);

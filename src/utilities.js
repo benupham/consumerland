@@ -52,7 +52,7 @@ export const getProductsInExtent = function () {
 
 export const getOmniboxList = function(fid = 0) {
   console.log(`omnibox request ${fid}`)
-  return fetch(`/omnibox?fid=${fid}`)
+  return fetch(`https://cofr6smqq6.execute-api.us-west-1.amazonaws.com/production/omnibox?fid=${fid}`)
   .then(res => res.json())
   .catch(err => console.log(err))
 }
