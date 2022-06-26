@@ -4,6 +4,7 @@ bundle.js
 images/
 product-images/
 *.json
+!.prettierrc.json
 !package*.json
 storage/
 *.png

@@ -22,3 +22,13 @@ OTHER NOTES
 * '/omnibox','/api', '/products' API endpoints are proxied locally to :8080 in webpack-config
 
 GIT STRUCTURE
+* master is the production branch
+* aws was for setting up the AWS stuff
+* develop was the most recently worked on branch before aws
+* the others are defunct
+
+TODO
+* consolidate AWS services into one Amplify package
+* get Add to Cart, omnibox breadcrumb, and tags to work 
+* a lot of refactoring
+* remove firebase config
