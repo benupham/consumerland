@@ -3,7 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './index.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -11,11 +11,15 @@ module.exports = {
   },
   mode: 'production',
   devServer: {
-    host: 'localhost', 
-    port: 3000,
-    proxy: {
-      '/api': 'http://localhost:8080'
-    }
+    host: 'localhost',
+    contentBase: './src',
+    port: 3010,
+    proxy: [
+      {
+        context: ['/omnibox','/api', '/products'],
+        target: 'http://localhost:8080'
+      }
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({

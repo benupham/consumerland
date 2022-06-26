@@ -5,10 +5,10 @@
   ],
   "version": "1.0.0",
   "description": "product map app",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "start": "webpack-dev-server --open",
-    "dev-server": "nodemon --ignore node-utility-scripts --watch ./server.js ./server.js localhost 8080",
+    "dev-server": "nodemon --ignore node-utility-scripts --watch ./functions/index.js ./functions/index.js localhost 8080",
     "build": "webpack --config webpack.config.js"
   },
   "author": "Ben Upham",
@@ -38,6 +38,7 @@
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
     "nodemon": "^1.17.5",
+    "prettier": "^2.7.1",
     "style-loader": "^0.20.3",
     "url-loader": "^1.0.1",
     "webpack": "^4.5.0",
