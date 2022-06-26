@@ -56,7 +56,7 @@
 
 // /*
 // * Label Features
-// * 
+// *
 // */
 // const labelFeatureRender = function (featureSets, type='all') {
 //   const rangeData = d3Array.histogram()
@@ -92,13 +92,12 @@
 //           //src: f.properties.src
 //         });
 //         label.setId(f.id + '-label');
-//         labels.push(label);        
+//         labels.push(label);
 //       }
 //     })
 //   })
 //   return labels;
 // }
-
 
 // const labelStyleCache = {};
 // const resolutionCache = {};
@@ -108,13 +107,13 @@
 
 //   let style = labelStyleCache[label.getId()];
 
-//   if (resolutionCache[label.getId()] >= labelStyleChange[label.get('type')] 
+//   if (resolutionCache[label.getId()] >= labelStyleChange[label.get('type')]
 //   && view.getResolution() <= labelStyleChange[label.get('type')]) {
 //     label.set('styleChange', true);
 //     style = null;
-//   } else if (resolutionCache[label.getId()] <= labelStyleChange[label.get('type')] 
+//   } else if (resolutionCache[label.getId()] <= labelStyleChange[label.get('type')]
 //   && view.getResolution() >= labelStyleChange[label.get('type')]) {
-//     label.set('styleChange', false); 
+//     label.set('styleChange', false);
 //     style = null;
 //   }
 //   const labelType = label.get('type');
@@ -126,8 +125,8 @@
 //     const text = label.get('name');
 //     const textAlign = styleChange === true ? 'center' : 'left';
 //     const offsetX = styleChange === true ? 0 : imageScale[labelType] * 120;
-//     const backgroundFillColor = styleChange === true ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0)'; 
-    
+//     const backgroundFillColor = styleChange === true ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0)';
+
 //     style = new Style({
 //       text: new Text({
 //         font: fontWeight[labelType] + ' ' + fontSize + 'px' + ' ' + fontFamily[labelType],
@@ -150,7 +149,7 @@
 
 // /*
 // * Image Features
-// * 
+// *
 // */
 
 // const imageFeatureRender = function (featureSets, type='all') {
@@ -159,15 +158,15 @@
 //   if (featureSets.length === 1) {
 //     extent = d3Array.extent(featureSets[0], function(f) {
 //       if (type === f.properties.type) {
-//         return f.properties.radius  
-//       } 
+//         return f.properties.radius
+//       }
 //     });
 //   }
 
 //   featureSets.forEach((featureSet) => {
 //     featureSet.forEach((f) => {
 //       if ((f.properties.type === type || type === 'all'))  {
-//         const src = imagesDir + (f.properties.sampleImg || f.properties.src); 
+//         const src = imagesDir + (f.properties.sampleImg || f.properties.src);
 //         const image = new Feature({
 //           geometry: new Point(f.geometry.coordinates),
 //           name: f.properties.name,
@@ -181,7 +180,7 @@
 //           maxRes: f.properties.maxRes
 //         });
 //         image.setId(f.id + '-image');
-//         images.push(image);        
+//         images.push(image);
 //       }
 //     })
 //   })
@@ -220,9 +219,9 @@
 //         }),
 //         radius: 105 * scaleFactor
 //       })
-//     }); 
+//     });
 //     const Iconstyle = new Style({
-//       image: icon 
+//       image: icon
 //     })
 //     style = [circleStyle, Iconstyle];
 //     imageStyleCache[image.get('type')] = style;
@@ -231,10 +230,9 @@
 //   return style;
 // }
 
-
 // /*
 // * Circle Features
-// * 
+// *
 // */
 
 // const circleFeatureRender = function(featureSets, type='all') {
@@ -256,14 +254,14 @@
 //           hover: false,
 //           hoverColor: hoverColor,
 //           src: imagesDir + (f.properties.sampleImg || f.properties.src),
-//           children: f.properties.value || '' 
+//           children: f.properties.value || ''
 //         });
 //         circle.setId(f.id + '-circle');
-//         circles.push(circle);        
+//         circles.push(circle);
 //       }
 //     })
 //   })
-//   return circles;    
+//   return circles;
 // }
 
 // const circleStyleCache = {};
@@ -286,10 +284,9 @@
 //   return style;
 // }
 
-
 // /*
 // * Circle Labels Features --- NOT USED
-// * 
+// *
 // */
 
 // const circleLabelRender = function(featureSets, type='all') {
@@ -311,18 +308,18 @@
 //           hoverColor: circleHoverColors[type],
 //         });
 //         circle.setId(f.id + '-circlelabel');
-//         circles.push(circle);        
+//         circles.push(circle);
 //       }
 //     })
 //   })
-//   return circles;    
+//   return circles;
 // }
 
 // const circleLabelStyleCache = {};
 // const circleLabelStyle = function(circleLabel, res) {
 //   let style = circleLabelStyleCache[circleLabel.get('id')];
 //   if (!style) {
-//     const fillColor = 
+//     const fillColor =
 //     style = new Style({
 //       text: new Text({
 //         font: circleLabel.get('fontSize'),
@@ -342,7 +339,6 @@
 //   return style;
 // }
 
-
 // // Product Image Feature
 
 // const productImageFeatureRender = function (featureSets, type='product') {
@@ -350,7 +346,7 @@
 
 //   featureSets.forEach((featureSet) => {
 //     featureSet.forEach((f) => {
-//       const src = imagesDir + f.properties.src; 
+//       const src = imagesDir + f.properties.src;
 //       const image = new Feature({
 //         geometry: new Point(f.geometry.coordinates),
 //         name: f.properties.name,
@@ -364,8 +360,8 @@
 //       if (f.properties.sprite200Src && f.properties.spriteCoord) {
 //         image.set('sprite200Src', imagesDir + f.properties.sprite200Src);
 //         image.set('spriteCoord', f.properties.spriteCoord);
-//       } 
-//       images.push(image);        
+//       }
+//       images.push(image);
 //     })
 //   })
 //   return images;
@@ -393,7 +389,7 @@
 //         offset: offset,
 //         crossOrigin: 'anonymous'
 //       })
-//       productSpriteIconCache[imagesrc] = spriteicon;  
+//       productSpriteIconCache[imagesrc] = spriteicon;
 //     }
 
 //     if (!imageicon) {
@@ -402,7 +398,7 @@
 //         size: [199,199],
 //         crossOrigin: 'anonymous'
 //       })
-//       productImageIconCache[imagesrc] = imageicon;  
+//       productImageIconCache[imagesrc] = imageicon;
 //     }
 
 //     // const imageStyle = new Style({ image: imageicon });
@@ -412,8 +408,7 @@
 //     // productImageStyleCache[imagesrc] = style;
 
 //     style = new Style();
-    
-    
+
 //   }
 //   if (imagesrc.includes('missing-item')) {
 //     style.setImage(productImageIconCache[imagesrc]);
@@ -426,10 +421,9 @@
 //     style.setImage(productImageIconCache[imagesrc]);
 //     style.getImage().setScale(1/res);
 //   }
-  
+
 //   return style;
 // }
-
 
 // /*
 // * Exports
@@ -440,8 +434,6 @@
 // .value(d => d.properties.radius)
 // .thresholds([200,400,600,800,1600,2000,2800,3500]);
 
-
-
 // const setMaxRange = function(features, range) {
 //   features.forEach((f) => {
 //     for (let i = 0; i < range.length; i++) {
@@ -451,8 +443,8 @@
 //           break;
 //         }
 //       }
-//     }  
-//   })  
+//     }
+//   })
 // }
 
 // // Dept Layers defined outside of Promise so they can be exported to the OverviewMap control
@@ -483,9 +475,9 @@
 // //   const features = [];
 // //   for (let f of snapshot.docs) {
 // //       features.push(f.data());
-// //     } 
+// //     }
 // //   console.log(features);
-// // }) 
+// // })
 
 // getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
 // .then(res => {
@@ -498,7 +490,7 @@
 
 //   const deptLabelFeatures = labelFeatureRender([featureData], 'dept');
 //   deptLabelSource.addFeatures(deptLabelFeatures);
-  
+
 //   const departmentsImageLayer = new VectorLayer({
 //     source: new VectorSource({
 //       features: imageFeatureRender([featureData], 'dept'),
@@ -524,7 +516,7 @@
 //     minResolution: subdeptsLabelMin,
 //     maxResolution: subdeptsLabelMax
 //   })
-  
+
 //   const subdepartmentsImageLayer = new VectorLayer({
 //     source: new VectorSource({
 //       features: imageFeatureRender([featureData], 'subdept'),
@@ -537,7 +529,7 @@
 //     minResolution: subdeptsImageMin,
 //     maxResolution: subdeptsImageMax
 //   })
-  
+
 //   const subdepartmentsCircleLayer = new VectorLayer({
 //     source: new VectorSource({
 //       features: circleFeatureRender([featureData], 'subdept')
@@ -562,7 +554,6 @@
 //     minResolution: brandsLabelMin,
 //     maxResolution: brandsLabelMax
 //   })
-
 
 //   const brandsImageLayer = new VectorLayer({
 //     source: new VectorSource({
@@ -599,15 +590,12 @@
 //   map.addLayer(departmentsImageLayer);
 //   map.addLayer(departmentsLabelLayer);
 //   maxExtent = departmentsCircleLayer.getSource().getExtent();
-  
+
 // })
 // .then(() => {
 //   document.querySelector('.loading').style.display = 'none';
 // })
 // .catch(err => console.log(err));
-
- 
-
 
 // // Products
 
@@ -620,7 +608,7 @@
 // .then(productData => {
 //   const imageFeatures = productImageFeatureRender([productData], 'product');
 //   productsSource.addFeatures(imageFeatures);
-  
+
 //   const productsImageLayer = new VectorLayer({
 //     source: productsSource,
 //     style: productImageStyle,
@@ -630,7 +618,7 @@
 //     zIndex: 4,
 //     maxResolution: productsImageMax
 //   });
-  
+
 //   const productsCircleLayer = new VectorLayer({
 //     source: new VectorSource({
 //       features: circleFeatureRender([productData], 'product')
@@ -645,4 +633,3 @@
 //   map.addLayer(productsCircleLayer);
 //   map.addLayer(productsImageLayer);
 // })
-

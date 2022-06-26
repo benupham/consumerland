@@ -1,73 +1,70 @@
-import Feature from 'ol/feature';
-import Point from 'ol/geom/point';
-import VectorLayer from 'ol/layer/vector';
-import VectorSource from 'ol/source/vector';
-import Icon from 'ol/style/icon';
-import Style from 'ol/style/style';
+import Feature from "ol/feature"
+import Point from "ol/geom/point"
+import VectorLayer from "ol/layer/vector"
+import VectorSource from "ol/source/vector"
+import Icon from "ol/style/icon"
+import Style from "ol/style/style"
 
-import {imagesDir, productsImageMax} from '../constants.js';
-import {productsSource} from './categoryFeatures.js';
-import {textFormatter, iconcache, styleCache, getFeatureJson} from '../utilities.js';
-import {map} from '../index.js';
-import { updateCart, checkCart } from '../components/cart.js';
-
+import { imagesDir, productsImageMax } from "../constants.js"
+import { productsSource } from "./categoryFeatures.js"
+import { textFormatter, iconcache, styleCache, getFeatureJson } from "../utilities.js"
+import { map } from "../index.js"
+import { updateCart, checkCart } from "../components/cart.js"
 
 /*
-* Product on Sale, in Cart, Tagged Features and Styles
-* 
-*/
+ * Product on Sale, in Cart, Tagged Features and Styles
+ *
+ */
 
 const tagsData = {
-  sale: {color: '', src: 'sale-red.png'},
-  add: {color: '', src: 'add.png'},
-  remove: {color: '', src: 'remove.png'},
+  sale: { color: "", src: "sale-red.png" },
+  add: { color: "", src: "add.png" },
+  remove: { color: "", src: "remove.png" }
 }
 
-const tagFeatureRender = function(features, colors = null, tagType = 'sale') {
-  let tags = [];
-  features.forEach( (f) => {
-    if (f.properties.type == 'product' && f.properties.price.indexOf('Reg') > -1) {
+const tagFeatureRender = function (features, colors = null, tagType = "sale") {
+  let tags = []
+  features.forEach((f) => {
+    if (f.properties.type == "product" && f.properties.price.indexOf("Reg") > -1) {
       const tag = new Feature({
-        'geometry': new Point([f.geometry.coordinates[0] - 75, f.geometry.coordinates[1] + 75]),
-        'name': f.id + '-' + tagType,
-        'type': tagType,
+        geometry: new Point([f.geometry.coordinates[0] - 75, f.geometry.coordinates[1] + 75]),
+        name: f.id + "-" + tagType,
+        type: tagType
       })
-      tag.setId(f.id + '-' + tagType);
-      tags.push(tag);      
+      tag.setId(f.id + "-" + tagType)
+      tags.push(tag)
     }
   })
-  return tags;
+  return tags
 }
 
-
 const tagStyle = function (tag, resolution) {
-  const type = tag.get('type');
-  const src = tagsData[type].src;
-  let style = {};
+  const type = tag.get("type")
+  const src = tagsData[type].src
+  let style = {}
 
-  let tagIcon = iconcache[src];
+  let tagIcon = iconcache[src]
 
   if (!tagIcon) {
     tagIcon = new Icon({
-      size: [48,48],
-      crossOrigin: 'anonymous',
-      src: imagesDir + 'product-images/tags/' + src
-    });
+      size: [48, 48],
+      crossOrigin: "anonymous",
+      src: imagesDir + "product-images/tags/" + src
+    })
   }
-  
-  if (type === 'sale') {
-    tagIcon.setScale(1 / resolution);
+
+  if (type === "sale") {
+    tagIcon.setScale(1 / resolution)
   } else {
-    const res = 1 / resolution + .2 > 1 ? 1 : 1 / resolution + .2;
-    tagIcon.setScale(res);
+    const res = 1 / resolution + 0.2 > 1 ? 1 : 1 / resolution + 0.2
+    tagIcon.setScale(res)
   }
-  
-  
-  iconcache[src] = tagIcon;
+
+  iconcache[src] = tagIcon
 
   style = new Style({
     image: tagIcon,
-    zIndex: type === 'remove' ? 10 : 0
+    zIndex: type === "remove" ? 10 : 0
   })
 
   return style
@@ -75,7 +72,7 @@ const tagStyle = function (tag, resolution) {
 
 const tagSource = new VectorSource({
   overlaps: false
-});
+})
 
 export const tagLayer = new VectorLayer({
   source: tagSource,
@@ -83,65 +80,60 @@ export const tagLayer = new VectorLayer({
   zIndex: 4,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  renderMode: 'vector',
-  maxResolution: productsImageMax 
+  renderMode: "vector",
+  maxResolution: productsImageMax
 })
-tagLayer.set('name','tag-layer');
+tagLayer.set("name", "tag-layer")
 
-getFeatureJson(['product'], 'tags')
-.then(data => {
-  const tagFeatures = tagFeatureRender(data);
-  tagSource.addFeatures(tagFeatures);
-  map.addLayer(tagLayer);
-  
+getFeatureJson(["product"], "tags").then((data) => {
+  const tagFeatures = tagFeatureRender(data)
+  tagSource.addFeatures(tagFeatures)
+  map.addLayer(tagLayer)
 })
 
 const cartAddIcon = new Feature({
-  'geometry': new Point([null, null]),
-  'name': 'cart-add-icon',
-  'type': 'add',
+  geometry: new Point([null, null]),
+  name: "cart-add-icon",
+  type: "add"
 })
-cartAddIcon.setId('cart-add-icon');
-tagSource.addFeature(cartAddIcon);
+cartAddIcon.setId("cart-add-icon")
+tagSource.addFeature(cartAddIcon)
 
-export const setCartAddIcon = function(product) {
+export const setCartAddIcon = function (product) {
   // send nowhere if false
   if (product === false) {
-    cartAddIcon.getGeometry().setCoordinates([null,null]);
-    return;
+    cartAddIcon.getGeometry().setCoordinates([null, null])
+    return
   }
 
   // get product coord
-  const coordinate = product.getGeometry().getCoordinates();
-  cartAddIcon.getGeometry().setCoordinates([coordinate[0] + 75, coordinate[1] + 75]);
+  const coordinate = product.getGeometry().getCoordinates()
+  cartAddIcon.getGeometry().setCoordinates([coordinate[0] + 75, coordinate[1] + 75])
 
-  cartAddIcon.set('pId', product.getId());
+  cartAddIcon.set("pId", product.getId())
 }
 
-export const setCartRemoveIcon = function(pId) {
-  
+export const setCartRemoveIcon = function (pId) {
   if (!checkCart(pId)) {
-    if (tagSource.getFeatureById('remove-' + pId) != null) {
-      const icon = tagSource.getFeatureById('remove-' + pId);
-      tagSource.removeFeature(icon);
+    if (tagSource.getFeatureById("remove-" + pId) != null) {
+      const icon = tagSource.getFeatureById("remove-" + pId)
+      tagSource.removeFeature(icon)
     }
   } else {
-    const product = productsSource.getFeatureById(pId);
-    const coord = product.getGeometry().getCoordinates();
+    const product = productsSource.getFeatureById(pId)
+    const coord = product.getGeometry().getCoordinates()
     const cartRemoveIcon = new Feature({
-      type: 'remove',
-      src: tagsData['remove'].src,
+      type: "remove",
+      src: tagsData["remove"].src,
       geometry: new Point([coord[0] + 75, coord[1] + 75]),
       pId: pId
-    });
-    cartRemoveIcon.setId('remove-' + pId);
-    tagSource.addFeature(cartRemoveIcon);
+    })
+    cartRemoveIcon.setId("remove-" + pId)
+    tagSource.addFeature(cartRemoveIcon)
   }
-
-} 
-
-export const cartIconHandleClick = function(cartIcon) {
-  const pId = cartIcon.get('pId');
-  updateCart(pId);
 }
 
+export const cartIconHandleClick = function (cartIcon) {
+  const pId = cartIcon.get("pId")
+  updateCart(pId)
+}

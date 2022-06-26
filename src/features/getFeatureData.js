@@ -1,14 +1,18 @@
-import VectorLayer from 'ol/layer/vector';
-import VectorSource from 'ol/source/vector';
+import VectorLayer from "ol/layer/vector"
+import VectorSource from "ol/source/vector"
 
+const d3Array = require("d3-array")
 
-const d3Array = require('d3-array');
-
-import {productImageFeatureRender, productImageStyle, productLabelFeatureRender, productLabelStyle} from './products';
-import {circleFeatureRender, circleStyle} from './circles';
-import {labelFeatureRender, labelStyle, imageFeatureRender, imageStyle} from './labels';
-import {tagsFeatureRender, tagsStyle, cartAddIcon} from './tags2';
-import {omnibox} from '../components/omnibox';
+import {
+  productImageFeatureRender,
+  productImageStyle,
+  productLabelFeatureRender,
+  productLabelStyle
+} from "./products"
+import { circleFeatureRender, circleStyle } from "./circles"
+import { labelFeatureRender, labelStyle, imageFeatureRender, imageStyle } from "./labels"
+import { tagsFeatureRender, tagsStyle, cartAddIcon } from "./tags2"
+import { omnibox } from "../components/omnibox"
 
 import {
   productsImageMax,
@@ -30,77 +34,79 @@ import {
   deptsImageMax,
   deptsImageMin,
   maxResolutions,
-  productsLabelMax,
-} from '../constants.js';
-import {textFormatter, dataTool, getFeatureJson, getFeaturesFromFirestore, getProductsInExtent} from '../utilities.js';
-import {view, map} from '../index.js';
-import { isNullOrUndefined } from 'util';
-
-
-
+  productsLabelMax
+} from "../constants.js"
+import {
+  textFormatter,
+  dataTool,
+  getFeatureJson,
+  getFeaturesFromFirestore,
+  getProductsInExtent
+} from "../utilities.js"
+import { view, map } from "../index.js"
+import { isNullOrUndefined } from "util"
 
 // These two functions create a universal maximum resolution for all category features
 // They are applied when data is first collected, rather than on a per-layer basis
-const maxResData = d3Array.histogram()
-.value(d => d.properties.radius)
-.thresholds([200,400,600,800,1600,2000,2800,3500]);
+const maxResData = d3Array
+  .histogram()
+  .value((d) => d.properties.radius)
+  .thresholds([200, 400, 600, 800, 1600, 2000, 2800, 3500])
 
-const setMaxRange = function(features, range) {
+const setMaxRange = function (features, range) {
   features.forEach((f) => {
     for (let i = 0; i < range.length; i++) {
       for (let j = 0; j < range[i].length; j++) {
         if (range[i][j].id == f.id) {
-          f.properties.maxRes = maxResolutions[i];
-          if (f.properties.type == 'dept') {
+          f.properties.maxRes = maxResolutions[i]
+          if (f.properties.type == "dept") {
             // console.log(f.properties.name, f.properties.maxRes)
-
           }
-          break;
+          break
         }
       }
-    }  
-  })  
+    }
+  })
 }
 
 /*
-* Exports
-*/
+ * Exports
+ */
 
 // Exported so components can use productsSource for feature look-ups
-export const productsSource = new VectorSource({overlaps: false});
-const productsCircleSource = new VectorSource({overlaps: false});
-const productsLabelSource = new VectorSource();
-export const tagsSource = new VectorSource({overlaps: false});
-const deptsCircleSource = new VectorSource({overlaps: false});
-const deptsLabelSource = new VectorSource();
-const deptsImageSource = new VectorSource();
-const subdeptsCircleSource = new VectorSource({overlaps: false});
-const subdeptsLabelSource = new VectorSource();
-const subdeptsImageSource = new VectorSource();
-const brandsCircleSource = new VectorSource({overlaps: false});
-const brandsLabelSource = new VectorSource();
-const brandsImageSource = new VectorSource();
-
+export const productsSource = new VectorSource({ overlaps: false })
+const productsCircleSource = new VectorSource({ overlaps: false })
+const productsLabelSource = new VectorSource()
+export const tagsSource = new VectorSource({ overlaps: false })
+const deptsCircleSource = new VectorSource({ overlaps: false })
+const deptsLabelSource = new VectorSource()
+const deptsImageSource = new VectorSource()
+const subdeptsCircleSource = new VectorSource({ overlaps: false })
+const subdeptsLabelSource = new VectorSource()
+const subdeptsImageSource = new VectorSource()
+const brandsCircleSource = new VectorSource({ overlaps: false })
+const brandsLabelSource = new VectorSource()
+const brandsImageSource = new VectorSource()
 
 const productsImageLayer = new VectorLayer({
   source: productsSource,
   style: productImageStyle,
-  renderMode: 'raster',
+  renderMode: "raster",
   updateWhileAnimating: true,
   updateWhileInteracting: true,
   zIndex: 3,
   maxResolution: productsImageMax
-});
+})
 
 const productsCircleLayer = new VectorLayer({
   source: productsCircleSource,
-  renderMode: 'raster',
+  renderMode: "raster",
   style: circleStyle,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
   zIndex: 2,
   maxResolution: productsCircleMax
-});
+})
 
 const productsLabelLayer = new VectorLayer({
   source: productsLabelSource,
@@ -118,8 +124,8 @@ export const tagsLayer = new VectorLayer({
   zIndex: 4,
   updateWhileAnimating: true,
   updateWhileInteracting: true,
-  renderMode: 'vector',
-  maxResolution: productsImageMax 
+  renderMode: "vector",
+  maxResolution: productsImageMax
 })
 
 // Exported to be used in Overview Map
@@ -128,8 +134,8 @@ export const deptsCircleLayer = new VectorLayer({
   source: deptsCircleSource,
   zIndex: 0,
   updateWhileAnimating: true,
-  updateWhileInteracting: true,
-});
+  updateWhileInteracting: true
+})
 
 export const deptsLabelLayer = new VectorLayer({
   style: labelStyle,
@@ -139,7 +145,7 @@ export const deptsLabelLayer = new VectorLayer({
   zIndex: 10,
   minResolution: deptsLabelMin,
   maxResolution: deptsLabelMax
-});
+})
 
 const deptsImageLayer = new VectorLayer({
   source: deptsImageSource,
@@ -150,7 +156,6 @@ const deptsImageLayer = new VectorLayer({
   minResolution: subdeptsImageMax,
   maxResolution: deptsImageMax
 })
-
 
 const subdeptsLabelLayer = new VectorLayer({
   source: subdeptsLabelSource,
@@ -193,7 +198,6 @@ const brandsLabelLayer = new VectorLayer({
   maxResolution: brandsLabelMax
 })
 
-
 const brandsImageLayer = new VectorLayer({
   source: brandsImageSource,
   style: imageStyle,
@@ -215,93 +219,79 @@ const brandsCircleLayer = new VectorLayer({
   opacity: 1
 })
 
-
 // This is defined when dept circles are finished loading, to create bounding area for map
-export let maxExtent = [];
+export let maxExtent = []
 
 // Array of all feature data for use by other components
-export let featureData = [];
+export let featureData = []
 
-getFeatureJson(['dept','subdept','brand'], 'categoryfeatures')
-.then(categoryData => {
+getFeatureJson(["dept", "subdept", "brand"], "categoryfeatures")
+  .then((categoryData) => {
+    // Apply max range algorithm to all categories
+    const maxResRange = maxResData(categoryData)
+    setMaxRange(categoryData, maxResRange)
 
-  // Apply max range algorithm to all categories
-  const maxResRange = maxResData(categoryData);
-  setMaxRange(categoryData, maxResRange);
+    // Add feature data to category sources
+    deptsCircleSource.addFeatures(circleFeatureRender([categoryData], "dept"))
+    deptsLabelSource.addFeatures(labelFeatureRender([categoryData], "dept"))
+    deptsImageSource.addFeatures(imageFeatureRender([categoryData], "dept"))
 
-  // Add feature data to category sources 
-  deptsCircleSource.addFeatures(circleFeatureRender([categoryData], 'dept'));
-  deptsLabelSource.addFeatures(labelFeatureRender([categoryData], 'dept'));
-  deptsImageSource.addFeatures(imageFeatureRender([categoryData], 'dept'));
+    subdeptsCircleSource.addFeatures(circleFeatureRender([categoryData], "subdept"))
+    subdeptsLabelSource.addFeatures(labelFeatureRender([categoryData], "subdept"))
+    subdeptsImageSource.addFeatures(imageFeatureRender([categoryData], "subdept"))
 
-  subdeptsCircleSource.addFeatures(circleFeatureRender([categoryData], 'subdept'));
-  subdeptsLabelSource.addFeatures(labelFeatureRender([categoryData], 'subdept'));
-  subdeptsImageSource.addFeatures(imageFeatureRender([categoryData], 'subdept'));
-  
-  brandsCircleSource.addFeatures(circleFeatureRender([categoryData], 'brand'));
-  brandsLabelSource.addFeatures(labelFeatureRender([categoryData], 'brand'));
-  brandsImageSource.addFeatures(imageFeatureRender([categoryData], 'brand'));
+    brandsCircleSource.addFeatures(circleFeatureRender([categoryData], "brand"))
+    brandsLabelSource.addFeatures(labelFeatureRender([categoryData], "brand"))
+    brandsImageSource.addFeatures(imageFeatureRender([categoryData], "brand"))
 
-  //map.addLayer(productsCircleLayer);
+    //map.addLayer(productsCircleLayer);
 
-  map.addLayer(deptsCircleLayer);
-  map.addLayer(subdeptsCircleLayer);
-  map.addLayer(brandsCircleLayer);
-  map.addLayer(brandsImageLayer);
-  // map.addLayer(brandsLabelLayer);
-  map.addLayer(subdeptsImageLayer);
-  // map.addLayer(subdeptsLabelLayer);
-  map.addLayer(deptsImageLayer);
-  map.addLayer(deptsLabelLayer);
+    map.addLayer(deptsCircleLayer)
+    map.addLayer(subdeptsCircleLayer)
+    map.addLayer(brandsCircleLayer)
+    map.addLayer(brandsImageLayer)
+    // map.addLayer(brandsLabelLayer);
+    map.addLayer(subdeptsImageLayer)
+    // map.addLayer(subdeptsLabelLayer);
+    map.addLayer(deptsImageLayer)
+    map.addLayer(deptsLabelLayer)
 
-  maxExtent = deptsCircleLayer.getSource().getExtent();
+    maxExtent = deptsCircleLayer.getSource().getExtent()
 
-  document.querySelector('.loading').style.display = 'none';
+    document.querySelector(".loading").style.display = "none"
 
-  omnibox.renderList();
-  
-})
-.catch(err => console.log(err));
-
-
+    omnibox.renderList()
+  })
+  .catch((err) => console.log(err))
 
 export const updateProductsLayer = async function () {
-  
   try {
-    
     const productData = await getProductsInExtent()
-  
+
     if (productData.length == 0) return
-  
-    document.querySelector('.loading').style.display = 'block';
+
+    document.querySelector(".loading").style.display = "block"
 
     productsSource.clear()
     productsLabelSource.clear()
     tagsSource.clear()
-  
-    productsSource.addFeatures(productImageFeatureRender([productData], 'product'));
+
+    productsSource.addFeatures(productImageFeatureRender([productData], "product"))
     // productsCircleSource.addFeatures(circleFeatureRender([productData], 'product'));
-    productsLabelSource.addFeatures(productLabelFeatureRender([productData], 'product'));
-  
-    tagsSource.addFeatures(tagsFeatureRender(productData));
-    tagsSource.addFeature(cartAddIcon);
-    tagsLayer.set('name','tag-layer');
-  
-    map.addLayer(tagsLayer);
-    map.addLayer(productsImageLayer);
+    productsLabelSource.addFeatures(productLabelFeatureRender([productData], "product"))
+
+    tagsSource.addFeatures(tagsFeatureRender(productData))
+    tagsSource.addFeature(cartAddIcon)
+    tagsLayer.set("name", "tag-layer")
+
+    map.addLayer(tagsLayer)
+    map.addLayer(productsImageLayer)
     // map.addLayer(productsCircleLayer);
-    map.addLayer(productsLabelLayer);
-  
-    document.querySelector('.loading').style.display = 'none';
-    
+    map.addLayer(productsLabelLayer)
+
+    document.querySelector(".loading").style.display = "none"
   } catch (error) {
-
-    document.querySelector('.loading').style.display = 'none';
+    document.querySelector(".loading").style.display = "none"
     console.log(error)
-
   }
-  
-
 }
-
-

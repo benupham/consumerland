@@ -31,7 +31,7 @@
 //   map.getTargetElement().style.cursor = 'pointer';
 //   const res = view.getResolution();
 
-//   window.jumpStripActive = true; 
+//   window.jumpStripActive = true;
 
 //   const size = map.getSize();
 //   const limit = [size[0] - 100, size[1] - 100];
@@ -49,12 +49,12 @@
 //     velocity = pixel[0] <= pixel[1] ? (100 - pixel[0]) * delta : (100 - pixel[1]) * delta;
 //   } else {
 //     velocity = pixel[0] > limit[0] ? (pixel[0] - limit[0]) * delta : (pixel[1] - limit[1]) * delta;
-//   }  
-//   const angle = Math.atan2(p[1] - ctr[1], p[0] - ctr[0]); 
+//   }
+//   const angle = Math.atan2(p[1] - ctr[1], p[0] - ctr[0]);
 //   // jumpStripPointer.getGeometry().setCoordinates(e.coordinate);
 //   // jumpStripPointer.getStyle().getImage().setRotation(angle);
 //   const adj = Math.sin(angle) * velocity;
-//   const opp = Math.cos(angle) * velocity; 
+//   const opp = Math.cos(angle) * velocity;
 //   const newCtr = [ctr[0] + opp, ctr[1] + adj];
 
 //   const resDelta = delta * 0.05;

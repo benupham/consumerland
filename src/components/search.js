@@ -6,15 +6,14 @@
 // import {Omnibox} from './omnibox.js'
 
 /*
-* Search
-* 
-*/
+ * Search
+ *
+ */
 
 // export const omnibox = new Overlay({
 //   element: document.getElementById('omnibox'),
 //   stopEvent: false,
 // })
-
 
 // getFeatureJson(['product','brand','dept','subdept'])
 // .then(res => {
@@ -51,7 +50,7 @@
 //       const coord = result.coord;
 //       map.getView().animate({
 //         center: coord,
-//         resolution: searchResolutions[result.type] 
+//         resolution: searchResolutions[result.type]
 //       })
 //       $( "#search-input" ).autocomplete('close');
 //     }
@@ -59,7 +58,7 @@
 //       console.log(query +' not found');
 //     }
 //   }
-// } 
+// }
 
 // const termTemplate = "<span class='ui-autocomplete-term'>%s</span>";
 // $( "#search-input" ).autocomplete({
@@ -79,7 +78,7 @@
 //     $( "#search-input" ).value = ui.item.value;
 //     map.getView().animate({
 //       center: ui.item.coord,
-//       resolution: searchResolutions[ui.item.type] 
+//       resolution: searchResolutions[ui.item.type]
 //     })
 //   },
 //   open: function(e, ui) {
@@ -92,7 +91,3 @@
 //   }
 
 // });
-
-
-
-
